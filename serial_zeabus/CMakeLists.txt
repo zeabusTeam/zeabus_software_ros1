@@ -101,10 +101,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES serial_zeabus
-#  CATKIN_DEPENDS chrono roscpp system
-#  DEPENDS system_lib
+  INCLUDE_DIRS include
+  LIBRARIES serial_zeabus
+  CATKIN_DEPENDS roscpp
+  DEPENDS serial_zeabus
 )
 
 ###########
@@ -116,12 +116,14 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/serial_zeabus.cpp
 # )
+#  add_library(serial_zeabus include/serial_zeabus/serial.h)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

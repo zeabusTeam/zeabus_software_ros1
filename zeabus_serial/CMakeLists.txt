@@ -15,8 +15,8 @@ find_package(Boost REQUIRED COMPONENTS system chrono)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES zeabus_serial
-  CATKIN_DEPENDS Boost
-  DEPENDS zeabus_serial
+  CATKIN_DEPENDS roscpp
+  DEPENDS Boost
 )
 
 ###########
@@ -24,8 +24,9 @@ catkin_package(
 ###########
 
 include_directories(
-# include
-# ${catkin_INCLUDE_DIRS}
+ include
+ ${catkin_INCLUDE_DIRS}
+ ${Boost_INCLUDE_DIRS}
 )
 
 # add_library(${PROJECT_NAME}

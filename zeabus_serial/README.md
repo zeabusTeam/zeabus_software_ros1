@@ -11,5 +11,5 @@
 &ensp;Supasan Komonlit ,<em>2018</em>
 
 <h3> List Order </h3>
-<strong>Name file &endsp;&endsp; Status</strong><br/>
-serial&endsp;&endsp;coding
+<strong>Name file &ensp;&ensp; Status</strong><br/>
+serial&ensp;&ensp;coding

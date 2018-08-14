@@ -1,5 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////
 //
+//	serial.h
 //  Created on : Aug 11 , 2018
 //      Author : Supasan
 //Follow original of
@@ -97,7 +98,7 @@ namespace serial_zeabus{
 
 			virtual ~serial();
 
-			bool open_port(	std::string port , 
+			bool open_port(	std::string name_port , 
 							unsigned int baud_rate, 
 							boost::asio::serial_port_base::parity opt_parity =
 								boost::asio::serial_port_base::parity( 

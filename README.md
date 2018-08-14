@@ -20,14 +20,14 @@ __Second way__
 1. Install [git bash](https://git-scm.com/downloads)
 2. Right click on your destination folder
 3. Click git bash here
-4. paste this command `https://github.com/zeabusTeam/zeabus_software.git` in git bash
+4. paste this command `git clone https://github.com/zeabusTeam/zeabus_software.git` in git bash
 5. Enjoy!!!
 
 ### Linux or macOS user
 1. Open your terminal
 2. `mkdir <your directory name>`
 3. `cd <your directory name>`
-4. `https://github.com/zeabusTeam/zeabus_software.git`
+4. `git clone https://github.com/zeabusTeam/zeabus_software.git`
 5. Enjoy!!!
 
 [Back to Top](#zeabus-software)

@@ -33,6 +33,8 @@ include_directories(
 #   src/${PROJECT_NAME}/zeabus_serial.cpp
 # )
 
+add_library( zeabus_serial src/serial.cpp)
+
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 # add_executable(${PROJECT_NAME}_node src/zeabus_serial_node.cpp)

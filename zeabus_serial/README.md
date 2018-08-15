@@ -12,5 +12,5 @@
 
 <h3> List Order </h3>
 <ol>
-<li>serial.cpp (---- catkin ----)</li>
+<li>serial.cpp (---- waiting for test ----)</li>
 </ol>

@@ -26,7 +26,7 @@ namespace	zeabus_serial{
 						uint8_t data_1;
 					};
 					uint16_t data;
-	}	data_16
+	}	data_16;
 
 //---------------------------------> class time error <----------------------------------------//
 	class	timeout_error : public std::runtime_error{
@@ -62,14 +62,14 @@ namespace	zeabus_serial{
 	};
 
 //---------------------------------> class packet error <--------------------------------------//
-	class	packet_error{
+	class	packet_error : public std::runtime_error{
 
 		public:
 			packet_error( const packet &data_packet , uint8_t code);
 
 		private:
 			std::string generate_string( const packet &data_packet ,  uint8_t code);
-	}
+	};
 
 //------------------------------------> class serial <-----------------------------------------//
 	class	serial : private boost::noncopyable{
@@ -120,14 +120,14 @@ namespace	zeabus_serial{
 			virtual void read_handle(	const boost::system::error_code& message 
 									,	const size_t bytes_transferred );
 
-			virtual	void timer_handle( const boost::system::error_code& message)
+			virtual	void timer_handle( const boost::system::error_code& message);
 
 			void async_read_block_of_data( data_stream& data , size_t size , int time_out);
 
 		protected:
 			boost::asio::io_service IO_service;
 			boost::asio::serial_port serial_port;
-			boost::asio::deadline_time deadline_time;
+			boost::asio::deadline_timer deadline_time;
 			int byte_transfer;
 			int IO_state;
 	};

@@ -20,8 +20,8 @@ zeabus_serial::timeout_error::timeout_error( bool is_write , unsigned int time)
 std::string zeabus_serial::timeout_error::generate_string( bool is_write , unsigned int time){
 	std::stringstream temporary;
 	temporary << "Timed out while " << ( (is_write) ? "writeing" : "reading" ) << "\t,\t";
-	temporary << "Time out limit is " << time << "ms."
-	return ss.str();
+	temporary << "Time out limit is " << time << "ms.";
+	return temporary.str();
 }
 
 //---------------------------------> the part of IO error <------------------------------------//
@@ -33,7 +33,7 @@ zeabus_serial::IO_error::IO_error( const std::string& description )
 
 zeabus_serial::packet::packet(){}
 
-virtual zeabus_serial::packet::~packet(){}
+zeabus_serial::packet::~packet(){}
 
 //--------------------------------> the part packet error <------------------------------------//
 
@@ -43,7 +43,7 @@ zeabus_serial::packet_error::packet_error(const packet &data_packet , uint8_t co
 std::string zeabus_serial::packet_error::generate_string( const packet &data_packet 
 														, uint8_t code ){
 		std::stringstream temporary;
-		temporary << p.toString();
+		temporary << data_packet.to_string();
 		return temporary.str();
 }
 
@@ -60,20 +60,20 @@ zeabus_serial::serial::~serial(){}
 
 bool zeabus_serial::serial::open_port( std::string port
 								,	unsigned int baud_rate
-								,	boost::asio::serial_port_base::parity opt_parity = 
+								,	boost::asio::serial_port_base::parity opt_parity /*= 
 										boost::asio::serial_port_base::parity( 
 											boost::asio::serial_port_base::parity::none
-										)
-								,	boost::asio::serial_port_base::character_size opt_csize = 
-										boost::asio::serial_port_base::character_size( 8 )
-								,	boost::asio::serial_port_base::flow_control opt_flow = 
+										)*/
+								,	boost::asio::serial_port_base::character_size opt_csize /*= 
+										boost::asio::serial_port_base::character_size( 8 )*/
+								,	boost::asio::serial_port_base::flow_control opt_flow /*= 
 										boost::asio::serial_port_base::flow_control(
 											boost::asio::serial_port_base::flow_control::none
-										)
-								,	boost::asio::serial_port_base::stop_bits opt_stop = 
+										)*/
+								,	boost::asio::serial_port_base::stop_bits opt_stop /*= 
 										boost::asio::serial_port_base::stop_bits(
 											boost::asio::serial_port_base::stop_bits::one
-										)
+										)*/
 								){
 	if( port_is_open() ) 
 		close_port();
@@ -98,7 +98,7 @@ void zeabus_serial::serial::close_port(){
 }
 
 bool zeabus_serial::serial::port_is_open(){
-	return	serial_port::is_open();
+	return	serial_port.is_open();
 }
 
 void zeabus_serial::serial::change_baud_rate( unsigned int baud_rate){
@@ -114,7 +114,7 @@ void zeabus_serial::serial::write_packet( const zeabus_serial::packet& data_pack
 										, int time_out ){
 	zeabus_serial::data_stream temporary;
 	data_packet.get_data_stream( temporary );
-	write_data( temporary , timeout);
+	write_data( temporary , time_out);
 }
 
 void zeabus_serial::serial::write_string( const std::string& message){
@@ -141,7 +141,7 @@ void zeabus_serial::serial::write_data( const data_stream& data , int time_out){
 		boost::chrono::high_resolution_clock::now();
 
 	boost::chrono::high_resolution_clock::time_point time_stop =
-		time_start + boost::chrono::milliseconde( time_out );
+		time_start + boost::chrono::milliseconds( time_out );
 
 	size_t written = 0;
 	while ( written < data.size() ){
@@ -150,11 +150,12 @@ void zeabus_serial::serial::write_data( const data_stream& data , int time_out){
 											);
 		if( amont > 0) written += amont;
 		else if( amont < 0 ){
-			if( boost::chrono::errno == EAGAIN || boost::chrono::errno == EINTR ){
+// errno is a preprocessor macro that expands to a thread-local
+			if( errno == EAGAIN || errno == EINTR ){
 				// blocked or interrupted - try again until time out
 			}
 			else{
-				throw boost::chrono::IOError("I/O error while writing");
+				throw zeabus_serial::IO_error("I/O error while writing");
 			}
 		}
 
@@ -199,7 +200,7 @@ void zeabus_serial::serial::async_read_block_of_data( data_stream& data, size_t 
 										, boost::asio::placeholders::bytes_transferred
 										)
 							);
-	deadline_time.expires_from_now( boost::posix_time::milliseconde( time_out ));
+	deadline_time.expires_from_now( boost::posix_time::milliseconds( time_out ));
 	deadline_time.async_wait( boost::bind(&zeabus_serial::serial::timer_handle
 										, this
 										, boost::asio::placeholders::error

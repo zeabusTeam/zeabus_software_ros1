@@ -54,7 +54,7 @@ namespace	zeabus_serial{
 		public:
 			packet();
 
-			virtual ~packet(){}
+			virtual ~packet();
 
 			virtual std::string to_string() const = 0;
 
@@ -68,7 +68,7 @@ namespace	zeabus_serial{
 			packet_error( const packet &data_packet , uint8_t code);
 
 		private:
-			std::string generate_string( bool is_write , unsigned int time);
+			std::string generate_string( const packet &data_packet ,  uint8_t code);
 	}
 
 //------------------------------------> class serial <-----------------------------------------//
@@ -109,7 +109,7 @@ namespace	zeabus_serial{
 
 			void change_baud_rate( unsigned int baud_rate);
 
-			void write_packet( const zeabus_serial::packet& packet , int time_out);
+			void write_packet( const zeabus_serial::packet& data_packet , int time_out);
 
 			void write_string( const std::string& message);
 

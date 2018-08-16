@@ -22,29 +22,14 @@ namespace convert{
 // can copy and past 5 line of function 
 // style to convert is overload function
 // change type first argument
+// and please add function in ./../../src/convert_to_string.cpp
 // can ready use , Supasan Komonlit Aug 16 2018
 
-	std::string to_string( boost::posix_time::ptime data ){
-		std::ostringstream temporary;
-		temporary << data;
-		return temporary.str();
-	}
+	std::string to_string( boost::posix_time::ptime data );
 
-	std::string to_string( boost::gregorian::date data ){
-		std::ostringstream temporary;
-		temporary << data;
-		return temporary.str();
-	}
+	std::string to_string( boost::gregorian::date data );
 
-	std::string to_string( int data ){
-		std::ostringstream temporary;
-		temporary << data;
-		return temporary.str();
-	}
+	std::string to_string( int data );
 
-	std::string to_string( float data ){
-		std::ostringstream temporary;
-		temporary << data;
-		return temporary.str();
-	}
+	std::string to_string( float data );
 }

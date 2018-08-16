@@ -6,7 +6,6 @@ find_package(catkin REQUIRED roslib roscpp )
 find_package(Boost REQUIRED COMPONENTS system date_time)
 
 
-###################################
 ## The catkin_package macro generates cmake config files for your package
 ## Declare things to be passed to dependent projects
 ## INCLUDE_DIRS: uncomment this if your package contains header files
@@ -26,6 +25,17 @@ include_directories(
  include
  ${catkin_INCLUDE_DIRS}
  ${Boost_INCLUDE_DIRS}
+)
+
+set( zeabus_extension_sources
+	src/convert_to_string.cpp
+)
+
+add_library( zeabus_extension ${zeabus_extension_sources})
+
+target_link_libraries( zeabus_extension
+	${catkin_LIBRARIES}
+	${Boost_LIBRARIES}
 )
 
 #for complie file cpp to execute file

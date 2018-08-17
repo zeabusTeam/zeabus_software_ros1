@@ -30,6 +30,7 @@ include_directories(
 set( zeabus_extension_sources
 	src/convert_to_string.cpp
 	src/world_time.cpp
+	src/count_time.cpp
 )
 
 add_library( zeabus_extension ${zeabus_extension_sources})

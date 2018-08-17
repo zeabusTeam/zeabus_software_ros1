@@ -15,7 +15,7 @@ find_package(Boost REQUIRED COMPONENTS system date_time)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES zeabus_extension
-  CATKIN_DEPENDS roscpp
+  CATKIN_DEPENDS roscpp 
   DEPENDS Boost
 )
 
@@ -29,6 +29,7 @@ include_directories(
 
 set( zeabus_extension_sources
 	src/convert_to_string.cpp
+	src/time.cpp
 )
 
 add_library( zeabus_extension ${zeabus_extension_sources})

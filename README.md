@@ -9,7 +9,7 @@ This repository start on August 10, 2018
    * [Camera](#how-to-open-camera)
       + [Front camera](#front-camera-only)
       + [Bottom camera](#bottom-camera-only)
-      + [All camera](#open-all-camera-(close-all-other-camera-files-before-use-it))
+      + [All camera](#open-all-camera)
     
     
 ## Tutorial for Git beginner
@@ -38,15 +38,15 @@ __Second way__
 
 ## Zeabus vision
 ### How to open camera
-__Front camera only__
+#### Front camera only
 ```
 roslaunch zeabus_vision front.launch
 ```
-__Bottom camera only__
+#### Bottom camera only
 ```
 roslaunch zeabus_vision bottom.launch
 ```
-__Open all camera (close all other camera files before use it)__
+#### Open all camera
 ```
 roslaunch zeabus_vision camera.launch
 ```

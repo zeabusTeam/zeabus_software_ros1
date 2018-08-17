@@ -6,7 +6,7 @@
     <arg name="camera_topic" value="image_raw" />
     <arg name="camera_id" value="2" />
     <arg name="image_width" value="1936" />
-    <arg name="image_hight" value="1216" />
+    <arg name="image_height" value="1216" />
     <!-- <arg name="image_left" value="-1" /> -->
     <!-- <arg name="image_top" value="-1" /> -->
     <arg name="color_mode" value="rgb8" />
@@ -34,12 +34,12 @@
     <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)"
         args="manager" output="screen" />
     <node pkg="nodelet" type="nodelet" name="ueye_cam_nodelet_$(arg nodelet_manager_name)"
-        args="load ueye_cam/ueye_cam_nodelet_$(arg nodelet_manager_name)">
+        args="load ueye_cam/ueye_cam_nodelet $(arg nodelet_manager_name)">
         <param name="camera_name" type="str" value="$(arg camera_name)" />
         <param name="camera_topic" type="str" value="$(arg camera_topic)" />
         <param name="camera_id" type="int" value="$(arg camera_id)" />
         <param name="image_width" type="int" value="$(arg image_width)" />
-        <param name="image_hight" type="int" value="$(arg image_hight)" />
+        <param name="image_height" type="int" value="$(arg image_height)" />
         <!-- <param name="image_left" type="int" value="$(arg image_left)" /> -->
         <!-- <param name="image_top" type="int" value="$(arg image_top)" /> -->
         <param name="color_mode" type="str" value="$(arg color_mode)" />
@@ -62,5 +62,5 @@
         <param name="pixel_clock" type="int" value="$(arg pixel_clock)" />
         <!-- <param name="flip_upd" type="bool" value="$(arg flip_upd)" /> -->
         <param name="flip_lr" type="bool" value="$(arg flip_lr)" />
-        </node>
+    </node>
 </launch>

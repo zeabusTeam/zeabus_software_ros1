@@ -3,7 +3,7 @@ project(zeabus_extension)
 
 find_package(catkin REQUIRED roslib roscpp )
 
-find_package(Boost REQUIRED COMPONENTS system date_time)
+find_package(Boost REQUIRED COMPONENTS system date_time thread chrono)
 
 
 ## The catkin_package macro generates cmake config files for your package

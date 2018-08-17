@@ -9,11 +9,13 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include	<iostream>
-#include	<ctime>
-#include	<boost/date_time/gregorian/gregorian.hpp>
-#include	<boost/date_time/posix_time/posix_time.hpp>
-#include	<zeabus_extension/convert_to_string.h>
+#include	<iostream> // standard library for cpp
+#include	<ctime> // use for local time
+#include	<boost/date_time/gregorian/gregorian.hpp> //  not use in this time
+#include	<boost/date_time/posix_time/posix_time.hpp> // for world time
+#include	<zeabus_extension/convert_to_string.h> // for convert to string
+#include	<boost/chrono/duration.hpp> // don't use in this time
+#include	<boost/thread/thread.hpp>
 
 #ifndef nullptr
 	#define nullptr 0
@@ -47,10 +49,12 @@ namespace local_time{
 			double diff_reset(); // for calculate different time of two point
 			double diff();
 			void reset_time(); // reset time_01
-			std::time_t time_01; // can think this is previous time
+			void sleep( double duration_time );
 			
 		private:
 			bool print_test;
 			double result; // for collect result
+			double find_diff( std::time_t time_start);
+			std::time_t time_01; // can think this use for calculate diff time
 	};
 }

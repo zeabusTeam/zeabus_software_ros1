@@ -29,7 +29,7 @@ include_directories(
 
 set( zeabus_extension_sources
 	src/convert_to_string.cpp
-	src/time.cpp
+	src/world_time.cpp
 )
 
 add_library( zeabus_extension ${zeabus_extension_sources})
@@ -40,5 +40,3 @@ target_link_libraries( zeabus_extension
 )
 
 #for complie file cpp to execute file
-add_executable(time_test src/test_folder/universal_day.cpp)
-add_executable(posix_time_test src/test_folder/posix_time.cpp)

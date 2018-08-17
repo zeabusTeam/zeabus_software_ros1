@@ -8,8 +8,10 @@
 //	Main purpose	:	for convert type to type
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
-#include	<zeabus_extension/convert_to_string.h> // include standard function of c
+#ifndef ZEABUS_EXTENSION_CONVERT_TO_STRING
+	#include	<zeabus_extension/convert_to_string.h> // include standard function of c
+	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
+#endif
 
 std::string convert::to_string( boost::posix_time::ptime data ){
 	std::ostringstream temporary;

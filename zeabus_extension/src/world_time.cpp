@@ -9,7 +9,10 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include	<zeabus_extension/time.h>
+#ifndef ZEABUS_EXTENSION_TIME
+	#include	<zeabus_extension/time.h>
+	#define ZEABUS_EXTENSION_TIME
+#endif
 
 world_time::time::time( bool print_test){
 	this->print_test = print_test;

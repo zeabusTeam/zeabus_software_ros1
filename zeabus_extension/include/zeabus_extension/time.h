@@ -9,13 +9,35 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include	<iostream> // standard library for cpp
-#include	<ctime> // use for local time
-#include	<boost/date_time/posix_time/posix_time.hpp> // for world time
-#include	<boost/date_time/posix_time/posix_time_duration.hpp> // for calculate diff
-#include	<zeabus_extension/convert_to_string.h> // for convert to string
+#ifndef IOSTREAM
+	#include	<iostream> // standard library for cpp
+	#define IOSTREAM
+#endif
 
-#include	<boost/thread/thread.hpp> //  for sleep
+#ifndef CTIME
+	#include	<ctime> // use for local time
+	#define CTIME
+#endif
+
+#ifndef BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME
+	#include	<boost/date_time/posix_time/posix_time.hpp> // for world time
+	#define BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME
+#endif
+
+#ifndef BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME_DURATION
+	#include	<boost/date_time/posix_time/posix_time_duration.hpp> // for calculate diff
+	#define BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME_DURATION
+#endif
+
+#ifndef ZEABUS_EXTENSION_CONVERT_TO_STRING
+	#include	<zeabus_extension/convert_to_string.h> // for convert to string
+	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
+#endif
+
+#ifndef BOOST_THREAD_THREAD
+	#include	<boost/thread/thread.hpp> //  for sleep
+	#define BOOST_THREAD_THREAD
+#endif
 
 #ifndef nullptr
 	#define nullptr 0

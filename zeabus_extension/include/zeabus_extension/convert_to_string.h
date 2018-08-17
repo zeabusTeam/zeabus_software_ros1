@@ -9,11 +9,25 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include	<boost/date_time/gregorian/gregorian.hpp> // for include type date
-#include	<boost/date_time/posix_time/posix_time.hpp> // for include type time
+#ifndef BOOST_DATE_TIME_GREGORIAN_GREGORIAN
+	#include	<boost/date_time/gregorian/gregorian.hpp> // for include type date
+	#define BOOST_DATE_TIME_GREGORIAN_GREGORIAN
+#endif
 
-#include	<iostream> // include standard function of c
-#include	<sstream> // for convert to string
+#ifndef BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME
+	#include	<boost/date_time/posix_time/posix_time.hpp> // for include type time
+	#define BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME
+#endif
+
+#ifndef IOSTREAM
+	#include	<iostream> // include standard function of c
+	#define IOSTREAM
+#endif
+
+#ifndef SSTREAM
+	#include	<sstream> // for convert to string
+	#define SSTREAM
+#endif
 
 namespace convert{
 

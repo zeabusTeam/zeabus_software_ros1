@@ -57,4 +57,6 @@ namespace local_time{
 			double find_diff( std::time_t time_start);
 			std::time_t time_01; // can think this use for calculate diff time
 	};
+
+	void sleep( double duration_time );
 }

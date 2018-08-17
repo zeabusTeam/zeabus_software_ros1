@@ -88,5 +88,17 @@ double local_time::time::find_diff( std::time_t time_start){
 }
 
 void local_time::time::sleep( double duration_time){
+	if( print_test){
+		std::cout	<< "We will sleep for "
+					<< duration_time
+					<< " ms.\n";
+	}
+		boost::this_thread::sleep( boost::posix_time::milliseconds( duration_time));
+}
+
+void local_time::sleep( double duration_time){
+	std::cout	<< "We will sleep for "
+				<< duration_time
+				<< " ms.\n";
 	boost::this_thread::sleep( boost::posix_time::milliseconds( duration_time));
 }

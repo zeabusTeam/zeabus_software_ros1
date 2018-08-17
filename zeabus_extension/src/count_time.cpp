@@ -20,11 +20,12 @@ count_time::time::time( ){
 }
 
 void count_time::time::reset_time(){
-	time_01 = boost::posix_time::second_clock::local_time();
+	time_01 = boost::posix_time::microsec_clock::local_time();
+	if( print_test ) std::cout << "now time_01 is " << time_01 << "\n" ;
 }
 
 void count_time::time::find_different(){
-	temporary = boost::posix_time::second_clock::local_time() - time_01;
+	temporary = boost::posix_time::microsec_clock::local_time() - time_01;
 }
 
 long count_time::second::different( bool reset){
@@ -52,19 +53,23 @@ long count_time::nanosecond::different( bool reset){
 }
 
 void count_time::second::sleep( double data ){
+	if( print_test) std::cout << "second sleep is " << data*1000 << " ms \n";
 	boost::this_thread::sleep( boost::posix_time::millisec( data * 1000 ) );
 }
 
 void count_time::millisecond::sleep( double data ){
+	if( print_test) std::cout << "millisecond sleep is " << data <<  " ms \n";
 	boost::this_thread::sleep( boost::posix_time::millisec( data ) );
 }
 
 void count_time::microsecond::sleep( double data ){
+	if( print_test) std::cout << "microsecond sleep is " << data << " us\n";
 	boost::this_thread::sleep( boost::posix_time::microsec( data ) );
 }
 
 void count_time::nanosecond::sleep( double data ){
-	boost::this_thread::sleep( boost::posix_time::microsec( data / 1000 ) );
+	if( print_test) std::cout << "nanosecond sleep is " << data * 1000 << " us\n";
+	boost::this_thread::sleep( boost::posix_time::microsec( data * 1000 ) );
 }
 
 count_time::second::second( bool print_test ){

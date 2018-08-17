@@ -2,7 +2,7 @@
 //
 //	File's name		: convert_to_string.h
 //
-//	Last Update		: Aug 16 , 2018
+//	Last Update		: Aug 17 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	:	for convert type to type
@@ -25,6 +25,8 @@ namespace convert{
 // and please add function in ./../../src/convert_to_string.cpp
 // can ready use , Supasan Komonlit Aug 16 2018
 
+	static char set[7] = {' ' , ':' , ',' , '-' , '.' , '_' , ';'};
+
 	std::string to_string( boost::posix_time::ptime data );
 
 	std::string to_string( boost::gregorian::date data );
@@ -32,4 +34,10 @@ namespace convert{
 	std::string to_string( int data );
 
 	std::string to_string( float data );
+
+	std::string to_string( char data );
+
+	std::string edit_space( std::string data , std::string key);
+
+	bool in_set( char data);
 }

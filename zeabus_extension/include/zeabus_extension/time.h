@@ -24,6 +24,7 @@
 //////////////////////////////// Information Addition //////////////////////////////////////////
 // type std::time_t accuracy is second
 // protected are according inheritance to access. private can't do that
+// this time have accuracy up to microsecond
 
 // ------------------------------> for about name file <---------------------------------------
 namespace world_time{

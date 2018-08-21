@@ -37,7 +37,7 @@ namespace ros{
 			find_path( std::string package_name , std::string path , std::string name_file );
 
 		protected:
-			set_path( std::string package_name , std::string path , std::string name_file);
+			void set_path( std::string package_name , std::string path , std::string name_file);
 			std::string last_path;
 		
 	};
@@ -47,10 +47,14 @@ namespace ros{
 		public:
 			dynamic_reconfigure( std::string package_name 
 								, std::string path 
-								, std::string name_file);
-			set_parameter( std::string node_name );
-			load();
-			save();
+								, std::string name_file
+								, std::string node_name);
+			void set_parameter( std::string node_name );
+			void load();
+			void save();
+
+		private:
+			std::string node_name;
 
 	};
 }
@@ -61,13 +65,14 @@ namespace log_data{
 
 		public:	
 			log( std::string package_name , std::string path 
-				, std::string name_file = "" , bool anonymous = true);
-			new_file( bool anonymous )
-			write( std::string message );
-			clear_screen();
+				, std::string name_file = "~" , bool anonymous = true);
+			void new_file( bool anonymous );
+			void write( std::string message );
+			void clear_screen();
 
 		private: 
-			count_time::time time = new count_time::time( true );
-
+			count_time::time time;
+			world_time::time time_file;
+			std::string name_file;
 	};
 }

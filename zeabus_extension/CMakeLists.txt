@@ -15,7 +15,7 @@ find_package(Boost REQUIRED COMPONENTS system date_time thread chrono)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES zeabus_extension
-  CATKIN_DEPENDS roscpp 
+  CATKIN_DEPENDS roscpp roslib 
   DEPENDS Boost
 )
 

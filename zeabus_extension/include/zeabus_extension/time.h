@@ -2,7 +2,7 @@
 //
 //	File's name		: time.h
 //
-//	Last Update		: Aug 17 , 2018
+//	Last Update		: Aug 21 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: manage about time
@@ -77,6 +77,7 @@ namespace count_time{
 			time( bool print_test );
 			time();
 			void reset_time();
+			boost::posix_time::ptime now();
 				
 		protected:
 			boost::posix_time::ptime time_01;

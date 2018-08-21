@@ -2,7 +2,7 @@
 //
 //	File's name		: count_time.cpp
 //
-//	Last Update		: Aug 17 , 2018
+//	Last Update		: Aug 21 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: manage about time that want more accuracy
@@ -20,6 +20,10 @@ count_time::time::time( bool print_test ){
 
 count_time::time::time( ){
 	this->print_test = false;
+}
+
+boost::time::posix_time::ptime now(){
+	return boost::posix_time::microsec_clock::local_time();
 }
 
 void count_time::time::reset_time(){

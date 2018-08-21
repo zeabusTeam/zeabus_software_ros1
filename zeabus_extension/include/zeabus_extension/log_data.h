@@ -2,7 +2,7 @@
 //
 //	File's name		: log_data.h
 //
-//	Last Update		: Aug 21 , 2018
+//	Last Update		: Aug 22 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: for creat and save data to log is ROS
@@ -27,6 +27,11 @@
 #ifndef ZEABUS_EXTENSION_TIME
 	#include	<zeabus_extension/time.h>
 	#define ZEABUS_EXTENSION_TIME
+#endif
+
+#ifndef ZEABUS_EXTENSION_CONVERT_TO_STRING
+	#include	<zeabus_extension/convert_to_string.h>
+	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
 #endif
 
 namespace ros{
@@ -61,13 +66,14 @@ namespace ros{
 
 namespace log_data{
 
-	class log : public ros::find_path , {
+	class log : public ros::find_path {
 
 		public:	
 			log( std::string package_name , std::string path 
 				, std::string name_file = "~" , bool anonymous = true);
-			void new_file( bool anonymous );
-			void write( std::string message );
+			void new_file(std::string package_name , std::string path 
+						, std::string name_file , bool anonymous );
+			void write( std::string message , bool header = true);
 			void clear_screen();
 
 		private: 

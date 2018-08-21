@@ -2,7 +2,7 @@
 //
 //	File's name		: time.h
 //
-//	Last Update		: Aug 21 , 2018
+//	Last Update		: Aug 22 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: manage about time
@@ -74,8 +74,7 @@ namespace count_time{
 	class time{
 		
 		public:
-			time( bool print_test );
-			time();
+			time( bool print_test  = false);
 			void reset_time();
 			boost::posix_time::ptime now();
 				
@@ -89,32 +88,28 @@ namespace count_time{
 
 	class second : public time{
 		public:
-			second( bool print_test );
-			second();
+			second( bool print_test = false ) : time( print_test ){}
 			long different( bool reset );
 			void sleep( double data );
 	};
 
 	class millisecond : public time{
 		public:
-			millisecond( bool print_test );
-			millisecond();
+			millisecond( bool print_test = false ) : time( print_test ){}
 			long different( bool reset );
 			void sleep( double data );
 	};
 
 	class microsecond : public time{
 		public:
-			microsecond( bool print_test );
-			microsecond();
+			microsecond( bool print_test = false ) : time( print_test ){}
 			long different( bool reset );
 			void sleep( double data );
 	};
 
 	class nanosecond : public time{
 		public:
-			nanosecond( bool print_test );
-			nanosecond();
+			nanosecond( bool print_test  = false) : time( print_test ){}
 			long different( bool reset );
 			void sleep( double data );
 	};

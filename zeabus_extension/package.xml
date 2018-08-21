@@ -18,6 +18,9 @@
   <build_depend>roscpp</build_depend>
   <exec_depend>roscpp</exec_depend>
 
+  <build_depend>roslib</build_depend>
+  <exec_depend>roslib</exec_depend>
+
   <build_export_depend>zeabus_extention</build_export_depend>
 
 </package>

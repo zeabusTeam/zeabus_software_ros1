@@ -29,9 +29,12 @@ void ros::find_path::set_path(  std::string package_name , 	std::string path,
 }
 
 ros::dynamic_reconfigure::dynamic_reconfigure( std::string package_name , std::string path 
-						, std::string name_file , std::string node_name){
+						, std::string name_file , std::string node_name) :
+		find_path( package_name , path , name_file ){
+
 	this->set_path( package_name , path , name_file );
 	this->set_parameter( node_name );
+
 }
 
 void ros::dynamic_reconfigure::set_parameter( std::string node_name ){

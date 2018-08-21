@@ -31,6 +31,8 @@ set( zeabus_extension_sources
 	src/convert_to_string.cpp
 	src/world_time.cpp
 	src/count_time.cpp
+	src/log_data.cpp
+	src/ros.cpp
 )
 
 add_library( zeabus_extension ${zeabus_extension_sources})

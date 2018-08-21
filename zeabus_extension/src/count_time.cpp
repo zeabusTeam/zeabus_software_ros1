@@ -18,11 +18,7 @@ count_time::time::time( bool print_test ){
 	this->print_test = print_test;
 }
 
-count_time::time::time( ){
-	this->print_test = false;
-}
-
-boost::time::posix_time::ptime now(){
+boost::posix_time::ptime now(){
 	return boost::posix_time::microsec_clock::local_time();
 }
 
@@ -78,36 +74,3 @@ void count_time::nanosecond::sleep( double data ){
 	if( print_test) std::cout << "nanosecond sleep is " << data * 1000 << " us\n";
 	boost::this_thread::sleep( boost::posix_time::microsec( data * 1000 ) );
 }
-
-count_time::second::second( bool print_test ){
-	this->print_test = print_test;
-}
-
-count_time::second::second( ){
-	this->print_test = false;
-}
-
-count_time::millisecond::millisecond( bool print_test ){
-	this->print_test = print_test;
-}
-
-count_time::millisecond::millisecond( ){
-	this->print_test = false;
-}
-
-count_time::microsecond::microsecond( bool print_test ){
-	this->print_test = print_test;
-}
-
-count_time::microsecond::microsecond( ){
-	this->print_test = false;
-}
-
-count_time::nanosecond::nanosecond( bool print_test ){
-	this->print_test = print_test;
-}
-
-count_time::nanosecond::nanosecond( ){
-	this->print_test = false;
-}
-

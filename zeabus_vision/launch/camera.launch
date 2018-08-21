@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find zeabus_vision)/launch/front.launch"></include>
+  <include file="$(find zeabus_vision)/launch/bottom.launch"></include>
+</launch>

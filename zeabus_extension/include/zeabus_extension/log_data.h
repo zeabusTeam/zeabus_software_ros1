@@ -34,6 +34,8 @@
 	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
 #endif
 
+#define nullstring "~"
+
 namespace ros{
 
 	class find_path{
@@ -71,14 +73,19 @@ namespace log_data{
 		public:	
 			log( std::string package_name , std::string path 
 				, std::string name_file = "~" , bool anonymous = true);
-			void new_file(std::string package_name , std::string path 
-						, std::string name_file , bool anonymous );
-			void write( std::string message , bool header = true);
+			void new_file(std::string package_name = NULL
+						, std::string path = NULL 
+						, std::string name_file = NULL
+						, bool anonymous = true);
+			void write( std::string message , bool header = true , bool start = false);
 			void clear_screen();
 
 		private: 
 			count_time::time time;
 			world_time::time time_file;
 			std::string name_file;
+			std::string only_name;
+			std::string package_name;
+			std::string path;
 	};
 }

@@ -17,38 +17,52 @@
 log_data::log::log( std::string package_name , std::string path 
 				,  std::string name_file , bool anonymous ) : 
 		ros::find_path::find_path( package_name , path , name_file ){
-	this->name_file = name_file;
-	this->new_file( package_name , path , name_file , anonymous );
+	this->only_name = name_file;
+	this->package_name = package_name;
+	this->path = path;
+	this->new_file( package_name , path , only_name , anonymous );
 	time = new count_time::time();
 }
 
 void log_data::log::new_file( std::string package_name , std::string path 
-				, std::string name_file , bool anonymous ){
+				, std::string name_file , bool anonymous ) {
+	if( name_file != nullstring)	this->only_name = name_file;
+	if( package_name != nullstring)	this->package_name = package_name;
+	if( path != nullstring )		this->path = path;
 	time_file.get_time();
 	if( this->name_file == "~"){
 		this->name_file = convert::edit_space(time_file.local_time() , "_") + ".txt";
 	}
 	else{
 		if( anonymous ){
-			this->name_file += "_" + convert::edit_space(time_file.local_time() , "_") + ".txt";
+			this->name_file = only_name + "_" 
+							+ convert::edit_space(time_file.local_time() , "_") + ".txt";
 		}
 		else{
-			this->name_file += ".txt";
+			this->name_file = only_name + ".txt";
 		}
 	}
 	this->set_path( package_name , path , this->name_file );
+	std::string start_text = "------------------------------------->";
+	start_text += " start log ";
+	start_text += "<-------------------------------------";
+	this->write( start_text , false , true);
 }
 
-void log_data::log::write( std::string message , bool header){
-	if( header){
+void log_data::log::write( std::string message , bool header , bool start ){
+	if( header ){
 		std::string arrive_message = "echo \"----------------> "
-//						+ "----------> " 
 							+ convert::edit_space( convert::to_string(time.now()) , "_")
-							+ " <----------------" + "\""
+							+ " <----------------" + "\" >>"
 							+ this->last_path ;
 		std::system( arrive_message.c_str() );
 	}
-	message = "echo \"" + message + "\" " + this->last_path;
+	if( start ){
+		message = "echo \"" + message + "\" > " + this->last_path;
+	}
+	else{
+		message = "echo \"" + message + "\" >> " + this->last_path;
+	}
 	std::system( message.c_str() );
 }
 

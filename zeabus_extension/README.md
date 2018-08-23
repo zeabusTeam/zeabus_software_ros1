@@ -11,5 +11,5 @@
 <li>covert_to_string.h (---- finish 4 type ----)</li>
 <li>time.h (---- finish 2 type ----)</li>
 <li>log_data.h (---- finish wait generating_message ----)</li>
-<li>generating_message (---- thinkin ----)</li>
+<li>generate_message (---- testing ----)</li>
 </ol>

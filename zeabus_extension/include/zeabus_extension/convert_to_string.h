@@ -5,7 +5,7 @@
 //	Last Update		: Aug 17 , 2018
 //	Author			: Supasan Komonlit
 //
-//	Main purpose	:	for convert type to type
+//	Main purpose	: for convert type to type
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

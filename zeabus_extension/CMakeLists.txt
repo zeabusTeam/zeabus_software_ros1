@@ -33,6 +33,7 @@ set( zeabus_extension_sources
 	src/count_time.cpp
 	src/log_data.cpp
 	src/ros.cpp
+	src/generate_message.cpp
 )
 
 add_library( zeabus_extension ${zeabus_extension_sources})

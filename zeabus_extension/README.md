@@ -10,6 +10,6 @@
 <ol>
 <li>covert_to_string.h (---- finish 4 type ----)</li>
 <li>time.h (---- finish 2 type ----)</li>
-<li>log_data.h (---- finish wait generating_message ----)</li>
-<li>generate_message (---- testing ----)</li>
+<li>log_data.h (---- finish ----)</li>
+<li>generate_message (---- finish ----)</li>
 </ol>

@@ -23,8 +23,8 @@ std::string generate_message::specific_message(	int number_line
 	for( int run = 0 ; run < number_line ; run++){
 		answer += message[run];
 		answer += detail[run];
-		answer += "\n";
 		if( run == number_line -1 ) break;
+		answer += "\n";
 	}
 
 	return answer;
@@ -47,7 +47,8 @@ void generate_message::log_message::setup_begin( std::string* message
 }
 
 std::string generate_message::log_message::message( std::string* data){
-	generate_message::specific_message( this->number_line
-									,	this->begin_line
-									,	data);
+	return generate_message::specific_message( this->number_line
+											,  this->begin_line
+											,  data);
+	
 }

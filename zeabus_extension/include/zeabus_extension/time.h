@@ -54,7 +54,7 @@ namespace world_time{
 	class time{
 
 		public:
-			time( bool print_test ); // for function init class
+			time( bool print_test = false); // for function init class
 			time();
 			std::string local_time(); // return string for local time (computer time)
 			std::string universal_time(); // return string for UTC time
@@ -89,28 +89,28 @@ namespace count_time{
 	class second : public time{
 		public:
 			second( bool print_test = false ) : time( print_test ){}
-			long different( bool reset );
+			long different( bool reset = true );
 			void sleep( double data );
 	};
 
 	class millisecond : public time{
 		public:
 			millisecond( bool print_test = false ) : time( print_test ){}
-			long different( bool reset );
+			long different( bool reset = true );
 			void sleep( double data );
 	};
 
 	class microsecond : public time{
 		public:
 			microsecond( bool print_test = false ) : time( print_test ){}
-			long different( bool reset );
+			long different( bool reset = true );
 			void sleep( double data );
 	};
 
 	class nanosecond : public time{
 		public:
 			nanosecond( bool print_test  = false) : time( print_test ){}
-			long different( bool reset );
+			long different( bool reset = true );
 			void sleep( double data );
 	};
 

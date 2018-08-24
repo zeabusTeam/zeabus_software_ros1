@@ -2,21 +2,22 @@
 &ensp;In this file will tell you all function and how to use all that
 <br/><br/>
 <h2>1. zeabus_extension/convert_to_string.h </h2>
-&ensp; This file use to convert any type to string<br/>
-&ensp; You can edit by use overload function
-&ensp;<h3>convert<h3/>
-&ensp;&ensp;<li>std::string to_string( data) <br/>
+&ensp;This file use to convert any type to string<br/>
+&ensp;You can edit by use overload function<br/>
+&ensp;<h3>convert</h3>
+&ensp;&ensp;<li>std::string to_string( data) </li>
 &ensp;&ensp;&ensp;this use convert to type string <br/>
 &ensp;&ensp;&ensp;first arguments is data <br/>
-&ensp;&ensp;&ensp;&ensp;include type is posix_time::ptime, gregorian::data, int, float, char</li>
-&ensp;&ensp;<li>std::string edit_space( data , key) receive two arguments<br/>
+&ensp;&ensp;&ensp;&ensp;include type is posix_time::ptime, gregorian::data, int, float, char<br/>
+&ensp;&ensp;<li>std::string edit_space( data , key) receive two arguments</li>
 &ensp;&ensp;&ensp;first is string want to edit syntax {' ', ':', ',', '-', '.', '\_', ';'} <br/>
-&ensp;&ensp;&ensp;second is string key want to replace on syntax</li>
-&ensp;&ensp;<li>bool in_set( data ) reseivce char for check that char in syntax or not</li> 
+&ensp;&ensp;&ensp;second is string key want to replace on syntax<br/>
+&ensp;&ensp;<li>bool in_set( data )</li> 
+&ensp;&ensp;&ensp;receive char for check that char in syntax or not<br/> 
 <br/><br/>
 <h2>2. zeabus_extension/time.h </h2>
-&ensp; This file use library posix_time to tell you about time<br/>
-&ensp;<h3>world_time::time<h3/>
+&ensp;This file use library posix_time to tell you about time<br/>
+&ensp;<h3>world_time::time</h3>
 &ensp:&ensp;This class will tell you about time accuracy in second<br/>
 &ensp;&ensp;<li>time( print_test)</li>
 &ensp;&ensp;&ensp;first arguments it for test don't worry about that<br/>

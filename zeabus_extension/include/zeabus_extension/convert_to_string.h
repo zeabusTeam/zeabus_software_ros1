@@ -2,7 +2,7 @@
 //
 //	File's name		: convert_to_string.h
 //
-//	Last Update		: Aug 17 , 2018
+//	Last Update		: Aug 24 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: for convert type to type
@@ -29,6 +29,11 @@
 	#define SSTREAM
 #endif
 
+#ifndef EXCEPTION
+	#include	<exception> // for use try-catch
+	#define EXCEPTION
+#endif
+
 namespace convert{
 
 //----------------------------------> part to string <-------------------------------------------
@@ -45,11 +50,14 @@ namespace convert{
 
 	std::string to_string( boost::gregorian::date data );
 
-	std::string to_string( int data );
+	std::string to_string( int data , bool assign_position = false 
+						,  int position = 0 , bool sign = true);
 
 	std::string to_string( float data );
 
 	std::string to_string( char data );
+
+	std::string to_string( double data);
 
 	std::string edit_space( std::string data , std::string key);
 

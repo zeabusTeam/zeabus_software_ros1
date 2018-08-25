@@ -17,11 +17,14 @@
 log_data::log::log( std::string package_name , std::string path 
 				,  std::string name_file , bool anonymous ) : 
 		ros::find_path::find_path( package_name , path , name_file ){
+
 	this->only_name = name_file;
 	this->package_name = package_name;
 	this->path = path;
 	this->new_file( package_name , path , only_name , anonymous );
 	time = new count_time::time();
+//	time.reset_time();
+
 }
 
 void log_data::log::new_file( std::string package_name , std::string path 

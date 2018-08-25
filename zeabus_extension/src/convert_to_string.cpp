@@ -2,7 +2,7 @@
 //
 //	File's name		: convert_to_string.cpp
 //
-//	Last Update		: Aug 16 , 2018
+//	Last Update		: Aug 24 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	:	for convert type to type
@@ -12,6 +12,8 @@
 	#include	<zeabus_extension/convert_to_string.h> // include standard function of c
 	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
 #endif
+
+#define convert_test
 
 std::string convert::to_string( boost::posix_time::ptime data ){
 	std::ostringstream temporary;
@@ -25,10 +27,41 @@ std::string convert::to_string( boost::gregorian::date data ){
 	return temporary.str();
 }
 
-std::string convert::to_string( int data ){
+std::string convert::to_string( int data , bool assign_position , int position , bool sign ){
 	std::ostringstream temporary;
 	temporary << data;
-	return temporary.str();
+	if( ! assign_position ) return temporary.str();
+	else{
+		#ifdef convert_test
+			std::cout << "before test in convert\n";
+		#endif
+
+		int count = 0;
+		std::string problem = temporary.str();
+		std::string answer = "";
+		for( int run = 0 ; ; run++){
+			try{
+				if( problem[run] == '+' ) sign = true;
+				else if( problem[run] == '-' ) sign = false;
+				else if( problem[run] != '\0' && problem[run] != '\n'){
+					answer += to_string( problem[run]);
+					count++; 
+				}
+				else break;
+			}
+			catch( std::exception& error_msg){
+				std::cout << "Standard Exception : " << error_msg.what() << "\n";
+			}
+		}
+		std::cout << "In put have all char is " << count << "\n";
+		for( ; count != position ; count++){
+			answer = "0" + answer;
+		}
+		if( sign ) answer = "+" + answer;
+		else answer = "-" + answer;
+		std::cout << "Out put is answer :" << answer << "\n";
+		return answer;
+	}
 }
 
 std::string convert::to_string( float data ){
@@ -38,6 +71,12 @@ std::string convert::to_string( float data ){
 }
 
 std::string convert::to_string( char data ){
+	std::ostringstream temporary;
+	temporary << data;
+	return temporary.str();
+}
+
+std::string convert::to_string( double data ){
 	std::ostringstream temporary;
 	temporary << data;
 	return temporary.str();

@@ -100,7 +100,7 @@ std::string convert::to_string( double data , bool assign_position , int positio
 				#endif
 				if( problem[run] == '-' || problem[run] == '+') continue;
 				else if( problem[run] == '.' ) mode = false;
-				else if( (problem[run] != '\n' && problem[run] != '\0' ) 
+				else if( (problem[run] != '\n' || problem[run] != '\0' ) 
 													&& is_num( problem[run] ) ) {
 					if( mode ){
 						#ifdef convert_test
@@ -168,8 +168,12 @@ bool convert::in_set( char data){
 
 bool convert::is_num( char data){
 	int run = 0;
-	for( run = 0 ; run < 11 ; run++){
-		if( data == set_number[run]) return true;
+	for( run = 0 ; run < 10 ; run++){
+		if( data == set_number[run]){
+			std::cout << "cach data is " << (int)data << " same with " << run << "\n";
+			std::cout << "return true for data \'" << data << "\'\n";
+			return true;
+		}
 	}
 	return false;
 }

@@ -44,7 +44,9 @@ namespace convert{
 // and please add function in ./../../src/convert_to_string.cpp
 // can ready use , Supasan Komonlit Aug 16 2018
 
-	static char set[7] = {' ' , ':' , ',' , '-' , '.' , '_' , ';'};
+	static char set_syntax[7] = {' ' , ':' , ',' , '-' , '.' , '_' , ';'};
+
+	static char set_number[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}; 
 
 	std::string to_string( boost::posix_time::ptime data );
 
@@ -57,9 +59,12 @@ namespace convert{
 
 	std::string to_string( char data );
 
-	std::string to_string( double data);
+	std::string to_string( double data , bool assign_position = false
+						, int position = 0 , bool have_point = false
+						, int front = 3 , int back = 2 );
 
 	std::string edit_space( std::string data , std::string key);
 
 	bool in_set( char data);
+	bool is_num( char data);
 }

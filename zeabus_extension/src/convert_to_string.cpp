@@ -13,7 +13,7 @@
 	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
 #endif
 
-#define convert_test
+//#define convert_test
 
 std::string convert::to_string( boost::posix_time::ptime data ){
 	std::ostringstream temporary;
@@ -76,10 +76,74 @@ std::string convert::to_string( char data ){
 	return temporary.str();
 }
 
-std::string convert::to_string( double data ){
+std::string convert::to_string( double data , bool assign_position , int position 
+								, bool have_point , int front , int back){
 	std::ostringstream temporary;
 	temporary << data;
-	return temporary.str();
+	if( ! assign_position ) return temporary.str();
+	else{
+		if( ! have_point ){
+			std::cout << "Should put seconde parameter is false or don't put\n";
+		}
+		bool mode = true;
+		bool sign = true;
+		int count_front = 0;
+		int count_back = 0;
+		std::string answer = "";
+		std::string problem = temporary.str();
+		if( problem[0] == '-') sign = false;
+		else sign = true;
+		for( int run = 0 ; ; run++){
+			try{
+				#ifdef convert_test
+					std::cout << "Consider on " << to_string( problem[run]) << "\n";
+				#endif
+				if( problem[run] == '-' || problem[run] == '+') continue;
+				else if( problem[run] == '.' ) mode = false;
+				else if( (problem[run] != '\n' && problem[run] != '\0' ) 
+													&& is_num( problem[run] ) ) {
+					if( mode ){
+						#ifdef convert_test
+							std::cout << "In mode consider on \'" <<( problem[run]) << "\'\n";
+						#endif
+
+						if( count_front == front){
+							std::cout << "Over limit of front\n";
+							count_front = front;
+							std::exit( -1 );
+						}
+						else{
+							#ifdef convert_test
+								std::cout << "add front " << to_string( problem[run]) << "\n";
+							#endif
+							answer = answer + to_string( problem[run]);
+							count_front++;
+						}
+					}
+					else{
+						count_back++;
+						if( count_back > back){
+							std::cout << "Over limit of back\n";
+							count_back = back;
+							break;
+						}
+						else{
+							answer = answer + to_string( problem[run]);
+						}
+					}
+				}
+				else break;
+			}
+			catch( std::exception& error_msg){
+				std::cout << "Standard Exception : " << error_msg.what() << "\n";
+			}
+		}
+		for( ; count_front != front ; count_front++) answer = "0"+answer;
+		for( ; count_back != back ; count_back++) answer = answer+"0";
+		if( sign ) answer = "+" + answer ;
+		else answer = "-" + answer;
+		return answer;
+	}
 }
 
 std::string convert::edit_space( std::string data , std::string key){
@@ -97,7 +161,15 @@ std::string convert::edit_space( std::string data , std::string key){
 bool convert::in_set( char data){
 	int run = 0;
 	for( run = 0 ; run < 7 ; run++){
-		if( data == set[run]) return true;
+		if( data == set_syntax[run]) return true;
+	}
+	return false;
+}
+
+bool convert::is_num( char data){
+	int run = 0;
+	for( run = 0 ; run < 11 ; run++){
+		if( data == set_number[run]) return true;
 	}
 	return false;
 }

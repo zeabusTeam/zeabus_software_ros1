@@ -2,7 +2,7 @@
 //
 //	File's name		: log_data.h
 //
-//	Last Update		: Aug 22 , 2018
+//	Last Update		: Aug 24 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: for creat and save data to log is ROS
@@ -81,7 +81,7 @@ namespace log_data{
 			void clear_screen();
 
 		private: 
-			count_time::time time;
+			count_time::millisecond time;
 			world_time::time time_file;
 			std::string name_file;
 			std::string only_name;

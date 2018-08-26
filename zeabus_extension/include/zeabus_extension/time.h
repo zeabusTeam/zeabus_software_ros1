@@ -2,7 +2,7 @@
 //
 //	File's name		: time.h
 //
-//	Last Update		: Aug 22 , 2018
+//	Last Update		: Aug 24 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: manage about time
@@ -55,7 +55,6 @@ namespace world_time{
 
 		public:
 			time( bool print_test = false); // for function init class
-			time();
 			std::string local_time(); // return string for local time (computer time)
 			std::string universal_time(); // return string for UTC time
 			boost::posix_time::ptime local_data; // for collect data of local time

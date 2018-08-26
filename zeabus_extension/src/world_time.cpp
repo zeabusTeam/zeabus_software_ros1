@@ -2,7 +2,7 @@
 //
 //	File's name		: world_time.cpp
 //
-//	Last Update		: Aug 17 , 2018
+//	Last Update		: Aug 24 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: manage about time
@@ -16,11 +16,6 @@
 
 world_time::time::time( bool print_test){
 	this->print_test = print_test;
-	this->get_time();
-}
-
-world_time::time::time(){
-	this->print_test = false;
 	this->get_time();
 }
 

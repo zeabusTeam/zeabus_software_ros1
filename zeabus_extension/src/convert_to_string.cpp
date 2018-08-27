@@ -39,10 +39,11 @@ std::string convert::to_string( int data , bool assign_position , int position ,
 		int count = 0;
 		std::string problem = temporary.str();
 		std::string answer = "";
+		bool sign_plus = true;
 		for( int run = 0 ; ; run++){
 			try{
-				if( problem[run] == '+' ) sign = true;
-				else if( problem[run] == '-' ) sign = false;
+				if( problem[run] == '+' ) sign_plus = true;
+				else if( problem[run] == '-' ) sign_plus = false;
 				else if( problem[run] != '\0' && problem[run] != '\n'){
 					answer += to_string( problem[run]);
 					count++; 
@@ -57,8 +58,10 @@ std::string convert::to_string( int data , bool assign_position , int position ,
 		for( ; count != position ; count++){
 			answer = "0" + answer;
 		}
-		if( sign ) answer = "+" + answer;
-		else answer = "-" + answer;
+		if( sign ){
+			if( sign_plus ) answer = "+" + answer;
+			else answer = "-" + answer;
+		}
 		std::cout << "Out put is answer :" << answer << "\n";
 		return answer;
 	}

@@ -9,9 +9,20 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include	<boost/asio.hpp>
-#include	<boost/chrono.hpp>
-#include	<boost/bind.hpp>
+#ifndef BOOST_ASIO_HPP
+	#include	<boost/asio.hpp>
+	#define BOOST_ASIO_H
+#endif
+
+#ifndef	BOOST_CHRONO_HPP
+	#include	<boost/chrono.hpp>
+	#define	BOOST_CHRONO_HPP
+#endif
+
+#ifndef	BOOST_BIND_HPP
+	#include	<boost/bind.hpp>
+	#define	BOOST_BIND_HPP
+#endif
 
 #define		u8(x)	static_cast< uint8_t >((x))
 #define		u16(x)	static_cast< uint16_t >((x))

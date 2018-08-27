@@ -8,9 +8,11 @@ project(zeabus_sensor)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  zeabus_extension
-  zeabus_serial
+	roscpp
+	zeabus_extension
+	zeabus_serial
+	std_msgs
+	geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions

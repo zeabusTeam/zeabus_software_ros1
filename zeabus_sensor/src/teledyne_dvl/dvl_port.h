@@ -19,6 +19,12 @@
 	#define	ZEABUS_SERIAL_SERIAL
 #endif
 
+#ifndef ZEABUS_EXTENSION_CONVERT_TO_STRING
+	#include	<zeabus_extension/convert_to_string.h>
+	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
+#endif
+
+/*
 #ifndef	DIAGNOSTIC_UPDATER_DIAGNOSTIC_UPDATER
 	#include	<dignostic_updater/diagnostic_updater.h>
 	#define DIAGNOSTIC_UPDATER_DIAGNOSTIC_UPDATER
@@ -28,7 +34,28 @@
 	#include	<dignostic_updater/publisher.h>
 	#define DIAGNOSTIC_UPDATER_PUBLISHER
 #endif
+*/
 
+#ifndef STD_MSGS_STRING
+	#include	<std_msgs/String.h>
+	#define STD_MSGS_STRING
+#endif
+
+#ifndef IOSTREAM
+	#include	<iostream>
+	#define		IOSTREAM
+#endif
+
+#ifndef STDIO_H
+	#include	<stdio.h>
+	#define		STDIO_H
+#endif
+
+
+//------------------ Zeabus software will try to extract code to 2 code
+//----------- first is code manage about read port and send to next code
+//----------- second is code manage about caculate value from port and send to sensor
+/*
 boost::mutex g_mutex;
 bool	g_status_updated = false;
 long	g_status_date = 0;
@@ -68,7 +95,4 @@ void	check_dvl_status( diagnostic_updater::DiagnosticStatusWrapper &stat){
 
 	}
 
-}
-
-
-
+} */

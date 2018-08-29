@@ -2,7 +2,7 @@
 //
 //	File's name		: convert_to_string.h
 //
-//	Last Update		: Aug 24 , 2018
+//	Last Update		: Aug 29 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: for convert type to type
@@ -34,7 +34,8 @@
 	#define EXCEPTION
 #endif
 
-namespace convert{
+namespace zeabus_extension{
+	namespace convert{
 
 //----------------------------------> part to string <-------------------------------------------
 // how to do if want to create function?
@@ -44,27 +45,28 @@ namespace convert{
 // and please add function in ./../../src/convert_to_string.cpp
 // can ready use , Supasan Komonlit Aug 16 2018
 
-	static char set_syntax[7] = {' ' , ':' , ',' , '-' , '.' , '_' , ';'};
+		static char set_syntax[7] = {' ' , ':' , ',' , '-' , '.' , '_' , ';'};
 
-	static char set_number[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}; 
+		static char set_number[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}; 
 
-	std::string to_string( boost::posix_time::ptime data );
+		std::string to_string( boost::posix_time::ptime data );
 
-	std::string to_string( boost::gregorian::date data );
+		std::string to_string( boost::gregorian::date data );
 
-	std::string to_string( int data , bool assign_position = false 
+		std::string to_string( int data , bool assign_position = false 
 						,  int position = 0 , bool sign = true);
 
-	std::string to_string( float data );
+		std::string to_string( float data );
 
-	std::string to_string( char data );
+		std::string to_string( char data );
 
-	std::string to_string( double data , bool assign_position = false
-						, int position = 0 , bool have_point = false
-						, int front = 3 , int back = 2 );
+		std::string to_string( double data , bool assign_position = false
+							, int position = 0 , bool have_point = false
+							, int front = 3 , int back = 2 );
 
-	std::string edit_space( std::string data , std::string key);
+		std::string edit_space( std::string data , std::string key);
 
-	bool in_set( char data);
-	bool is_num( char data);
+		bool in_set( char data);
+		bool is_num( char data);
+	}
 }

@@ -53,7 +53,7 @@ std::string zeabus_extension::convert::to_string( int data , bool assign_positio
 			}
 		}
 		std::cout << "In put have all char is " << count << "\n";
-		for( ; count != position ; count++){
+		for( ; count < position ; count++){
 			answer = "0" + answer;
 		}
 		if( sign ){

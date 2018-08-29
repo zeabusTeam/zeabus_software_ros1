@@ -80,7 +80,7 @@ std::string zeabus_extension::convert::to_string( char data ){
 
 // this function have more detail to make you can convert double to string 
 // and you can design about number of position in before and after point
-std::string zeabus_extension::convert::to_string( double data , bool assign_position , int position 
+std::string zeabus_extension::convert::to_string( double data , bool assign_position  
 								, bool have_point , int front , int back){
 	std::ostringstream temporary;
 	temporary << data;

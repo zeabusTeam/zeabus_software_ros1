@@ -61,7 +61,7 @@ namespace zeabus_extension{
 		std::string to_string( char data );
 
 		std::string to_string( double data , bool assign_position = false
-							, int position = 0 , bool have_point = false
+							, bool have_point = false
 							, int front = 3 , int back = 2 );
 
 		std::string edit_space( std::string data , std::string key);

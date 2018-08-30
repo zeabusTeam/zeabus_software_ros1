@@ -65,7 +65,7 @@ namespace zeabus_extension{
 
 // ---------------------------> use in code for calculate <------------------------------------
 namespace zeabus_extension{
-	namespace count_time{
+	namespace precise_time{
 
 		class time{
 		

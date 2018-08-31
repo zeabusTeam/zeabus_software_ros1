@@ -85,28 +85,32 @@ namespace zeabus_extension{
 		class second : public time{
 			public:
 				second( bool print_test = false ) : time( print_test ){}
-				long different( bool reset = true );
+				long raw_different( bool reset = true );
+				double different( bool reset = true );
 				void sleep( double data );
 		};
 	
 		class millisecond : public time{
 			public:
 				millisecond( bool print_test = false ) : time( print_test ){}
-				long different( bool reset = true );
+				long raw_different( bool reset = true );
+				double different( bool reset = true );
 				void sleep( double data );
 		};
 
 		class microsecond : public time{
 			public:
 				microsecond( bool print_test = false ) : time( print_test ){}
-				long different( bool reset = true );
+				long raw_different( bool reset = true );
+				double different( bool reset = true );
 				void sleep( double data );
 		};
 	
 		class nanosecond : public time{
 			public:
 				nanosecond( bool print_test  = false) : time( print_test ){}
-				long different( bool reset = true );
+				long raw_different( bool reset = true );
+				double different( bool reset = true );
 				void sleep( double data );
 		};
 	

@@ -23,23 +23,25 @@
 	#define nullptr 0
 #endif
 
-namespace generate_message{
+namespace zeabus_extension{
+	namespace generate_message{
 
-	std::string specific_message( int number_line = 0 
-								, std::string* message = nullptr 
-								, std::string* detail = nullptr );
+		std::string specific_message( int number_line = 0 
+									, std::string* message = nullptr 
+									, std::string* detail = nullptr );
 
-	class log_message{
+		class log_message{
 
-		public:
-			log_message( int number_line = 0 , std::string *message = nullptr);
-			void setup_begin( std::string* message = nullptr , int number_line = 0);
-			std::string message( std::string* data);
+			public:
+				log_message( int number_line = 0 , std::string *message = nullptr);
+				void setup_begin( std::string* message = nullptr , int number_line = 0);
+				std::string message( std::string* data);
 			
-		protected:
-			int number_line;
-			std::string* begin_line;
+			protected:
+				int number_line;
+				std::string* begin_line;
 
-	};
+		};
 
+	}
 }

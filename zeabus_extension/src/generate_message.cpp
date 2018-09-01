@@ -2,7 +2,7 @@
 //
 //	File's name		: generate_message.cpp
 //
-//	Last Update		: Aug 24 , 2018
+//	Last Update		: Sep 01 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: Detail Function of generate_message.cpp
@@ -14,7 +14,7 @@
 	#define ZEABUS_EXTENSION_GENERATE_MESSAGE
 #endif
 
-std::string generate_message::specific_message(	int number_line 
+std::string zeabus_extension::generate_message::specific_message(	int number_line 
 											,	std::string* message 
 											,	std::string* detail){
 
@@ -30,12 +30,12 @@ std::string generate_message::specific_message(	int number_line
 	return answer;
 }
 
-generate_message::log_message::log_message( int number_line 
+zeabus_extension::generate_message::log_message::log_message( int number_line 
 										,	std::string* message ){
 	setup_begin( message , number_line);
 }
 
-void generate_message::log_message::setup_begin( std::string* message 
+void zeabus_extension::generate_message::log_message::setup_begin( std::string* message 
 												,int number_line ){
 	if( number_line != 0 ) this->number_line = number_line;
 	if( message != nullptr ){
@@ -46,7 +46,7 @@ void generate_message::log_message::setup_begin( std::string* message
 	}
 }
 
-std::string generate_message::log_message::message( std::string* data){
+std::string zeabus_extension::generate_message::log_message::message( std::string* data){
 	return generate_message::specific_message( this->number_line
 											,  this->begin_line
 											,  data);

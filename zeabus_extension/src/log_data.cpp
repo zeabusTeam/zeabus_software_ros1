@@ -2,7 +2,7 @@
 //
 //	File's name		: log_data.cpp
 //
-//	Last Update		: Aug 22 , 2018
+//	Last Update		: Sep 01 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: Detail Function of log_data in log_data.h
@@ -14,9 +14,9 @@
 	#include	<zeabus_extension/log_data.h>
 #endif
 
-log_data::log::log( std::string package_name , std::string path 
+zeabus_extension::log_data::log::log( std::string package_name , std::string path 
 				,  std::string name_file , bool anonymous ) : 
-		ros::find_path::find_path( package_name , path , name_file ){
+		zeabus_extension::zeabus_ros::find_path::find_path( package_name , path , name_file ){
 
 	this->only_name = name_file;
 	this->package_name = package_name;
@@ -27,7 +27,7 @@ log_data::log::log( std::string package_name , std::string path
 
 }
 
-void log_data::log::new_file( std::string package_name , std::string path 
+void zeabus_extension::log_data::log::new_file( std::string package_name , std::string path 
 				, std::string name_file , bool anonymous ) {
 	if( name_file != nullstring)	this->only_name = name_file;
 	if( package_name != nullstring)	this->package_name = package_name;
@@ -54,7 +54,7 @@ void log_data::log::new_file( std::string package_name , std::string path
 	this->write( start_text , false , true);
 }
 
-void log_data::log::write( std::string message , bool header , bool start ){
+void zeabus_extension::log_data::log::write( std::string message , bool header , bool start ){
 	if( header ){
 		std::string arrive_message = "echo \"----------------> "
 							+ zeabus_extension::convert::edit_space( 
@@ -72,6 +72,6 @@ void log_data::log::write( std::string message , bool header , bool start ){
 	std::system( message.c_str() );
 }
 
-void log_data::log::clear_screen(){
+void zeabus_extension::log_data::log::clear_screen(){
 	std::system( "clear" );
 }

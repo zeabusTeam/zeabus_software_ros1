@@ -37,7 +37,7 @@
 #define nullstring "~"
 
 namespace zeabus_extension{
-	namespace ros{
+	namespace zeabus_ros{
 
 		class find_path{
 
@@ -70,11 +70,12 @@ namespace zeabus_extension{
 
 		};
 	}
+}
 
-
+namespace zeabus_extension{
 	namespace log_data{
 
-		class log : public ros::find_path {
+		class log : public zeabus_extension::zeabus_ros::find_path {
 
 			public:	
 				log( std::string package_name 

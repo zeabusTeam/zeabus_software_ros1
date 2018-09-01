@@ -22,7 +22,7 @@ log_data::log::log( std::string package_name , std::string path
 	this->package_name = package_name;
 	this->path = path;
 	this->new_file( package_name , path , only_name , anonymous );
-	time = new count_time::time();
+	time = new zeabus_extension::precise_time::millisecond();
 //	time.reset_time();
 
 }
@@ -32,14 +32,16 @@ void log_data::log::new_file( std::string package_name , std::string path
 	if( name_file != nullstring)	this->only_name = name_file;
 	if( package_name != nullstring)	this->package_name = package_name;
 	if( path != nullstring )		this->path = path;
-	time_file.get_time();
+	time_file.reset_time();
 	if( this->name_file == "~"){
-		this->name_file = convert::edit_space(time_file.local_time() , "_") + ".txt";
+		this->name_file = zeabus_extension::convert::edit_space(
+										time_file.local_time() , "_") + ".txt";
 	}
 	else{
 		if( anonymous ){
 			this->name_file = only_name + "_" 
-							+ convert::edit_space(time_file.local_time() , "_") + ".txt";
+							+ zeabus_extension::convert::edit_space(
+										time_file.local_time() , "_") + ".txt";
 		}
 		else{
 			this->name_file = only_name + ".txt";
@@ -55,7 +57,8 @@ void log_data::log::new_file( std::string package_name , std::string path
 void log_data::log::write( std::string message , bool header , bool start ){
 	if( header ){
 		std::string arrive_message = "echo \"----------------> "
-							+ convert::edit_space( convert::to_string(time.now()) , "_")
+							+ zeabus_extension::convert::edit_space( 
+									zeabus_extension::convert::to_string(time.now()) , "_")
 							+ " <----------------" + "\" >>"
 							+ this->last_path ;
 		std::system( arrive_message.c_str() );

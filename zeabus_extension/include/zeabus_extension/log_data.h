@@ -81,8 +81,8 @@ namespace log_data{
 			void clear_screen();
 
 		private: 
-			count_time::millisecond time;
-			world_time::time time_file;
+			zeabus_extension::precise_time::millisecond time;
+			zeabus_extension::world_time::time time_file;
 			std::string name_file;
 			std::string only_name;
 			std::string package_name;

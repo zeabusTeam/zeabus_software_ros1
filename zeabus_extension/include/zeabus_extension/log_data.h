@@ -2,7 +2,7 @@
 //
 //	File's name		: log_data.h
 //
-//	Last Update		: Aug 24 , 2018
+//	Last Update		: Sep 01 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: for creat and save data to log is ROS
@@ -36,56 +36,65 @@
 
 #define nullstring "~"
 
-namespace ros{
+namespace zeabus_extension{
+	namespace ros{
 
-	class find_path{
+		class find_path{
 
-		public:
-			find_path( std::string package_name , std::string path , std::string name_file );
+			public:
+				find_path( std::string package_name 
+						,  std::string path 
+						,  std::string name_file );
 
-		protected:
-			void set_path( std::string package_name , std::string path , std::string name_file);
-			std::string last_path;
+			protected:
+				void set_path( std::string package_name 
+							,  std::string path 
+							, std::string name_file);
+				std::string last_path;
 		
-	};
+		};
 
-	class dynamic_reconfigure : public find_path{
+		class dynamic_reconfigure : public find_path{
 
-		public:
-			dynamic_reconfigure( std::string package_name 
-								, std::string path 
-								, std::string name_file
-								, std::string node_name);
-			void set_parameter( std::string node_name );
-			void load();
-			void save();
+			public:
+				dynamic_reconfigure( std::string package_name 
+									, std::string path 
+									, std::string name_file
+									, std::string node_name);
+				void set_parameter( std::string node_name );
+				void load();
+				void save();
 
-		private:
-			std::string node_name;
+			private:
+				std::string node_name;
 
-	};
-}
+		};
+	}
 
-namespace log_data{
 
-	class log : public ros::find_path {
+	namespace log_data{
 
-		public:	
-			log( std::string package_name , std::string path 
-				, std::string name_file = "~" , bool anonymous = true);
-			void new_file(std::string package_name = NULL
+		class log : public ros::find_path {
+
+			public:	
+				log( std::string package_name 
+						, std::string path 
+						, std::string name_file = "~" 
+						, bool anonymous = true);
+				void new_file(std::string package_name = NULL
 						, std::string path = NULL 
 						, std::string name_file = NULL
 						, bool anonymous = true);
-			void write( std::string message , bool header = true , bool start = false);
-			void clear_screen();
+				void write( std::string message , bool header = true , bool start = false);
+				void clear_screen();
 
-		private: 
-			zeabus_extension::precise_time::millisecond time;
-			zeabus_extension::world_time::time time_file;
-			std::string name_file;
-			std::string only_name;
-			std::string package_name;
-			std::string path;
-	};
+			private: 
+				zeabus_extension::precise_time::millisecond time;
+				zeabus_extension::world_time::time time_file;
+				std::string name_file;
+				std::string only_name;
+				std::string package_name;
+				std::string path;
+		};
+	}
 }

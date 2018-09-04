@@ -9,11 +9,6 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef ZEABUS_EXTENSION_CONVERT_TO_STRING
-	#include	<zeabus_extension/convert_to_string.h>
-	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
-#endif
-
 #ifndef	IOSTREAM
 	#include	<iostream>
 	#define IOSTREAM

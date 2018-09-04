@@ -55,19 +55,23 @@ void zeabus_extension::log_data::log::new_file( std::string package_name , std::
 }
 
 void zeabus_extension::log_data::log::write( std::string message , bool header , bool start ){
+	if( start ){
+		std::string arrive_message = "echo \"----------------> "
+							+ zeabus_extension::convert::edit_space( 
+									zeabus_extension::convert::to_string(time.now()) , "_")
+							+ " <----------------" + "\" > "
+							+ this->last_path ;
+		std::system( arrive_message.c_str() );
+	}
 	if( header ){
 		std::string arrive_message = "echo \"----------------> "
 							+ zeabus_extension::convert::edit_space( 
 									zeabus_extension::convert::to_string(time.now()) , "_")
-							+ " <----------------" + "\" >>"
+							+ " <----------------" + "\" >> "
 							+ this->last_path ;
 		std::system( arrive_message.c_str() );
 	}
-	if( start ){
-		message = "echo \"" + message + "\" > " + this->last_path;
-	}
-	else{
-		message = "echo \"" + message + "\" >> " + this->last_path;
+	message = "echo \"" + message + "\" >> " + this->last_path;
 	}
 	std::system( message.c_str() );
 }

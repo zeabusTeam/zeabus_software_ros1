@@ -38,6 +38,8 @@ class AutoExposure:
 
     def get_mode(self, data):
         data = data.ravel()
+        mode = stats.mode(data).mode
+        return mode
 
     def get_param(self, param):
         value = rospy.get_param("/" + str(self.client_name) + str(param), None)

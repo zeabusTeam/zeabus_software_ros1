@@ -10,18 +10,19 @@ import color_text as ctxt
 
 
 class AutoExposure:
-    def __init__(self, sub_topic, client_name, exposure_value_default=0, exposure_value_min=0):
+    def __init__(self, sub_topic, client_name, default_exposure_value=0, min_exposure_value=0):
         print_result("Init auto exposure topic" + sub_topic,color=ctxt.GREEN)
         self.image = None
         self.Bright = None
         self.sub_sampling = 1
         self.sub_topic = sub_topic
         self.client_name = client_name
-        self.exposure_value_default = exposure_value_default
-        self.exposure_value_min = exposure_value_min
+        self.default_exposure_value = default_exposure_value
+        self.min_exposure_value = min_exposure_value
         self.sub_image = rospy.Subscriber(
             sub_topic, CompressedImage, self.img_callback,  queue_size=10)
         self.client = Client(self.client_name)
+        self.set_param('exposure',default_exposure_value)
 
     def img_callback(self, msg):
         arr = np.fromstring(msg.data, np.uint8)

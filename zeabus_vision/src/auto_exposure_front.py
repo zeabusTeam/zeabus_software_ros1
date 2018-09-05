@@ -2,7 +2,6 @@
 import rospy
 from auto_exposure import AutoExposure
 
-
 def adjust():
     EVmin = 0
     EVdefault = 0

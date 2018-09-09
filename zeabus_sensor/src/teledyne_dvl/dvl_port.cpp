@@ -117,6 +117,7 @@ int main( int argc , char **argv){
 //			updater.update();
 
 			data_dvl_port.data = serial.read_line();
+			publisher_dvl_port.publish( data_dvl_port );
 		}
 		catch ( exception& error){
 			std::cout << error.what() << "\n";

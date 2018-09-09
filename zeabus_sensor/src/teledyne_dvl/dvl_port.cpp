@@ -69,9 +69,9 @@ int main( int argc , char **argv){
 	serial.write_string("BP1\n");
 
 //set maximum bottom search depth (dm)
-	stringstream temporary;
+	std::ostringstream temporary;
 	temporary << "BX" << maximum_bottom_search_depth << "\n";
-	search.write_string( temporary.str() );
+	serial.write_string( temporary.str() );
 
 //set Heading alignment to 0 degrees , page 133
 	std::string heading_alignment_angle = convert::to_string( heading_alignment , true , 5 );
@@ -119,17 +119,17 @@ int main( int argc , char **argv){
 			data_dvl_port.data = serial.read_line();
 			publisher_dvl_port.publish( data_dvl_port );
 		}
-		catch ( exception& error){
+		catch ( std::exception& error){
 			std::cout << error.what() << "\n";
 		}
 		ros::spinOnce();
 	}
 
 	serial.write_string("===");
-	serial.readLine();
-	serial.readLine();
-	serial.readLine();
-	serial.readLine();
+	serial.read_line();
+	serial.read_line();
+	serial.read_line();
+	serial.read_line();
 	std::cout << "end file of DVL port\n";
 	
 }

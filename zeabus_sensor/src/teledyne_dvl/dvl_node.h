@@ -31,4 +31,4 @@
 
 geometry_msgs::Twist data_dvl_node; // for send value velocity
 
-void listen_port_dvl( const std_msgs::String message)
+void listen_port_dvl( const std_msgs::String message);

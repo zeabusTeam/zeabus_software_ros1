@@ -25,7 +25,7 @@
 #endif
 
 #ifndef GEOMETRY_MSGS_TWIST
-	#include	<geomety_msgs/Twist.h>
+	#include	<geometry_msgs/Twist.h>
 	#define		GEOMETRY_MSGS_TWIST
 #endif
 

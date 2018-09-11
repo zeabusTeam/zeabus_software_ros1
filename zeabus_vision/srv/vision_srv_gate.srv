@@ -1,0 +1,6 @@
+# Call
+string task
+string req
+---
+# Return
+zeabus_vision/vision_gate data

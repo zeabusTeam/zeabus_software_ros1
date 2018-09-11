@@ -49,18 +49,20 @@ find_package(OpenCV REQUIRED)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  FILES
+  vision_gate.msg
+  vision_flare.msg
+  vision_drum.msg
+)
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  vision_srv_gate.srv
+  vision_srv_flare.srv
+  vision_srv_drum.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -70,10 +72,10 @@ find_package(OpenCV REQUIRED)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -105,11 +107,12 @@ find_package(OpenCV REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES zeabus_vision
-#  CATKIN_DEPENDS message_generation rospy std_msgs
-#  DEPENDS system_lib
+  # INCLUDE_DIRS include
+  LIBRARIES zeabus_vision
+  # CATKIN_DEPENDS message_generation rospy std_msgs
+  # DEPENDS system_lib
 )
+catkin_package()
 
 ###########
 ## Build ##

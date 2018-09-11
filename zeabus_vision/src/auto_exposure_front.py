@@ -1,6 +1,7 @@
 #!/usr/bin/python2.7
 import rospy
-from auto_exposure import AutoExposure
+# from auto_exposure import AutoExposure
+from auto_exposure_old import AutoExposure
 
 def adjust():
     EVmin = 0.1

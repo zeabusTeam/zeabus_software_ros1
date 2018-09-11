@@ -66,20 +66,22 @@ int main( int argc , char **argv){
 	serial.read_line();
 
 // enable = 1 , 0 = uenable single-ping bottom tracking
-	serial.write_string("BP1\n");
+	serial.write_string("BP001\n");
 
 //set maximum bottom search depth (dm)
-	stringstream temporary;
+	std::ostringstream temporary;
 	temporary << "BX" << maximum_bottom_search_depth << "\n";
-	search.write_string( temporary.str() );
+	serial.write_string( temporary.str() );
 
 //set Heading alignment to 0 degrees , page 133
-	std::string heading_alignment_angle = convert::to_string( heading_alignment , true , 5 );
+	std::string heading_alignment_angle = 
+				zeabus_extension::convert::to_string( heading_alignment , true , false);
 	heading_alignment_angle = "EA" + heading_alignment_angle + "\n";
 	serial.write_string( heading_alignment_angle );	
 
 //set salinity ( salt is component ) value of water
-	std::string salinity_water_string = convert::to_string( salinity_water , true , 5 , false);
+	std::string salinity_water_string = 
+				zeabus_extension::convert::to_string( salinity_water , true , 5 , false);
 	salinity_water_string = "ES" + salinity_water_string + "\n";
 	serial.write_string( salinity_water_string );
 
@@ -90,7 +92,8 @@ int main( int argc , char **argv){
 	serial.write_string("TP" + time_between_pings + "\n");
 
 // select type of data stream
-	serial.write_string("PD" + convert::to_string( data_stream_select ) + "\n");
+	serial.write_string("PD" + 
+				zeabus_extension::convert::to_string( data_stream_select ) + "\n");
 // see detail of PD6 in page 212
 
 // keep paramter and start to ping
@@ -117,18 +120,19 @@ int main( int argc , char **argv){
 //			updater.update();
 
 			data_dvl_port.data = serial.read_line();
+			publisher_dvl_port.publish( data_dvl_port );
 		}
-		catch ( exception& error){
+		catch ( std::exception& error){
 			std::cout << error.what() << "\n";
 		}
 		ros::spinOnce();
 	}
 
 	serial.write_string("===");
-	serial.readLine();
-	serial.readLine();
-	serial.readLine();
-	serial.readLine();
+	serial.read_line();
+	serial.read_line();
+	serial.read_line();
+	serial.read_line();
 	std::cout << "end file of DVL port\n";
 	
 }

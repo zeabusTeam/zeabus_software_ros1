@@ -51,6 +51,7 @@
 	#define		STDIO_H
 #endif
 
+float	surface_depth;
 
 //------------------ Zeabus software will try to extract code to 2 code
 //----------- first is code manage about read port and send to next code
@@ -67,7 +68,6 @@ int		g_status_num_error = 0;
 int		g_status_current_error = 0;
 bool	g_status_velocity_ok = false;
 
-float	surface_depth;
 
 void	check_dvl_status( diagnostic_updater::DiagnosticStatusWrapper &stat){
 

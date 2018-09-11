@@ -1,0 +1,19 @@
+##### Coding file #####
+.vscode
+.env
+*.pyc
+*.pyo
+
+##### File editing ####
+*.bak
+# Vim
+*.swp
+*.swo
+*.un~
+# Emacs
+*~
+.#*
+
+######## Video ########
+*.bag
+*.mp4

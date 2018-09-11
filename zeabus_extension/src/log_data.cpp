@@ -72,7 +72,6 @@ void zeabus_extension::log_data::log::write( std::string message , bool header ,
 		std::system( arrive_message.c_str() );
 	}
 	message = "echo \"" + message + "\" >> " + this->last_path;
-	}
 	std::system( message.c_str() );
 }
 

@@ -24,7 +24,7 @@ int main( int argc , char **argv){
 		nh.subscribe( "dvl/port" , 10 , &listen_port_dvl);
 
 // Set to send data form port after read meaning
-	ros::Publisher publisher_dvl_data = ros::NodeHandle().advertise<
+	publisher_dvl_data = ros::NodeHandle().advertise<
 											geometry_msgs::Twist >( "dvl/data" , 10);
 
 	std::cout << "Welcome to read value dvl_data output type PD6 ";
@@ -36,6 +36,8 @@ int main( int argc , char **argv){
 
 void listen_port_dvl( const std_msgs::String message){
 	std::string data = message.data;
+
+	dvl_log.write( data );
 
 //01// READ PART of SYSTEM ATTITUDE DATA
 	if( data.find(":SA") != std::string::npos ){}
@@ -58,7 +60,23 @@ void listen_port_dvl( const std_msgs::String message){
 	else{}
 
 //06// READ PART of BOTTOM-TRACK, SHIP-REFERENCED VELOCITY DATA
-	if( data.find(":BS") != std::string::npos ){}
+	if( data.find(":BS") != std::string::npos ){
+		int v_x , v_y , v_z ;
+		char status;
+
+		sscanf( data.c_str() , ":BS,%d,%d,%d,%c" , &v_x , &v_y , &v_z , &status);
+
+		if( status == 'A'){
+			ROS_INFO("DVL : GOOD DATA");
+			data_dvl_node.linear.x = v_x * 0.001;
+			data_dvl_node.linear.y = v_y * 0.001;
+			data_dvl_node.linear.z = v_z * 0.001;
+			publisher_dvl_data.publish( data_dvl_node );
+		}
+		else{
+			ROS_INFO("DVL : BAD DATA");
+		}
+	}
 	else{}
 
 //07//	READ PART of WATER-MASS, EARTH-REFERENCED VELOCITY DATA

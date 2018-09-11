@@ -24,6 +24,7 @@ catkin_package(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(port_dvl src/teledyne_dvl/dvl_port.cpp)
+add_executable(node_dvl src/teledyne_dvl/dvl_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -40,6 +41,7 @@ add_executable(port_dvl src/teledyne_dvl/dvl_port.cpp)
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(port_dvl ${catkin_LIBRARIES})
+target_link_libraries(node_dvl ${catkin_LIBRARIES})
 
 #############
 ## Install ##

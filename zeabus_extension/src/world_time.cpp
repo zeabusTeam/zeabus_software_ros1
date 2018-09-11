@@ -2,7 +2,7 @@
 //
 //	File's name		: world_time.cpp
 //
-//	Last Update		: Aug 24 , 2018
+//	Last Update		: Sep 1 , 2018
 //	Author			: Supasan Komonlit
 //
 //	Main purpose	: manage about time
@@ -14,30 +14,30 @@
 	#define ZEABUS_EXTENSION_TIME
 #endif
 
-world_time::time::time( bool print_test){
+zeabus_extension::world_time::time::time( bool print_test){
 	this->print_test = print_test;
-	this->get_time();
+	this->reset_time();
 }
 
-std::string world_time::time::local_time(){
+std::string zeabus_extension::world_time::time::local_time(){
 	if( print_test ){
 		std::cout	<< " At world_time::time::local_time " 
 					<< convert::to_string( local_data )
 					<< "\n";
 	}
-	return convert::to_string( local_data );	
+	return zeabus_extension::convert::to_string( local_data );	
 }
 
-std::string world_time::time::universal_time(){
+std::string zeabus_extension::world_time::time::universal_time(){
 	if( print_test ){
 		std::cout	<< " At world_time::time::universal_time " 
 					<< convert::to_string( universal_data )
 					<< "\n";
 	}
-	return convert::to_string( universal_data );
+	return zeabus_extension::convert::to_string( universal_data );
 }
 
-void world_time::time::get_time(){
+void zeabus_extension::world_time::time::reset_time(){
 	local_data = boost::posix_time::second_clock::local_time();
 	universal_data = boost::posix_time::second_clock::universal_time();
 }

@@ -13,21 +13,19 @@
 	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
 #endif
 
-//#define convert_test
-
-std::string convert::to_string( boost::posix_time::ptime data ){
+std::string zeabus_extension::convert::to_string( boost::posix_time::ptime data ){
 	std::ostringstream temporary;
 	temporary << data;
 	return temporary.str();
 }
 
-std::string convert::to_string( boost::gregorian::date data ){
+std::string zeabus_extension::convert::to_string( boost::gregorian::date data ){
 	std::ostringstream temporary;
 	temporary << data;
 	return temporary.str();
 }
 
-std::string convert::to_string( int data , bool assign_position , int position , bool sign ){
+std::string zeabus_extension::convert::to_string( int data , bool assign_position , int position , bool sign ){
 	std::ostringstream temporary;
 	temporary << data;
 	if( ! assign_position ) return temporary.str();
@@ -55,7 +53,7 @@ std::string convert::to_string( int data , bool assign_position , int position ,
 			}
 		}
 		std::cout << "In put have all char is " << count << "\n";
-		for( ; count != position ; count++){
+		for( ; count < position ; count++){
 			answer = "0" + answer;
 		}
 		if( sign ){
@@ -67,22 +65,26 @@ std::string convert::to_string( int data , bool assign_position , int position ,
 	}
 }
 
-std::string convert::to_string( float data ){
+std::string zeabus_extension::convert::to_string( float data ){
 	std::ostringstream temporary;
 	temporary << data;
 	return temporary.str();
 }
 
-std::string convert::to_string( char data ){
+std::string zeabus_extension::convert::to_string( char data ){
 	std::ostringstream temporary;
 	temporary << data;
 	return temporary.str();
 }
 
-std::string convert::to_string( double data , bool assign_position , int position 
+
+// this function have more detail to make you can convert double to string 
+// and you can design about number of position in before and after point
+std::string zeabus_extension::convert::to_string( double data , bool assign_position  
 								, bool have_point , int front , int back){
 	std::ostringstream temporary;
 	temporary << data;
+	// if you don't want to assign that. It will return by default of ostringstream
 	if( ! assign_position ) return temporary.str();
 	else{
 		if( ! have_point ){
@@ -104,7 +106,7 @@ std::string convert::to_string( double data , bool assign_position , int positio
 				if( problem[run] == '-' || problem[run] == '+') continue;
 				else if( problem[run] == '.' ) mode = false;
 				else if( (problem[run] != '\n' || problem[run] != '\0' ) 
-													&& is_num( problem[run] ) ) {
+								&& is_num( problem[run] ) ) {
 					if( mode ){
 						#ifdef convert_test
 							std::cout << "In mode consider on \'" <<( problem[run]) << "\'\n";
@@ -149,19 +151,24 @@ std::string convert::to_string( double data , bool assign_position , int positio
 	}
 }
 
-std::string convert::edit_space( std::string data , std::string key){
+// this function will edit space to key as you want example change '-' , '*' to '_'
+std::string zeabus_extension::convert::edit_space( std::string data , std::string key){
 	int order = 0;
 	std::string answer = "";
 	while( true ){
+// if that is char to tell new line or end of string that will break	 
+// that mean this function can edit one line only
 		if( data[order] == '\n' || data[order] == '\0' ) break;
+// if that cahr have in syntax will change to key
 		else if( in_set( data[order] ) ) answer += key;
+// if not will + same char
 		else answer += to_string( data[order] );
 		order++;
 	}
 	return answer;
 }
-
-bool convert::in_set( char data){
+// this function will check data input have in set of syntax or not
+bool zeabus_extension::convert::in_set( char data){
 	int run = 0;
 	for( run = 0 ; run < 7 ; run++){
 		if( data == set_syntax[run]) return true;
@@ -169,12 +176,14 @@ bool convert::in_set( char data){
 	return false;
 }
 
-bool convert::is_num( char data){
+// this function will check data input it is number or not
+bool zeabus_extension::convert::is_num( char data){
 	int run = 0;
 	for( run = 0 ; run < 10 ; run++){
 		if( data == set_number[run]){
-			std::cout << "cach data is " << (int)data << " same with " << run << "\n";
-			std::cout << "return true for data \'" << data << "\'\n";
+// for test in function but now finish don't use 2 line under
+			//std::cout << "cach data is " << (int)data << " same with " << run << "\n";
+			//std::cout << "return true for data \'" << data << "\'\n";
 			return true;
 		}
 	}

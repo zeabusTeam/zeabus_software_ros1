@@ -16,7 +16,7 @@ sub_sampling = 1
 
 def mission_callback(msg):
     print_result('mission_callback', ct.CYAN)
-    task = msg.task.data
+    task = str(msg.task.data)
 
     print(msg)
     if task == 'gate':

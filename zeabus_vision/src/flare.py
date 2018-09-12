@@ -16,11 +16,14 @@ sub_sampling = 1
 
 def mission_callback(msg):
     print_result('mission_callback', ct.CYAN)
-    task = msg.task.data
+    task = str(msg.task.data)
+    req = str(msg.req.data)
 
     print(msg)
-    if task == 'flare':
-        return find_flare()
+    if task == 'flare' and req == 'near':
+        return find_near_flare()
+    elif task == 'flare' and req == 'far':
+        return find_far_flare()
 
 
 def image_callback(msg):
@@ -43,13 +46,19 @@ def message(n_obj=0, cx=0.0, cy=0.0, area=0.0):
     return msg
 
 
-def find_flare():
+def find_near_flare():
     global bgr
     if bgr is None:
         img_is_none()
         return message(n_obj=-1)
     pass
 
+def find_far_flare():
+    global bgr
+    if bgr is None:
+        img_is_none()
+        return message(n_obj=-1)
+    pass
 
 if __name__ == '__main__':
     rospy.init_node('vision_flare', anonymous=False)

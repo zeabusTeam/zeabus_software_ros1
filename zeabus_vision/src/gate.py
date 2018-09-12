@@ -53,15 +53,12 @@ def find_gate():
 
 if __name__ == '__main__':
     rospy.init_node('vision_gate', anonymous=False)
-    print_result("INIT NODE", ct.GREEN)
 
     image_topic = get_topic("front")
     rospy.Subscriber(image_topic, CompressedImage, image_callback)
-    print_result("INIT SUBSCRIBER", ct.GREEN)
-
     rospy.Service('vision_gate', vision_srv_gate(),
                   mission_callback)
-    print_result("INIT SERVICE", ct.GREEN)
+    print_result("INIT NODE GATE", ct.GREEN)
 
     rospy.spin()
     print_result("END PROGRAM", ct.YELLOW_HL+ct.RED)

@@ -53,15 +53,12 @@ def find_flare():
 
 if __name__ == '__main__':
     rospy.init_node('vision_flare', anonymous=False)
-    print_result("INIT NODE", ct.GREEN)
-
+    
     image_topic = get_topic("front")
     rospy.Subscriber(image_topic, CompressedImage, image_callback)
-    print_result("INIT SUBSCRIBER", ct.GREEN)
-
     rospy.Service('vision_flare', vision_srv_flare(),
                   mission_callback)
-    print_result("INIT SERVICE", ct.GREEN)
+    print_result("INIT NODE FLARE", ct.GREEN)
 
     rospy.spin()
     print_result("END PROGRAM", ct.YELLOW_HL+ct.RED)

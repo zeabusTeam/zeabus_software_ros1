@@ -6,8 +6,6 @@ from sensor_msgs.msg import CompressedImage
 from dynamic_reconfigure.client import Client as Client
 from vision_lib import *
 import color_text as ctxt
-from time import time
-from scipy import stats
 
 
 class AutoExposure:
@@ -50,9 +48,7 @@ class AutoExposure:
                 img_is_none()
                 continue
             v = cv.split(self.hsv)[2]
-            a = time()
             mode = self.get_mode(v.ravel())
-            print ("new", time()-a)
             ev = self.get_param()
             print_result('Exposure')
             print_result(ev)

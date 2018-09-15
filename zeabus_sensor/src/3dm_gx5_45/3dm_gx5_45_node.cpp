@@ -21,7 +21,7 @@ ros::Publisher pub_imu_data;
 
 sensor_msgs::Imu imu_data;
 
-void publish_IMU_data( const zeabus_sensor::IMU_data& data){
+void publish_IMU_data( const zeabus_sensor::3dm_gx4_45::IMU_DATA& data){
 	imu_data.stamp = ros::Time::now(); // get time for use in message
 
 // from data have to receive that is cal from frame of IMU this will change to frame of robot
@@ -45,7 +45,7 @@ void publish_IMU_data( const zeabus_sensor::IMU_data& data){
 	imu_data.orientation.w = original_quaternion.w()	
 	imu_data.orientation.x = original_quaternion.x()	
 	imu_data.orientation.y = original_quaternion.y()	
-	imu_data.orientation.z = original_quaternion.z()	
+	imu_data.orientation.z = original_quaternion.z();
 
 	imu_data.linear_acceleration.x = data.scaled_accelerometer[0];
 	imu_data.linear_acceleration.y = data.scaled_accelerometer[2];
@@ -62,7 +62,7 @@ int main( int argc , char **argv){
 	ros::init( argc , argv , "node_imu");
 	ros::NodeHandle nh("~"); // component for use roslib
 
-	zeabus_sensor::zeabus_3dm_gx5_45 imu;
+	zeabus_sensor::3dm_gx4_45::IMU imu;
 
 // declare variable for can get pass launch
 	std::string publish_topic;
@@ -93,13 +93,13 @@ int main( int argc , char **argv){
 	static const int decimation = (500/imu_rate);
 
 	imu.set_imu_data_rate(	decimation
-						,	zeabus_sensor::imu_data::SCALED_ACCELEROMETER 
-						|	zeabus_sensor::imu_data::SCALED_GYRO
-						|	zeabus_sensor::imu_data::CF_QUATERNION 
+						,	zeabus_sensor::3dm_gx4_45::imu_data::SCALED_ACCELEROMETER 
+						|	zeabus_sensor::3dm_gx4_45::imu_data::SCALED_GYRO
+						|	zeabus_sensor::3dm_gx4_45::imu_data::CF_QUATERNION 
 						|	0
 						);
 
-	imu.select_data_stream(	zeabus_sensor::data_stream::imu_data 
+	imu.select_data_stream(	zeabus_sensor::3dm_gx4_45::data_stream::IMU_DATA 
 						|	0
 						);
 

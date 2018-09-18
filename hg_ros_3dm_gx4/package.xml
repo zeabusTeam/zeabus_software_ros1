@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <name>hg_ros_3dm_gx4</name>
+  <version>0.0.1</version>
+  <description>MicroStrain 3DM-GX4-XX driver of ROS</description>
+
+  <maintainer email="mahisorn.w@hiveground.com">mahisorn</maintainer>
+  <author>Mahisorn Wongphati</author>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>hg_ros_serial</build_depend>
+  <run_depend>hg_ros_serial</run_depend>
+  
+  <build_depend>sensor_msgs</build_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <run_depend>geometry_msgs</run_depend>
+  
+  <export>
+  </export>
+</package>

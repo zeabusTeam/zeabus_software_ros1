@@ -66,15 +66,14 @@ def find_golf():
 
 if __name__ == '__main__':
     rospy.init_node('vision_drum', anonymous=False)
-    print_result("INIT NODE", ct.GREEN)
 
     image_topic = get_topic("front")
     rospy.Subscriber(image_topic, CompressedImage, image_callback)
-    print_result("INIT SUBSCRIBER", ct.GREEN)
-
     rospy.Service('vision_drum', vision_srv_drum(),
                   mission_callback)
-    print_result("INIT SERVICE", ct.GREEN)
+    print_result("INIT NODE DRUM", ct.GREEN)
 
     rospy.spin()
     print_result("END PROGRAM", ct.YELLOW_HL+ct.RED)
+
+    

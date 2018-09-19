@@ -14,8 +14,8 @@
     <!-- <arg name="binning" value="1" /> -->
     <!-- <arg name="sensor_scaling" value="1.0" /> -->
     <arg name="auto_gain" value="False" />
-    <arg name="master_gain" value="70" />
-    <arg name="red_gain" value="50" />
+    <arg name="master_gain" value="10" />
+    <arg name="red_gain" value="100" />
     <arg name="green_gain" value="0" />
     <arg name="blue_gain" value="30" />
     <arg name="auto_exposure" value="False" />

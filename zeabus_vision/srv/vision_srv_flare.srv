@@ -1,6 +1,6 @@
 # Call
-string task
-string req
+std_msgs/String task
+std_msgs/String req
 ---
 # Return
 zeabus_vision/vision_flare data

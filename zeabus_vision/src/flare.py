@@ -19,7 +19,7 @@ def mission_callback(msg):
     task = str(msg.task.data)
     req = str(msg.req.data)
 
-    print(msg)
+    print("task",task + " " + req)
     if task == 'flare' and req == 'near':
         return find_near_flare()
     elif task == 'flare' and req == 'far':
@@ -42,7 +42,7 @@ def message(n_obj=0, cx=0.0, cy=0.0, area=0.0):
     msg.cx = cx
     msg.cy = cy
     msg.area = area
-    print n_obj
+    print msg
     return msg
 
 

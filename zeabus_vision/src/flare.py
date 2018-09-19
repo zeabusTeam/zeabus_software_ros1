@@ -122,7 +122,7 @@ def find_far_flare():
         return message(n_obj=-1)
     mask = get_mask(image_result)
     ROI = get_ROI(mask,case = 'far')
-     if len(ROI) == 0 :
+    if len(ROI) == 0 :
         mode = 1
         print_result("NOT FOUND", color_text.RED)
     elif len(ROI) == 1 :

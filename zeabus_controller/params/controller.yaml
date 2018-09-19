@@ -1,0 +1,36 @@
+controller:    
+    twist:
+        type: zeabus_controller/TwistController
+        linear/x:
+            k_p: 50.0
+            k_i: 0.0
+            k_d: 0.0
+            limit_output: 50.0
+            time_constant: 0.05
+        linear/y:
+            k_p: 50.0
+            k_i: 0.0
+            k_d: 0.0
+            limit_output: 50.0
+            time_constant: 0.05
+        linear/z:
+            k_p: 2.5
+            k_i: 0.0
+            k_d: 0.0
+            limit_output: 10.0
+            time_constant: 0.05
+        angular/r:
+            k_p: 1.0
+            k_i: 0.3
+            k_d: 0.0
+            limit_output: 10.0
+        angular/p:
+            k_p: 1.0
+            k_i: 0.3
+            k_d: 0.0
+            limit_output: 10.0
+        angular/y:
+            k_p: 10.0
+            k_i: 0.0
+            k_d: 0.0
+            limit_output: 100.0

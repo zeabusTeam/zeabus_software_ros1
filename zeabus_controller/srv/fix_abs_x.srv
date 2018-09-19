@@ -1,0 +1,4 @@
+float64 fix_x
+std_msgs/String user
+---
+bool success

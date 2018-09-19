@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<launch> <group ns="Controller">
+	<node pkg="zeabus_controller"	type="pure_thrust_mapper.py"
+			name="thruster"				output="log"/>
+	<node pkg="zeabus_controller" 	type="feedback_linearlization.py" 
+			name="feedback" output="log">
+		<!-- for Coriolis effect and centripetal RB /-->
+			<param name="mass"		value="45"		/>
+			<param name="i_xx"		value="1.03"	/>
+			<param name="i_yy"		value="0.038"	/>
+			<param name="i_zz"		value="0.06"	/>
+		<!-- for Coiolis effect and centripetal A alpha_01 /-->
+			<param name="x_u_dot"	value="3"		/>
+			<param name="x_w_dot"	value="0"		/>
+			<param name="x_q_dot" 	value="0"		/>
+	
+		<!-- for Coiolis effect and centripetal A alpha_02 /-->
+			<param name="y_u_dot"	value="3"		/>
+			<param name="y_w_dot"	value="0"		/>
+			<param name="y_q_dot" 	value="0"		/>
+	
+		<!-- for Coiolis effect and centripetal A alpha_03 /-->
+			<param name="z_u_dot"	value="0"		/>
+			<param name="z_w_dot"	value="3"		/>
+			<param name="z_q_dot" 	value="0"		/>
+		<!-- for Coiolis effect and centripetal A beta_01 /-->
+			<param name="k_u_dot"	value="0"		/>
+			<param name="k_w_dot"	value="0.001"	/>
+			<param name="k_q_dot" 	value="0"		/>
+		<!-- for Coiolis effect and centripetal A beta_02 /-->
+			<param name="m_u_dot"	value="0"		/>
+			<param name="m_w_dot"	value="0"		/>
+			<param name="m_q_dot" 	value="0.001"	/>
+		<!-- for Coiolis effect and centripetal A beta_03 /-->
+			<param name="n_u_dot"	value="0"		/>
+			<param name="n_w_dot"	value="0"		/>
+			<param name="n_q_dot" 	value="0.001"	/>
+		<!-- for Hydrodynamic damping d i /-->
+			<param name="x_u"		value="0.3"		/>
+			<param name="y_u"		value="0.3"		/>
+			<param name="z_u"		value="0.3"		/>
+			<param name="k_u"		value="0.001"	/>
+			<param name="m_u"		value="0.001"	/>
+			<param name="n_u"		value="0.001"	/>
+		<!-- for Hydrodynamic damping d q /-->
+			<param name="x_abs_u"	value="85.25"	/>
+			<param name="y_abs_u"	value="100"		/>
+			<param name="z_abs_u"	value="173.975"	/>
+			<param name="k_abs_u"	value="0.399"	/>
+			<param name="m_abs_u"	value="8.925"	/>
+			<param name="n_abs_u"	value="23.296"	/>
+		<!-- for Gravitational and Buoyancy force /-->
+			<param name="weight"	value="441"		/>
+			<param name="buoyancy" 	value="390"		/>
+			<param name="x_cm" 		value="0"		/>
+			<param name="x_cb" 		value="0"		/>
+			<param name="y_cm" 		value="0"		/>
+			<param name="y_cb" 		value="0"		/>
+			<param name="z_cm" 		value="0"		/>
+			<param name="z_cb" 		value="0"		/>
+		<!-- for test param about array or list /-->
+			<param name="test"		value="[1,2,3]"	/>
+	</node>
+	<node pkg="zeabus_controller"	type="offset_control"
+			name="controller"			output="screen">	
+		<!-- component of controller offset code/-->
+			<param name="bound_force"	value="{0.00 , 0.00 , 0.00 , 0.00 , 0.00 , 0.00}"/>
+			<param name="ok_error"	value="{0.00 , 0.00 , 0.00 , 0.00 , 0.00 , 0.00}"	/>
+			<param name="yes_error"	value="{0.00 , 0.00 , 0.00 , 0.00 , 0.00 , 0.00}"	/>
+			<param name="can_fix"	value="{true , true , true , true , true , true}}"	/>
+		<!-- if else condition /-->
+			<param name="use_down"	value="true"	/>
+			<param name="force_down"	value="-1"		/>
+		<!-- if else tune or not/-->
+			<param name="tune"	value="true"/>
+	</node>
+</group> </launch>

@@ -1,0 +1,5 @@
+std_msgs/String type
+float64 adding
+std_msgs/String user
+---
+bool ok

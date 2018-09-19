@@ -1,0 +1,43 @@
+<package>
+  <name>zeabus_controller</name>
+  <version>0.0.1</version>
+  <description>zeabus_controller</description>
+  <maintainer email="samoooop@gmail.com">Trairat Punyawatthananukool</maintainer>
+  <maintainer email="supasan.k@ku.th">Supasan Komonlit(2018)</maintainer>
+  <license>BSD</license>
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>dynamic_reconfigure</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
+  <build_depend>roslib</build_depend>
+  <build_depend>message_generation</build_depend>
+  
+  <!--build_depend>zeabus_controller</build_depend-->
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>message_runtime</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>dynamic_reconfigure</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
+  <run_depend>roslib</run_depend>
+  <!--run_depend>controller</run_depend-->
+  <!-- Dependencies needed only for running tests. -->
+  <!--export>
+    <controller_interface plugin="${prefix}/plugin.xml"/>
+  </export-->
+</package>

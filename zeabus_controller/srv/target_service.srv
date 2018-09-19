@@ -1,0 +1,4 @@
+std_msgs/String type
+---
+float64 target_01
+float64 target_02

@@ -33,6 +33,7 @@ void publishIMUData(const hg_3dm_gx4::IMUData& data)
 //  q.setRPY(-(roll - M_PI/2.0), pitch, -yaw + M_PI);
   q.setRPY(roll, pitch, yaw );
 
+
   g_imu.orientation.w = q.w();
   g_imu.orientation.x = q.x();
   g_imu.orientation.y = q.y();

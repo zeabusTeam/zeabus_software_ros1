@@ -1,5 +1,0 @@
------------------ start log control -----------------
------- Order by :  when Fri Aug  3 11:46:12 2018
---- order to absolute yaw
-now target is 1.71681
-

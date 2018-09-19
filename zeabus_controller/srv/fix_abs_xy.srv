@@ -1,5 +1,0 @@
-float64 x
-float64 y
-std_msgs/String user
----
-bool success

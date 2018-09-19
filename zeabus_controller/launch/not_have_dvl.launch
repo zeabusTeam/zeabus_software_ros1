@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-    
-    <node name="Controller" pkg="zeabus_controller" type="not_have_dvl" output="screen"/>
-    <node name="origin_thruster_2018" pkg="zeabus_controller" type="2018_thrust_mapper_origin.py" output="log">
-    </node>
-    
-</launch>

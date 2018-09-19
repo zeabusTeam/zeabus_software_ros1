@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-    
-    <node name="force_controller" pkg="zeabus_controller" type="force_control" output="screen"/>
-    <node name="force_thruster_2018" pkg="zeabus_controller" type="2018_thrust_mapper_force.py" output="log">
-    </node>
-    
-</launch>

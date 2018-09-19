@@ -37,19 +37,17 @@ class AutoExposure:
         return value
 
     def get_mode(self, data):
-        if data is None:
-            return None
-        values, counts = np.unique(data, return_counts=True)
-        mode_index = counts.argmax()
-        mode = values[mode_index]
-        return mode
+        count = np.bincount(data)
+        max_idx = count.max()
+        count = list(count)
+        return count.index(max_idx)
 
     def adjust_exposure_value(self):
         while not rospy.is_shutdown():
             if self.hsv is None:
                 img_is_none()
                 continue
-            h, s, v = cv.split(self.hsv)
+            v = cv.split(self.hsv)[2]
             mode = self.get_mode(v.ravel())
             ev = self.get_param()
             print_result('Exposure')

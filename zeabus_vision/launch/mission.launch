@@ -1,0 +1,11 @@
+<launch>
+    <arg name="mission"/>
+    <arg name="number"/>
+    <arg name="camera_position"/>
+    <rosparam ns="color_range_$(arg camera_position)_$(arg number)_$(arg mission)" command="load" file="$(find zeabus_vision)/params/$(number)/color_range_$(arg camera_position)_$(arg mission).yaml"></rosparam>
+    <node pkg="zeabus_vision" name="color_range_$(arg camera_position)_$(arg number)_$(arg mission)" type="$(arg mission).py" args="color_range_$(arg camera_position)_$(arg number)_$(arg mission)" output="screen">
+        <param name="camera_position" type="str" value="$(arg camera_position)"/>
+        <param name="number" type="str" value="$(arg number)"/>
+        <param name="mission" type="str" value="$(arg mission)"/>
+    </node>
+</launch>

@@ -1,4 +1,5 @@
 import rospy
+import math
 
 from geometry_msgs.msg import Twist, Pose
 from nav_msgs.msg import Odometry
@@ -12,9 +13,13 @@ class control_auv:
 
 	# parameter want_init_node is if you want to init node please True
 	#			this make for protected situation init node overlap
-	def __init__( self , want_init_node = False , name_node = ""):
+	def __init__( self , name_node = "" , want_init_node = False):
+
+		self.collect_x = 0
+		self.collect_y = 0
 
 		self.name = String()
+		self.message = String()
 		if want_init_node : 
 			if name_node == "":
 				rospy.init_node( "robot_control" )
@@ -33,6 +38,12 @@ class control_auv:
 		self.client_absolute_depth	= rospy.ServiceProxy('/fix_abs_depth' ,  fix_abs_depth )
 		self.client_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , fix_abs_yaw )
 		self.client_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , fix_abs_yaw )
+		self.client_target_position = rospy.ServiceProxy('/know_target' , target_service )
+
+		self.message.data = "xy"
+		receive_data = self.client_target_position( self.message )
+		self.collect_x = receive_data.target_01
+		self.collect_y = receive_data.target_02
 
 	def set_name( self , name ):
 		self.name.data = name
@@ -90,3 +101,17 @@ class control_auv:
 			self.velocity_data.angular.z = 0
 
 		self.publisher_velocity.publish( self.velocity_data )
+
+	def collect_position( self ):
+		self.message.data = "xy"
+		receive_data = self.client_target_position( self.message )
+		self.collect_x = receive_data.target_01
+		self.collect_y = receive_data.target_02
+
+	def calculate_distance( self ):
+		self.message.data = "xy"
+		receive_data = self.client_target_position( self.message )
+		return math.sqrt(
+						math.pow( receive_data.target_01 - self.collect_x , 2 ) +
+						math.pow( receive_data.target_02 - self.collect_y , 2 )
+					)

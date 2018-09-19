@@ -7,12 +7,12 @@ project(zeabus_planner)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED rospy)
+find_package(catkin REQUIRED rospy geometry_msgs std_msgs)
 
 catkin_package(
 #  INCLUDE_DIRS include
   LIBRARIES 
-  CATKIN_DEPENDS rospy
+  CATKIN_DEPENDS rospy geometry_msgs
   DEPENDS 
 )
 

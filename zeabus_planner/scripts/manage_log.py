@@ -49,4 +49,7 @@ class log:
 		answer =	str( current_time.tm_year ) + "-" + str( current_time.tm_mon ) 
 		answer +=	"-" + str( current_time.tm_mday ) + "-" + str( current_time.tm_hour) 
 		answer +=	"-" + str( current_time.tm_min)
-		return str(answer)	
+		return str(answer)
+
+	def close( self ):
+		self.file_log.close()	

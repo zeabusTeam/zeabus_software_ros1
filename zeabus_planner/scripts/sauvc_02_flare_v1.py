@@ -16,7 +16,7 @@ class play_flare:
 		rospy.wait_for_service('vision_flare')
 		print("I found flare service")
 		
-		self.rate = rospy.Rate(30)
+		self.rate = rospy.Rate( rate)
 
 	def set_up( self ):
 		self.already_setup = True
@@ -72,10 +72,10 @@ class play_flare:
 				break
 			else:
 				self.log_command.write("I not found in far mode" , False , 1)
-			if( self.auv.calculate_distance > 5 ) break
+			if( self.auv.calculate_distance > 5 ): break
 		
-		if(self.near_mode) self.find_near()
-		if(self.far_mode) self.find_far()
+		if(self.near_mode): self.find_near()
+		if(self.far_mode): self.find_far()
 		if( self.past_mode == 'forward'):
 			self.past_mode = 'left'
 			self.survey_forward()
@@ -110,9 +110,9 @@ class play_flare:
 				break
 			else:
 				self.log_command.write("I not found in far mode" , False , 1)
-			if( self.auv.calculate_distance() > 5) break
-		if(self.near_mode) self.find_near()
-		if(self.far_mode) self.find_far()
+			if( self.auv.calculate_distance() > 5): break
+		if(self.near_mode): self.find_near()
+		if(self.far_mode): self.find_far()
 		if( self.past_mode == 'forward'):
 			self.past_mode = 'right'
 			self.survey_forward()
@@ -147,9 +147,9 @@ class play_flare:
 				break
 			else:
 				self.log_command.write("I not found in far mode" , False , 1)
-			if( self.auv.calculate_distance() > 2) break
-		if(self.near_mode) self.find_near()
-		if(self.far_mode) self.find_far()
+			if( self.auv.calculate_distance() > 2): break
+		if(self.near_mode): self.find_near()
+		if(self.far_mode): self.find_far()
 		if( self.past_mode == 'right'):
 			self.past_mode = 'forward'
 			self.survey_left()
@@ -171,12 +171,12 @@ class play_flare:
 					self.log_command.write("I move forward")
 					print("now move forward")
 					self.auv.velocity( x = 0.3 )
-				else if( self.data_center_x < 0 ):
+				elif( self.data_center_x < 0 ):
 					print("now move left")
 					self.auv.velocity( y = -0.4 )
 				else:
 					print("now move right")
-					self.auv.velocity( y = 0.4 ):
+					self.auv.velocity( y = 0.4 )
 
 			else:
 				print("I think it finish")
@@ -201,7 +201,7 @@ class play_flare:
 					self.rate.sleep()
 					self.auv.velocity( x = 0.8 )
 					self.rate.sleep()
-				else if( self.data_center_x < 0 ):
+				elif( self.data_center_x < 0 ):
 					print("move left in far mode")
 					self.log_command.write("I move left")
 					self.auv.velocity( y = -0.6)
@@ -221,12 +221,12 @@ class play_flare:
 				break
 			else:
 				print("don't found by near mode in far mode")
-				if( think_to_break == 1) break
+				if( think_to_break == 1): break
 		if( self.data_have ):
 			self.find_near()
 		elif( think_to_break == 1):
-			if( self.past_center_x < 0 ) self.survey_left()
-			else self.survey_right()
+			if( self.past_center_x < 0 ): self.survey_left()
+			else: self.survey_right()
 #---------------------------------------- End part --------------------------------------------	
 
 	def request_data( self , amont , type_request):
@@ -276,6 +276,6 @@ if __name__=='__main__':
 
 	rospy.init_node(" Mission Flare ")		
 
-	flare = plat_flare()
+	flare = play_flare( 30 )
 	flare.set_up()
 	flare_start()

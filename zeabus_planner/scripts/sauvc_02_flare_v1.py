@@ -2,8 +2,13 @@
 
 import rospy
 import math
-from manage_log import log
-from control_auv import control_auv 
+
+try:
+	from zeabus_extension.manage_log import log
+	from zeabus_extension.control_auv import control_auv 
+except:
+	print("Pleas install setup.bash in zeabus_extension package")
+	exit()
 from zeabus_vision.srv import vision_srv_flare
 from zeabus_vision.msg import vision_flare
 from std_msgs.msg import String
@@ -309,7 +314,7 @@ class play_flare:
 
 if __name__=='__main__':
 
-	rospy.init_node(" Mission Flare ")		
+	rospy.init_node("Mission Flare")		
 
 	flare = play_flare( 30 )
 	flare.set_up()

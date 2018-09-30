@@ -1,0 +1,66 @@
+<launch>
+    <!-- source: http://wiki.ros.org/ueye_cam -->
+    <!-- Set ALL Argument -->
+    <arg name="nodelet_manager_name" value="front" />
+    <arg name="camera_name" value="/camera/front" />
+    <arg name="camera_topic" value="image_raw" />
+    <arg name="camera_id" value="2" />
+    <arg name="image_width" value="1936" />
+    <arg name="image_height" value="1216" />
+    <!-- <arg name="image_left" value="-1" /> -->
+    <!-- <arg name="image_top" value="-1" /> -->
+    <arg name="color_mode" value="rgb8" />
+    <!-- <arg name="subsampling" value="1" /> -->
+    <!-- <arg name="binning" value="1" /> -->
+    <!-- <arg name="sensor_scaling" value="1.0" /> -->
+    <arg name="auto_gain" value="False" />
+    <arg name="master_gain" value="10" />
+    <arg name="red_gain" value="50" />
+    <arg name="green_gain" value="0" />
+    <arg name="blue_gain" value="30" />
+    <arg name="auto_exposure" value="False" />
+    <arg name="exposure" value="33.0" />
+    <arg name="auto_white_balance" value="False" />
+    <!-- <arg name="white_balance_red_offset" value="0" /> -->
+    <!-- <arg name="white_balance_blue_offset" value="0" /> -->
+    <arg name="ext_trigger_mode" value="False" />
+    <arg name="auto_frame_rate" value="False" />
+    <arg name="frame_rate" value="10.0" />
+    <arg name="pixel_clock" value="25" />
+    <!-- <arg name="flip_upd" value="False" /> -->
+    <arg name="flip_lr" value="False" />
+
+    <!-- Front Camera Node -->
+    <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)"
+        args="manager" output="screen" />
+    <node pkg="nodelet" type="nodelet" name="ueye_cam_nodelet_$(arg nodelet_manager_name)"
+        args="load ueye_cam/ueye_cam_nodelet $(arg nodelet_manager_name)">
+        <param name="camera_name" type="str" value="$(arg camera_name)" />
+        <param name="camera_topic" type="str" value="$(arg camera_topic)" />
+        <param name="camera_id" type="int" value="$(arg camera_id)" />
+        <param name="image_width" type="int" value="$(arg image_width)" />
+        <param name="image_height" type="int" value="$(arg image_height)" />
+        <!-- <param name="image_left" type="int" value="$(arg image_left)" /> -->
+        <!-- <param name="image_top" type="int" value="$(arg image_top)" /> -->
+        <param name="color_mode" type="str" value="$(arg color_mode)" />
+        <!-- <param name="subsampling" type="int" value="$(arg subsampling)" /> -->
+        <!-- <param name="binning" type="int" value="$(arg binning)" /> -->
+        <!-- <param name="sensor_scaling" type="double" value="$(arg sensor_scaling)" /> -->
+        <param name="auto_gain" type="bool" value="$(arg auto_gain)" />
+        <param name="master_gain" type="int" value="$(arg master_gain)" />
+        <param name="red_gain" type="int" value="$(arg red_gain)" />
+        <param name="green_gain" type="int" value="$(arg green_gain)" />
+        <param name="blue_gain" type="int" value="$(arg blue_gain)" />
+        <param name="auto_exposure" type="bool" value="$(arg auto_exposure)" />
+        <param name="exposure" type="double" value="$(arg exposure)" />
+        <param name="auto_white_balance" type="bool" value="$(arg auto_white_balance)" />
+        <!-- <param name="white_balance_red_offset" type="int" value="$(arg white_balance_red_offset)" /> -->
+        <!-- <param name="white_balance_blue_offset" type="int" value="$(arg white_balance_blue_offset)" /> -->
+        <param name="ext_trigger_mode" type="bool" value="$(arg ext_trigger_mode)" />
+        <param name="auto_frame_rate" type="bool" value="$(arg auto_frame_rate)" />
+        <param name="frame_rate" type="double" value="$(arg frame_rate)" />
+        <param name="pixel_clock" type="int" value="$(arg pixel_clock)" />
+        <!-- <param name="flip_upd" type="bool" value="$(arg flip_upd)" /> -->
+        <param name="flip_lr" type="bool" value="$(arg flip_lr)" />
+    </node>
+</launch>

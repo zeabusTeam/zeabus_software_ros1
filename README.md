@@ -2,10 +2,14 @@
 This repository start on August 10, 2018
 
 ## Table of contents
-* [Git tutorial](#tutorial-for-git-beginner)
-    * [Windows user](#windows-user)
-    * [Linux or macOS user](#linux-or-macos-user)
-* [Zeabus vision](#zeabus-vision)
+- [Git tutorial](#tutorial-for-git-beginner)
+   * [Windows user](#windows-user)
+   * [Linux or macOS user](#linux-or-macos-user)
+- [Zeabus vision](#zeabus-vision)
+   * [Camera](#how-to-open-camera)
+      + [Front camera](#front-camera-only)
+      + [Bottom camera](#bottom-camera-only)
+      + [All camera](#open-all-camera)
     
     
 ## Tutorial for Git beginner
@@ -33,4 +37,23 @@ __Second way__
 [Back to Top](#zeabus-software)
 
 ## Zeabus vision
+### How to open camera
+#### Front camera only
+```
+roslaunch zeabus_vision front.launch
+```
+#### Bottom camera only
+```
+roslaunch zeabus_vision bottom.launch
+```
+#### Open all camera
+```
+roslaunch zeabus_vision camera.launch
+```
+
+[Back to Top](#zeabus-software)
+
+### How to run mission code
 (temporary reconstruction)
+
+[Back to Top](#zeabus-software)

@@ -46,7 +46,12 @@ class play_gate:
 		self.log_vision = log( "zeabus_planner" , "log" , "02_gate_vision")
 		self.client_gate = rospy.ServiceProxy('vision_gate' , vision_srv_gate )
 
-	def far_analysis( self , color , amont):
+		self.auv = control_auv( "play gate")
+		self.auv.absolute_depth( "-1.3")
+
+	def move_forward( self, distance )
+
+	def analysis( self , color , amont):
 		self.log_vision.write( "target color of gate is " + color , True , 0)
 		print( "find color : " + color + " is ", end='' )
 		self.reset_data()

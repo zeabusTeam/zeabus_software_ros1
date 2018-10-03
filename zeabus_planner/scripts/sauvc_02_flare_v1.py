@@ -34,7 +34,7 @@ class play_flare:
 		self.data_center_x = 0
 		self.data_center_y = 0
 		self.data_area = 0
-		self.auv = control_auv( "plan flare" )
+		self.auv = control_auv( "play flare" )
 		self.past_have = False
 		self.past_center_x = 0
 		self.past_center_y = 0

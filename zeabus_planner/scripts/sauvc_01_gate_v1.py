@@ -14,6 +14,8 @@ from zeabus_vision.srv import vision_srv_gate
 from zeabus_vision.msg import vision_gate
 from std_msgs.msg import String
 
+
+#function last_play and setup have depth required to check
 class play_gate:
 
 	def __init__( self , rate ):
@@ -40,7 +42,7 @@ class play_gate:
 		self.already_setup = True
 
 		self.navigation = { "first_forward" : first_forward , "first_survey" : first_survey,
-							"forward" : forwaard , "survey" : survey}
+							"forward" : forward , "survey" : survey}
 
 		self.log_command = log( "zeabus_planner" , "log" , "02_gate_command")
 		self.log_vision = log( "zeabus_planner" , "log" , "02_gate_vision")
@@ -48,14 +50,141 @@ class play_gate:
 
 		self.auv = control_auv( "play gate")
 		self.auv.absolute_depth( "-1.3")
+		self.past_step = 'don\'t move'	# don't move = 0, forward = 1 , right = 2 , left = 3
 
 	def move_forward( self, distance )
+		self.log_command.write("Now I move forward distance is " + str( distance) , True , 0)
+		self.auv.collect_position()
+		while( rospy.is_shutdown() and self.auv.calculate_distance() < distance ):
+			self.auv.velocity( x = 0.1 )
+			self.rate.sleep()
+			self.all_analysis()
+			if( self.result_vision['color'] == None ):
+				self.log_command.write("Not found all")
+				self.rate.sleep()
+			elif( self.result_vision['color'] == 'green')
+				self.log_command.write("I found green")
+				self.rate.sleep()
+				break
+			elif( self.result_vision['color'] == 'red')
+				self.log_command.write("I found red")
+				self.rate.sleep()
+				break
+		self.log_command.write("Out Loop")
+		print("Out Loop")
+		if( self.result_vision['color'] == None):
+			if( self.past_step == 'don\'t move' ):
+				self.past_step = 'forward':
+				if( self.navigation['fist_survey'] < 0 )
+					self.survey_right( abs(self.navigation['first_survey']) )
+				else:
+					self.survey_left( abs(self.navigation['first_survey']) )
+			elif( self.past_step == 'right' )
+				self.past_step = 'forward' 
+				self.survey_lety( self.navigation['survey'])
+			elif( self.past_step == 'left' )
+				self.past_step = 'forward'
+				self.survey_right( self.navigation['survey'])
+		elif( self.result_vision['color'] in [ 'red' , 'green']):
+			self.last_play()
+
+	def survey_left( self , distance )
+		self.log_command.write("Now I move servey left distance is " + str( distance) , True , 0)
+		self.auv.collect_position()
+		while( rospy.is_shutdown() and self.auv.calculate_distance() < distance ):
+			self.auv.velocity( y = 0.3 )
+			self.rate.sleep()
+			self.all_analysis()
+			if( self.result_vision['color'] == None ):
+				self.log_command.write("Not found all")
+				self.rate.sleep()
+			elif( self.result_vision['color'] == 'green')
+				self.log_command.write("I found green")
+				self.rate.sleep()
+				break
+			elif( self.result_vision['color'] == 'red')
+				self.log_command.write("I found red")
+				self.rate.sleep()
+				break
+		self.log_command.write("Out Loop")
+		print("Out Loop")
+		if( self.result_vision['color'] == None):
+			self.past_step = 'lefy'
+			self.move_forward( self.navigation['forward'])
+		elif( self.result_vision['color'] in [ 'red' , 'green']):
+			self.last_play()
+
+	def survey_right( self , distance )
+		self.log_command.write("Now I move servey right distance is " +str( distance), True , 0)
+		self.auv.collect_position()
+		while( rospy.is_shutdown() and self.auv.calculate_distance() < distance ):
+			self.auv.velocity( y = -0.3 )
+			self.rate.sleep()
+			self.all_analysis()
+			if( self.result_vision['color'] == None ):
+				self.log_command.write("Not found all")
+				self.rate.sleep()
+			elif( self.result_vision['color'] == 'green')
+				self.log_command.write("I found green")
+				self.rate.sleep()
+				break
+			elif( self.result_vision['color'] == 'red')
+				self.log_command.write("I found red")
+				self.rate.sleep()
+				break
+		self.log_command.write("Out Loop")
+		print("Out Loop")
+		if( self.result_vision['color'] == None):
+			self.past_step = 'lefy'
+			self.move_forward( self.navigation['forward'])
+		elif( self.result_vision['color'] in [ 'red' , 'green']):
+			self.last_play()
+
+	def last_play( self ):
+		self.log_command.write("Now is last part" , True , 0)
+		self.auv.collect_position()
+		self.log_command.write("I will move to center before" , False , 1)
+		print( "move to center ")
+		while( rospy.is_shutdown() ):
+			self.rate.sleep()
+			self.all_analysis( 5 )
+			if( self.result_vision['color'] == None):
+				self.log_command.write("I faliure")
+				print("faliure while move to center")
+				exit()
+			if( abs(self.find_center('y')) < 0.1 ):
+				print("change depth")
+				self.log_command.write("Don't depth already I will move depth" , False , 2)
+				self.auv.absolute_depth(-1.6)
+			elif( self.find_center('x') < -0.2 ):
+				print("move left to center")
+				self.log_command.write("Move to left")
+				self.auv.velocity( 0.08 )
+			elif( self.find_center('x') > 0.2 ):
+				print("move right to center")
+				self.log_command.write("Move to right")
+				self.auv.velocity( -0.08 )
+			else:
+				break
+		self.log_command.write("Now it center move forward")
+		self.auv.collect_position()
+
+		
+
+			
+	def all_analysis( self, amont ):
+		self.result_vision = { "color" : None  , "cx_1" : 0 , "cx_2" : 0 ,
+							 "cy_1" : 0 , "cy_2" : 0 , "area" : 0 }
+		for color in ['green' , 'red']:
+			self.analysis( color , amont)
+			if( self.result_vision != None):
+				break
 
 	def analysis( self , color , amont):
 		self.log_vision.write( "target color of gate is " + color , True , 0)
 		print( "find color : " + color + " is ", end='' )
 		self.reset_data()
-		while( True ):
+		while( not rospy.is_shutdown() ):
 			request_vision( String("gate") , String(color) )
 			if( self.data_vision["n_obj"] == -1 ):
 				self.collect_vision["-1"] += 1
@@ -80,6 +209,7 @@ class play_gate:
 					self.result_vision['cx_2'] = self.collect_vision['1']['cx_2']/amont
 					self.result_vision['cy_1'] = self.collect_vision['1']['cy_1']/amont
 					self.result_vision['cy_2'] = self.collect_vision['1']['cy_2']/amont
+					self.result_vision['area'] = self.collect_vision['1']['area']/amont
 					print("Found cx are " + str(self.result_vision['cx_1']) + " : " +
 							str(self.result_vision['cx_2']) + " and cy are " + 
 							str(self.result_vision['cy_1']) + " : " + 
@@ -113,6 +243,16 @@ class play_gate:
 			self.collect_vision["1"][first] += self.data_vision[second]
 			self.collect_vision["1"][second] += self.data_vision[first]
 			
+	def find_center( self , axis ):
+		if( axis == 'y' ):
+			return ( self.result_vision['cy_2'] + self.result_vision['cy_1'] ) / 2
+		elif( axis == 'x'):
+			return ( self.result_vision['cx_2'] + self.result_vision['cx_1'] ) / 2
+		else:
+			print("invalid input function find_center")
+			exit()
+			return -1
+
 	def reset_data( self ):
 		self.collect_vision = { "-1 " : 0 , "0" : 0 , 
 								"1": { "amont" : 0 , "cx_1" : 0 , "cx_2" : 0 , 

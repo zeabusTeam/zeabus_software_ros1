@@ -21,7 +21,8 @@ class play_gate:
 							 "cy_01" : 0 , "cy_02" : 0 , "area" : 0 }
 
 		self.collect_vision = { "-1 " : 0 , "0" : 0 , 
-								"1": { "amont" : 0 , "avg_x" : 0 , "avg_y" : 0 , "avg_area" : 0}}
+								"1": { "amont" : 0 , "cx_1" : 0 , "cx_2" : 0 , 
+								"cy_1" : 0 , "cy_2" : 0 , "avg_area" : 0}}
 
 		self.data_vision = {"n_obj" : -1 , "cx1" : 0 , "cx2" : 0 ,
 							"cy01" : 0 , "cy02" : 0 , "area" : 0}
@@ -48,11 +49,16 @@ class play_gate:
 	def far_analysis( self , color , amont):
 		self.log_vision( "target color of gate is " + color , True , 0)
 		print( "find color : " + color , end='' )
-
+		self.reset_data()
 		while( True ):
 			request_vision( String("gate") , String(color) )
-			if( self.data_vision["n_obj"] == -1 )
-				self.collect_vision["-1"]++;
+			if( self.data_vision["n_obj"] == -1 ):
+				self.collect_vision["-1"] += 1
+			elif( self.data_vision["n_obj"] == 0):
+				self.collect_vision["0"] += 1
+			else:
+				self.collect_vision['1']['amont'] += 1
+				self.collect_vision['1']['avg_x'] += 
 
 	def	request_vision( self , first_order , second_order ):
 		receive_data = self.client_gate( first_order , second_order)
@@ -62,6 +68,15 @@ class play_gate:
 		self.data_vision['cy1'] = receive_data.data.cy1
 		self.data_vision['cy2'] = receive_data.data.cy2
 		self.data_vision['area'] = receive_dataa.data.area
+
+	def split_2_data( self , first , second ): # for decision 2 valaue to x1 or x2
+		if( self.data_vision[first] < self.data_vision[second] ):
+			self.collect_vision["1"][first] = self.data_vision[first]
+			self.collect_vision["1"][second] = self.data_vision[second]
+		else:
+			self.collect_vision["1"][first] = self.data_vision[second]
+			self.collect_vision["1"][second] = self.data_vision[first]
+			
 
 	def reset_data( self ):
 		self.collect_vision = { "-1 " : 0 , "0" : 0 , 

@@ -59,7 +59,7 @@ def get_ROI(mask, case):
     contours = cv.findContours(
         mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
     for cnt in contours:
-        check_area = 700 if case == 'near' else 100
+        check_area = 1500 if case == 'near' else 100
         print (check_area,case)
         area = cv.contourArea(cnt)
         print area
@@ -73,9 +73,9 @@ def get_ROI(mask, case):
         if case == 'near':
             percent_area = (float(area)/(himg*wimg))
             print percent_area
-            big_case = ((percent_area > 0.4) and bottom_excess)
+            big_case = ((percent_area > 0.3) and bottom_excess)
             print big_case
-            small_case = ((percent_area < 0.4) and bottom_excess)
+            small_case = ((percent_area <= 0.3) and bottom_excess and not (left_excess or right_excess))
             print small_case
             if big_case or small_case:
                 ROI.append(cnt)

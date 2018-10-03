@@ -9,6 +9,7 @@ try:
 except:
 	print("Pleas install setup.bash in zeabus_extension package")
 	exit()
+
 from zeabus_vision.srv import vision_srv_flare
 from zeabus_vision.msg import vision_flare
 from std_msgs.msg import String

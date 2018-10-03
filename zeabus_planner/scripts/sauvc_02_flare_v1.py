@@ -9,6 +9,7 @@ try:
 except:
 	print("Pleas install setup.bash in zeabus_extension package")
 	exit()
+
 from zeabus_vision.srv import vision_srv_flare
 from zeabus_vision.msg import vision_flare
 from std_msgs.msg import String
@@ -33,7 +34,7 @@ class play_flare:
 		self.data_center_x = 0
 		self.data_center_y = 0
 		self.data_area = 0
-		self.auv = control_auv( "plan flare" )
+		self.auv = control_auv( "play flare" )
 		self.past_have = False
 		self.past_center_x = 0
 		self.past_center_y = 0

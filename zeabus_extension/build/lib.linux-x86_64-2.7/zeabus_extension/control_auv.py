@@ -39,6 +39,7 @@ class control_auv:
 		self.client_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , fix_abs_yaw )
 		self.client_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , fix_abs_yaw )
 		self.client_target_position = rospy.ServiceProxy('/know_target' , target_service )
+		self.client_ok_position		= rospy.ServiceProxy('/ok_position' , ok_position)
 
 		self.message.data = "xy"
 		receive_data = self.client_target_position( self.message )
@@ -47,6 +48,14 @@ class control_auv:
 
 	def set_name( self , name ):
 		self.name.data = name
+
+	def ok_position( self , request , adding ):
+		try:
+			result = self.client_ok_position( String(request) , adding , self.name)
+#			print("Finish client ok Position")
+			return result.ok
+		except rospy.ServiceException , e:
+			print "Service call failed: %s"%e
 
 	def absolute_depth( self , depth ):
 		try:

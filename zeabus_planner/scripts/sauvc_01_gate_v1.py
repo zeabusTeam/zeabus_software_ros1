@@ -159,19 +159,43 @@ class play_gate:
 			elif( self.find_center('x') < -0.2 ):
 				print("move left to center")
 				self.log_command.write("Move to left")
-				self.auv.velocity( 0.08 )
+				self.auv.velocity( y = 0.08 )
 			elif( self.find_center('x') > 0.2 ):
 				print("move right to center")
 				self.log_command.write("Move to right")
-				self.auv.velocity( -0.08 )
+				self.auv.velocity( y = -0.08 )
+			elif( self.result_vision['area'] < 0.6)
+				self.auv.velocity( x = 0.1)
 			else:
 				break
-		self.log_command.write("Now it center move forward")
+		self.log_command.write("Now it center move forward", False , 1)
 		self.auv.collect_position()
+		if( self.result_vision['color'] == 'green'):
+			self.log_command.write("this is green move left", False , 2)
+			print("move right")
+			while( not rospy.is_shutdown() and self.auv.calculate_distance() < 0.6 ):
+				self.auv.velocity( y = 0.1 )
+				self.rate.sleep()
+			self.log_command.write("finish move left" , False , 2)
+			self.last_move()
+		elif( self.result_vision['color'] == 'red'):
+			print("move left")
+			while( not rospy.is_shutdown() and self.auv.calculate_distance() < 0.6):
+				self.auv.velocity( y = -0.1 )
+				self.rate.sleep()
+			self.log_command.write("finish move right", False , 2)
+			self.last_move()
+		else:
+			print("what the fuck")
 
-		
+	def last_move( self ):
+		print( "This is last move")
+		while( not rospy.is_shutdown() and self.auv.calculate_distance() < 1 ):
+			self.auv.velocity( x = 0.2 )
+			self.rate.sleep()
+		print( "I think it finish?")
+		self.log_command.write("I think this is Finish" , True , 0)
 
-			
 	def all_analysis( self, amont ):
 		self.result_vision = { "color" : None  , "cx_1" : 0 , "cx_2" : 0 ,
 							 "cy_1" : 0 , "cy_2" : 0 , "area" : 0 }

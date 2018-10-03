@@ -46,8 +46,17 @@ class play_flare:
 	def play( self ):
 		if( not self.already_setup ):
 			self.set_up()
-		
+		self.auv.absolute_depth(-3.5)
+		self.log_command.write("Waiting ok depth" , True , 0)
+		print("Waiting Depth")
+		while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.1) ):
+			self.rate.sleep()	
+		self.log_command.write("depth is OK next wait yaw" , False , 1)
+		print("Waiting yaw")
+		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1) ):
+			self.rate.sleep()		
 		self.log_command.write("I will start now", True , 0)
+		print("I will start now")
 		# plan is move left forward right and forward left continue
 		self.survey_left( )
 
@@ -209,6 +218,7 @@ class play_flare:
 	def find_far(self ):
 		self.log_command.write("I play on far mode" , True)
 		print( "Now play on far mode")
+		think_to_break = 0
 		while not rospy.is_shutdown():
 			self.request_data( 6 , "far" )
 			self.rate.sleep()

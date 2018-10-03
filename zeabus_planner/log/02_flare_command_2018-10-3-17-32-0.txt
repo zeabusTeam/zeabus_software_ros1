@@ -1,0 +1,466 @@
+---------------------> 2018-10-3-17-32 <---------------------
+Waiting ok depth
+	depth is OK next wait yaw
+---------------------> 2018-10-3-17-32 <---------------------
+I will start now
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+Don't found by use near
+---------------------> 2018-10-3-17-32 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-3-17-32 <---------------------
+I play on far mode
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move forward
+I move left
+I move left
+I move forward
+I move forward
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move left
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I found near Wow
+---------------------> 2018-10-3-17-33 <---------------------
+I play on near mode
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+---------------------> 2018-10-3-17-33 <---------------------
+Finish this part

@@ -1,0 +1,712 @@
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.141085271318	cy:0.698765432099	area:0.00565030146425
+		Found data and result is cx:0.13488372093	cy:0.703703703704	area:0.0059718633362
+		Found data and result is cx:0.137984496124	cy:0.550617283951	area:0.00210546463776
+		Found data and result is cx:0.137984496124	cy:0.856790123457	area:0.00210546463776
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.131782945736	cy:0.708641975309	area:0.00501100583788
+		Found data and result is cx:0.13488372093	cy:0.56049382716	area:0.00159249688965
+		Found data and result is cx:0.128682170543	cy:0.841975308642	area:0.00273710402909
+		Found data and result is cx:0.131782945736	cy:0.753086419753	area:0.000796248444827
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.125581395349	cy:0.738271604938	area:0.0049153028998
+		Found data and result is cx:0.125581395349	cy:0.6	area:0.00168819982773
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.116279069767	cy:0.762962962963	area:0.00404249210451
+		Found data and result is cx:0.119379844961	cy:0.634567901235	area:0.0012862474878
+		Found data and result is cx:0.119379844961	cy:0.886419753086	area:0.0012862474878
+			Not Found
+			Not Found
+			Not Found
+		Found data and result is cx:0.116279069767	cy:0.762962962963	area:0.00445592879701
+		Found data and result is cx:0.116279069767	cy:0.634567901235	area:0.00151593453919
+Last result is Found data and data is cx:0.383565891473	cy:2.1387654321	area:0.00903206048426
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.113178294574	cy:0.886419753086	area:0.00115226337449
+		Found data and result is cx:0.113178294574	cy:0.654320987654	area:0.00202124605225
+		Found data and result is cx:0.116279069767	cy:0.718518518519	area:0.000551248923342
+			Not Found
+		Found data and result is cx:0.113178294574	cy:0.772839506173	area:0.00352186812135
+		Found data and result is cx:0.113178294574	cy:0.649382716049	area:0.0010718729065
+			Not Found
+			Not Found
+			Not Found
+		Found data and result is cx:0.113178294574	cy:0.777777777778	area:0.00378983634798
+Last result is Found data and data is cx:0.177622739018	cy:1.09967078189	area:0.00352339936836
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.116279069767	cy:0.659259259259	area:0.00119437266724
+			Not Found
+		Found data and result is cx:0.113178294574	cy:0.787654320988	area:0.00329218106996
+		Found data and result is cx:0.113178294574	cy:0.674074074074	area:0.000991482438511
+		Found data and result is cx:0.113178294574	cy:0.901234567901	area:0.000991482438511
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+		Found data and result is cx:0.116279069767	cy:0.797530864198	area:0.00381280505312
+		Found data and result is cx:0.116279069767	cy:0.693827160494	area:0.0010718729065
+Last result is Found data and data is cx:0.144332472007	cy:0.935541838134	area:0.0024795993237
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.113178294574	cy:0.802469135802	area:0.00275624461671
+		Found data and result is cx:0.116279069767	cy:0.703703703704	area:0.000689061154177
+			Not Found
+			Not Found
+			Not Found
+		Found data and result is cx:0.116279069767	cy:0.822222222222	area:0.00307397837114
+		Found data and result is cx:0.119379844961	cy:0.723456790123	area:0.000949373145756
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+I can't found in far mode. Why?
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.119379844961	cy:0.817283950617	area:0.00283280696717
+		Found data and result is cx:0.119379844961	cy:0.723456790123	area:0.000777107857211
+		Found data and result is cx:0.122480620155	cy:0.807407407407	area:0.00338405589052
+		Found data and result is cx:0.125581395349	cy:0.718518518519	area:0.00111015408173
+		Found data and result is cx:0.116279069767	cy:0.896296296296	area:0.000987654320988
+Last result is Found data and data is cx:0.242509905254	cy:1.59007133059	area:0.00380800714582
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+		Found data and result is cx:0.125581395349	cy:0.827160493827	area:0.00321561871949
+		Found data and result is cx:0.125581395349	cy:0.733333333333	area:0.00103359173127
+			Not Found
+		Found data and result is cx:0.119379844961	cy:0.837037037037	area:0.00230835486649
+		Found data and result is cx:0.122480620155	cy:0.743209876543	area:0.000643123743899
+			Not Found
+	Last result is not found
+I can't found in far mode. Why?
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.119379844961	cy:0.856790123457	area:0.00225858933869
+			Not Found
+			Not Found
+		Found data and result is cx:0.122480620155	cy:0.851851851852	area:0.00280218202699
+		Found data and result is cx:0.122480620155	cy:0.767901234568	area:0.000895779500431
+			Not Found
+		Found data and result is cx:0.119379844961	cy:0.851851851852	area:0.00233515168916
+		Found data and result is cx:0.119379844961	cy:0.767901234568	area:0.000669920566561
+Last result is Found data and data is cx:0.267726787252	cy:1.76542167353	area:0.00399406386576
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.119379844961	cy:0.856790123457	area:0.00225858933869
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+I can't found in far mode. Why?
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+		Found data and result is cx:0.116279069767	cy:0.856790123457	area:0.00248444827256
+		Found data and result is cx:0.113178294574	cy:0.856790123457	area:0.00203273040482
+		Found data and result is cx:0.116279069767	cy:0.777777777778	area:0.000528280218203
+		Found data and result is cx:0.113178294574	cy:0.851851851852	area:0.00206718346253
+		Found data and result is cx:0.116279069767	cy:0.767901234568	area:0.000551248923342
+Last result is Found data and data is cx:0.192460086133	cy:1.34666458162	area:0.00278330889718
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.113178294574	cy:0.856790123457	area:0.00203273040482
+		Found data and result is cx:0.116279069767	cy:0.772839506173	area:0.000551248923342
+			Not Found
+		Found data and result is cx:0.119379844961	cy:0.856790123457	area:0.00271030720643
+		Found data and result is cx:0.119379844961	cy:0.851851851852	area:0.0030356971959
+			Not Found
+		Found data and result is cx:0.119379844961	cy:0.866666666667	area:0.00273710402909
+		Found data and result is cx:0.122480620155	cy:0.792592592593	area:0.000880467030338
+Last result is Found data and data is cx:0.150422934252	cy:1.05736590764	area:0.00245514394785
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.122480620155	cy:0.861728395062	area:0.00240022968705
+			Not Found
+		Found data and result is cx:0.122480620155	cy:0.861728395062	area:0.0023581203943
+			Not Found
+		Found data and result is cx:0.125581395349	cy:0.861728395062	area:0.0027868695569
+			Not Found
+		Found data and result is cx:0.125581395349	cy:0.871604938272	area:0.00223179251603
+			Not Found
+		Found data and result is cx:0.128682170543	cy:0.861728395062	area:0.002143745813
+			Not Found
+		Found data and result is cx:0.128682170543	cy:0.876543209877	area:0.00214757393052
+Last result is Found data and data is cx:0.150651884391	cy:1.04207127267	area:0.00275391264094
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.131782945736	cy:0.876543209877	area:0.00210546463776
+		Found data and result is cx:0.13488372093	cy:0.881481481481	area:0.00187577758637
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+I can't found in far mode. Why?
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+		Found data and result is cx:0.165891472868	cy:0.920987654321	area:0.00126327878266
+		Found data and result is cx:0.172093023256	cy:0.916049382716	area:0.00143171595368
+			Not Found
+		Found data and result is cx:0.181395348837	cy:0.920987654321	area:0.00122499760743
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is near
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+			Not Found
+	Last result is not found
+---------------------> 2018-10-3-17-27 <---------------------
+Start request data and type is far
+			Not Found
+			Not Found
+			Not Found

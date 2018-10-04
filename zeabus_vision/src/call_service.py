@@ -1,0 +1,20 @@
+import cv2 as cv
+import rospy
+from zeabus_vision.msg import *
+from zeabus_vision.srv import *
+from std_msgs.msg import String
+
+if __name__ == "__main__":
+    rospy.init_node('call_service')
+    service_name = 'vision_flare'
+    print('wait service')
+    rospy.wait_for_service(service_name)
+    print('service start')
+    call = rospy.ServiceProxy(service_name, vision_srv_flare)
+    while not rospy.is_shutdown():
+        try:
+            res = call(String('flare'), String('near'))
+            # res = call(String('flare'),String('far'))
+        except:
+            print('Error')
+        rospy.sleep(0.1)

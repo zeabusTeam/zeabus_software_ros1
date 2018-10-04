@@ -7,6 +7,7 @@ from zeabus_vision.msg import vision_flare
 from zeabus_vision.srv import vision_srv_flare
 from vision_lib import *
 import color_text as ct
+import os
 
 bgr = None
 image_result = None
@@ -47,8 +48,8 @@ def message(n_obj=0, cx=0.0, cy=0.0, area=0.0):
 def get_mask(img):
     hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
     # upper, lower = get_color_range('yellow', 'front', '1', 'flare')
-    upper = np.array([45, 255, 255], dtype=np.uint8)
-    lower = np.array([7, 160, 0], dtype=np.uint8)
+    upper = np.array([92, 255, 137], dtype=np.uint8)
+    lower = np.array([16, 0, 0], dtype=np.uint8)
     mask = cv.inRange(hsv, lower, upper)
     return mask
 
@@ -59,29 +60,35 @@ def get_ROI(mask, case):
     contours = cv.findContours(
         mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
     for cnt in contours:
-        check_area = 1500 if case == 'near' else 100
-        print (check_area,case)
+        check_area = 10000 if case == 'near' else 100
         area = cv.contourArea(cnt)
-        print area
         if area < check_area:
             continue
-        x, y, w, h = cv.boundingRect(cnt)
-        # top_excess = (y < 0.05*image_result)
-        right_excess = ((x+w) > 0.95*wimg)
-        left_excess = (x < (0.05*wimg))
-        bottom_excess = ((y+h) > 0.95*himg)
+        rect = cv.minAreaRect(cnt)
+        (w,h) = rect[1]
+        angle = rect[2]
+        print angle
+        box = cv.boxPoints(rect)
+        box = np.int0(box)
+        BR = box[0]
+        BL = box[1]
+        TL = box[2]
+        TR = box[3]
+        cv.drawContours(image_result,[box],0,(0,0,255),2)
+        top_excess = (TL[1] <0.05*himg or TR[1] < 0.05*himg)
+        right_excess = (TR[0] > 0.95*wimg or BR[0] > 0.95*wimg)
+        left_excess = (TL[0] < (0.05*wimg) or BL[0] < 0.05*wimg)
+        bottom_excess = (BL[1] > 0.95*himg or BR[1] > 0.95*himg)
         if case == 'near':
             percent_area = (float(area)/(himg*wimg))
-            print percent_area
-            big_case = ((percent_area > 0.3) and bottom_excess)
-            print big_case
-            small_case = ((percent_area <= 0.3) and bottom_excess and not (left_excess or right_excess))
-            print small_case
-            if big_case or small_case:
+            print TL[1] , TR[1] , 0.05*wimg
+            print percent_area , bottom_excess , top_excess
+            if ((percent_area > 0.25) and bottom_excess and top_excess):
                 ROI.append(cnt)
         elif case == 'far':
             h_w_ratio = 1.0*h/w
-            if not(left_excess or right_excess) and h_w_ratio >= 2:
+            print h_w_ratio ,left_excess ,right_excess
+            if not(left_excess or right_excess) and h_w_ratio >= 0.035 and (angle <= -80 or angle == 0) :
                 ROI.append(cnt)
     return ROI
 
@@ -89,14 +96,20 @@ def get_ROI(mask, case):
 def get_cx(cnt):
     global image_result
     himg, wimg = image_result.shape[:2]
-    x, y, w, h = cv.boundingRect(cnt)
-    cv.rectangle(image_result, (x, y), (x+w, y+h), (0, 255, 0), 2)
-    cx = x + (w/2)
-    cy = y + (h/2)
+    rect = cv.minAreaRect(cnt)
+    box = cv.boxPoints(rect)
+    box = np.int0(box)
+    BR = box[0]
+    BL = box[1]
+    TL = box[2]
+    TR = box[3]
+    cv.drawContours(image_result,[box],0,(0,255,0),2)
+    cx = ((TL[0]+TR[0])/2 + (BL[0]+BR[0])/2)/2
+    cy = ((TR[1]+BR[1])/2 + (TL[1]+BL[1])/2)/2
     cv.circle(image_result, (cx, cy), 5, (0, 0, 255), -1)
     cx = Aconvert(cx, wimg)
     cy = -1.0*Aconvert(cy, himg)
-    area = (1.0*w*h)/(wimg*himg)
+    area = -1
     return cx, cy, area
 
 
@@ -105,6 +118,7 @@ def find_flare(req):
     if bgr is None:
         img_is_none()
         return message(n_obj=-1)
+    rospy.sleep(0.25)
     mask = get_mask(image_result)
     ROI = get_ROI(mask, case=req)
     mode = len(ROI)
@@ -124,42 +138,14 @@ def find_flare(req):
         publish_result(mask, 'gray', public_topic + 'mask')
         return message(cx=cx, cy=cy, area=area, n_obj=len(ROI))
 
-
-<<<<<<< HEAD
-def find_far_flare():
-    global bgr
-    if bgr is None:
-        img_is_none()
-        return message(n_obj=-1)
-    mask = get_mask(image_result)
-    ROI = get_ROI(mask,case = 'far')
-    if len(ROI) == 0 :
-        mode = 1
-        print_result("NOT FOUND", ct.RED)
-    elif len(ROI) == 1:
-        mode = 2
-        print_result("FOUND A FLARE", ct.GREEN)
-    elif len(ROI) > 1:
-        mode = 2
-        print_result("FOUND BUT HAVE SOME NOISE", ct.YELLOW)
-    if mode == 1:
-        publish_result(image_result, 'bgr', public_topic + 'image_result')
-        publish_result(mask, 'gray', public_topic + 'mask')
-        return message()
-    elif mode == 2:
-        cx, cy, area = get_cx(cnt=max(ROI, key=cv.contourArea))
-        publish_result(image_result, 'bgr', public_topic + 'image_result')
-        publish_result(mask, 'gray', public_topic + 'mask')
-        return message(cx=cx, cy=cy, area=area, n_obj=len(ROI))
-=======
 # def find_far_flare():
 #     global bgr
 #     if bgr is None:
 #         img_is_none()
 #         return message(n_obj=-1)
 #     mask = get_mask(image_result)
-#     ROI = get_ROI(mask, case='far')
-#     if len(ROI) == 0:
+#     ROI = get_ROI(mask,case = 'far')
+#     if len(ROI) == 0 :
 #         mode = 1
 #         print_result("NOT FOUND", ct.RED)
 #     elif len(ROI) == 1:
@@ -177,7 +163,6 @@ def find_far_flare():
 #         publish_result(image_result, 'bgr', public_topic + 'image_result')
 #         publish_result(mask, 'gray', public_topic + 'mask')
 #         return message(cx=cx, cy=cy, area=area, n_obj=len(ROI))
->>>>>>> 00d9255ebaeec1d14305b752daad63b30f2c1a07
 
 
 if __name__ == '__main__':

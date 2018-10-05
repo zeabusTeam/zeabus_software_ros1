@@ -19,9 +19,11 @@ namespace zeabus_extension{
 namespace manage_port{
 
 // function of init class
-	specific_port( std::string name_port ){
-		if( name_port != NULL) this->name_port = name_port;
-		else this->name_port = NULL;
+	specific_port::specific_port( std::string name_port ):
+		port( io_service )
+	{
+		if( name_port != "") this->name_port = name_port;
+		else this->name_port = "";
 	}
 
 // check port now open or not by using boost::asio::basic_serial_port::is_open
@@ -31,21 +33,21 @@ namespace manage_port{
 	}
 
 	void specific_port::open_port( std::string name_device ){
-		if( name_port == NULL){
+		if( this->name_port == ""){
 			std::cout << "You never set name of port what you want" << "\n";
-			return -1;
+			exit(-1);
 		}
 		try{
 			this->port.open( this->name_port ); // try to open port
 
 			std::cout << "ZEABUS_EXTENSION : Now Open port " << this->name_port;
-			if( name_device == NULL ) std::cout << "\n";
+			if( name_device == "" ) std::cout << "\n";
 			else std::cout << " for " << name_device << "\n";
 		}
 		catch ( std::exception& error){
 			std::cout	<< error.what() << "\n"; // print error 
 			std::cout	<< "ZEABUS_EXTENSION : Can't open port " << this->name_port;
-			if( name_device == NULL ) std::cout << "\n";
+			if( name_device == "" ) std::cout << "\n";
 			else std::cout << " for " << name_device << "\n";
 		}
 	}
@@ -56,7 +58,7 @@ namespace manage_port{
 
 // change name of port on this object
 	void specific_port::set_name_port( std::string name_port){
-		if( this.is_open() ){ // must check we are now open or not
+		if( this->is_open() ){ // must check we are now open or not
 			
 		}
 		this->name_port = name_port;

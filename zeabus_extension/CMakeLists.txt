@@ -34,6 +34,7 @@ set( zeabus_extension_sources
 	src/log_data.cpp
 	src/ros.cpp
 	src/generate_message.cpp
+	src/manage_port.cpp
 )
 
 add_library( zeabus_extension ${zeabus_extension_sources})

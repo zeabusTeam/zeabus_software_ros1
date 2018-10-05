@@ -22,10 +22,10 @@
 namespace zeabus_extension{
 namespace manage_port{
 	
-	class specific_port : private boost::noncopyable{
+	class specific_port{
 
 		public:
-			specific_port(  std::string name_port = "" ); //function init
+			specific_port( std::string name_port = "" ); //function init
 			void set_name_port( std::string name_port ); //set name of port
 			void open_port( std::string name_device = ""); // open port
 			void close_port(); // we will close port now

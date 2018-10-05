@@ -33,9 +33,9 @@ namespace manage_port{
 			
 
 		protected:
-			boost::asio::serial_port port;
-			// add for can pass catkin make require for explicit
+			// order is importance service must build first
 			boost::asio::io_service io_service;
+			boost::asio::serial_port io_port;
 
 		private:
 			std::string name_port; // collect name of port to open example is /dev/ttys0

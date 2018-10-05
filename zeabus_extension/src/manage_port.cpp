@@ -20,7 +20,7 @@ namespace manage_port{
 
 // function of init class
 	specific_port::specific_port( std::string name_port ):
-		port( io_service )
+		io_port( io_service )
 	{
 		if( name_port != "") this->name_port = name_port;
 		else this->name_port = "";
@@ -28,7 +28,7 @@ namespace manage_port{
 
 // check port now open or not by using boost::asio::basic_serial_port::is_open
 	bool specific_port::is_open(){
-		if( this->port.is_open() ) return true; // port is variable in protected in this class
+		if( this->io_port.is_open() ) return true; // port is variable in protected in this class
 		else return false;
 	}
 
@@ -38,7 +38,7 @@ namespace manage_port{
 			exit(-1);
 		}
 		try{
-			this->port.open( this->name_port ); // try to open port
+			this->io_port.open( this->name_port ); // try to open port
 
 			std::cout << "ZEABUS_EXTENSION : Now Open port " << this->name_port;
 			if( name_device == "" ) std::cout << "\n";
@@ -53,7 +53,7 @@ namespace manage_port{
 	}
 
 	void specific_port::close_port(){
-		this->port.close();
+		this->io_port.close();
 	}
 
 // change name of port on this object

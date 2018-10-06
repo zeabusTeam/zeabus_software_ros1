@@ -33,6 +33,12 @@ namespace manage_port{
 		else return false;
 	}
 
+// this function for destroy port
+	specific_port::~specific_port(){
+		std::cout << "System from manage_port :: Close port" << "\n";
+	}
+
+// this function for only open port 
 	void specific_port::open_port( std::string name_device ){
 		if( this->name_port == ""){
 			std::cout << "You never set name of port what you want" << "\n";
@@ -53,6 +59,7 @@ namespace manage_port{
 		}
 	}
 
+// for close port
 	void specific_port::close_port(){
 		this->io_port.close();
 	}
@@ -64,6 +71,19 @@ namespace manage_port{
 		}
 		this->name_port = name_port;
 	}	
+
+// for get option please remember argument receive in form reference
+		template<typename port_option> 
+		void specific_port::get_option( port_option& option ){
+			this->io_port.get_option( option );	
+		}
+	 
+
+// for set option please remember argument receive in for rederence
+		template<typename port_option>
+		void specific_port::set_option( port_option& option ){
+			this->io_port.set_option( option );
+		}
 
 }
 }

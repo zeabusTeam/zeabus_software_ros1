@@ -20,7 +20,8 @@ namespace manage_port{
 
 // function of init class
 	specific_port::specific_port( std::string name_port ):
-		io_port( io_service )
+		io_port( io_service ) // this line is need because this is form of boost 
+							  // make shared ptr of pointer port( service )
 	{
 		if( name_port != "") this->name_port = name_port;
 		else this->name_port = "";

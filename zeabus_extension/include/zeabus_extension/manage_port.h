@@ -36,6 +36,11 @@ namespace manage_port{
 			// order is importance service must build first
 			boost::asio::io_service io_service;
 			boost::asio::serial_port io_port;
+			boost::asio::serial_port_base::baud_rate io_baudrate;
+			boost::asio::serial_port_base::flow_control io_flow_control;
+			boost::asio::serial_port_base::parity io_parity;
+			boost::asio::serial_port_base::stop_bits io_stop_bits;
+			boost::asio::serial_port_base::character_size io_character_size;
 
 		private:
 			std::string name_port; // collect name of port to open example is /dev/ttys0

@@ -40,7 +40,7 @@ namespace manage_port{
 		protected:
 			// order is importance service must build first
 			boost::asio::io_service io_service;
-			boost::asio::serial_port io_port;
+			boost::asio::serial_port* io_port;
 			// 5 line below is a port_option
 			boost::asio::serial_port_base::baud_rate io_baudrate;
 			boost::asio::serial_port_base::flow_control io_flow_control;

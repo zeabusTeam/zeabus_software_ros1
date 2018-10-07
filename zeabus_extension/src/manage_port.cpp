@@ -16,6 +16,7 @@
 
 
 namespace zeabus_extension{
+
 namespace manage_port{
 
 // function of init class
@@ -76,17 +77,35 @@ namespace manage_port{
 	}	
 
 // for get option please remember argument receive in form reference
-		template<typename port_option> 
-		void specific_port::get_option( port_option& option ){
-			this->io_port->get_option( option );	
-		}
+	template<typename port_option> 
+	void specific_port::get_option( port_option& option ){
+		this->io_port->get_option( option );	
+	}
 	 
-
 // for set option please remember argument receive in for rederence
-		template<typename port_option>
-		void specific_port::set_option( port_option& option ){
-			this->io_port->set_option( option );
+	template<typename port_option>
+	void specific_port::set_option( port_option& option ){
+		this->io_port->set_option( option );
+	}
+
+	void specific_port::write_string( std::string data ){
+		// create buffer to send and will you with boost::asio::buffer
+		std::vector< char > data_buffer;
+		
+		std::cout << "SYSTEM--> In write_string of specific_port class in file manage_port.cpp";
+		std::cout << "  start write <-------\n";
+		size_t data_size = 0;
+		for( int run = 0 ; data[run] != '\n' && data[run] != '\0' ; run++){
+			data_buffer.push_back( data[run] ); // get data[run] in to buffer char type
+			data_size++; // plus size of data
 		}
+		std::cout << "SYSTEM--> Finish get data in to buffer and have size is ";
+		std::cout << data_size << "\n";
+		
+		boost::asio::write( this->io_port , boost::asio::buffer( data_buffer , data_size));
+		
+		std::cout << "SYSTEM--> FINISH WRITE PORT" << "\n";
+	}	
 
 }
 }

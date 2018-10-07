@@ -19,6 +19,11 @@
 	#define BOOST_ASIO_HPP
 #endif
 
+#ifndef VECTOR
+	#include	<vector>
+	#define VECTOR
+#endif
+
 namespace zeabus_extension{
 namespace manage_port{
 	
@@ -35,7 +40,9 @@ namespace manage_port{
 			template<typename port_option> void get_option( port_option& option );
 			// for set new option of port
 			template<typename port_option> void set_option( port_option& option );
-			
+//			std::string read_line(); // read serial port one line and return in type string
+			void write_line( std::string data );// write to serial port receive data only string
+					
 
 		protected:
 			// order is importance service must build first

@@ -101,10 +101,14 @@ namespace manage_port{
 		}
 		std::cout << "SYSTEM--> Finish get data in to buffer and have size is ";
 		std::cout << data_size << "\n";
+
+		size_t data_write = this->io_port->write_some( 
+								boost::asio::buffer(&data_write , data_size) 
+							);
 		
-		boost::asio::write( this->io_port , boost::asio::buffer( data_buffer , data_size));
+//		boost::asio::write( this->io_port , boost::asio::buffer( data_buffer , data_size));
 		
-		std::cout << "SYSTEM--> FINISH WRITE PORT" << "\n";
+		std::cout << "SYSTEM--> FINISH WRITE PORT and have size is " << data_write  << "\n";
 	}	
 
 }

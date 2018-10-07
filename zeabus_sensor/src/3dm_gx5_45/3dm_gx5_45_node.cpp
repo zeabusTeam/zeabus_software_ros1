@@ -18,8 +18,23 @@ int main( int argc , char **argv){
 	imu_port = new zeabus_extension::manage_port::specific_port("/dev/ttyACM0");	
 
 	imu_port->open_port();
-	
+	// set variable for set baudrate	
 	imu_port->io_baud_rate = boost::asio::serial_port_base::baud_rate( 115200 );
+	// set variable for set flow_control	
+	imu_port->io_flow_control = 
+		boost::asio::serial_port_base::flow_control( 
+			boost::asio::serial_port_base::flow_control::none ) ;
+	// set variable for set parity	
+	imu_port->io_parity =
+		boost::asio::serial_port_base::parity( 
+			boost::asio::serial_port_base::parity::none );
+	// set variable for set stop_bits	
+	imu_port->io_stop_bits = 
+		boost::asio::serial_port_base::stop_bits(
+			boost::asio::serial_port_base::stop_bits::one);
+	// set variable for set character_size	
+	imu_port->io_character_size = 
+		boost::asio::serial_port_base::character_size(8);
 
 	imu_port->io_port->set_option( imu_port->io_baud_rate );
 	std::cout	<< "Baud rate of IMU is " 

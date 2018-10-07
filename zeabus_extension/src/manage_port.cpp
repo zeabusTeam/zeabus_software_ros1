@@ -155,9 +155,9 @@ namespace manage_port{
 		}
 
 		// read type asynchronous_read
-		std::vector<unsigned int> specific_port::asynchronous_read( std::size_t data_size ){
+		std::vector<unsigned char> specific_port::asynchronous_read( std::size_t data_size ){
 			std::cout << "SYSTEM--> START READ ASYNCHRONOUS size is " << data_size << "\n";
-			std::vector<unsigned int> data_buffer;
+			std::vector<unsigned char> data_buffer;
 			std::size_t bytes_transfer ;
 			boost::system::error_code error_message;
 			boost::asio::async_read( *(this->io_port) , 
@@ -167,12 +167,13 @@ namespace manage_port{
 		}
 
 		// write type asynchronous_read
-		void specific_port::asynchronous_write( std::vector<unsigned int> data_write , 
+		void specific_port::asynchronous_write( std::vector<unsigned char> data_write , 
 												std::size_t data_size ){
 			std::cout << "SYSTEM--> START WRITE ASYNCHRONOUS size is " << data_size << "\n";
 			boost::asio::async_write( *(this->io_port) , 
 							boost::asio::buffer( data_write , data_size) ,
 							handler);
+			std::cout << "SYSTEM--> END WRITE ASYNCHRONOUS size is " << data_size << "\n";
 		}
 
 }

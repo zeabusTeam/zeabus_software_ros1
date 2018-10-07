@@ -58,7 +58,8 @@ namespace manage_port{
 //								NEXT IS ASYNCHRONOUS PART									   //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 			std::vector<unsigned int> asynchronous_read( std::size_t data_size );
-//			void asynchronous_write( std::vector<unsigned int> data_write );
+			void asynchronous_write( std::vector<unsigned int> data_write 
+					, std::size_t data_size);
 
 		protected:
 			// order is importance service must build first

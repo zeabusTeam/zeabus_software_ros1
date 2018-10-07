@@ -167,9 +167,13 @@ namespace manage_port{
 		}
 
 		// write type asynchronous_read
-//		void asynchronous_write( std::vector<unsigned int> data_write ){
-
-//		}
+		void specific_port::asynchronous_write( std::vector<unsigned int> data_write , 
+												std::size_t data_size ){
+			std::cout << "SYSTEM--> START WRITE ASYNCHRONOUS size is " << data_size << "\n";
+			boost::asio::async_write( *(this->io_port) , 
+							boost::asio::buffer( data_write , data_size) ,
+							handler);
+		}
 
 }
 }

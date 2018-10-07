@@ -88,6 +88,39 @@ namespace manage_port{
 		this->io_port->set_option( option );
 	}
 
+// for read data
+	std::string specific_port::read_string(){
+		// create buffer to receive data
+		std::vector< char > data_buffer;
+		size_t position = 0;
+
+		std::cout << "SYSTEM--> In read_string of specific_port class in file manage_port.cpp";
+		std::cout << " start read <----------\n";
+		while( true ){
+			this->io_port->read_some( boost::asio::buffer( &data_buffer , 1 ));
+			if( data_buffer[ position ] == '\n' || data_buffer[position] == '\0'){
+				break;
+			}
+			else{
+				position++;
+			}
+		}
+		std::cout << "SYSTEM--> In read_string of specific_port class in file manage_port.cpp";
+		std::cout <<  " end read <-----------\n";
+
+		std::string result = "";
+
+		std::cout << "SYSTEM--> In read_string of specific_port class in file manage_port.cpp";
+		std::cout << " start prepare output <---------\n";
+		while ( ! data_buffer.empty()){ // run until buffer is empty
+			result = data_buffer.back()	+ result; // prepare output
+			data_buffer.pop_back();// remove last element
+		}
+		std::cout << "SYSTEM--> In read_string of specific_port class in file manage_port.cpp";
+		std::cout << " finish prepare output <--------\n";
+	}
+
+// for write data
 	void specific_port::write_string( std::string data ){
 		// create buffer to send and will you with boost::asio::buffer
 		std::vector< char > data_buffer;
@@ -103,7 +136,7 @@ namespace manage_port{
 		std::cout << data_size << "\n";
 
 		size_t data_write = this->io_port->write_some( 
-								boost::asio::buffer(&data_write , data_size) 
+								boost::asio::buffer(&data_buffer , data_size) 
 							);
 		
 //		boost::asio::write( this->io_port , boost::asio::buffer( data_buffer , data_size));

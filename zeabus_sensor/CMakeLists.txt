@@ -9,20 +9,21 @@ find_package(catkin REQUIRED COMPONENTS
 	geometry_msgs
 )
 
-find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system chrono)
 
-include_directories( include ${catkin_INCLUDE_DIRS})
+include_directories( include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES
+  LIBRARIES zeabis_sensor
   CATKIN_DEPENDS roscpp zeabus_extension zeabus_serial std_msgs geometry_msgs
-  DEPENDS 
+  DEPENDS Boost 
 )
 
 add_executable(port_dvl src/teledyne_dvl/dvl_port.cpp)
 add_executable(node_dvl src/teledyne_dvl/dvl_node.cpp)
+add_executable(node_imu src/3dm_gx5_45/3dm_gx5_45_node.cpp)
 
 target_link_libraries(port_dvl ${catkin_LIBRARIES})
 target_link_libraries(node_dvl ${catkin_LIBRARIES})
-
+target_link_libraries(node_imu ${catkin_LIBRARIES})

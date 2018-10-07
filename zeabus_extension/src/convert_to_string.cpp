@@ -12,7 +12,13 @@
 	#include	<zeabus_extension/convert_to_string.h> // include standard function of c
 	#define ZEABUS_EXTENSION_CONVERT_TO_STRING
 #endif
-
+/*
+template< typename type_variable > std::string to_string( type_variable data){
+	std::ostringstream temporary;
+	temporary << data;
+	return temporary.str();
+}
+*/
 std::string zeabus_extension::convert::to_string( boost::posix_time::ptime data ){
 	std::ostringstream temporary;
 	temporary << data;
@@ -76,7 +82,6 @@ std::string zeabus_extension::convert::to_string( char data ){
 	temporary << data;
 	return temporary.str();
 }
-
 
 // this function have more detail to make you can convert double to string 
 // and you can design about number of position in before and after point

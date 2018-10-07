@@ -36,25 +36,26 @@ namespace manage_port{
 			void open_port( std::string name_device = ""); // open port
 			void close_port(); // we will close port now
 			bool is_open(); // check now port are open or not
-			// for check option of port
+			// for check option of port // don't use have problem  undefined reference to 
 			template<typename port_option> void get_option( port_option& option );
-			// for set new option of port
+			// for set new option of port // don't use have problem  undefined reference to
 			template<typename port_option> void set_option( port_option& option );
 			std::string read_string(); // read serial port one line and return in type string
 			void write_string( std::string data );//write to serial port receive data only string
-					
-
-		protected:
-			// order is importance service must build first
-			boost::asio::io_service io_service;
-			boost::asio::serial_port* io_port;
 			// 5 line below is a port_option
-			boost::asio::serial_port_base::baud_rate io_baudrate;
+			boost::asio::serial_port_base::baud_rate io_baud_rate;
 			boost::asio::serial_port_base::flow_control io_flow_control;
 			boost::asio::serial_port_base::parity io_parity;
 			boost::asio::serial_port_base::stop_bits io_stop_bits;
 			boost::asio::serial_port_base::character_size io_character_size;
 			// end of port_option
+			// if want to get or set option we use function member of
+			// boost::asio::serial_port
+			boost::asio::serial_port* io_port;
+					
+		protected:
+			// order is importance service must build first
+			boost::asio::io_service io_service;
 
 		private:
 			std::string name_port; // collect name of port to open example is /dev/ttys0

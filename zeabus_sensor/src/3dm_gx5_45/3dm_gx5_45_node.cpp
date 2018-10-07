@@ -19,8 +19,11 @@ int main( int argc , char **argv){
 
 	imu_port->open_port();
 	
-	imu_port->io_baud_rate = boost::asio::serial_port_base::baud_rate( 11520 );
+	imu_port->io_baud_rate = boost::asio::serial_port_base::baud_rate( 115200 );
 
+	imu_port->io_port->set_option( imu_port->io_baud_rate );
+	std::cout	<< "Baud rate of IMU is " 
+				<< imu_port->io_baud_rate.value()  << "\n";
 	imu_port->io_port->get_option( imu_port->io_baud_rate );
 	std::cout	<< "Baud rate of IMU is " 
 				<< imu_port->io_baud_rate.value()  << "\n";

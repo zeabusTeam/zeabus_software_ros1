@@ -26,6 +26,8 @@
 
 namespace zeabus_extension{
 namespace manage_port{
+
+	void handler( const boost::system::error_code& error , std::size_t bytes_transfer);
 	
 	class specific_port : private boost::noncopyable{
 
@@ -52,13 +54,20 @@ namespace manage_port{
 			// if want to get or set option we use function member of
 			// boost::asio::serial_port
 			boost::asio::serial_port* io_port;
-					
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//								NEXT IS ASYNCHRONOUS PART									   //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+			std::vector<unsigned int> asynchronous_read( std::size_t data_size );
+//			void asynchronous_write( std::vector<unsigned int> data_write );
+
 		protected:
 			// order is importance service must build first
 			boost::asio::io_service io_service;
 
 		private:
 			std::string name_port; // collect name of port to open example is /dev/ttys0
+			// this handle is for read and write it is formular from boost
+			// when call write or read operation completes.
 	};
 
 }

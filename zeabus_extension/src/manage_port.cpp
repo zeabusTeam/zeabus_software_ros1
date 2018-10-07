@@ -142,7 +142,34 @@ namespace manage_port{
 //		boost::asio::write( this->io_port , boost::asio::buffer( data_buffer , data_size));
 		
 		std::cout << "SYSTEM--> FINISH WRITE PORT and have size is " << data_write  << "\n";
-	}	
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//																							//
+//																							//
+//	FINISH PART OF SYNCHRONOUS , I THOUGH THAT NEXT IS PART OF ASYNCHRONOUS FOR SEND PACKET //
+//																							//
+//																							//
+//////////////////////////////////////////////////////////////////////////////////////////////
+		void handler( const boost::system::error_code& error ,
+							std::size_t bytes_transfer ){
+		}
+
+		// read type asynchronous_read
+		std::vector<unsigned int> specific_port::asynchronous_read( std::size_t data_size ){
+			std::cout << "SYSTEM--> START READ ASYNCHRONOUS size is " << data_size << "\n";
+			std::vector<unsigned int> data_buffer;
+			std::size_t bytes_transfer ;
+			boost::system::error_code error_message;
+			boost::asio::async_read( *(this->io_port) , 
+							boost::asio::buffer( data_buffer , data_size) ,// NULL);
+							handler); 
+			std::cout << "SYSTEM--> END READ ASYNCHRONOUS\n";
+		}
+
+		// write type asynchronous_read
+//		void asynchronous_write( std::vector<unsigned int> data_write ){
+
+//		}
 
 }
 }

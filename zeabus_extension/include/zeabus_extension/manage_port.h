@@ -10,8 +10,13 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef	BOOST_ASIO_HPP
-	#include <boost/asio.hpp> // this is top of serial port I include all
+	#include	<boost/asio.hpp> // this is top of serial port I include all
 	#define BOOST_ASIO_HPP
+#endif
+
+#ifndef BOOST_ASIO_STEADY_TIMER
+	#include	<boost/asio/steady_timer.hpp>
+	#define BOOST_ASIO_STEADY_TIMER
 #endif
 
 #ifndef IOSTREAM
@@ -34,7 +39,8 @@ namespace manage_port{
 
 		public:
 			specific_port(  std::string name_port = "" ); //function init
-			~specific_port();
+			~specific_port(); // function for delete port
+
 			void set_name_port( std::string name_port ); //set name of port
 
 			void open_port( std::string name_device = ""); // open port
@@ -69,10 +75,10 @@ namespace manage_port{
 /////////////////////////////////////////////////////////////////////////////////////////////////
 			
 
-
 		protected:
 			// order is importance service must build first
 			boost::asio::io_service io_service;
+			boost::asio::steady_timer* io_time;
 
 		private:
 			std::string name_port; // collect name of port to open example is /dev/ttys0

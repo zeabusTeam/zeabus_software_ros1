@@ -23,6 +23,7 @@ namespace manage_port{
 	specific_port::specific_port( std::string name_port )
 	{
 		this->io_port = new boost::asio::serial_port( this->io_service);
+		this->io_time = new boost::asio::steady_timer( this->io_service);
 		if( name_port != "") this->name_port = name_port;
 		else this->name_port = "";
 	}
@@ -154,7 +155,6 @@ namespace manage_port{
 //////////////////////////////////////////////////////////////////////////////////////////////
 		void read_handler( const boost::system::error_code& error 
 						   , std::size_t bytes_transfer ){
-			std::cout << "size transfer is " << bytes_transfer <<"\n";
 		}
 
 		void write_handler( const boost::system::error_code& error 
@@ -162,17 +162,6 @@ namespace manage_port{
 
 		}
 
-		// read type asynchronous_read
-		std::vector<unsigned char> specific_port::asynchronous_read( std::size_t data_size ){
-		}
 
-		// write type asynchronous_read
-		void specific_port::asynchronous_write( std::vector<unsigned char> data_write , 
-												std::size_t data_size ){
-		}
-		
-		void specific_port::run_service(){
-			this->io_service.run();
-		}
 }
 }

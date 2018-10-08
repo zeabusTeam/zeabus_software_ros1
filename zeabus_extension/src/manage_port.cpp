@@ -154,11 +154,11 @@ namespace manage_port{
 //																							//
 //																							//
 //////////////////////////////////////////////////////////////////////////////////////////////
-		void read_handler( const boost::system::error_code& error 
+		void read_handle( const boost::system::error_code& error 
 						   , std::size_t bytes_transfer ){
 			#ifdef TEST_MANAGE_PORT
-				std::cout	<< "IN read_handler " 
-//							<< "size of vector is " << data_receive.size() 
+				std::cout	<< "<--SYSTEM--> IN read_handler " 
+//							<< "size of vector is " << buffers
 							<< " and bytes_transfer is " << bytes_transfer
 //							<< " want byte is " << number_bytes
 							<< "\n";
@@ -166,9 +166,13 @@ namespace manage_port{
 			
 		}
 
-		void write_handler( const boost::system::error_code& error 
+		void write_handle( const boost::system::error_code& error 
 							, std::size_t bytes_transfer){
-
+			#ifdef TEST_MANAGE_PORT
+				std::cout	<< "<--SYSTEM--> In write handle "
+							<< "have bytes_transfer is " << bytes_transfer
+							<< "\n";
+			#endif
 		}
 
 		std::vector<unsigned char> specific_port::read_asynchronous( size_t number_bytes ){
@@ -178,28 +182,61 @@ namespace manage_port{
 				std::cout	<< "SYSTEM----> Before async_read_some number_bytes is " 
 							<< number_bytes << "\n";
 			#endif
+			// push queqe for read data			
+/*			this->io_port->async_read_some( boost::asio::buffer( data_receive , number_bytes),
+										read_handler);*/
+			// use function async_read because want to ensure have read equal data to request
+			boost::asio::async_read( *(this->io_port) 
+				, boost::asio::buffer( data_receive , number_bytes)
+				, boost::asio::transfer_exactly( number_bytes)
+				, read_handle
+			);
 			
-			this->io_port->async_read_some( boost::asio::buffer( data_receive , number_bytes),
-										read_handler);
 
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM----> AFTER async_read_some\n"
 							<< "----------------> NEXT RUNS io_service.run_for_one\n";
 			#endif
 
-			this->io_service.run_one();
+			// run one queqe
+			this->io_service.run();
 
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM----> AFTER RUN io_service "
 							<< "size of vector is " << data_receive.size()
 							<< "\n";
 			#endif
-
-			#ifdef TEST_MANAGE_PORT
-				std::cout	<< "<-SYSTEM-> BEFORE STOP IO_SERVICE\n";
-			#endif
+	
 
 			return data_receive;
+
+		}
+
+//		template<typename buffer_data>void specific_port::write_asynchronous( buffer_data data 
+//												, size_t bytes){
+		void specific_port::write_asynchronous( std::vector<unsigned char> data 
+												, size_t bytes){
+			#ifdef TEST_MANAGE_PORT
+				std::cout	<< "SYSTEM-----> Before async_write bytes to write is "
+							<< bytes << "\n";
+			#endif
+			// use function async_write because want to ensure all data is written
+			boost::asio::async_write( *(this->io_port)
+				, boost::asio::buffer( data , bytes)
+				, boost::asio::transfer_all()
+				, write_handle
+			);	
+			
+			#ifdef TEST_MANAGE_PORT
+				std::cout	<< "SYSTEM-----> After async_write and next run io_service\n";
+			#endif
+
+			this->io_service.run();
+
+			#ifdef TEST_MANAGE_PORT
+				std::cout	<< "SYSTEM-----> Finish run\n";
+			#endif
+			this->io_service.reset();
 
 		}
 

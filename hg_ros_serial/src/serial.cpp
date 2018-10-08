@@ -143,7 +143,9 @@ void Serial::readHandle(const boost::system::error_code& ec, const size_t bytes_
   if (!ec)
   {
     io_state_ = IO_DONE;
+	std::cout << "hg_serial ec : " <<  ec << "\n";
     byte_transferred_ = bytes_transferred;
+	std::cout << "hg_serial bytes_transferred : " << bytes_transferred << "\n";
     return;
   }
 

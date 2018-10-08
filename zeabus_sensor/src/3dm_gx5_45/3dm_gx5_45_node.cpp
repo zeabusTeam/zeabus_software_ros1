@@ -46,8 +46,24 @@ int main( int argc , char **argv){
 	imu_port->io_port->set_option( imu_port->io_flow_control );
 	imu_port->io_port->set_option( imu_port->io_character_size );
 ///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////// PART TEST IMU //////////////////////////////////////////////
+	std::vector<unsigned char>idle_command;
 
-	imu_port->read_asynchronous( 10 );
+	std::string idle_string = "756501020202E1C7";
+	for( int i = 0 ; i < 16 ; i++) idle_command.push_back( idle_string[i]);
+
+	imu_port->write_asynchronous( idle_command , size_t(16) );
+	std::cout << "FINISH send idle command next read command\n";
+	std::vector<unsigned char>idle_reply = 
+				imu_port->read_asynchronous( size_t(18) );
+	
+	std::cout	<< "result is : ";
+	while( ! idle_reply.empty() ){
+		std::cout << std::hex << idle_reply.back();
+		idle_reply.pop_back();
+	}
+	std::cout	<< " : finish\n"; 
+	imu_port->write_asynchronous( idle_command , size_t(16) );
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

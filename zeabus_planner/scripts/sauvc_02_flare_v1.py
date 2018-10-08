@@ -2,8 +2,14 @@
 
 import rospy
 import math
-from manage_log import log
-from control_auv import control_auv 
+
+try:
+	from zeabus_extension.manage_log import log
+	from zeabus_extension.control_auv import control_auv 
+except:
+	print("Pleas install setup.bash in zeabus_extension package")
+	exit()
+
 from zeabus_vision.srv import vision_srv_flare
 from zeabus_vision.msg import vision_flare
 from std_msgs.msg import String
@@ -28,7 +34,7 @@ class play_flare:
 		self.data_center_x = 0
 		self.data_center_y = 0
 		self.data_area = 0
-		self.auv = control_auv( "plan flare" )
+		self.auv = control_auv( "play flare" )
 		self.past_have = False
 		self.past_center_x = 0
 		self.past_center_y = 0
@@ -40,8 +46,17 @@ class play_flare:
 	def play( self ):
 		if( not self.already_setup ):
 			self.set_up()
-		
+		self.auv.absolute_depth(-3.5)
+		self.log_command.write("Waiting ok depth" , True , 0)
+		print("Waiting Depth")
+		while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.1) ):
+			self.rate.sleep()	
+		self.log_command.write("depth is OK next wait yaw" , False , 1)
+		print("Waiting yaw")
+		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1) ):
+			self.rate.sleep()		
 		self.log_command.write("I will start now", True , 0)
+		print("I will start now")
 		# plan is move left forward right and forward left continue
 		self.survey_left( )
 
@@ -203,6 +218,7 @@ class play_flare:
 	def find_far(self ):
 		self.log_command.write("I play on far mode" , True)
 		print( "Now play on far mode")
+		think_to_break = 0
 		while not rospy.is_shutdown():
 			self.request_data( 6 , "far" )
 			self.rate.sleep()
@@ -309,7 +325,7 @@ class play_flare:
 
 if __name__=='__main__':
 
-	rospy.init_node(" Mission Flare ")		
+	rospy.init_node("Mission Flare")		
 
 	flare = play_flare( 30 )
 	flare.set_up()

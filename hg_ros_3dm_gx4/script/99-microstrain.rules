@@ -1,0 +1,3 @@
+KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="199b", ATTRS{idProduct}=="3065", SYMLINK+="microstrain/3dm_gx3_25_%s{serial}"
+
+KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", SYMLINK+="microstrain/3dm_gx4_45_%s{serial}"

@@ -14,6 +14,7 @@
 	#define ZEABUS_EXTENSION_MANAGE_PORT_H
 #endif
 
+#define TEST_MANAGE_PORT
 
 namespace zeabus_extension{
 
@@ -155,6 +156,14 @@ namespace manage_port{
 //////////////////////////////////////////////////////////////////////////////////////////////
 		void read_handler( const boost::system::error_code& error 
 						   , std::size_t bytes_transfer ){
+			#ifdef TEST_MANAGE_PORT
+				std::cout	<< "IN read_handler " 
+//							<< "size of vector is " << data_receive.size() 
+							<< " and bytes_transfer is " << bytes_transfer
+//							<< " want byte is " << number_bytes
+							<< "\n";
+			#endif
+			
 		}
 
 		void write_handler( const boost::system::error_code& error 
@@ -162,6 +171,37 @@ namespace manage_port{
 
 		}
 
+		std::vector<unsigned char> specific_port::read_asynchronous( size_t number_bytes ){
+			std::vector<unsigned char> data_receive;
+
+			#ifdef TEST_MANAGE_PORT
+				std::cout	<< "SYSTEM----> Before async_read_some number_bytes is " 
+							<< number_bytes << "\n";
+			#endif
+			
+			this->io_port->async_read_some( boost::asio::buffer( data_receive , number_bytes),
+										read_handler);
+
+			#ifdef TEST_MANAGE_PORT
+				std::cout	<< "SYSTEM----> AFTER async_read_some\n"
+							<< "----------------> NEXT RUNS io_service.run_for_one\n";
+			#endif
+
+			this->io_service.run_one();
+
+			#ifdef TEST_MANAGE_PORT
+				std::cout	<< "SYSTEM----> AFTER RUN io_service "
+							<< "size of vector is " << data_receive.size()
+							<< "\n";
+			#endif
+
+			#ifdef TEST_MANAGE_PORT
+				std::cout	<< "<-SYSTEM-> BEFORE STOP IO_SERVICE\n";
+			#endif
+
+			return data_receive;
+
+		}
 
 }
 }

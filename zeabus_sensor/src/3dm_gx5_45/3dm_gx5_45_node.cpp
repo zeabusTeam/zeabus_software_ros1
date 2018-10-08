@@ -11,6 +11,8 @@
 
 #include	"3dm_gx5_45_node.h"
 
+#define TEST_IMU
+
 int main( int argc , char **argv){
 	ros::init( argc , argv , "individual_imu"); // init node for ros system
 	
@@ -45,9 +47,14 @@ int main( int argc , char **argv){
 	imu_port->io_port->set_option( imu_port->io_character_size );
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+	imu_port->read_asynchronous( 10 );
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-
+	#ifdef TEST_IMU
+		std::cout	<< "<-SYSTEM-> Befor delete imu_port"
+					<< "\n";
+	#endif
 	delete imu_port;
 
 }

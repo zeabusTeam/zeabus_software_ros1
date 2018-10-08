@@ -14,7 +14,7 @@
 	#define ZEABUS_EXTENSION_MANAGE_PORT_H
 #endif
 
-#define TEST_MANAGE_PORT
+//#define TEST_MANAGE_PORT
 
 namespace zeabus_extension{
 
@@ -25,6 +25,7 @@ namespace manage_port{
 	{
 		this->io_port = new boost::asio::serial_port( this->io_service);
 		this->io_time = new boost::asio::steady_timer( this->io_service);
+		num_temp = 0;
 		if( name_port != "") this->name_port = name_port;
 		else this->name_port = "";
 	}
@@ -159,24 +160,28 @@ namespace manage_port{
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "<--SYSTEM--> IN read_handler " 
 //							<< "size of vector is " << buffers
+							<< "error code : " << error
 							<< " and bytes_transfer is " << bytes_transfer
 //							<< " want byte is " << number_bytes
 							<< "\n";
 			#endif
-			
+				num_temp += bytes_transfer;
 		}
 
 		void write_handle( const boost::system::error_code& error 
 							, std::size_t bytes_transfer){
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "<--SYSTEM--> In write handle "
+							<< "error code : " << error
 							<< "have bytes_transfer is " << bytes_transfer
 							<< "\n";
 			#endif
+				num_temp += bytes_transfer;
 		}
 
 		std::vector<unsigned char> specific_port::read_asynchronous( size_t number_bytes ){
 			std::vector<unsigned char> data_receive;
+			data_receive.resize(number_bytes);
 
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM----> Before async_read_some number_bytes is " 
@@ -199,7 +204,10 @@ namespace manage_port{
 			#endif
 
 			// run one queqe
-			this->io_service.run();
+//			while( true ){
+			this->io_service.run_one();
+//				if( num_temp == number_bytes) break;
+//			}
 
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM----> AFTER RUN io_service "
@@ -207,14 +215,15 @@ namespace manage_port{
 							<< "\n";
 			#endif
 	
-
+			num_temp = 0;
+			this->io_service.reset();
 			return data_receive;
 
 		}
 
 //		template<typename buffer_data>void specific_port::write_asynchronous( buffer_data data 
 //												, size_t bytes){
-		void specific_port::write_asynchronous( std::vector<unsigned char> data 
+		void specific_port::write_asynchronous( std::vector<unsigned uint8_t> data 
 												, size_t bytes){
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM-----> Before async_write bytes to write is "
@@ -231,11 +240,12 @@ namespace manage_port{
 				std::cout	<< "SYSTEM-----> After async_write and next run io_service\n";
 			#endif
 
-			this->io_service.run();
+			this->io_service.run_one();
 
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM-----> Finish run\n";
 			#endif
+			num_temp = 0;
 			this->io_service.reset();
 
 		}

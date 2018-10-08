@@ -48,22 +48,45 @@ int main( int argc , char **argv){
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// PART TEST IMU //////////////////////////////////////////////
 	std::vector<unsigned char>idle_command;
-
+	
 	std::string idle_string = "756501020202E1C7";
-	for( int i = 0 ; i < 16 ; i++) idle_command.push_back( idle_string[i]);
+//	std::string idle_string = "756501020201E0C6";
+	for( int i = 0 ; i < 16 ; i++) idle_command.push_back( (unsigned char)idle_string[i]);
+	std::cout << "print vector : ";
+	for( std::vector<unsigned char>::iterator it = idle_command.begin() 
+			; it != idle_command.end() ; ++it){
+		//std::cout << std::hex << *it;
+		printf("%c" , *it);
+	}
+		
+	std::cout << "\n";
 
 	imu_port->write_asynchronous( idle_command , size_t(16) );
 	std::cout << "FINISH send idle command next read command\n";
-	std::vector<unsigned char>idle_reply = 
-				imu_port->read_asynchronous( size_t(18) );
-	
-	std::cout	<< "result is : ";
-	while( ! idle_reply.empty() ){
-		std::cout << std::hex << idle_reply.back();
-		idle_reply.pop_back();
+	std::vector<unsigned char>idle_reply; 
+	std::cout << "START TO find\n";
+	while( true ){
+		idle_reply.resize(1);
+		idle_reply = imu_port->read_asynchronous( size_t(1));
+		printf("\'%c\'  " , idle_reply[0] );
+		if( idle_reply[0] == 0x75){
+			break;
+		}
 	}
-	std::cout	<< " : finish\n"; 
-	imu_port->write_asynchronous( idle_command , size_t(16) );
+	std::cout << "\n";	
+	while( true ){
+		idle_reply.resize(1);
+		idle_reply = imu_port->read_asynchronous( size_t(1));
+		printf("\'%c\'  " , idle_reply[0] );
+		if( idle_reply[0] == 'e'){
+			break;
+		}
+	}
+	std::cout << "\n";	
+//	std::cout	<< "result is : ";
+//	for( std::vector<unsigned char>::iterator it = idle_reply.begin() 
+//		; it != idle_reply.end() ; ++it) printf( "%c\n" , *it);
+//	std::cout	<< " : finish\n"; 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

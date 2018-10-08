@@ -32,6 +32,7 @@
 namespace zeabus_extension{
 namespace manage_port{
 
+	size_t num_temp;
 	void read_handle( const boost::system::error_code& error , std::size_t bytes_transfer);
 	void write_handle( const boost::system::error_code& error , std::size_t bytes_transfer);
 	
@@ -76,7 +77,7 @@ namespace manage_port{
 			std::vector<unsigned char> read_asynchronous( size_t bytes_transfer );
 //			template<typename buffer_data>void write_asynchronous( buffer_data data 
 //												, size_t bytes);	
-			void write_asynchronous( std::vector<unsigned char> data 
+			void write_asynchronous( std::vector<unsigned uint8_t> data 
 												, size_t bytes);	
 
 		protected:

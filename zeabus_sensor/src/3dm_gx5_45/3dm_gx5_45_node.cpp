@@ -36,11 +36,21 @@ int main( int argc , char **argv){
 	imu_port->io_character_size = 
 		boost::asio::serial_port_base::character_size(8);
 
+	// set up all option
+	if( ! imu_port->is_open() ) return-1;
 	imu_port->io_port->set_option( imu_port->io_baud_rate );
-	std::cout	<< "Baud rate of IMU is " 
-				<< imu_port->io_baud_rate.value()  << "\n";
-	imu_port->io_port->get_option( imu_port->io_baud_rate );
-	std::cout	<< "Baud rate of IMU is " 
-				<< imu_port->io_baud_rate.value()  << "\n";
+	imu_port->io_port->set_option( imu_port->io_stop_bits );
+	imu_port->io_port->set_option( imu_port->io_parity );
+	imu_port->io_port->set_option( imu_port->io_flow_control );
+	imu_port->io_port->set_option( imu_port->io_character_size );
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+	imu_port->run_service();
+	std::vector<unsigned char> test = imu_port->asynchronous_read(10);
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	delete imu_port;
 
 }

@@ -97,7 +97,9 @@ namespace manage_port{
 		std::cout << "SYSTEM--> In read_string of specific_port class in file manage_port.cpp";
 		std::cout << " start read <----------\n";
 		while( true ){
+			std::cout << "before read_some \n";
 			this->io_port->read_some( boost::asio::buffer( &data_buffer , 1 ));
+			std::cout << "data_buffer is " << data_buffer[position] << "\n";
 			if( data_buffer[ position ] == '\n' || data_buffer[position] == '\0'){
 				break;
 			}
@@ -150,31 +152,27 @@ namespace manage_port{
 //																							//
 //																							//
 //////////////////////////////////////////////////////////////////////////////////////////////
-		void handler( const boost::system::error_code& error ,
-							std::size_t bytes_transfer ){
+		void read_handler( const boost::system::error_code& error 
+						   , std::size_t bytes_transfer ){
+			std::cout << "size transfer is " << bytes_transfer <<"\n";
+		}
+
+		void write_handler( const boost::system::error_code& error 
+							, std::size_t bytes_transfer){
+
 		}
 
 		// read type asynchronous_read
 		std::vector<unsigned char> specific_port::asynchronous_read( std::size_t data_size ){
-			std::cout << "SYSTEM--> START READ ASYNCHRONOUS size is " << data_size << "\n";
-			std::vector<unsigned char> data_buffer;
-			std::size_t bytes_transfer ;
-			boost::system::error_code error_message;
-			boost::asio::async_read( *(this->io_port) , 
-							boost::asio::buffer( data_buffer , data_size) ,// NULL);
-							handler); 
-			std::cout << "SYSTEM--> END READ ASYNCHRONOUS\n";
 		}
 
 		// write type asynchronous_read
 		void specific_port::asynchronous_write( std::vector<unsigned char> data_write , 
 												std::size_t data_size ){
-			std::cout << "SYSTEM--> START WRITE ASYNCHRONOUS size is " << data_size << "\n";
-			boost::asio::async_write( *(this->io_port) , 
-							boost::asio::buffer( data_write , data_size) ,
-							handler);
-			std::cout << "SYSTEM--> END WRITE ASYNCHRONOUS size is " << data_size << "\n";
 		}
-
+		
+		void specific_port::run_service(){
+			this->io_service.run();
+		}
 }
 }

@@ -52,5 +52,13 @@ int main( int argc , char **argv){
 	int desired_base_rate = 250
 	uint16_t rate_decimation = imu_rate / desired_base_rate;
 
+	std::vector<uint8_t> imu_message_format = { 
+			zeabus_sensor::MIP_COMMUNICATION::DATA::DELTA_THERA_VECTOR,
+			zeabus_sensor::MIP_COMMUNICATION::DATA::DELTA_VELOCITY_VECTOR,
+			zeabus_sensor::MIP_COMMUNICATION::DATA::CF_EULER_ANGLES
+		}
+	imu->set_imu_message_format_field( rate_decimation , imu_message_format );
+	imu->set_imu_message_format();
+
 	// NEXT SET IMU MESSAGE FORMAT to CHOOSE WHAT DATA DO YOU WANT
 }

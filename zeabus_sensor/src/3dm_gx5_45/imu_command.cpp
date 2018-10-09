@@ -92,7 +92,18 @@ namespace zeabus_sensor{
 		}
 
 		void microstrain_imu_port::set_imu_message_format(){
-
+			this->adding_header( this->write_buffer);
+			this->write_buffer.push_back( COMMAND::SENSOR::DESCRIPTOR);
+			this->write_buffer.push_back( this->imu_message_format_field[0]);
+			for( int run = 0 ; run < this->imu_message_format_field.size() ; run++){
+				this->write_buffer.push_back( this->imu_message_format_field[run]);
+			}
+			this->adding_checksum( this->write_buffer);
+			this->print_vector( this->write_buffer , "data write IMU MESSAGE FORMAT ");
+			do(
+				this->write_asynchronous( this->write_buffer , this->write_buffer.size());
+				this->read_reply_command("reply of set imu message format ");
+			)while( this->check_ACK_NACK( this->read_buffer.size() - 3));
 		}
 
 		

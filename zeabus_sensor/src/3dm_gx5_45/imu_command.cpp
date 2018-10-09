@@ -77,14 +77,24 @@ namespace zeabus_sensor{
 			uint8_t field_length = 4 + 3*descriptor_data.size();	
 			uint8_t field_descriptor = COMMAND::SENSOR::IMU_MESSAGE_FORMAT;
 			uint8_t function = 0x01; // use new setting
+			uint8_t descriptor_count = descriptor_data.size();
+			uint8_t rate_decimation_01 = uint8_t(decimation>>8 & 0xff);
+			uint8_t rate_decimation_02 = uint8_t(decimation & 0xff);
+//			uint8_t rate_decimation_01 = 0x00;
+//			uint8_t rate_decimation_02 = 0x02;
+			#ifdef TEST_IMU_PORT
+				printf("CHECK DECIMATION : %x : %x : %x " , decimation 
+						, rate_decimation_01 , rate_decimation_02);
+			#endif
 			this->imu_message_format_field.resize(0); // new std::vector for correct field
 			this->imu_message_format_field.push_back( field_length );
 			this->imu_message_format_field.push_back( field_descriptor);
 			this->imu_message_format_field.push_back( function );
+			this->imu_message_format_field.push_back( descriptor_count );
 			for( int run = 0 ; run < descriptor_data.size() ; run++ ){
 				this->imu_message_format_field.push_back( descriptor_data[run]);
-				this->imu_message_format_field.push_back( ( uint8_t(decimation >> 8) & 0xff ));
-				this->imu_message_format_field.push_back( uint8_t ( decimation & 0xff));
+				this->imu_message_format_field.push_back( rate_decimation_01 );
+				this->imu_message_format_field.push_back( rate_decimation_02 );
 			}
 			#ifdef TEST_IMU_PORT
 				this->print_vector( this->imu_message_format_field , "FIELD IMU FORMAT ");
@@ -106,7 +116,33 @@ namespace zeabus_sensor{
 			}while( this->check_ACK_NACK( this->read_buffer.size() - 3));
 		}
 
-		
+		void microstrain_imu_port::continuous_stream( bool imu_msg , bool ef_msg){
+			this->adding_header( this->write_buffer);
+			this->write_buffer.push_back( COMMAND::SENSOR::DESCRIPTOR );
+			this->write_buffer.push_back( 0x0A );
+			this->write_buffer.push_back( 0x05 ); //field length
+			this->write_buffer.push_back( COMMAND::SENSOR::CONTINUOUS_DATA_STREAM );
+			this->write_buffer.push_back( 0x01 ); // save new setting
+			this->write_buffer.push_back( 0x01 ); // choose imu
+			if( imu_msg ) this->write_buffer.push_back( 0x01); // enable
+			else this->write_buffer.push_back( 0x00 ); // disable
+			this->write_buffer.push_back( 0x05 ); //field length
+			this->write_buffer.push_back( COMMAND::SENSOR::CONTINUOUS_DATA_STREAM );
+			this->write_buffer.push_back( 0x01 ); // save new setting
+			this->write_buffer.push_back( 0x03 ); // choose Estimation Filter
+			if( ef_msg ) this->write_buffer.push_back( 0x01); // enable
+			else this->write_buffer.push_back( 0x00 ); // disable
+			this->adding_checksum( this->write_buffer );
+			#ifdef TEST_IMU_PORT
+				this->print_vector( this->write_buffer , "Continuous Stream : ");
+			#endif
+			do{
+				this->write_asynchronous( this->write_buffer , this->write_buffer.size());
+				this->read_reply_command("reply of continuous stream : ");
+			}while( this->check_ACK_NACK(this->read_buffer.size() - 3) &&
+					this->check_ACK_NACK(this->read_buffer.size() -6 ) );
+			
+		}	
 	}
 
 }

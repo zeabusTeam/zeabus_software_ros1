@@ -53,6 +53,7 @@ namespace MIP_COMMUNICATION{
 			static const uint8_t GET_GNSS_DATA_BASE_RATE = 0x07;
 			static const uint8_t IMU_MESSAGE_FORMAT = 0x08;
 			static const uint8_t GNSS_MESSAGE_FORMAT = 0x09;
+			static const uint8_t CONTINUOUS_DATA_STREAM = 0x11;
 		}
 	}
 

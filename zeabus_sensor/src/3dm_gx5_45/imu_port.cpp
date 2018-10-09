@@ -16,7 +16,7 @@
 //#include	"imu_port.h"
 
 #define TEST_IMU_PORT
-#define SHOW_CHECK_SUM
+//#define SHOW_CHECK_SUM
 namespace zeabus_sensor{
 
 	namespace MIP_COMMUNICATION{
@@ -76,6 +76,7 @@ namespace zeabus_sensor{
 
 		void microstrain_imu_port::read_reply_command( std::string command){
 			// First read untill find 'u' or 0x75 to show start packet
+			this->read_buffer.resize(0);
 			std::vector<unsigned uint8_t> temporary;
 			while( true ){
 				temporary = this->read_asynchronous( (size_t)1);

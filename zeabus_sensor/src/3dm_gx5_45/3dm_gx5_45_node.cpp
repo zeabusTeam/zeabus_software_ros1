@@ -51,6 +51,7 @@ int main( int argc , char **argv){
 	std::cout << "imu rate is " << imu_rate << "\n";
 	int desired_base_rate = 250;
 	uint16_t rate_decimation = uint16_t(imu_rate / desired_base_rate);
+	std::cout << "rate_decimation is " << rate_decimation << "\n";
 	
 	// NEXT SET IMU MESSAGE FORMAT to CHOOSE WHAT DATA DO YOU WANT
 	std::vector<uint8_t> imu_message_format; 
@@ -66,5 +67,9 @@ int main( int argc , char **argv){
 	imu->set_imu_message_format_field( rate_decimation , imu_message_format );
 	imu->set_imu_message_format();
 	// finish part set IMU MESSAGE FORMAT
+
+	std::cout << "will Enable stream\n";
+	// true is enable stream and first order is imu and second is ef	
+	imu->continuous_stream( true , false);
 
 }

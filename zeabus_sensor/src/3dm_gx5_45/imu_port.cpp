@@ -125,13 +125,7 @@ namespace zeabus_sensor{
 			else ok_data = false;
 				
 			// Print all reply of command
-			std::cout <<"<--IMU-->Result of " << command << " is ";
-			for(	std::vector<uint8_t>::iterator iterator = this->read_buffer.begin() ;  
-					iterator != this->read_buffer.end() ; iterator++
-				){
-				printf("%x " , *iterator);	
-			}
-			printf("\n");
+			this->print_vector( this->read_buffer , command);
 								
 		}
 

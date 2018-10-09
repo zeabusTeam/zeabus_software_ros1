@@ -49,4 +49,6 @@ int main( int argc , char **argv){
 	imu->set_idle();
 	int imu_rate = imu->get_imu_data_base_rate();
 	std::cout << "imu rate is " << imu_rate << "\n";
+	int desired_base_rate = 250
+	uint16_t rate_decimation = imu_rate / desired_base_rate;
 }

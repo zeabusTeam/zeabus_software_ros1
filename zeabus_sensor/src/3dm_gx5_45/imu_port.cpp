@@ -5,7 +5,7 @@
 //	Create	: Oct 09 , 2018
 //	Author	: Supasan Komonlit
 //
-//	Main Purpose : Detail of cord from imu_port
+//	Main Purpose : Detail of class from imu_port
 //				
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -36,31 +36,8 @@ namespace zeabus_sensor{
 			#endif
 		}		
 
-		void microstrain_imu_port::set_idle(){
-			this->adding_header( this->write_buffer );
-			#ifdef TEST_IMU_PORT
-				std::cout	<< "<--TESTER--> After adding_head in call function area have size "
-							<< this->write_buffer.size() << "\n";
-			#endif
-			this->write_buffer.push_back( COMMAND::BASE::DESCRIPTOR ); // add descriptor set
-			this->write_buffer.push_back( 0x02 ); // add Payload Length
-			this->write_buffer.push_back( 0x02 ); // add Field Length
-			this->write_buffer.push_back( COMMAND::BASE::IDLE ); // add descriptor field
-			#ifdef TEST_IMU_PORT
-				std::cout	<< "<--TESTER--> After adding Command field have size " 
-							<< write_buffer.size() << "\n";
-			#endif
-			this->adding_checksum( this->write_buffer);
-			#ifdef TEST_IMU_PORT
-				std::cout	<< "<--TESTER--> After adding Check some have size " 
-							<< write_buffer.size() << "\n";
-			#endif
-			this->write_asynchronous( this->write_buffer , this->write_buffer.size());
-			this->read_reply_command("Set to Idle");
-		}
-
 		template<typename type_vector>void microstrain_imu_port::adding_header(
-												type_vector data){
+												type_vector& data){
 			data.resize(0);
 			//data.push_back( this->sync_1);
 			//data.push_back( this->sync_2);
@@ -73,18 +50,18 @@ namespace zeabus_sensor{
 		}
 
 		template<typename type_vector>void microstrain_imu_port::adding_checksum( 
-												type_vector data){
-			uint16_t check_sum_01 = 0;
-			uint16_t check_sum_02 = 0;
+												type_vector& data){
+			uint8_t check_sum_01 = 0;
+			uint8_t check_sum_02 = 0;
 			for( int run = 0 ; run < data.size() ; run++){
 				check_sum_01 += data[run];
 				check_sum_02 += check_sum_01;
 				#ifdef TEST_IMU_PORT
-					printf("<---HOW---> %x : %x : %x" , data[run] , check_sum_01 , check_sum_02);
+					printf("<---HOW---> %x : %x : %x\n" , data[run] , check_sum_01 , check_sum_02);
 				#endif
 			}
 			
-			uint32_t all_result = (check_sum_01 << 8) + check_sum_02;
+			uint32_t all_result = (uint16_t(check_sum_01) << 8) + uint16_t(check_sum_02);
 			data.push_back( (uint8_t)((all_result>>8)&0xff));
 			data.push_back( (uint8_t)(all_result&0xff));
 			#ifdef TEST_IMU_PORT
@@ -149,10 +126,21 @@ namespace zeabus_sensor{
 			for(	std::vector<uint8_t>::iterator iterator = this->read_buffer.begin() ;  
 					iterator != this->read_buffer.end() ; iterator++
 				){
-				printf("%x" , *iterator);	
+				printf("%x " , *iterator);	
 			}
 			printf("\n");
-					
+								
+		}
+
+		bool microstrain_imu_port::check_ACK_NACK( int point){
+			if( this->read_buffer[point] == 0x00){
+				std::cout << "It is ACK" << "\n";
+				return false;
+			}
+			else{
+				std::cout << "It is NACK" << "\n";
+				return true;
+			}
 		} 
 
 }

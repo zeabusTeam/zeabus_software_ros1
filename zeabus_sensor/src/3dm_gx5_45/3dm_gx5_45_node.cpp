@@ -12,6 +12,7 @@
 #include	<zeabus_sensor/3dm_gx5_45_node.h>
 
 #include	"imu_port.cpp"
+#include	"imu_command.cpp"
 
 int main( int argc , char **argv){
 
@@ -44,5 +45,6 @@ int main( int argc , char **argv){
 	imu->io_port->set_option( imu->io_parity);
 	imu->io_port->set_option( imu->io_stop_bits);
 	imu->io_port->set_option( imu->io_character_size);
-
+	
+	imu->set_idle();
 }

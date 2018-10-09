@@ -142,6 +142,11 @@ namespace zeabus_sensor{
 			}while( this->check_ACK_NACK(this->read_buffer.size() - 3) &&
 					this->check_ACK_NACK(this->read_buffer.size() -6 ) );
 			
+		}
+
+		std::vector<uint8_t> microstrain_imu_port::stream_data(){
+			this->read_reply_command("RECEIVE DATA : ");
+			return this->read_buffer;
 		}	
 	}
 

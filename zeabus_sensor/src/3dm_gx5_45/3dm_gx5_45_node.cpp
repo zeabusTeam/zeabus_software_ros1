@@ -72,4 +72,12 @@ int main( int argc , char **argv){
 	// true is enable stream and first order is imu and second is ef	
 	imu->continuous_stream( true , false);
 
+	// start part of ros
+	ros::NodeHandle nh;
+	std::cout << "<---SYSTEM---> IMU STREAM DATA\n";
+	std::vector<uint8_t> data;
+	while( nh.ok() ){
+		data = imu->stream_data();
+	}	
+
 }

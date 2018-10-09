@@ -18,6 +18,8 @@ namespace zeabus_sensor{
 
 	namespace MIP_COMMUNICATION{
 
+		// set idle is recommend in first step to prepare config imu
+		// it make imu already to config or reply command
 		void microstrain_imu_port::set_idle(){
 			this->adding_header( (this->write_buffer) );
 			#ifdef TEST_IMU_PORT
@@ -48,7 +50,11 @@ namespace zeabus_sensor{
 			}while( this->check_ACK_NACK( this->read_buffer.size() - 3));
 		}
 
+		// get base rate for the IMU data in Hz
+		// this value is used for data rate calculations
+		void microstrain_imu_port::get_imu_data_base_rate(){
 
+		}
 	}
 
 }

@@ -33,6 +33,7 @@ namespace zeabus_sensor{
 				microstrain_imu_port( std::string name_port = "" );
 				~microstrain_imu_port();
 				void set_idle(); // function to set imu ready for config recommand
+				int get_base_rate();
 				unsigned int get_imu_data_base_rate(); // function for get IMU Data BASE RATE
 
 			private:

@@ -20,17 +20,17 @@ catkin_package(
 
 include_directories( include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
-set( zeabus_sensor_sources
-	src/3dm_gx5_45/3dm_gx5_45_node.cpp
-	src/3dm_gx5_45/imu_port.cpp
-)
+#set( zeabus_sensor_sources
+#	src/3dm_gx5_45/3dm_gx5_45_node.cpp
+#	src/3dm_gx5_45/imu_port.cpp
+#)
 
-add_library( zeabus_sensor ${zeabus_sensor_sources})
+#add_library( zeabus_sensor ${zeabus_sensor_sources})
 
 add_executable(port_dvl src/teledyne_dvl/dvl_port.cpp)
 add_executable(node_dvl src/teledyne_dvl/dvl_node.cpp)
 add_executable(node_3dm_gx5_45 src/3dm_gx5_45/3dm_gx5_45_node.cpp)
 
-target_link_libraries(port_dvl ${catkin_LIBRARIES})
-target_link_libraries(node_dvl ${catkin_LIBRARIES})
-target_link_libraries(node_3dm_gx5_45 ${catkin_LIBRARIES})
+target_link_libraries(port_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
+target_link_libraries(node_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
+target_link_libraries(node_3dm_gx5_45 ${catkin_LIBRARIES} ${boost_LIBRARIES})

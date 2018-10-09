@@ -28,10 +28,9 @@ namespace zeabus_sensor{
 
 	namespace MIP_COMMUNICATION{
 
-		class microstrain_imu_port: public zeabus_extension::manage_port::specific_port{
+		class microstrain_imu_port : public zeabus_extension::manage_port::specific_port{
 			public:
-				microstrain_imu_port( std::string name_port=""):
-					zeabus_extension::manage_port::specific_port( name_port);
+				microstrain_imu_port( std::string name_port = "" );
 				~microstrain_imu_port();
 				void set_idle(); // function to set imu ready for config recommand
 				unsigned int get_imu_data_base_rate(); // function for get IMU Data BASE RATE

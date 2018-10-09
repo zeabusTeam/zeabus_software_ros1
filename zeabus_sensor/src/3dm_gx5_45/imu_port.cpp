@@ -11,8 +11,9 @@
 
 #ifndef ZEABUS_SENSOR_IMU_PORT_H
 	#include	<zeabus_sensor/imu_port.h>
-	#define	ZEABUS_SENSOR_IMU_PORT_H
+	#define ZEABUS_SENSOR_IMU_PORT_H
 #endif
+//#include	"imu_port.h"
 
 #define TEST_IMU_PORT
 
@@ -20,8 +21,9 @@ namespace zeabus_sensor{
 
 	namespace MIP_COMMUNICATION{
 
-		microstrain_imu_port::microstrain_imu_port( std::string name_port): 
-										specific_port( name_port ){
+		microstrain_imu_port::microstrain_imu_port( std::string name_port ): 
+				zeabus_extension::manage_port::specific_port( name_port )
+		{ 
 			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> Init call microstrain_imu_port by name port is "
 							<< name_port << "\n";
@@ -60,8 +62,10 @@ namespace zeabus_sensor{
 		template<typename type_vector>void microstrain_imu_port::adding_header(
 												type_vector data){
 			data.resize(0);
-			data.push_back( this->sync_1);
-			data.push_back( this->sync_2);
+			//data.push_back( this->sync_1);
+			//data.push_back( this->sync_2);
+			data.push_back( 'u');
+			data.push_back( 'e');
 			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> After adding_head have size " 
 							<< data.size() << "\n";
@@ -95,7 +99,7 @@ namespace zeabus_sensor{
 			std::vector<unsigned uint8_t> temporary;
 			while( true ){
 				temporary = this->read_asynchronous( (size_t)1);
-				if( temporary[0] == this->sync_1 ){
+				if( temporary[0] == 'u' ){
 					this->read_buffer.push_back( temporary[0] );
 					break;
 				}
@@ -104,7 +108,8 @@ namespace zeabus_sensor{
 			// Second read untill find 'e' or 0x65 to show second start packet
 			while( true ){
 				temporary = this->read_asynchronous( (size_t)1 );
-				if( temporary[0] == this->sync_2){
+				//if( temporary[0] == this->sync_2){
+				if( temporary[0] == 'e'){
 					this->read_buffer.push_back( temporary[0] );
 					break;
 				}

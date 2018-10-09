@@ -28,7 +28,7 @@ namespace zeabus_sensor{
 			#endif
 		} 
 
-		microstrain_imu_port::~microstrain_imu_port(): ~specific_port(){
+		microstrain_imu_port::~microstrain_imu_port(){
 			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> THE END OF microstrain_imu_port\n";
 			#endif
@@ -38,12 +38,12 @@ namespace zeabus_sensor{
 			this->adding_header( this->write_buffer );
 			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> After adding_head in call function area have size "
-							<< data.size() << "\n"
+							<< this->write_buffer.size() << "\n";
 			#endif
-			this->write_buffer.push_back( BASE::DESCRIPTOR ); // add descriptor set
+			this->write_buffer.push_back( COMMAND::BASE::DESCRIPTOR ); // add descriptor set
 			this->write_buffer.push_back( 0x02 ); // add Payload Length
 			this->write_buffer.push_back( 0x02 ); // add Field Length
-			this->write_buffer.push_back( BASE::SET_TO_IDLE ); // add descriptor field
+			this->write_buffer.push_back( COMMAND::BASE::IDLE ); // add descriptor field
 			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> After adding Command field have size " 
 							<< write_buffer.size() << "\n";
@@ -53,12 +53,13 @@ namespace zeabus_sensor{
 				std::cout	<< "<--TESTER--> After adding Check some have size " 
 							<< write_buffer.size() << "\n";
 			#endif
-
+			this->write_asynchronous( this->write_buffer , this->write_buffer.size());
+			this->read_reply_command("Set to Idle");
 		}
 
 		template<typename type_vector>void microstrain_imu_port::adding_header(
 												type_vector data){
-			this->data.resize(0);
+			data.resize(0);
 			data.push_back( this->sync_1);
 			data.push_back( this->sync_2);
 			#ifdef TEST_IMU_PORT
@@ -66,15 +67,16 @@ namespace zeabus_sensor{
 							<< data.size() << "\n";
 			#endif
 		}
+
 		template<typename type_vector>void microstrain_imu_port::adding_checksum( 
 												type_vector data){
 			uint16_t check_sum_01 = 0;
 			uint16_t check_sum_02 = 0;
-			for( type_vector::iterator = data.begin() ; iterator != data.end() ; iterator++){
-				check_sum_01 += *iterator;
+			for( int run = 0 ; run < data.size() ; run++){
+				check_sum_01 += data[run];
 				check_sum_02 += check_sum_01;
 				#ifdef TEST_IMU_PORT
-					printf("<---HOW---> %x : %x : %x" , *iterator , check_sum_01 , check_sum_02);
+					printf("<---HOW---> %x : %x : %x" , data[run] , check_sum_01 , check_sum_02);
 				#endif
 			}
 			
@@ -82,11 +84,71 @@ namespace zeabus_sensor{
 			data.push_back( (uint8_t)((all_result>>8)&0xff));
 			data.push_back( (uint8_t)(all_result&0xff));
 			#ifdef TEST_IMU_PORT
-				print("<--RESULT--> %x : %x\n", *(data.end()-2) , *(data.end()-1));
-				std::cout	<< "<--TESTER--> After addinh_checksun have size is "
+				printf("<--RESULT--> %x : %x\n", *(data.end()-2) , *(data.end()-1));
+				std::cout	<< "<--TESTER--> After adding_checksum have size is "
 							<< data.size() << "\n"; 
 			#endif
 		}
+
+		void microstrain_imu_port::read_reply_command( std::string command){
+			// First read untill find 'u' or 0x75 to show start packet
+			std::vector<unsigned uint8_t> temporary;
+			while( true ){
+				temporary = this->read_asynchronous( (size_t)1);
+				if( temporary[0] == this->sync_1 ){
+					this->read_buffer.push_back( temporary[0] );
+					break;
+				}
+			}
+
+			// Second read untill find 'e' or 0x65 to show second start packet
+			while( true ){
+				temporary = this->read_asynchronous( (size_t)1 );
+				if( temporary[0] == this->sync_2){
+					this->read_buffer.push_back( temporary[0] );
+					break;
+				}
+			}
+
+			// Third read 2 bytes for get Describe set [0] and Payload Length[1]
+			temporary = this->read_asynchronous( (size_t)2);
+			for( int run = 0 ; run < temporary.size() ; run++){
+				this->read_buffer.push_back( temporary[run] );
+			}
+			
+			// Read all data in reply fields
+			temporary = this->read_asynchronous( (size_t)temporary[1]);
+			for( int run = 0 ; run < temporary.size() ; run++){
+				this->read_buffer.push_back( temporary[run] );
+			}
+
+			// Read about checksum and calculate for prove collect data
+			temporary = this->read_asynchronous( (size_t)2);
+			this->adding_checksum( this->read_buffer );
+			bool ok_data = true;
+			if( *(this->read_buffer.end()-2) == temporary[0]){
+				#ifdef TEST_IMU_PORT
+					std::cout << "<--TESTER--> MSB ARE EQUAL\n";
+				#endif
+			}
+			else ok_data = false;
+			if( *(this->read_buffer.end()-1) == temporary[1]){
+				#ifdef TEST_IMU_PORT
+					std::cout << "<--TESTER--> LSB ARE EQUAL\n";
+				#endif
+			}
+			else ok_data = false;
+				
+			// Print all reply of command
+			std::cout <<"<--IMU-->Result of " << command << " is ";
+			for(	std::vector<uint8_t>::iterator iterator = this->read_buffer.begin() ;  
+					iterator != this->read_buffer.end() ; iterator++
+				){
+				printf("%x" , *iterator);	
+			}
+			printf("\n");
+					
+		} 
 
 }
 

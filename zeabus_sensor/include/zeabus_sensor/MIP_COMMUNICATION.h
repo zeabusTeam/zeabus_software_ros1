@@ -14,6 +14,16 @@
 //  ----> second part is information of packet
 //  ----> checksum for check result of all bytes
 
+#ifndef STDINT_H
+	#include	<stdint.h>
+	#define	STDINT_H
+#endif
+
+#ifndef IOSTREAM
+	#include	<iostream>
+	#define IOSTREAM
+#endif
+
 namespace zeabus_sensor{
 
 namespace MIP_COMMUNICATION{

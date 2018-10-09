@@ -9,11 +9,6 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef ZEABUS_EXTENSION_MANAGE_PORT_H
-	#include	<zeabus_extension/manage_port.h>
-	#define	ZEABUS_EXTENSION_MANAGE_PORT_H
-#endif
-
 #ifndef IOSTREAM
 	#include	<iostream>
 	#define	IOSTREAM
@@ -24,12 +19,12 @@
 	#define ROS_ROS_H
 #endif
 
-#ifndef ZEABUS_EXTENSION_CONVERT_TO_STRING_H
-	#include	<zeabus_extension/convert_to_string.h>
-	#define ZEABUS_EXTENSION_CONVERT_TO_STRING_H
-#endif
-
 #ifndef ZEABUS_SENSOR_IMU_PORT_H
 	#include	<zeabus_sensor/imu_port.h>
 	#define ZEABUS_SENSOR_IMU_PORT_H
+#endif
+
+#ifndef ZEABUS_SENSOR_MIP_COMMUNICATION_H
+	#include	<zeabus_sensor/MIP_COMMUNICATION.h>
+	#define ZEABUS_SENSOR_MIP_COMMUNICATION_H
 #endif

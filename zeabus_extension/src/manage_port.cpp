@@ -25,7 +25,6 @@ namespace manage_port{
 	{
 		this->io_port = new boost::asio::serial_port( this->io_service);
 		this->io_time = new boost::asio::steady_timer( this->io_service);
-		num_temp = 0;
 		if( name_port != "") this->name_port = name_port;
 		else this->name_port = "";
 	}
@@ -165,7 +164,6 @@ namespace manage_port{
 //							<< " want byte is " << number_bytes
 							<< "\n";
 			#endif
-				num_temp += bytes_transfer;
 		}
 
 		void write_handle( const boost::system::error_code& error 
@@ -176,7 +174,6 @@ namespace manage_port{
 							<< "have bytes_transfer is " << bytes_transfer
 							<< "\n";
 			#endif
-				num_temp += bytes_transfer;
 		}
 
 		std::vector<unsigned uint8_t> specific_port::read_asynchronous( size_t number_bytes ){
@@ -204,18 +201,13 @@ namespace manage_port{
 			#endif
 
 			// run one queqe
-//			while( true ){
 			this->io_service.run_one();
-//				if( num_temp == number_bytes) break;
-//			}
-
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM----> AFTER RUN io_service "
 							<< "size of vector is " << data_receive.size()
 							<< "\n";
 			#endif
 	
-			num_temp = 0;
 			this->io_service.reset();
 			return data_receive;
 
@@ -245,7 +237,6 @@ namespace manage_port{
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM-----> Finish run\n";
 			#endif
-			num_temp = 0;
 			this->io_service.reset();
 
 		}

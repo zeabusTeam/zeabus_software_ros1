@@ -32,7 +32,6 @@
 namespace zeabus_extension{
 namespace manage_port{
 
-	size_t num_temp;
 	void read_handle( const boost::system::error_code& error , std::size_t bytes_transfer);
 	void write_handle( const boost::system::error_code& error , std::size_t bytes_transfer);
 	

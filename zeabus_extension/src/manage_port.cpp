@@ -179,8 +179,8 @@ namespace manage_port{
 				num_temp += bytes_transfer;
 		}
 
-		std::vector<unsigned char> specific_port::read_asynchronous( size_t number_bytes ){
-			std::vector<unsigned char> data_receive;
+		std::vector<unsigned uint8_t> specific_port::read_asynchronous( size_t number_bytes ){
+			std::vector<unsigned uint8_t> data_receive;
 			data_receive.resize(number_bytes);
 
 			#ifdef TEST_MANAGE_PORT
@@ -223,7 +223,7 @@ namespace manage_port{
 
 //		template<typename buffer_data>void specific_port::write_asynchronous( buffer_data data 
 //												, size_t bytes){
-		void specific_port::write_asynchronous( std::vector<unsigned uint8_t> data 
+		void specific_port::write_asynchronous( std::vector<uint8_t> data 
 												, size_t bytes){
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM-----> Before async_write bytes to write is "

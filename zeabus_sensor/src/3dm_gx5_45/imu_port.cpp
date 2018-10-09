@@ -20,14 +20,15 @@ namespace zeabus_sensor{
 
 	namespace MIP_COMMUNICATION{
 
-		microstrain_imu_port( std::string name_port): specific_port( name_port ){
+		microstrain_imu_port::microstrain_imu_port( std::string name_port): 
+										specific_port( name_port ){
 			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> Init call microstrain_imu_port by name port is "
 							<< name_port << "\n";
 			#endif
 		} 
 
-		~microstrain_imu_port(): ~specific_port(){
+		microstrain_imu_port::~microstrain_imu_port(): ~specific_port(){
 			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> THE END OF microstrain_imu_port\n";
 			#endif
@@ -55,7 +56,8 @@ namespace zeabus_sensor{
 
 		}
 
-		template<typename type_vector>microstrain_imu_port::adding_header( type_vector data){
+		template<typename type_vector>void microstrain_imu_port::adding_header(
+												type_vector data){
 			this->data.resize(0);
 			data.push_back( this->sync_1);
 			data.push_back( this->sync_2);
@@ -64,7 +66,8 @@ namespace zeabus_sensor{
 							<< data.size() << "\n";
 			#endif
 		}
-		template<typename type_vector>adding_checksum( type_vector data){
+		template<typename type_vector>void microstrain_imu_port::adding_checksum( 
+												type_vector data){
 			uint16_t check_sum_01 = 0;
 			uint16_t check_sum_02 = 0;
 			for( type_vector::iterator = data.begin() ; iterator != data.end() ; iterator++){

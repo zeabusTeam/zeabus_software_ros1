@@ -20,7 +20,7 @@
 #endif
 
 #ifndef ZEABUS_SENSOR_MIP_COMMUNICATION_H
-	#include	<zeabus_sensor/MIP_COMMUNICATION_H>
+	#include	<zeabus_sensor/MIP_COMMUNICATION.h>
 	#define ZEABUS_SENSOR_MIP_COMMUNICATION_H
 #endif
 
@@ -30,7 +30,7 @@ namespace zeabus_sensor{
 
 		class microstrain_imu_port: public zeabus_extension::manage_port::specific_port{
 			public:
-				microstrain_imu_port( std::string name_port="");
+				microstrain_imu_port( std::string name_port=""): specific_port( name_port){};
 				~microstrain_imu_port();
 				void set_idle(); // function to set imu ready for config recommand
 				unsigned int get_imu_data_base_rate(); // function for get IMU aFata BASE RATE
@@ -38,11 +38,11 @@ namespace zeabus_sensor{
 			private:
 				static const unsigned char sync_1 = 0x75;
 				static const unsigned char sync_2 = 0x65;
-				template<typename type_vector>adding_header( type_vector data);
-				template<typename type_vector>adding_checksum( type_vector data);
+				template<typename type_vector>void adding_header( type_vector data);
+				template<typename type_vector>void adding_checksum( type_vector data);
 				std::vector<unsigned uint8_t> read_buffer;
 				std::vector<unsigned uint8_t> write_buffer;
-		}
+		};
 	}
 
 }

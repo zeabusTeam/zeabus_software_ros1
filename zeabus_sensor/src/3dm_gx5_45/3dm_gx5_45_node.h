@@ -29,4 +29,7 @@
 	#define ZEABUS_EXTENSION_CONVERT_TO_STRING_H
 #endif
 
-zeabus_extension::manage_port::specific_port* imu_port;
+#ifndef ZEABUS_SENSOR_IMU_PORT_H
+	#include	<zeabus_sensor/imu_port.h>
+	#define ZEABUS_SENSOR_IMU_PORT_H
+#endif

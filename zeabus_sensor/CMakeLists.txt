@@ -22,8 +22,8 @@ catkin_package(
 
 add_executable(port_dvl src/teledyne_dvl/dvl_port.cpp)
 add_executable(node_dvl src/teledyne_dvl/dvl_node.cpp)
-add_executable(test_imu src/3dm_gx5_45/3dm_gx5_45_test.cpp)
+add_executable(node_3dm_gx5_45 src/3dm_gx5_45/3dm_gx5_45_node.cpp)
 
 target_link_libraries(port_dvl ${catkin_LIBRARIES})
 target_link_libraries(node_dvl ${catkin_LIBRARIES})
-target_link_libraries(test_imu ${catkin_LIBRARIES})
+target_link_libraries(node_3dm_gx5_45 ${catkin_LIBRARIES})

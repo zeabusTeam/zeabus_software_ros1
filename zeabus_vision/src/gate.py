@@ -95,7 +95,17 @@ def get_rect(cnt):
     cx = Aconvert(cx, wimg)
     cy = -1.0*Aconvert(cy, himg)
     area = (1.0*w*h)/(wimg*himg)
-    return x, y, x+w, y+h, area
+    top_excess = (y < 0.05*himg)
+    right_excess = ((x+w) > 0.95*wimg)
+    left_excess = (x < (0.05*wimg))
+    bottom_excess = ((y+h) > 0.95*himg)
+    if right_excess and not left_excess:
+        pos = 1
+    elif left_excess and not right_excess:
+        pos = -1
+    else:
+        pos = 0
+    return x, y, x+w, y+h, area, pos
 
 
 def find_gate():
@@ -103,6 +113,7 @@ def find_gate():
     if bgr is None:
         img_is_none()
         return message(n_obj=-1)
+    bgr = pre_process(bgr)
     mask = get_mask(bgr)
     ROI = get_ROI(mask)
     mode = len(ROI)
@@ -118,10 +129,10 @@ def find_gate():
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         select_cnt = max(ROI, key=cv.contourArea)
-        cx1, cy1, cx2, cy2, area = get_rect(select_cnt)
+        cx1, cy1, cx2, cy2, area, pos = get_rect(select_cnt)
         publish_result(image_result, 'bgr', public_topic + 'image_result')
         publish_result(mask, 'gray', public_topic + 'mask')
-        return message(n_obj=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, area=area)
+        return message(n_obj=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, area=area, pos=pos)
 
 
 if __name__ == '__main__':

@@ -51,4 +51,6 @@ int main( int argc , char **argv){
 	std::cout << "imu rate is " << imu_rate << "\n";
 	int desired_base_rate = 250
 	uint16_t rate_decimation = imu_rate / desired_base_rate;
+
+	// NEXT SET IMU MESSAGE FORMAT to CHOOSE WHAT DATA DO YOU WANT
 }

@@ -69,6 +69,9 @@ namespace MIP_COMMUNICATION{
 			static const uint8_t CF_ORIENTATION_MATRXI = 0x09;
 			static const uint8_t CF_QUATERNION = 0x0A;
 			static const uint8_t CF_EULER_ANGLES = 0x0C;
+			static const uint8_t CF_STABILIZED_MAG_VECTOR_NORTH = 0x10;
+			static const uint8_t CF_STABILIZED_ACCEL_VECTOR_UP = 0x11;
+			static const uint8_t GPS_CORRELATION_TIMESTAMP = 0x12;
 		}
 	}
 

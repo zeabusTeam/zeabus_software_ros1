@@ -35,10 +35,15 @@ namespace zeabus_sensor{
 				void set_idle(); // function to set imu ready for config recommand to use this
 				int get_base_rate();
 				unsigned int get_imu_data_base_rate(); // function for get IMU Data BASE RATE
+				void set_imu_message_format_field( uint16_t decimation 
+							, std::vector<uint8_t> descriptor_data 
+				);
+				void set_imu_message_format();
 
 			protected:
 				template<typename type_vector>void print_vector(type_vector data 
 						, std::string message);
+				std::vector<uint8_t>imu_message_format_field;
 
 			private:
 				static const unsigned char sync_1 = 0x75;

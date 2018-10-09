@@ -70,6 +70,32 @@ namespace zeabus_sensor{
 			std::cout << "answer is " << std::hex << answer << std::dec << "\n";
 			return int( answer );
 		}
+
+		void microstrain_imu_port::set_imu_message_format_field( uint16_t decimation
+				, std::vector<uint8_t> descriptor_data){
+			// assign lengt in this field
+			uint8_t field_length = 4 + 3*descriptor_data.size();	
+			uint8_t field_descriptor = COMMAND::SENSOR::IMU_MESSAGE_FORMAT;
+			uint8_t function = 0x01; // use new setting
+			this->imu_message_format_field.resize(0); // new std::vector for correct field
+			this->imu_message_format_field.push_back( field_length );
+			this->imu_message_format_field.push_back( field_descriptor);
+			this->imu_message_format_field.push_back( function );
+			for( int run = 0 ; run < descriptor_data.size() ; run++ ){
+				this->imu_message_format_field.push_back( descriptor_data[run]);
+				this->imu_message_format_field.push_back( ( uint8_t(decimation >> 8) & 0xff ));
+				this->imu_message_format_field.push_back( uint8_t ( decimation & 0xff));
+			}
+			#ifdef TEST_IMU_PORT
+				this->print_vector( this->imu_message_format_field , "FIELD IMU FORMAT ");
+			#endif
+		}
+
+		void microstrain_imu_port::set_imu_message_format(){
+
+		}
+
+		
 	}
 
 }

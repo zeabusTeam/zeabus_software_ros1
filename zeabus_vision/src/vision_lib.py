@@ -1,3 +1,4 @@
+import cv2 as cv
 import rospy
 import numpy as np
 from cv_bridge import CvBridge 
@@ -69,3 +70,15 @@ def Aconvert(inp, full):
     full = float(full)
     res = (inp - (full / 2.0)) / (full / 2.0)
     return res
+
+
+def equalize(mono):
+    mono = cv.equalizeHist(mono)
+    return mono
+
+def equalize_hsv(hsv):
+    h,s,v = cv.split(hsv)
+    s = equalize(s)
+    v = equalize(v)
+    hsv = cv.merge((h,s,v))
+    return hsv

@@ -77,7 +77,7 @@ int main( int argc , char **argv){
 	std::cout << "<---SYSTEM---> IMU STREAM DATA\n";
 	std::vector<uint8_t> data;
 	while( nh.ok() ){
-		data = imu->stream_data();
+		imu->stream_data( data );
 	}	
 
 }

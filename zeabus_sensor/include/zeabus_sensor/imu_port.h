@@ -14,6 +14,11 @@
 	#define IOSTREAM
 #endif
 
+#ifndef VECTOR
+	#include	<vector>
+	#define	VECTOR
+#endif
+
 #ifndef ZEABUS_SENSOR_MIP_COMMUNICATION_H
 	#include	<zeabus_sensor/MIP_COMMUNICATION.h>
 	#define ZEABUS_SENSOR_MIP_COMMUNICATION_H
@@ -41,12 +46,12 @@ namespace zeabus_sensor{
 				void set_imu_message_format();
 				// continuous_stream imu_msg or ef_msg or not --> True is enable <--
 				void continuous_stream( bool imu_msg , bool ef_msg);
-				std::vector<uint8_t> stream_data();
+				void stream_data( std::vector<uint8_t> &data);
 
 			protected:
 				template<typename type_vector>void print_vector(type_vector data 
 						, std::string message);
-				std::vector<uint8_t>imu_message_format_field;
+				std::vector<uint8_t> imu_message_format_field;
 
 			private:
 				static const unsigned char sync_1 = 0x75;

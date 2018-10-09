@@ -86,7 +86,7 @@ namespace zeabus_sensor{
 				printf("CHECK DECIMATION : %x : %x : %x " , decimation 
 						, rate_decimation_01 , rate_decimation_02);
 			#endif
-			this->imu_message_format_field.resize(0); // new std::vector for correct field
+			this->imu_message_format_field.clear(); // new std::vector for correct field
 			this->imu_message_format_field.push_back( field_length );
 			this->imu_message_format_field.push_back( field_descriptor);
 			this->imu_message_format_field.push_back( function );
@@ -144,9 +144,40 @@ namespace zeabus_sensor{
 			
 		}
 
-		std::vector<uint8_t> microstrain_imu_port::stream_data(){
-			this->read_reply_command("RECEIVE DATA : ");
-			return this->read_buffer;
+		void microstrain_imu_port::stream_data( std::vector<uint8_t>& data){
+//			this->read_buffer.clear();
+//			this->read_buffer.shrink_to_fit();
+			uint8_t temporary;
+			// find heading of packet
+			while( true ){
+				temporary = this->read_asynchronous( size_t(1) )[0];	
+				if( temporary == 'u'){
+					break;
+				}
+			}
+			while( true ){
+				temporary = this->read_asynchronous( size_t(1) )[0];	
+				if( temporary == 'e'){
+					break;
+				}
+			}
+
+			temporary = this->read_asynchronous( size_t(1) )[0];
+			if( temporary == DATA::IMU_DATA_SET::DESCRIPTOR ){
+				temporary = this->read_asynchronous( size_t(1) )[0];
+				#ifdef TEST_RECEIVE_DATA
+					printf( "length of data is %d\n" , temporary);
+				#endif
+				if( temporary < 256){
+					data = this->read_asynchronous( size_t( temporary));
+					#ifdef TEST_RECEIVE_DATA
+						this->print_vector( data , "Packet Payload : ");
+					#endif
+				}
+				else{
+					return;
+				}
+			}
 		}	
 	}
 

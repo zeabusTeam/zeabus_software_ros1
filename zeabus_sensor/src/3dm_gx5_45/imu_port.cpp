@@ -16,7 +16,7 @@
 //#include	"imu_port.h"
 
 #define TEST_IMU_PORT
-
+#define SHOW_CHECK_SUM
 namespace zeabus_sensor{
 
 	namespace MIP_COMMUNICATION{
@@ -56,16 +56,19 @@ namespace zeabus_sensor{
 			for( int run = 0 ; run < data.size() ; run++){
 				check_sum_01 += data[run];
 				check_sum_02 += check_sum_01;
-				#ifdef TEST_IMU_PORT
-					printf("<---HOW---> %x : %x : %x\n" , data[run] , check_sum_01 , check_sum_02);
+				#ifdef SHOW_CHECK_SUM
+					printf("<---CHECK_SUM---> %x : %x : %x\n" 
+							, data[run] , check_sum_01 , check_sum_02);
 				#endif
 			}
 			
 			uint32_t all_result = (uint16_t(check_sum_01) << 8) + uint16_t(check_sum_02);
 			data.push_back( (uint8_t)((all_result>>8)&0xff));
 			data.push_back( (uint8_t)(all_result&0xff));
-			#ifdef TEST_IMU_PORT
+			#ifdef SHOW_CHECK_SUM
 				printf("<--RESULT--> %x : %x\n", *(data.end()-2) , *(data.end()-1));
+			#endif
+			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> After adding_checksum have size is "
 							<< data.size() << "\n"; 
 			#endif
@@ -110,13 +113,13 @@ namespace zeabus_sensor{
 			bool ok_data = true;
 			if( *(this->read_buffer.end()-2) == temporary[0]){
 				#ifdef TEST_IMU_PORT
-					std::cout << "<--TESTER--> MSB ARE EQUAL\n";
+					std::cout << "<--CHECK_SUM--> MSB ARE EQUAL\n";
 				#endif
 			}
 			else ok_data = false;
 			if( *(this->read_buffer.end()-1) == temporary[1]){
 				#ifdef TEST_IMU_PORT
-					std::cout << "<--TESTER--> LSB ARE EQUAL\n";
+					std::cout << "<--CHECK_SUM--> LSB ARE EQUAL\n";
 				#endif
 			}
 			else ok_data = false;
@@ -141,6 +144,15 @@ namespace zeabus_sensor{
 				std::cout << "It is NACK" << "\n";
 				return true;
 			}
+		}
+
+		template<typename type_vector>void microstrain_imu_port::print_vector( type_vector data 
+				, std::string message){
+			std::cout << message << " : ";
+			for( int run = 0 ; run < data.size() ; run++){
+				printf( "%x " , data[run]);
+			}
+			std::cout << "\n";
 		} 
 
 }

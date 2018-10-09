@@ -47,4 +47,6 @@ int main( int argc , char **argv){
 	imu->io_port->set_option( imu->io_character_size);
 	
 	imu->set_idle();
+	int imu_rate = imu->get_imu_data_base_rate();
+	std::cout << "imu rate is " << imu_rate << "\n";
 }

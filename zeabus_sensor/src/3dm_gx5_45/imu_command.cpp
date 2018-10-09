@@ -39,7 +39,7 @@ namespace zeabus_sensor{
 				std::cout	<< "<--TESTER--> After adding Check some have size " 
 							<< write_buffer.size() << "\n";
 			#endif
-			std::cout << "write set_idle command ";
+			std::cout << "write set_idle command : ";
 			for( int run = 0 ; run < this->write_buffer.size() ; run ++){
 				printf("%x " , this->write_buffer[run]);
 			}
@@ -52,8 +52,23 @@ namespace zeabus_sensor{
 
 		// get base rate for the IMU data in Hz
 		// this value is used for data rate calculations
-		void microstrain_imu_port::get_imu_data_base_rate(){
+		unsigned int microstrain_imu_port::get_imu_data_base_rate(){
+			this->adding_header( (this->write_buffer ) );
+			this->write_buffer.push_back( COMMAND::SENSOR::DESCRIPTOR );
+			this->write_buffer.push_back( 0x02 );
+			this->write_buffer.push_back( 0x02 );
+			this->write_buffer.push_back( COMMAND::SENSOR::GET_IMU_DATA_BASE_RATE );
+			this->adding_checksum( this->write_buffer);
+			this->print_vector( this->write_buffer , "data write get imu base rate ");
+			do{
+				this->write_asynchronous( this->write_buffer , this->write_buffer.size());
+				this->read_reply_command("get imu base rate ");
+			}while( this->check_ACK_NACK( this->read_buffer.size() -7));
 
+			uint16_t answer = (uint16_t)(this->read_buffer[ this->read_buffer.size() - 4] << 8)
+						+ (uint16_t)(this->read_buffer[ this->read_buffer.size()-3]);
+			std::cout << "answer is " << std::hex << answer << std::dec << "\n";
+			return int( answer );
 		}
 	}
 

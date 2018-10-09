@@ -100,10 +100,10 @@ namespace zeabus_sensor{
 			}
 			this->adding_checksum( this->write_buffer);
 			this->print_vector( this->write_buffer , "data write IMU MESSAGE FORMAT ");
-			do(
+			do{
 				this->write_asynchronous( this->write_buffer , this->write_buffer.size());
 				this->read_reply_command("reply of set imu message format ");
-			)while( this->check_ACK_NACK( this->read_buffer.size() - 3));
+			}while( this->check_ACK_NACK( this->read_buffer.size() - 3));
 		}
 
 		

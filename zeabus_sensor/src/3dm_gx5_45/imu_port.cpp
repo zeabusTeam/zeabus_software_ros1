@@ -15,8 +15,8 @@
 #endif
 //#include	"imu_port.h"
 
-//#define TEST_IMU_PORT
-//#define SHOW_CHECK_SUM
+#define TEST_IMU_PORT
+#define SHOW_CHECK_SUM
 #define TEST_RECEIVE_DATA
 namespace zeabus_sensor{
 
@@ -80,9 +80,8 @@ namespace zeabus_sensor{
 		void microstrain_imu_port::read_reply_command( std::string command){
 			// First read untill find 'u' or 0x75 to show start packet
 			this->read_buffer.resize(0);
-			std::vector<unsigned uint8_t> temporary;
 			while( true ){
-				temporary = this->read_asynchronous( (size_t)1);
+				this->read_asynchronous( (size_t)1 , this->temporary);
 				if( temporary[0] == 'u' ){
 					this->read_buffer.push_back( temporary[0] );
 					break;
@@ -91,7 +90,7 @@ namespace zeabus_sensor{
 
 			// Second read untill find 'e' or 0x65 to show second start packet
 			while( true ){
-				temporary = this->read_asynchronous( (size_t)1 );
+				this->read_asynchronous( (size_t)1 , this->temporary);
 				//if( temporary[0] == this->sync_2){
 				if( temporary[0] == 'e'){
 					this->read_buffer.push_back( temporary[0] );
@@ -100,19 +99,19 @@ namespace zeabus_sensor{
 			}
 
 			// Third read 2 bytes for get Describe set [0] and Payload Length[1]
-			temporary = this->read_asynchronous( (size_t)2);
+			this->read_asynchronous( (size_t)2 , this->temporary);
 			for( int run = 0 ; run < temporary.size() ; run++){
 				this->read_buffer.push_back( temporary[run] );
 			}
 			
 			// Read all data in reply fields
-			temporary = this->read_asynchronous( (size_t)temporary[1]);
+			this->read_asynchronous( (size_t)temporary[1] , this->temporary);
 			for( int run = 0 ; run < temporary.size() ; run++){
 				this->read_buffer.push_back( temporary[run] );
 			}
 
 			// Read about checksum and calculate for prove collect data
-			temporary = this->read_asynchronous( (size_t)2);
+			this->read_asynchronous( (size_t)2 , this->temporary);
 			this->adding_checksum( this->read_buffer );
 			bool ok_data = true;
 			if( *(this->read_buffer.end()-2) == temporary[0]){

@@ -73,7 +73,7 @@ namespace manage_port{
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //								NEXT IS ASYNCHRONOUS PART									   //
 /////////////////////////////////////////////////////////////////////////////////////////////////
-			std::vector<unsigned uint8_t> read_asynchronous( size_t bytes_transfer );
+			void read_asynchronous( size_t bytes_transfer , std::vector<uint8_t>&data_receive);
 //			template<typename buffer_data>void write_asynchronous( buffer_data data 
 //												, size_t bytes);	
 			void write_asynchronous( std::vector<unsigned uint8_t> data 

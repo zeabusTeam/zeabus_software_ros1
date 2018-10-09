@@ -58,8 +58,9 @@ namespace zeabus_sensor{
 				static const unsigned char sync_2 = 0x65;
 				template<typename type_vector>void adding_header( type_vector& data);
 				template<typename type_vector>void adding_checksum( type_vector& data);
-				std::vector<unsigned uint8_t> read_buffer;
-				std::vector<unsigned uint8_t> write_buffer;
+				std::vector< uint8_t> read_buffer;
+				std::vector< uint8_t> write_buffer;
+				std::vector< uint8_t> temporary;
 				// function for read reply of command and will print
 				void read_reply_command(std::string command); 
 				bool check_ACK_NACK( int point );

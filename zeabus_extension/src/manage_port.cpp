@@ -176,8 +176,8 @@ namespace manage_port{
 			#endif
 		}
 
-		std::vector<unsigned uint8_t> specific_port::read_asynchronous( size_t number_bytes ){
-			std::vector<unsigned uint8_t> data_receive;
+		void specific_port::read_asynchronous( size_t number_bytes 
+												, std::vector<uint8_t>&data_receive){
 			data_receive.resize(number_bytes);
 
 			#ifdef TEST_MANAGE_PORT
@@ -209,7 +209,6 @@ namespace manage_port{
 			#endif
 	
 			this->io_service.reset();
-			return data_receive;
 
 		}
 

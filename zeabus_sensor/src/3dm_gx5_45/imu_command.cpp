@@ -147,29 +147,28 @@ namespace zeabus_sensor{
 		void microstrain_imu_port::stream_data( std::vector<uint8_t>& data){
 //			this->read_buffer.clear();
 //			this->read_buffer.shrink_to_fit();
-			uint8_t temporary;
 			// find heading of packet
 			while( true ){
-				temporary = this->read_asynchronous( size_t(1) )[0];	
-				if( temporary == 'u'){
+				this->read_asynchronous( size_t(1) , this->temporary);	
+				if( this->temporary[0] == 'u'){
 					break;
 				}
 			}
 			while( true ){
-				temporary = this->read_asynchronous( size_t(1) )[0];	
-				if( temporary == 'e'){
+				this->read_asynchronous( size_t(1) , this->temporary);	
+				if( this->temporary[0] == 'e'){
 					break;
 				}
 			}
 
-			temporary = this->read_asynchronous( size_t(1) )[0];
-			if( temporary == DATA::IMU_DATA_SET::DESCRIPTOR ){
-				temporary = this->read_asynchronous( size_t(1) )[0];
+			this->read_asynchronous( size_t(1) , this->temporary);
+			if(this->temporary[0] == DATA::IMU_DATA_SET::DESCRIPTOR ){
+				this->read_asynchronous( size_t(1) , this->temporary);
 				#ifdef TEST_RECEIVE_DATA
-					printf( "length of data is %d\n" , temporary);
+					printf( "length of data is %d\n" , this->temporary[0]);
 				#endif
-				if( temporary < 256){
-					data = this->read_asynchronous( size_t( temporary));
+				if( this->temporary[0] < 256){
+					this->read_asynchronous( size_t( this->temporary[0]) , data);
 					#ifdef TEST_RECEIVE_DATA
 						this->print_vector( data , "Packet Payload : ");
 					#endif

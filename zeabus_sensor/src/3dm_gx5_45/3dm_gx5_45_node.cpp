@@ -90,9 +90,14 @@ int main( int argc , char **argv){
 		else{
 			std::cout << "<--IMU--> BAD DATA\n";
 		}
+		// this part for publisher data
+
+
+		// the part of close port by service
 		if( ! status_port ){
-			break;
+			imu->close_port();
 		}
+		ros::spinOnce();
 	}
 
 	delete imu;

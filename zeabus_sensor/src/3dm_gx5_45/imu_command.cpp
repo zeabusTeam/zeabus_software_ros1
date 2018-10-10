@@ -175,7 +175,7 @@ namespace zeabus_sensor{
 				#ifdef TEST_RECEIVE_DATA
 					printf( "length of data is %d\n" , this->temporary[0]);
 				#endif
-				if( this->temporary[0] < 33){
+				if( this->temporary[0] < 43){
 					check_sum_01 += temporary[0];
 					check_sum_02 += check_sum_01;
 					this->read_asynchronous( size_t( this->temporary[0]) , data);

@@ -75,6 +75,8 @@ int main( int argc , char **argv){
 	// start part of ros
 	ros::NodeHandle nh;
 
+	ros::ServiceServer ser_cli_port_sensor = 
+		nh.advertiseService("port_imu/status" , service_manage_port);	
 
 	// SET PART of STREAM
 	std::cout << "<---SYSTEM---> IMU STREAM DATA\n";
@@ -88,6 +90,11 @@ int main( int argc , char **argv){
 		else{
 			std::cout << "<--IMU--> BAD DATA\n";
 		}
+		if( ! status_port ){
+			break;
+		}
 	}
+
+	delete imu;
 
 }

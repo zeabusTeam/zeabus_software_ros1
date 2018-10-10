@@ -144,39 +144,88 @@ namespace zeabus_sensor{
 			
 		}
 
-		void microstrain_imu_port::stream_data( std::vector<uint8_t>& data){
+		void microstrain_imu_port::stream_data( std::vector<uint8_t>& data , bool& ok_data){
 //			this->read_buffer.clear();
 //			this->read_buffer.shrink_to_fit();
+			uint8_t check_sum_01 = 0;
+			uint8_t check_sum_02 = 0;
 			// find heading of packet
 			while( true ){
 				this->read_asynchronous( size_t(1) , this->temporary);	
 				if( this->temporary[0] == 'u'){
+					check_sum_01 += temporary[0];
+					check_sum_02 += check_sum_01;
 					break;
 				}
 			}
 			while( true ){
 				this->read_asynchronous( size_t(1) , this->temporary);	
 				if( this->temporary[0] == 'e'){
+					check_sum_01 += temporary[0];
+					check_sum_02 += check_sum_01;
 					break;
 				}
 			}
 
 			this->read_asynchronous( size_t(1) , this->temporary);
 			if(this->temporary[0] == DATA::IMU_DATA_SET::DESCRIPTOR ){
+				check_sum_01 += temporary[0];
+				check_sum_02 += check_sum_01;
 				this->read_asynchronous( size_t(1) , this->temporary);
 				#ifdef TEST_RECEIVE_DATA
 					printf( "length of data is %d\n" , this->temporary[0]);
 				#endif
-				if( this->temporary[0] < 256){
+				if( this->temporary[0] < 33){
+					check_sum_01 += temporary[0];
+					check_sum_02 += check_sum_01;
 					this->read_asynchronous( size_t( this->temporary[0]) , data);
 					#ifdef TEST_RECEIVE_DATA
 						this->print_vector( data , "Packet Payload : ");
 					#endif
 				}
 				else{
+					#ifdef TEST_RECEIVE_DATA
+						std::cout << "<---RECEIVE---> Don't pass length\n";
+					#endif
+					ok_data = false; 
 					return;
 				}
+				
 			}
+			for( int run = 0 ; run < data.size() ; run++){
+				check_sum_01 += data[run];
+				check_sum_02 += check_sum_01;
+				#ifdef SHOW_CHECK_SUM
+					printf("<---RECEIVE---> %x : %x : %x\n" 
+							, data[run] , check_sum_01 , check_sum_02);
+				#endif
+			}
+			this->read_asynchronous( size_t(2) , this->temporary);
+			if( this->temporary[0] == check_sum_01){
+				#ifdef TEST_RECEIVE_DATA
+					std::cout << "MSB is EQUAL";
+				#endif
+				if( this->temporary[1] == check_sum_02){
+					#ifdef TEST_RECEIVE_DATA
+						std::cout << " and LSB is EQUAL\n";
+					#endif
+					ok_data = true;
+				}
+				else{
+					#ifdef TEST_RECEIVE_DATA
+						std::cout << " but LSB isn't EQUAL\n";
+					#endif
+					ok_data = false;
+				}
+			}
+			else{
+				#ifdef TEST_RECEIVE_DATA
+					std::cout << "MB isn't EQUAL\n";
+				#endif
+				ok_data = false;
+			}
+			
+			
 		}	
 	}
 

@@ -74,10 +74,20 @@ int main( int argc , char **argv){
 
 	// start part of ros
 	ros::NodeHandle nh;
+
+
+	// SET PART of STREAM
 	std::cout << "<---SYSTEM---> IMU STREAM DATA\n";
 	std::vector<uint8_t> data;
-	while( nh.ok() ){
-		imu->stream_data( data );
-	}	
+	bool ok_data;
+	while( nh.ok() && imu->is_open()){
+		imu->stream_data( data , ok_data);
+		if( ok_data ){
+			std::cout << "<--IMU--> GOOD DATA\n";
+		}
+		else{
+			std::cout << "<--IMU--> BAD DATA\n";
+		}
+	}
 
 }

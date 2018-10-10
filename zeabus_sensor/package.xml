@@ -36,4 +36,9 @@
   <build_depend>geometry_msgs</build_depend>
   <exec_depend>geometry_msgs</exec_depend>
 
+  <build_depend>message_runtime</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_generation</exec_depend>
 </package>

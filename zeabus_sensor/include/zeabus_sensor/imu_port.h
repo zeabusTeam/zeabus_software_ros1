@@ -46,7 +46,7 @@ namespace zeabus_sensor{
 				void set_imu_message_format();
 				// continuous_stream imu_msg or ef_msg or not --> True is enable <--
 				void continuous_stream( bool imu_msg , bool ef_msg);
-				void stream_data( std::vector<uint8_t> &data);
+				void stream_data( std::vector<uint8_t> &data, bool& ok_data);
 
 			protected:
 				template<typename type_vector>void print_vector(type_vector data 

@@ -30,6 +30,8 @@
 #endif
 
 #include	<zeabus_sensor/port_sensor.h>
+#include	<geometry_msgs/TwistStamped.h>
+#include	<geometry_msgs/Vector3Stamped.h>
 
 bool status_port = true;
 

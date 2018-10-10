@@ -56,7 +56,7 @@ int main( int argc , char **argv){
 	// NEXT SET IMU MESSAGE FORMAT to CHOOSE WHAT DATA DO YOU WANT
 	std::vector<uint8_t> imu_message_format; 
 	imu_message_format.push_back(
-			zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::DELTA_THETA_VECTOR
+			zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::SCALED_GYRO_VECTOR
 		);
 	imu_message_format.push_back(
 			zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::DELTA_VELOCITY_VECTOR
@@ -77,6 +77,12 @@ int main( int argc , char **argv){
 
 	ros::ServiceServer ser_cli_port_sensor = 
 		nh.advertiseService("port_imu/status" , service_manage_port);	
+	
+	ros::Publisher tell_velocity = nh.advertise<geometry_msgs::TwistStamped>("/imu/velocity", 1);
+	ros::Publisher tell_euler = nh.advertise<geometry_msgs::Vector3Stamped>("/imu/euler" , 1 );
+
+	geometry_msgs::Vector3Stamped euler_message;
+	geometry_msgs::TwistStamped velocity_message;
 
 	// SET PART of STREAM
 	std::cout << "<---SYSTEM---> IMU STREAM DATA\n";
@@ -86,13 +92,82 @@ int main( int argc , char **argv){
 		imu->stream_data( data , ok_data);
 		if( ok_data ){
 			std::cout << "<--IMU--> GOOD DATA\n";
+			// this part for consider and get value to message
+			for( int run = 0 ; run < data.size() ; ){
+				// read length data for each set 1 bytes
+				run++;
+				// if data is of delta_theta_vector
+				if(data[run] == 
+					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::SCALED_GYRO_VECTOR){
+					// finish read data descriptor field
+					run++;
+					velocity_message.twist.angular.x = float( ( int32_t(data[run]) << 24 ) +
+						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
+						(int32_t(data[run+3]) << 0)
+					);
+					run+=4;	
+					velocity_message.twist.angular.y = float( ( int32_t(data[run]) << 24 ) +
+						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
+						(int32_t(data[run+3]) << 0)
+					);
+					run+=4;	
+					velocity_message.twist.angular.z = float( ( int32_t(data[run]) << 24 ) +
+						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
+						(int32_t(data[run+3]) << 0)
+					);
+					run+=4;	
+					//	skip to read length data for each set 1 bytes
+				}
+				else if(data[run] ==
+					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::DELTA_VELOCITY_VECTOR){
+					run++; // finish read data descriptor field
+					velocity_message.twist.linear.x = float( ( int32_t(data[run]) << 24 ) +
+						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
+						(int32_t(data[run+3]) << 0)
+					);
+					run+=4;
+					velocity_message.twist.linear.y = float( ( int32_t(data[run]) << 24 ) +
+						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
+						(int32_t(data[run+3]) << 0)
+					);
+					run+=4;
+					velocity_message.twist.linear.z = float( ( int32_t(data[run]) << 24 ) +
+						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
+						(int32_t(data[run+3]) << 0)
+					);
+					run+=4;
+					// skip to read length data for each set 1 bytes
+				}
+				else if(data[run] ==
+					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::CF_EULER_ANGLES){
+					run++;
+					euler_message.vector.x = float( ( int32_t(data[run]) << 24 ) +
+						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
+						(int32_t(data[run+3]) << 0)
+					);
+					run+=4;
+					euler_message.vector.y = float( ( int32_t(data[run]) << 24 ) +
+						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
+						(int32_t(data[run+3]) << 0)
+					);
+					run+=4;
+					euler_message.vector.z = float( ( int32_t(data[run]) << 24 ) +
+						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
+						(int32_t(data[run+3]) << 0)
+					);
+					run+=4;
+					// skip to rad length data for each set 1 bytes
+				}
+			}
+			// this part for publisher data
+			euler_message.header.stamp = ros::Time::now();
+			velocity_message.header.stamp = ros::Time::now();
+			tell_euler.publish( euler_message );
+			tell_velocity.publish( velocity_message );
 		}
 		else{
 			std::cout << "<--IMU--> BAD DATA\n";
 		}
-		// this part for publisher data
-
-
 		// the part of close port by service
 		if( ! status_port ){
 			imu->close_port();

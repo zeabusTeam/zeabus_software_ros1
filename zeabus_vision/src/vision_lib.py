@@ -82,3 +82,17 @@ def equalize_hsv(hsv):
     v = equalize(v)
     hsv = cv.merge((h,s,v))
     return hsv
+
+def equalize_bgr(bgr):
+    b,g,r = cv.split(bgr)
+    b = equalize(b)
+    g = equalize(g)
+    r = equalize(r)
+    bgr = cv.merge((b,g,r))
+    return bgr
+
+def debug_head():
+    print ct.WHITE_HL+ct.BLACK+'<{:-^80}>'.format(' Debug ')
+
+def debug_end():
+    print '<{:-^80}>'.format(' End Debug ')+ct.DEFAULT

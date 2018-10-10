@@ -7,6 +7,7 @@ from zeabus_vision.msg import vision_gate
 from zeabus_vision.srv import vision_srv_gate
 from vision_lib import *
 import color_text as ct
+from time import time
 
 bgr = None
 image_result = None
@@ -36,7 +37,12 @@ def image_callback(msg):
     image_result = bgr.copy()
 
 def pre_process(bgr):
-    processed = bgr
+    b,g,r = cv.split(bgr)
+    r.fill(255)
+    bgr = cv.merge((b,g,r))
+    blur = cv.medianBlur(bgr,5)
+    equ = equalize_bgr(blur)
+    processed = equ
     return processed
 
 
@@ -51,13 +57,14 @@ def message(n_obj=0,pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
     msg.area = area
     if debug:
         print n_obj
+    print msg
     return msg
 
 
 def get_mask(img):
     hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-    upper = np.array([45, 255, 255], dtype=np.uint8)
-    lower = np.array([7, 160, 0], dtype=np.uint8)
+    upper = np.array([2, 255, 255], dtype=np.uint8)
+    lower = np.array([0, 247, 0], dtype=np.uint8)
     mask = cv.inRange(hsv,lower,upper)
     return mask
 
@@ -113,14 +120,28 @@ def find_gate():
     if bgr is None:
         img_is_none()
         return message(n_obj=-1)
+    # if debug:
+        # debug_head()
+    a = []
+    checkpoint = time()
     bgr = pre_process(bgr)
+    a.append(('c1',time()-checkpoint))
+    checkpoint = time()
     mask = get_mask(bgr)
+    a.append(('c2',time()-checkpoint))
+    checkpoint = time()
     ROI = get_ROI(mask)
+    a.append(('c3',time()-checkpoint))
+    checkpoint = time()
     mode = len(ROI)
     if mode == 0:
         print_result("NOT FOUND", ct.RED)
+        # if debug:
+            # debug_end()
         publish_result(image_result, 'bgr', public_topic + 'image_result')
         publish_result(mask, 'gray', public_topic + 'mask')
+        a.append(('c4',time()-checkpoint))
+        checkpoint = time()
         return message()
     elif mode >= 1:
         if mode == 1:
@@ -129,9 +150,18 @@ def find_gate():
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         select_cnt = max(ROI, key=cv.contourArea)
+        a.append(('c5',time()-checkpoint))
+        checkpoint = time()
         cx1, cy1, cx2, cy2, area, pos = get_rect(select_cnt)
+        # if debug:
+            # debug_end()
+        a.append(('c6',time()-checkpoint))
+        checkpoint = time()
         publish_result(image_result, 'bgr', public_topic + 'image_result')
         publish_result(mask, 'gray', public_topic + 'mask')
+        print a
+        print max(a,key=lambda x: a[1])
+        print ('sum',sum([i[1] for i in a]))
         return message(n_obj=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, area=area, pos=pos)
 
 

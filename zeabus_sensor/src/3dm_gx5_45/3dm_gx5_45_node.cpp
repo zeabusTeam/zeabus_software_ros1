@@ -17,15 +17,56 @@
 int main( int argc , char **argv){
 
 // init name node but if you have launch this node will name up to launch file
+	
 	ros::init( argc , argv, "node_imu");
+	
+/////////////////////////////////////PART OF ROS LAUNCH//////////////////////////////////////////
+//	use nh.param( name of param in launch , variable to collect value , default value)
 
+	ros::NodeHandle nh("~");
+	// this is service to close or open port of imu
+	std::string imu_name_service_status;
+	nh.param("imu/name_service_status" , imu_name_service_status 
+										, std::string("port_imu/status"));
+	ros::ServiceServer ser_cli_port_sensor = 
+		nh.advertiseService( imu_name_service_status , service_manage_port);	
+	// this is part of topic for send velocity in angular and linear
+	std::string imu_topic_tell_velocity;
+	nh.param("imu/topic_tell_velocity" , imu_topic_tell_velocity 
+										, std::string("imu/velocity"));	
+	ros::Publisher tell_velocity = nh.advertise<geometry_msgs::TwistStamped>(
+										imu_topic_tell_velocity, 1
+									);
+	// this is part of topic for send position of angle by use euler
+	std::string imu_topic_tell_euler;
+	nh.param("imu/topic_tell_euler" , imu_topic_tell_euler , std::string("imu/euler"));	
+	ros::Publisher tell_euler = nh.advertise<geometry_msgs::Vector3Stamped>(
+										imu_topic_tell_euler , 1 
+									);
+	// set message to for publisher
+	geometry_msgs::Vector3Stamped euler_message;
+	geometry_msgs::TwistStamped velocity_message;
+	
+//
+///////////////// END PART PURE ROS NEXT PART GET VALUE FOR SERIAL PORT
+//
 // use pointer variable
+	std::string name_port;
+	nh.param("imu/name_port" , name_port , std::string("/dev/ttyACM0"));
 	zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port* imu 
-//		= new zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port();
-		= new zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port("/dev/ttyACM0");
-		
-//	imu->set_name_port("/dev/ttyACM0");
-	std::cout << "Open imu port\n";
+		= new zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port( name_port );
+	// baud rate is rate for send symbol of message have learn in DATA COMMUNICATION
+	int temporary_rate ;
+	nh.param("imu/baud_rate" , temporary_rate , 11520);
+	unsigned int imu_baud_rate = (unsigned int)temporary_rate;
+	// THIS RATE TO USE WITH IMU AND RATE OF CODE
+	int desired_base_rate;
+	nh.param("imu/desired_base_rate" , desired_base_rate , 100);
+	ros::Rate rate( desired_base_rate );
+	
+
+////////////////////////// PART ABOUT PORT CONNECT AND SET UP //////////////////////////////////
+//
 	imu->open_port();
 
 	imu->io_baud_rate = boost::asio::serial_port_base::baud_rate((unsigned int) 115200);
@@ -39,19 +80,18 @@ int main( int argc , char **argv){
 						boost::asio::serial_port_base::stop_bits::one
 					);
 	imu->io_character_size = boost::asio::serial_port_base::character_size((size_t)8);
-	std::cout << "Set option of imu port\n";
+	// set option boost library use oeverload to manage this function
 	imu->io_port->set_option( imu->io_baud_rate);
 	imu->io_port->set_option( imu->io_flow_control);
 	imu->io_port->set_option( imu->io_parity);
 	imu->io_port->set_option( imu->io_stop_bits);
 	imu->io_port->set_option( imu->io_character_size);
-	
+
+////////////// FINISH PART OF CONNECT AND SET UP IMU NEXT PART SET UP IMU
+
 	imu->set_idle();
 	int imu_rate = imu->get_imu_data_base_rate();
-	std::cout << "imu rate is " << imu_rate << "\n";
-	int desired_base_rate = 100;
 	uint16_t rate_decimation = uint16_t(imu_rate / desired_base_rate);
-	std::cout << "rate_decimation is " << rate_decimation << "\n";
 	
 	// NEXT SET IMU MESSAGE FORMAT to CHOOSE WHAT DATA DO YOU WANT
 	std::vector<uint8_t> imu_message_format; 
@@ -71,21 +111,8 @@ int main( int argc , char **argv){
 	std::cout << "will Enable stream\n";
 	// true is enable stream and first order is imu and second is ef	
 	imu->continuous_stream( true , false);
-
-	// start part of ros
-	ros::NodeHandle nh;
-
-	ros::ServiceServer ser_cli_port_sensor = 
-		nh.advertiseService("port_imu/status" , service_manage_port);	
-	
-	ros::Publisher tell_velocity = nh.advertise<geometry_msgs::TwistStamped>("/imu/velocity", 1);
-	ros::Publisher tell_euler = nh.advertise<geometry_msgs::Vector3Stamped>("/imu/euler" , 1 );
-
-	geometry_msgs::Vector3Stamped euler_message;
-	geometry_msgs::TwistStamped velocity_message;
-	
-	ros::Rate rate(100);
-
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
 	// SET PART of STREAM
 	std::cout << "<---SYSTEM---> IMU STREAM DATA\n";
 	std::vector<uint8_t> data;
@@ -178,6 +205,7 @@ int main( int argc , char **argv){
 //			imu->continuous_stream( false , false);
 			break;
 		}
+		rate.sleep();
 		ros::spinOnce();
 	}
 	

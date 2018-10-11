@@ -67,6 +67,7 @@ namespace manage_port{
 
 // for close port
 	void specific_port::close_port(){
+		this->io_service.reset();
 		this->io_port->close();
 	}
 

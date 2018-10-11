@@ -15,9 +15,9 @@
 #endif
 //#include	"imu_port.h"
 
-#define TEST_IMU_PORT
-#define SHOW_CHECK_SUM
-#define TEST_RECEIVE_DATA
+//#define TEST_IMU_PORT
+//#define SHOW_CHECK_SUM
+//#define TEST_RECEIVE_DATA
 namespace zeabus_sensor{
 
 	namespace MIP_COMMUNICATION{

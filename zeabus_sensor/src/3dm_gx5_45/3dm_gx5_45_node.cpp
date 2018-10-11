@@ -49,7 +49,7 @@ int main( int argc , char **argv){
 	imu->set_idle();
 	int imu_rate = imu->get_imu_data_base_rate();
 	std::cout << "imu rate is " << imu_rate << "\n";
-	int desired_base_rate = 250;
+	int desired_base_rate = 100;
 	uint16_t rate_decimation = uint16_t(imu_rate / desired_base_rate);
 	std::cout << "rate_decimation is " << rate_decimation << "\n";
 	
@@ -83,12 +83,17 @@ int main( int argc , char **argv){
 
 	geometry_msgs::Vector3Stamped euler_message;
 	geometry_msgs::TwistStamped velocity_message;
+	
+	ros::Rate rate(100);
 
 	// SET PART of STREAM
 	std::cout << "<---SYSTEM---> IMU STREAM DATA\n";
 	std::vector<uint8_t> data;
+	int32_t temporary;
+	float message;
 	bool ok_data;
 	while( nh.ok() && imu->is_open()){
+		rate.sleep();
 		imu->stream_data( data , ok_data);
 		if( ok_data ){
 			std::cout << "<--IMU--> GOOD DATA\n";
@@ -101,60 +106,60 @@ int main( int argc , char **argv){
 					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::SCALED_GYRO_VECTOR){
 					// finish read data descriptor field
 					run++;
-					velocity_message.twist.angular.x = float( ( int32_t(data[run]) << 24 ) +
-						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
-						(int32_t(data[run+3]) << 0)
-					);
+					temporary = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
+								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
+					memcpy( &message , &temporary , 4);
+					velocity_message.twist.angular.x = message;
+					run+=4;
+					temporary = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
+								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
+					memcpy( &message , &temporary , 4);	
+					velocity_message.twist.angular.y = message;
 					run+=4;	
-					velocity_message.twist.angular.y = float( ( int32_t(data[run]) << 24 ) +
-						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
-						(int32_t(data[run+3]) << 0)
-					);
-					run+=4;	
-					velocity_message.twist.angular.z = float( ( int32_t(data[run]) << 24 ) +
-						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
-						(int32_t(data[run+3]) << 0)
-					);
+					temporary = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
+								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
+					memcpy( &message , &temporary , 4);	
+					velocity_message.twist.angular.z = message;
 					run+=4;	
 					//	skip to read length data for each set 1 bytes
 				}
 				else if(data[run] ==
 					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::DELTA_VELOCITY_VECTOR){
 					run++; // finish read data descriptor field
-					velocity_message.twist.linear.x = float( ( int32_t(data[run]) << 24 ) +
-						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
-						(int32_t(data[run+3]) << 0)
-					);
+					temporary  = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
+								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
+					memcpy( &message , &temporary , 4);	
+					velocity_message.twist.linear.x = message * standard_gravity_constant;
 					run+=4;
-					velocity_message.twist.linear.y = float( ( int32_t(data[run]) << 24 ) +
-						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
-						(int32_t(data[run+3]) << 0)
-					);
+					temporary  = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
+								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
+					memcpy( &message , &temporary , 4);	
+					velocity_message.twist.linear.y = message * standard_gravity_constant;
 					run+=4;
-					velocity_message.twist.linear.z = float( ( int32_t(data[run]) << 24 ) +
-						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
-						(int32_t(data[run+3]) << 0)
-					);
+					temporary = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
+								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
+					memcpy( &message , &temporary , 4);	
+					velocity_message.twist.linear.z = message * standard_gravity_constant;
 					run+=4;
 					// skip to read length data for each set 1 bytes
 				}
 				else if(data[run] ==
 					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::CF_EULER_ANGLES){
 					run++;
-					euler_message.vector.x = float( ( int32_t(data[run]) << 24 ) +
-						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
-						(int32_t(data[run+3]) << 0)
-					);
+					temporary  = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
+								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
+					memcpy( &message , &temporary , 4);
+					euler_message.vector.x = message;	
 					run+=4;
-					euler_message.vector.y = float( ( int32_t(data[run]) << 24 ) +
-						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
-						(int32_t(data[run+3]) << 0)
-					);
+					temporary  = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
+								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
+					memcpy( &message , &temporary , 4);	
+					euler_message.vector.y = message;	
 					run+=4;
-					euler_message.vector.z = float( ( int32_t(data[run]) << 24 ) +
-						(int32_t(data[run+1] << 16 ) ) + ( int32_t(data[run+2]) << 8 ) +
-						(int32_t(data[run+3]) << 0)
-					);
+					temporary  = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
+								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
+					memcpy( &message , &temporary , 4);	
+					euler_message.vector.z = message;
 					run+=4;
 					// skip to rad length data for each set 1 bytes
 				}
@@ -170,11 +175,13 @@ int main( int argc , char **argv){
 		}
 		// the part of close port by service
 		if( ! status_port ){
-			imu->close_port();
+//			imu->continuous_stream( false , false);
+			break;
 		}
 		ros::spinOnce();
 	}
-
+	
+	imu->continuous_stream( false , false);
 	delete imu;
 
 }

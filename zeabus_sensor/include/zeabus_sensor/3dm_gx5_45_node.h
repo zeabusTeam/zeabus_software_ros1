@@ -39,6 +39,7 @@
 #include	<geometry_msgs/Vector3Stamped.h>
 
 #define standard_gravity_constant 9.80665
+#define TEST_ROS_SYSTEM
 
 bool status_port = true;
 

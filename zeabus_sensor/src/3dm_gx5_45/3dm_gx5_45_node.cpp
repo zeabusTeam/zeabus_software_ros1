@@ -22,24 +22,33 @@ int main( int argc , char **argv){
 	
 /////////////////////////////////////PART OF ROS LAUNCH//////////////////////////////////////////
 //	use nh.param( name of param in launch , variable to collect value , default value)
-
-	ros::NodeHandle nh("~");
+	std::string name_node = ros::this_node::getName();
+	ros::NodeHandle nh("");
+	ros::NodeHandle ph("~");
 	// this is service to close or open port of imu
 	std::string imu_name_service_status;
-	nh.param("imu/name_service_status" , imu_name_service_status 
+	#ifdef TEST_ROS_SYSTEM
+		if( ph.getParam("imu/name_service_status", imu_name_service_status)){
+			std::cout << "<--SYSTEM-->" << name_node << " have get param" << "\n";
+		}
+		else{
+			std::cout << "<--SYSTEM-->" << name_node << " don't have get param" << "\n";
+		}
+	#endif	
+	ph.param("imu/name_service_status" , imu_name_service_status 
 										, std::string("port_imu/status"));
 	ros::ServiceServer ser_cli_port_sensor = 
 		nh.advertiseService( imu_name_service_status , service_manage_port);	
 	// this is part of topic for send velocity in angular and linear
 	std::string imu_topic_tell_velocity;
-	nh.param("imu/topic_tell_velocity" , imu_topic_tell_velocity 
+	ph.param("imu/topic_tell_velocity" , imu_topic_tell_velocity 
 										, std::string("imu/velocity"));	
 	ros::Publisher tell_velocity = nh.advertise<geometry_msgs::TwistStamped>(
 										imu_topic_tell_velocity, 1
 									);
 	// this is part of topic for send position of angle by use euler
 	std::string imu_topic_tell_euler;
-	nh.param("imu/topic_tell_euler" , imu_topic_tell_euler , std::string("imu/euler"));	
+	ph.param("imu/topic_tell_euler" , imu_topic_tell_euler , std::string("imu/euler"));	
 	ros::Publisher tell_euler = nh.advertise<geometry_msgs::Vector3Stamped>(
 										imu_topic_tell_euler , 1 
 									);
@@ -52,16 +61,16 @@ int main( int argc , char **argv){
 //
 // use pointer variable
 	std::string name_port;
-	nh.param("imu/name_port" , name_port , std::string("/dev/ttyACM0"));
+	ph.param("imu/name_port" , name_port , std::string("/dev/ttyACM0"));
 	zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port* imu 
 		= new zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port( name_port );
 	// baud rate is rate for send symbol of message have learn in DATA COMMUNICATION
 	int temporary_rate ;
-	nh.param("imu/baud_rate" , temporary_rate , 11520);
+	ph.param("imu/baud_rate" , temporary_rate , 11520);
 	unsigned int imu_baud_rate = (unsigned int)temporary_rate;
 	// THIS RATE TO USE WITH IMU AND RATE OF CODE
 	int desired_base_rate;
-	nh.param("imu/desired_base_rate" , desired_base_rate , 100);
+	ph.param("imu/desired_base_rate" , desired_base_rate , 250);
 	ros::Rate rate( desired_base_rate );
 	
 

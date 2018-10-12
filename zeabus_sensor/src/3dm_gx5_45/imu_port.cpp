@@ -18,6 +18,7 @@
 //#define TEST_IMU_PORT
 //#define SHOW_CHECK_SUM
 //#define TEST_RECEIVE_DATA
+//#define TEST_ALLOCATE_SIZE
 namespace zeabus_sensor{
 
 	namespace MIP_COMMUNICATION{
@@ -40,12 +41,14 @@ namespace zeabus_sensor{
 		template<typename type_vector>void microstrain_imu_port::adding_header(
 												type_vector& data){
 			data.resize(0);
-			std::cout	<< std::dec << "Vector size " << data.size() 
-						<< " Capacity " << data.capacity();
+			#ifdef TEST_ALLOCATE_SIZE
+				std::cout	<< std::dec << "Vector size " << data.size() 
+							<< " Capacity " << data.capacity();
+			#endif
 			//data.push_back( this->sync_1);
 			//data.push_back( this->sync_2);
-			data.push_back( 'u');
-			data.push_back( 'e');
+			data.push_back( 'u' );
+			data.push_back( 'e' );
 			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> After adding_head have size " 
 							<< data.size() << "\n";

@@ -34,9 +34,11 @@ include_directories( include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 add_executable(port_dvl src/teledyne_dvl/dvl_port.cpp)
 add_executable(node_dvl src/teledyne_dvl/dvl_node.cpp)
 add_executable(node_3dm_gx5_45 src/3dm_gx5_45/3dm_gx5_45_node.cpp)
+add_executable(node_filter_imu src/3dm_gx5_45/filter_imu_node.cpp)
 
-add_dependencies(node_3dm_gx5_45 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTD_TARGETS})
+#add_dependencies(node_3dm_gx5_45 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTD_TARGETS})
 
 target_link_libraries(port_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
 target_link_libraries(node_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
 target_link_libraries(node_3dm_gx5_45 ${catkin_LIBRARIES} ${boost_LIBRARIES})
+target_link_libraries(node_filter_imu ${catkin_LIBRARIES} ${boost_LIBRARIES})

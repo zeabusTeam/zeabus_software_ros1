@@ -217,7 +217,7 @@ int main( int argc , char **argv){
 		rate.sleep();
 		ros::spinOnce();
 	}
-	
+	imu->set_idle();	
 	imu->continuous_stream( false , false);
 	delete imu;
 

@@ -4,7 +4,7 @@
     <arg name="nodelet_manager_name" value="front" />
     <arg name="camera_name" value="vision/front" />
     <arg name="camera_topic" value="image_raw" />
-    <arg name="camera_id" value="1" />
+    <arg name="camera_id" value="2" />
     <arg name="image_width" value="1936" />
     <arg name="image_height" value="1216" />
     <!-- <arg name="image_left" value="-1" /> -->
@@ -15,9 +15,9 @@
     <!-- <arg name="sensor_scaling" value="1.0" /> -->
     <arg name="auto_gain" value="False" />
     <arg name="master_gain" value="10" />
-    <arg name="red_gain" value="100" />
+    <arg name="red_gain" value="50" />
     <arg name="green_gain" value="0" />
-    <arg name="blue_gain" value="30" />
+    <arg name="blue_gain" value="60" />
     <arg name="auto_exposure" value="False" />
     <arg name="exposure" value="33.0" />
     <arg name="auto_white_balance" value="False" />
@@ -25,8 +25,8 @@
     <!-- <arg name="white_balance_blue_offset" value="0" /> -->
     <arg name="ext_trigger_mode" value="False" />
     <arg name="auto_frame_rate" value="False" />
-    <arg name="frame_rate" value="10.0" />
-    <arg name="pixel_clock" value="25" />
+    <arg name="frame_rate" value="15.0" />
+    <arg name="pixel_clock" value="59" />
     <!-- <arg name="flip_upd" value="False" /> -->
     <arg name="flip_lr" value="False" />
 

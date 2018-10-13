@@ -19,6 +19,16 @@
 	#define BOOST_ASIO_STEADY_TIMER
 #endif
 
+#ifndef BOOST_BIND_HPP
+	#include	<boost/bind.hpp>
+	#define BOOST_BIND_HPP
+#endif
+
+#ifndef BOOST_ASIO_PLACEHOLDERS_HPP
+	#include	<boost/asio/placeholders.hpp>
+	#define	BOOST_ASIO_PLACEHOLDERS_HPP
+#endif
+
 #ifndef IOSTREAM
 	#include	<iostream>
 	#define BOOST_ASIO_HPP
@@ -32,8 +42,8 @@
 namespace zeabus_extension{
 namespace manage_port{
 
-	void read_handle( const boost::system::error_code& error , std::size_t bytes_transfer);
-	void write_handle( const boost::system::error_code& error , std::size_t bytes_transfer);
+//	void read_handle( const boost::system::error_code& error , std::size_t bytes_transfer);
+//	void write_handle( const boost::system::error_code& error , std::size_t bytes_transfer);
 	
 	class specific_port : private boost::noncopyable{
 
@@ -73,18 +83,30 @@ namespace manage_port{
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //								NEXT IS ASYNCHRONOUS PART									   //
 /////////////////////////////////////////////////////////////////////////////////////////////////
+			void read_all_asynchronous( std::vector<uint8_t>&data_receive);
 			void read_asynchronous( size_t bytes_transfer , std::vector<uint8_t>&data_receive);
 //			template<typename buffer_data>void write_asynchronous( buffer_data data 
 //												, size_t bytes);	
 			void write_asynchronous( std::vector<unsigned uint8_t> data 
 												, size_t bytes);	
+			virtual void read_handle( const boost::system::error_code& error 
+												, std::size_t bytes_transfer);
+			virtual	void write_handle( const boost::system::error_code& error 
+												, std::size_t bytes_transfer);
+			virtual void read_all_handle( const boost::system::error_code& error 
+												, std::size_t bytes_transfer);
 
 		protected:
 			// order is importance service must build first
 			boost::asio::io_service io_service;
 			boost::asio::steady_timer* io_time;
-
+			enum io_state	{	free_state  , 
+								process_state ,
+								close_state ,
+								done_state 
+							};
 		private:
+			io_state current_state;
 			std::string name_port; // collect name of port to open example is /dev/ttys0
 			// this handle is for read and write it is formular from boost
 			// when call write or read operation completes.

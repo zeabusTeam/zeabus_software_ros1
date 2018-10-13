@@ -21,6 +21,7 @@ namespace zeabus_sensor{
 		// set idle is recommend in first step to prepare config imu
 		// it make imu already to config or reply command
 		void microstrain_imu_port::set_idle(){
+			this->io_service.reset();
 			this->adding_header( (this->write_buffer) );
 			#ifdef TEST_IMU_PORT
 				std::cout	<< "<--TESTER--> After adding_head in call function area have size "
@@ -117,6 +118,7 @@ namespace zeabus_sensor{
 		}
 
 		void microstrain_imu_port::continuous_stream( bool imu_msg , bool ef_msg){
+			this->io_service.reset();
 			this->adding_header( this->write_buffer);
 			this->write_buffer.push_back( COMMAND::SENSOR::DESCRIPTOR );
 			this->write_buffer.push_back( 0x0A );
@@ -133,9 +135,8 @@ namespace zeabus_sensor{
 			if( ef_msg ) this->write_buffer.push_back( 0x01); // enable
 			else this->write_buffer.push_back( 0x00 ); // disable
 			this->adding_checksum( this->write_buffer );
-			#ifdef TEST_IMU_PORT
-				this->print_vector( this->write_buffer , "Continuous Stream : ");
-			#endif
+
+			this->print_vector( this->write_buffer , "Continuous Stream : ");
 			do{
 				this->write_asynchronous( this->write_buffer , this->write_buffer.size());
 				this->read_reply_command("reply of continuous stream : ");
@@ -150,23 +151,34 @@ namespace zeabus_sensor{
 			uint8_t check_sum_01 = 0;
 			uint8_t check_sum_02 = 0;
 			// find heading of packet
+			temporary[0] = '0';
 			while( true ){
 				this->read_asynchronous( size_t(1) , this->temporary);	
 				if( this->temporary[0] == 'u'){
 					check_sum_01 += temporary[0];
 					check_sum_02 += check_sum_01;
+					std::cout << "\n";
 					break;
 				}
+				else{
+					std::cout << "u";
+				}
 			}
+			temporary[0] = '0';
 			while( true ){
 				this->read_asynchronous( size_t(1) , this->temporary);	
 				if( this->temporary[0] == 'e'){
 					check_sum_01 += temporary[0];
 					check_sum_02 += check_sum_01;
+					std::cout << "\n";
 					break;
+				}
+				else{
+					std::cout << "e";
 				}
 			}
 
+			temporary[0] = 't';
 			this->read_asynchronous( size_t(1) , this->temporary);
 			if(this->temporary[0] == DATA::IMU_DATA_SET::DESCRIPTOR ){
 				check_sum_01 += temporary[0];

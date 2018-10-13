@@ -15,6 +15,7 @@
 #endif
 
 //#define TEST_MANAGE_PORT
+//#define TEST_PORT_SCHEDULE
 
 namespace zeabus_extension{
 
@@ -25,6 +26,7 @@ namespace manage_port{
 	{
 		this->io_port = new boost::asio::serial_port( this->io_service);
 		this->io_time = new boost::asio::steady_timer( this->io_service);
+		current_state = free_state;
 		if( name_port != "") this->name_port = name_port;
 		else this->name_port = "";
 	}
@@ -39,6 +41,7 @@ namespace manage_port{
 // this function for destroy port
 	specific_port::~specific_port(){
 		std::cout << "System from manage_port :: Close port" << "\n";
+		current_state = close_state;
 		delete this->io_port;
 	}
 
@@ -56,6 +59,7 @@ namespace manage_port{
 			std::cout << "ZEABUS_EXTENSION : Now Open port " << this->name_port;
 			if( name_device == "" ) std::cout << "\n";
 			else std::cout << " for " << name_device << "\n";
+			current_state = free_state;
 		}
 		catch ( std::exception& error){
 			std::cout	<< error.what() << "\n"; // print error 
@@ -155,7 +159,11 @@ namespace manage_port{
 //																							//
 //																							//
 //////////////////////////////////////////////////////////////////////////////////////////////
-		void read_handle( const boost::system::error_code& error 
+		void specific_port::read_all_handle( const boost::system::error_code& error 
+						   , std::size_t bytes_transfer ){
+			std::cout << std::dec << "read all buffer have read " << bytes_transfer << "\n";
+		}
+		void specific_port::read_handle( const boost::system::error_code& error 
 						   , std::size_t bytes_transfer ){
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "<--SYSTEM--> IN read_handler " 
@@ -165,16 +173,24 @@ namespace manage_port{
 //							<< " want byte is " << number_bytes
 							<< "\n";
 			#endif
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout	<< "finish read_handle\n";
+			#endif
+			current_state = done_state;
 		}
 
-		void write_handle( const boost::system::error_code& error 
+		void specific_port::write_handle( const boost::system::error_code& error 
 							, std::size_t bytes_transfer){
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "<--SYSTEM--> In write handle "
-							<< "error code : " << error
+							<< "  error code : " << error
 							<< "have bytes_transfer is " << bytes_transfer
 							<< "\n";
 			#endif
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout	<< "finish write_handle\n";
+			#endif
+			current_state = done_state;
 		}
 
 		void specific_port::read_asynchronous( size_t number_bytes 
@@ -192,7 +208,9 @@ namespace manage_port{
 			boost::asio::async_read( *(this->io_port) 
 				, boost::asio::buffer( data_receive , number_bytes)
 				, boost::asio::transfer_exactly( number_bytes)
-				, read_handle
+				, boost::bind( &zeabus_extension::manage_port::specific_port::read_handle , this 
+						, boost::asio::placeholders::error 
+						, boost::asio::placeholders::bytes_transferred)
 			);
 			
 
@@ -202,14 +220,42 @@ namespace manage_port{
 			#endif
 
 			// run one queqe
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout << "<--SCHEDULE--> Before into loop in function read\n";
+			#endif
+			while( current_state != free_state || current_state == done_state){
+				switch( current_state ){
+					case free_state		:	std::cout << "Should out of loop\n";
+											break;
+					case process_state	:	std::cout << "Wait for other porcess\n";
+											break;
+					case close_state	:	std::cout << "Port isn't open\n";
+											exit( -2);
+											break;
+					case done_state		:	std::cout << "Wait other process reset\n";
+											break;
+				}
+			}
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout << "<--SCHEDULE--> After loop in read function\n";
+			#endif
+			current_state = process_state;
 			this->io_service.run_one();
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout << "<--SCHEDULE--> Finish run one in read function\n";
+			#endif
+
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM----> AFTER RUN io_service "
 							<< "size of vector is " << data_receive.size()
 							<< "\n";
 			#endif
-	
+//			while( current_state != done_state ){}
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout << "<--SCHEDULE--> Out of read_handle go next queqe\n";
+			#endif	
 			this->io_service.reset();
+			current_state = free_state;
 
 		}
 
@@ -217,6 +263,8 @@ namespace manage_port{
 //												, size_t bytes){
 		void specific_port::write_asynchronous( std::vector<uint8_t> data 
 												, size_t bytes){
+//			std::vector<uint8_t> temporary;
+//			this->read_all_asynchronous( temporary );
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM-----> Before async_write bytes to write is "
 							<< bytes << "\n";
@@ -225,21 +273,86 @@ namespace manage_port{
 			boost::asio::async_write( *(this->io_port)
 				, boost::asio::buffer( data , bytes)
 				, boost::asio::transfer_all()
-				, write_handle
+				, boost::bind( &zeabus_extension::manage_port::specific_port::write_handle, this 
+						, boost::asio::placeholders::error 
+						, boost::asio::placeholders::bytes_transferred)
 			);	
 			
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM-----> After async_write and next run io_service\n";
 			#endif
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout << "<--SCHEDULE--> Before into loop in function write\n";
+			#endif
 
+			while( current_state != free_state || current_state == done_state){
+				switch( current_state ){
+					case free_state		:	std::cout << "Should out of loop\n";
+											break;
+					case process_state	:	std::cout << "Wait for other porcess\n";
+											break;
+					case close_state	:	std::cout << "Port isn't open\n";
+											break;
+					case done_state		:	std::cout << "Wait other process reset\n";
+											break;
+				}
+			}
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout << "<--SCHEDULE--> After loop in function write \n";
+			#endif
+			current_state = process_state;
 			this->io_service.run_one();
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout << "<--SCHEDULE--> Finish run one in function write \n";
+			#endif
 
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM-----> Finish run\n";
 			#endif
+//			while( current_state != done_state ){}
+			#ifdef TEST_PORT_SCHEDULE
+				std::cout << "<--SCHEDULE--> Finish handle in function write  go to next\n";
+			#endif
 			this->io_service.reset();
+			current_state = free_state;
 
 		}
 
+		void specific_port::read_all_asynchronous( std::vector<uint8_t>&data_receive ){
+			// push queqe for read data			
+/*			this->io_port->async_read_some( boost::asio::buffer( data_receive , number_bytes),
+										read_handler);*/
+			// use function async_read because want to ensure have read equal data to request
+			std::cout << "------------------------------ function read all \n";
+			boost::asio::async_read( *(this->io_port) 
+				, boost::asio::buffer( data_receive , 100)
+				, boost::asio::transfer_all()
+				, boost::bind( &zeabus_extension::manage_port::specific_port::read_all_handle 
+						, this 
+						, boost::asio::placeholders::error 
+						, boost::asio::placeholders::bytes_transferred)
+			);
+
+			// run one queqe
+			while( current_state != free_state || current_state == done_state){
+				switch( current_state ){
+					case free_state		:	std::cout << "Should out of loop\n";
+											break;
+					case process_state	:	std::cout << "Wait for other porcess\n";
+											break;
+					case close_state	:	std::cout << "Port isn't open\n";
+											exit( -2);
+											break;
+					case done_state		:	std::cout << "Wait other process reset\n";
+											break;
+				}
+			}
+			current_state = process_state;
+			this->io_service.run_one();
+
+//			while( current_state != done_state ){}
+			this->io_service.reset();
+			current_state = free_state;
+		}
 }
 }

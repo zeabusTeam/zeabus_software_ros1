@@ -70,7 +70,7 @@ int main( int argc , char **argv){
 	unsigned int imu_baud_rate = (unsigned int)temporary_rate;
 	// THIS RATE TO USE WITH IMU AND RATE OF CODE
 	int desired_base_rate;
-	ph.param("port_imu/desired_base_rate" , desired_base_rate , 250);
+	ph.param("port_imu/desired_base_rate" , desired_base_rate , 300);
 	ros::Rate rate( desired_base_rate );
 	
 
@@ -128,7 +128,8 @@ int main( int argc , char **argv){
 	int32_t temporary;
 	float message;
 	bool ok_data;
-	while( nh.ok() && imu->is_open()){
+	if( ! imu->is_open() ) return 0;
+	while( nh.ok()){
 		rate.sleep();
 		imu->stream_data( data , ok_data);
 		if( ok_data ){
@@ -217,7 +218,11 @@ int main( int argc , char **argv){
 		rate.sleep();
 		ros::spinOnce();
 	}
-	
+	std::cout << "Will close\n";
+	for( int run = 0 ; run < 20 ; run++){
+		rate.sleep();
+	}
+	imu->set_idle();	
 	imu->continuous_stream( false , false);
 	delete imu;
 

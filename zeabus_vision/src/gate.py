@@ -13,7 +13,8 @@ bgr = None
 image_result = None
 public_topic = '/vision/mission/gate/'
 sub_sampling = 1
-debug = True
+debug = False
+debug_time = False
 
 
 def mission_callback(msg):
@@ -87,6 +88,13 @@ def get_ROI(mask):
             print('w_h_bound', w_h_bound)
         if w_h_bound:
             continue
+        cv.rectangle(image_result, (x, y), (x+w, y+h), (0, 255, 255), 2)
+        square_area = wm*hm
+        percent = area/square_area
+        print percent
+        if percent > 0.22 or area/percent < 0.5:
+            continue
+        
         ROI.append(cnt)
     return ROI
 
@@ -120,28 +128,28 @@ def find_gate():
     if bgr is None:
         img_is_none()
         return message(n_obj=-1)
-    # if debug:
-        # debug_head()
-    a = []
-    checkpoint = time()
+    if debug_time:
+        a = []
+        checkpoint = time()
     bgr = pre_process(bgr)
-    a.append(('c1',time()-checkpoint))
-    checkpoint = time()
+    if debug_time:
+        a.append(('c1',time()-checkpoint))
+        checkpoint = time()
     mask = get_mask(bgr)
-    a.append(('c2',time()-checkpoint))
-    checkpoint = time()
+    if debug_time:
+        a.append(('c2',time()-checkpoint))
+        checkpoint = time()
     ROI = get_ROI(mask)
-    a.append(('c3',time()-checkpoint))
-    checkpoint = time()
+    if debug_time:
+        a.append(('c3',time()-checkpoint))
+        checkpoint = time()
     mode = len(ROI)
     if mode == 0:
         print_result("NOT FOUND", ct.RED)
-        # if debug:
-            # debug_end()
         publish_result(image_result, 'bgr', public_topic + 'image_result')
         publish_result(mask, 'gray', public_topic + 'mask')
-        a.append(('c4',time()-checkpoint))
-        checkpoint = time()
+        if debug_time:
+            a.append(('c4',time()-checkpoint))
         return message()
     elif mode >= 1:
         if mode == 1:
@@ -150,18 +158,20 @@ def find_gate():
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         select_cnt = max(ROI, key=cv.contourArea)
-        a.append(('c5',time()-checkpoint))
-        checkpoint = time()
+        if debug_time:
+            a.append(('c5',time()-checkpoint))
+            checkpoint = time()
         cx1, cy1, cx2, cy2, area, pos = get_rect(select_cnt)
-        # if debug:
-            # debug_end()
-        a.append(('c6',time()-checkpoint))
-        checkpoint = time()
+        if debug_time:
+            a.append(('c6',time()-checkpoint))
+        # checkpoint = time()
         publish_result(image_result, 'bgr', public_topic + 'image_result')
         publish_result(mask, 'gray', public_topic + 'mask')
-        print a
-        print max(a,key=lambda x: a[1])
-        print ('sum',sum([i[1] for i in a]))
+        # print time()-checkpoint
+        if debug_time:
+            print a
+            print max(a,key=lambda x: a[1])
+            print ('sum',sum([i[1] for i in a]))
         return message(n_obj=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, area=area, pos=pos)
 
 

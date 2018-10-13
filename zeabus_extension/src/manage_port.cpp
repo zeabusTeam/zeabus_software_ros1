@@ -15,7 +15,7 @@
 #endif
 
 //#define TEST_MANAGE_PORT
-#define TEST_PORT_SCHEDULE
+//#define TEST_PORT_SCHEDULE
 
 namespace zeabus_extension{
 
@@ -159,6 +159,10 @@ namespace manage_port{
 //																							//
 //																							//
 //////////////////////////////////////////////////////////////////////////////////////////////
+		void specific_port::read_all_handle( const boost::system::error_code& error 
+						   , std::size_t bytes_transfer ){
+			std::cout << std::dec << "read all buffer have read " << bytes_transfer << "\n";
+		}
 		void specific_port::read_handle( const boost::system::error_code& error 
 						   , std::size_t bytes_transfer ){
 			#ifdef TEST_MANAGE_PORT
@@ -259,6 +263,8 @@ namespace manage_port{
 //												, size_t bytes){
 		void specific_port::write_asynchronous( std::vector<uint8_t> data 
 												, size_t bytes){
+//			std::vector<uint8_t> temporary;
+//			this->read_all_asynchronous( temporary );
 			#ifdef TEST_MANAGE_PORT
 				std::cout	<< "SYSTEM-----> Before async_write bytes to write is "
 							<< bytes << "\n";
@@ -312,5 +318,41 @@ namespace manage_port{
 
 		}
 
+		void specific_port::read_all_asynchronous( std::vector<uint8_t>&data_receive ){
+			// push queqe for read data			
+/*			this->io_port->async_read_some( boost::asio::buffer( data_receive , number_bytes),
+										read_handler);*/
+			// use function async_read because want to ensure have read equal data to request
+			std::cout << "------------------------------ function read all \n";
+			boost::asio::async_read( *(this->io_port) 
+				, boost::asio::buffer( data_receive , 100)
+				, boost::asio::transfer_all()
+				, boost::bind( &zeabus_extension::manage_port::specific_port::read_all_handle 
+						, this 
+						, boost::asio::placeholders::error 
+						, boost::asio::placeholders::bytes_transferred)
+			);
+
+			// run one queqe
+			while( current_state != free_state || current_state == done_state){
+				switch( current_state ){
+					case free_state		:	std::cout << "Should out of loop\n";
+											break;
+					case process_state	:	std::cout << "Wait for other porcess\n";
+											break;
+					case close_state	:	std::cout << "Port isn't open\n";
+											exit( -2);
+											break;
+					case done_state		:	std::cout << "Wait other process reset\n";
+											break;
+				}
+			}
+			current_state = process_state;
+			this->io_service.run_one();
+
+//			while( current_state != done_state ){}
+			this->io_service.reset();
+			current_state = free_state;
+		}
 }
 }

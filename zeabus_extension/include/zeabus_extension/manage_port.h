@@ -83,6 +83,7 @@ namespace manage_port{
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //								NEXT IS ASYNCHRONOUS PART									   //
 /////////////////////////////////////////////////////////////////////////////////////////////////
+			void read_all_asynchronous( std::vector<uint8_t>&data_receive);
 			void read_asynchronous( size_t bytes_transfer , std::vector<uint8_t>&data_receive);
 //			template<typename buffer_data>void write_asynchronous( buffer_data data 
 //												, size_t bytes);	
@@ -91,6 +92,8 @@ namespace manage_port{
 			virtual void read_handle( const boost::system::error_code& error 
 												, std::size_t bytes_transfer);
 			virtual	void write_handle( const boost::system::error_code& error 
+												, std::size_t bytes_transfer);
+			virtual void read_all_handle( const boost::system::error_code& error 
 												, std::size_t bytes_transfer);
 
 		protected:

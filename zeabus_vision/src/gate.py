@@ -107,8 +107,10 @@ def get_rect(cnt):
     cx = x + (w/2)
     cy = y + (h/2)
     cv.circle(image_result, (cx, cy), 5, (0, 0, 255), -1)
-    cx = Aconvert(cx, wimg)
-    cy = -1.0*Aconvert(cy, himg)
+    cx1 = Aconvert(x, wimg)
+    cy1 = -1.0*Aconvert(y, himg)
+    cx2 = Aconvert(x+w, wimg)
+    cy2 = -1.0*Aconvert(y+h, himg)
     area = (1.0*w*h)/(wimg*himg)
     top_excess = (y < 0.05*himg)
     right_excess = ((x+w) > 0.95*wimg)
@@ -120,7 +122,7 @@ def get_rect(cnt):
         pos = -1
     else:
         pos = 0
-    return x, y, x+w, y+h, area, pos
+    return cx1, cy1, cx2, cy2, area, pos
 
 
 def find_gate():

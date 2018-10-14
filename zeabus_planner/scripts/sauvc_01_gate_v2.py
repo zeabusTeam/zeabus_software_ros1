@@ -52,40 +52,43 @@ class play_gate:
 		self.client_gate = rospy.ServiceProxy('vision_gate' , vision_srv_gate )
 
 		self.auv = control_auv( "play gate")
-		self.auv.absolute_depth( "-1.3")
+		self.auv.absolute_depth( -4.2)
 		self.past_step = 'don\'t move'	# don't move = 0, forward = 1 , right = 2 , left = 3
 		
 		self.already_setup = True
 
-	def play_gate( self ):
+	def play( self ):
 		
 		if( self.already_setup ) : print( "OK You have setup")
 		else: self.setup( 5 , 4 , 1 , 2)
 
-		self.auv.absolute_depth(-1.5)	
+		self.auv.absolute_depth(-4.2)	
 		self.log_command.write("Waiting ok depth" , True , 0)
 		print("Waiting Depth")
-		while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.1) ):
+		while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.2) ):
 			self.rate.sleep()	
 		self.log_command.write("depth is OK next wait yaw" , False , 1)
 		print("Waiting yaw")
-		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1) ):
-			self.rate.sleep()		
+#		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1) ):
+#			self.rate.sleep()		
 		self.log_command.write("I will start now", True , 0)
-		self.move_forward( self , self.first_forward)
+		self.move_forward( self.first_forward)
 
 # message of vision is n_obj = -1:wait image 0:don't have 1>= have object
 # pos = -1:left 0:middle 1:right
 # cx1 cy1 cx2 cy2 area
 
 	def center_x (self):
-		return ( self.result_vision['cx_2'] + self.result_vision['cx_1'] ) / 2
+		result = ( self.result_vision['cx_2'] + self.result_vision['cx_1'] ) / 2
+		print("center x is result : " + str( result ))
+		return result
 
 	def center_y (self):
 		return ( self.result_vision['cy_2'] + self.result_vision['cy_1'] ) / 2
  
 	def found_mode( self ):
 		self.log_command.write("Now it is last mode")
+		print("Last mode")
 		while( not rospy.is_shutdown() ):
 			self.rate.sleep()
 			self.analysis_data( 5 )
@@ -110,8 +113,8 @@ class play_gate:
 		self.log_command.write("Now I move forward and distance " + str( distance ) , True , 0 )	
 		self.auv.collect_position()
 		print("Wait yaw")
-		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1 )):
-			self.rospy.sleep()
+#		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1 )):
+#			self.rospy.sleep()
 		print("Let go")
 		while( not rospy.is_shutdown() and self.auv.calculate_distance() < distance):
 			self.analysis_data( 5 )
@@ -137,8 +140,8 @@ class play_gate:
 		self.log_command.write("Now on servey right distance is " + str( distance ) , True , 0 )
 		self.log_command.write("Wait ok yaw " )
 		print("Wait yaw")
-		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1 )):
-			self.rospy.sleep()
+#		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1 )):
+#			self.rospy.sleep()
 		print("Let go")
 		while( not rospy.is_shutdown() and self.auv.calculate_distance() < distance):
 			self.analysis_data( 5 )
@@ -153,14 +156,14 @@ class play_gate:
 			self.found_mode()
 		else:
 			self.past_mode = "right"
-			self..move_forward( self.survey )
+			self.move_forward( self.survey )
 
 	def survey_left( self , distance ):
 		self.log_command.write("Now on servey left distance is " + str( distance ) , True , 0 )
 		self.log_command.write("Wait ok yaw " )
 		print("Wait yaw")
-		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1 )):
-			self.rospy.sleep()
+#		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1 )):
+#			self.rospy.sleep()
 		print("Let go")
 		while( not rospy.is_shutdown() and self.auv.calculate_distance() < distance):
 			self.analysis_data( 5 )
@@ -175,7 +178,7 @@ class play_gate:
 			self.found_mode()
 		else:
 			self.past_mode = "left"
-			self..move_forward( self.survey )
+			self.move_forward( self.survey )
 
 	def analysis_data( self , amont):
 		self.log_vision.write("Analysis data" , True , 0)
@@ -183,8 +186,8 @@ class play_gate:
 		unfound = 0;
 		self.reset_collect_vision()
 		while( found < amont and unfound < amont):
-			request_vision( String("gate") , String(color) )
-			if( data_vision['n_obj'] in [0 , -1]):
+			self.request_vision( String("gate") , String("Aon Baka") )
+			if( self.data_vision['n_obj'] in [0 , -1]):
 				unfound+=1
 			else:
 				found+=1;
@@ -195,16 +198,16 @@ class play_gate:
 				self.collect_vision['cy_1'] += self.data_vision['cy_1']
 				self.collect_vision['cy_2'] += self.data_vision['cy_2']
 		if( found == amont):
-			self.request_vision['n_obj'] = 1
-			self.request_vision['pos'] = self.data_vision['pos']
-			self.request_vision['cx_1'] /= amont
-			self.request_vision['cx_2'] /= amont
-			self.request_vision['cy_1'] /= amont
-			self.request_vision['cy_2'] /= amont
+			self.result_vision['n_obj'] = 1
+			self.result_vision['pos'] = self.data_vision['pos']
+			self.result_vision['cx_1'] /= amont
+			self.result_vision['cx_2'] /= amont
+			self.result_vision['cy_1'] /= amont
+			self.result_vision['cy_2'] /= amont
 		else:
-			self.request_vision['n_obj'] = 0
+			self.result_vision['n_obj'] = 0
 				
-	def reset_collect_vision():
+	def reset_collect_vision( self ):
 		self.collect_vision = { "n_obj":None , "pos":None , "cx_1":0 , "cx_2":0
 							, "cy_1":0 , "cy_2":0 , "area":0}
 		
@@ -221,7 +224,7 @@ class play_gate:
 		if( self.data_vision['n_obj'] in [0 , -1]):
 			self.log_vision.write("NOT FOUND" , False , 0)
 		else:
-			self.log_vision.write("FOUND color is " + second_order , False , 0)
+			self.log_vision.write("FOUND color is " + str(second_order) , False , 0)
 			self.log_vision.write("point of x are " + str( self.data_vision['cx_1'] ) +
 								":" + str( self.data_vision['cx_2']) , False , 1)
 			self.log_vision.write("point of y are " + str( self.data_vision['cy_1'] ) +
@@ -230,3 +233,6 @@ class play_gate:
 
 if __name__=='__main__':
 	rospy.init_node("Mission Gate")	
+	gate = play_gate( 30 )
+	gate.setup( 4 , 4 , 1 , 2)
+	gate.play()

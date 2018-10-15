@@ -35,6 +35,7 @@ set( zeabus_extension_sources
 	src/ros.cpp
 	src/generate_message.cpp
 	src/manage_port.cpp
+	src/find_error_position.cpp
 )
 
 add_library( zeabus_extension ${zeabus_extension_sources})

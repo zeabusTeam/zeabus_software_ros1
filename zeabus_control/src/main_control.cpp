@@ -32,11 +32,17 @@ int main( int argc , char** argv){
 	ros::NodeHandle nh; // handle for use in this code
 
 
+
+	dynamic_reconfigure = new zeabus_extension::zeabus_ros::dynamic_reconfigure(
+								package_dynamic_reconfigure , path_file_dynamic_reconfigure 
+							,	name_file_dynamic_reconfigure , node_name_dynamic_reconfigure);
+
+	dynamic_reconfigure->load();
 	ros::Rate rate(30); // set frequency for run
 	while( nh.ok() ){ // run until ros is stop
-		
-		
-		ros::spinOnce(); // open time for listening subscriber or service
 		rate.sleep(); // sleep in one period of rate frequency
+		ros::spinOnce(); // open time for listening subscriber or service
+		
+		
 	}
 }

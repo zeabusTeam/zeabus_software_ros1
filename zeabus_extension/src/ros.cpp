@@ -9,10 +9,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef ZEABUS_EXTENSION_LOG_DATA
-	#define ZEABUS_EXTENSION_LOG_DATA
-	#include	<zeabus_extension/log_data.h>
-#endif
+#include	<zeabus_extension/log_data.h>
 
 zeabus_extension::zeabus_ros::find_path::find_path( std::string package_name 
 											, std::string path 

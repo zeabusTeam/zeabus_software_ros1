@@ -48,14 +48,17 @@ namespace zeabus_control{
 		
 	};
 
-	class discrete_pid : pid_control{
+	class discrete_pid : public pid_control{
 		public:
-			discrete_pid( double p_constant = 0 , double i_constant = 0 , double d_constant = 0);
+			discrete_pid();
+			discrete_pid( double p_constant , double i_constant ,  double d_constant );
 			void calculate_result( double error , double& result);
 			void reset_value();
 			void bound_value_integral();
 			void bound_size_integral();
-
+			void set_up_class();
+//			template<typename number_type> void set_constant(  number_type p_constant 
+//						, number_type i_constant , number_type d_constant );
 		private:
 			double integral_value;
 

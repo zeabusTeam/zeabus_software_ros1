@@ -15,9 +15,7 @@ namespace zeabus_extension{
 namespace zeabus_control{
 
 	pid_control::pid_control(double p_constant , double i_constant , double d_constant){
-		this->p_constant = p_constant;
-		this->i_constant = i_constant;
-		this->d_constant = d_constant;
+		this->set_constant( p_constant , i_constant , d_constant);
 		this->sum_error = 0;
 		this->assign_type = false;	
 	}

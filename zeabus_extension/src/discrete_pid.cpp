@@ -14,10 +14,13 @@
 namespace zeabus_extension{
 namespace zeabus_control{
 
+	discrete_pid::discrete_pid( ) : pid_control( 0 , 0 , 0 ){
+		this->set_up_class();
+	}
+
 	discrete_pid::discrete_pid( double p_constant , double i_constant , double d_constant)
 			: pid_control( p_constant , i_constant , d_constant ){
-		this->pid_result.resize( 2 , 0 );	
-		this->list_error.resize( 3 , 0 );
+		this->set_up_class();
 	} 
 	
 	void discrete_pid::calculate_result( double error , double& result){
@@ -41,11 +44,23 @@ namespace zeabus_control{
 		}
 	}
 
-	void bound_value_integral(){
+	void discrete_pid::bound_value_integral(){
 	}
 
-	void bound_size_integral(){
+	void discrete_pid::bound_size_integral(){
 
+	}
+	
+	void discrete_pid::set_up_class(){
+		if( this->limit_size ){
+		}
+		else{
+			for( int run = 0 ; run < 3 ; run ++){
+				this->list_error.push_back(0);
+			}
+		}
+		this->pid_result.push_back(0);
+		this->pid_result.push_back(0);
 	}
 
 }

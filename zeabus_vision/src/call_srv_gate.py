@@ -1,4 +1,5 @@
-import cv2
+#!/usr/bin/python2.7
+# import cv2
 import rospy
 from zeabus_vision.msg import vision_gate
 from zeabus_vision.srv import vision_srv_gate
@@ -13,8 +14,9 @@ if __name__ == "__main__":
     call = rospy.ServiceProxy(service_name, vision_srv_gate)
     while not rospy.is_shutdown():
         try:
-            res = call(String('flare'), String(''))
+            res = call(String('gate'), String(''))
             # res = call(String('flare'),String('far'))
         except:
             print('Error')
         rospy.sleep(0.1)
+        

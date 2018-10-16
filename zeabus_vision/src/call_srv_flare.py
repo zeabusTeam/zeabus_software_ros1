@@ -1,7 +1,7 @@
 import cv2 as cv
 import rospy
-from zeabus_vision.msg import *
-from zeabus_vision.srv import *
+from zeabus_vision.msg import vision_flare
+from zeabus_vision.srv import vision_srv_flare
 from std_msgs.msg import String
 
 if __name__ == "__main__":
@@ -14,7 +14,9 @@ if __name__ == "__main__":
     while not rospy.is_shutdown():
         try:
             res = call(String('flare'), String('near'))
-            # res = call(String('flare'),String('far'))
+            print ('near',res)
+            res = call(String('flare'),String('far'))
+            print ('far',res)
         except:
             print('Error')
         rospy.sleep(0.1)

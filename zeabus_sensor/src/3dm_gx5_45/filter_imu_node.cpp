@@ -74,15 +74,14 @@ void set_meesage_velocity(){
 										+ data_velocity.twist.linear.y * sin(adding_yaw) 
 									);
 	std::cout << "temporary of x is " << std::dec << temporary << "\n";
-	if( fabs(temporary) < 0.5 && fabs(temporary) >= 0.01){ 
-		std::cout << "Add value to x\n";
+//	if( fabs(temporary) < 1 && fabs(temporary) >= 0.005)
 		message_velocity.twist.linear.x += temporary;
-	}
+	
 	temporary= 1 *( data_velocity.twist.linear.x * sin(adding_yaw)
 										+ data_velocity.twist.linear.y * cos(adding_yaw)
 									);
 	std::cout << "temporary of y is " << std::dec << temporary << "\n";
-	if( fabs(temporary) < 0.5 && fabs(temporary) >= 0.01) 
+//	if( fabs(temporary) < 1 && fabs(temporary) >= 0.005) 
 		message_velocity.twist.linear.y += temporary;
 	message_velocity.twist.linear.z = data_velocity.twist.linear.z;
 	message_velocity.twist.angular.x = data_velocity.twist.angular.x;

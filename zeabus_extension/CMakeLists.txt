@@ -35,6 +35,9 @@ set( zeabus_extension_sources
 	src/ros.cpp
 	src/generate_message.cpp
 	src/manage_port.cpp
+	src/find_error_position.cpp
+	src/pid_control.cpp
+	src/discrete_pid.cpp
 )
 
 add_library( zeabus_extension ${zeabus_extension_sources})
@@ -44,4 +47,13 @@ target_link_libraries( zeabus_extension
 	${Boost_LIBRARIES}
 )
 
-#for complie file cpp to execute file
+install( TARGETS zeabus_extension 
+	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	RUNTIME DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION}
+)
+
+#install(
+#	DIRECTORY include/${PROJECT_NAME}
+#	DESTINARION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+#)

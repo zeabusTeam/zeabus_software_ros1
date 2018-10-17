@@ -1,5 +1,4 @@
 #!/usr/bin/python2.7
-# import cv2
 import rospy
 from zeabus_vision.msg import vision_gate
 from zeabus_vision.srv import vision_srv_gate

@@ -1,4 +1,4 @@
-import cv2 as cv
+#!/usr/bin/python2.7
 import rospy
 from zeabus_vision.msg import vision_flare
 from zeabus_vision.srv import vision_srv_flare

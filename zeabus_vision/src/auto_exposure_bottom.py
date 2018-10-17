@@ -6,8 +6,8 @@ from auto_exposure_old import AutoExposure
 def adjust():
     EVmin = 0.1
     EVdefault = 0.1
-    sub_topic = rospy.get_param("/auto_exposure_front/topic_bottom", None)
-    client_name = rospy.get_param("/auto_exposure_front/client_bottom", None)
+    sub_topic = rospy.get_param("/auto_exposure_bottom/topic_ae", None)
+    client_name = rospy.get_param("/auto_exposure_bottom/client_ae", None)
     print sub_topic
     print client_name
     if sub_topic is not None:

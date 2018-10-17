@@ -2,9 +2,9 @@
     <!-- source: http://wiki.ros.org/ueye_cam -->
     <!-- Set ALL Argument -->
     <arg name="nodelet_manager_name" value="front" />
-    <arg name="camera_name" value="/camera/front" />
+    <arg name="camera_name" value="vision/bottom" />
     <arg name="camera_topic" value="image_raw" />
-    <arg name="camera_id" value="2" />
+    <arg name="camera_id" value="1" />
     <arg name="image_width" value="1936" />
     <arg name="image_height" value="1216" />
     <!-- <arg name="image_left" value="-1" /> -->
@@ -15,9 +15,9 @@
     <!-- <arg name="sensor_scaling" value="1.0" /> -->
     <arg name="auto_gain" value="False" />
     <arg name="master_gain" value="10" />
-    <arg name="red_gain" value="50" />
+    <arg name="red_gain" value="100" />
     <arg name="green_gain" value="0" />
-    <arg name="blue_gain" value="30" />
+    <arg name="blue_gain" value="20" />
     <arg name="auto_exposure" value="False" />
     <arg name="exposure" value="33.0" />
     <arg name="auto_white_balance" value="False" />
@@ -26,7 +26,7 @@
     <arg name="ext_trigger_mode" value="False" />
     <arg name="auto_frame_rate" value="False" />
     <arg name="frame_rate" value="10.0" />
-    <arg name="pixel_clock" value="25" />
+    <arg name="pixel_clock" value="59" />
     <!-- <arg name="flip_upd" value="False" /> -->
     <arg name="flip_lr" value="False" />
 
@@ -63,4 +63,10 @@
         <!-- <param name="flip_upd" type="bool" value="$(arg flip_upd)" /> -->
         <param name="flip_lr" type="bool" value="$(arg flip_lr)" />
     </node>
+
+    <node pkg="zeabus_vision" name="auto_exposure_front" type="auto_exposure_front.py" output="screen">
+        <param name="topic_front" type="str" value="/$(arg camera_name)/$(arg camera_topic)/compressed"/>
+        <param name="client_front" type="str" value="ueye_cam_nodelet_$(arg nodelet_manager_name)/"/>
+    </node>
+
 </launch>

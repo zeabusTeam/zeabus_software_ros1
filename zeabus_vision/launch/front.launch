@@ -25,7 +25,7 @@
     <!-- <arg name="white_balance_blue_offset" value="0" /> -->
     <arg name="ext_trigger_mode" value="False" />
     <arg name="auto_frame_rate" value="False" />
-    <arg name="frame_rate" value="15.0" />
+    <arg name="frame_rate" value="10.0" />
     <arg name="pixel_clock" value="59" />
     <!-- <arg name="flip_upd" value="False" /> -->
     <arg name="flip_lr" value="False" />

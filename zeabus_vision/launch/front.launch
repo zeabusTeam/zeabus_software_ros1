@@ -65,8 +65,8 @@
     </node>
 
     <node pkg="zeabus_vision" name="auto_exposure_front" type="auto_exposure_front.py" output="screen">
-        <param name="topic_front" type="str" value="/$(arg camera_name)/$(arg camera_topic)/compressed"/>
-        <param name="client_front" type="str" value="ueye_cam_nodelet_$(arg nodelet_manager_name)/"/>
+        <param name="topic_ae" type="str" value="/$(arg camera_name)/$(arg camera_topic)/compressed"/>
+        <param name="client_ae" type="str" value="ueye_cam_nodelet_$(arg nodelet_manager_name)/"/>
     </node>
 
 </launch>

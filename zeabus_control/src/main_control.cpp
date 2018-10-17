@@ -36,13 +36,28 @@ int main( int argc , char** argv){
 	dynamic_reconfigure = new zeabus_extension::zeabus_ros::dynamic_reconfigure(
 								package_dynamic_reconfigure , path_file_dynamic_reconfigure 
 							,	name_file_dynamic_reconfigure , node_name_dynamic_reconfigure);
-
 	dynamic_reconfigure->load();
+
 	ros::Rate rate(30); // set frequency for run
+
 	while( nh.ok() ){ // run until ros is stop
 		rate.sleep(); // sleep in one period of rate frequency
 		ros::spinOnce(); // open time for listening subscriber or service
-		
-		
+		zeabus_extension::zeabus_control::find_error_position(	current_state , target_state 
+																, different_state);
+		divide_2_dimension_xy( different_state , robot_error , current_state , bound_error);	
+		for( int run = 0 ; run < 6 ; run++){
+			if( use_velocity[run] == 0 ){
+				pid_position[run].calculate_result( robot_error[run] , pid_force[run]);
+				pid_velocity[run].reset_value();
+			}
+			else{
+				use_velocity[run] --;
+				pid_velocity[run].calculate_result( target_velocity[run] - current_velocity[run]
+													, pid_force[run]);
+				pid_position[run].reset_value();
+			}
+		}
+			
 	}
 }

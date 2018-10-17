@@ -4,7 +4,7 @@
     <arg name="nodelet_manager_name" value="bottom" />
     <arg name="camera_name" value="vision/bottom" />
     <arg name="camera_topic" value="image_raw" />
-    <arg name="camera_id" value="1" />
+    <arg name="camera_id" value="2" />
     <arg name="image_width" value="1936" />
     <arg name="image_height" value="1216" />
     <!-- <arg name="image_left" value="-1" /> -->

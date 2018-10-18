@@ -12,6 +12,8 @@
 
 #include	<iostream>
 #include	<nav_msgs/Odometry.h>
+#include 	<tf/transform_datatypes.h>
+#include	<tf/transform_listener.h>
 
 #define	_CHECK_ERROR_	
 
@@ -111,4 +113,8 @@ namespace zeabus_control{
 
 }
 
+#endif
+
+#ifdef _CHECK_ERROR_
+	#undef _CHECK_ERROR_
 #endif

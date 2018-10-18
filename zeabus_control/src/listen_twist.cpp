@@ -20,20 +20,19 @@
 
 namespace zeabus_control{
 	
-	template < class array_type > class listen_velocity{
+	class listen_twist{
 		public:
 			void callback( const geometry_msgs::Twist& message);
-			listen_velocity( array_type* velocity );
-			listen_velocity( array_type* velocity , int* set_use_velocity);
+			listen_twist( double* velocity );
+			listen_twist( double* velocity , int* set_use_velocity);
 		private:
-			array_type* velocity;
+			double* velocity;
 			// for specific purpose
 			int* set_use_velocity;
 			bool use_velocity;
 	};
 
-	template <class array_type> void listen_velocity::callback(
-					const geometry_msgs::Twist& message){
+	void listen_twist::callback( const geometry_msgs::Twist& message){
 		this->velocity[0] = message.linear.x;
 		this->velocity[1] = message.linear.y;
 		this->velocity[2] = message.linear.z;
@@ -42,8 +41,7 @@ namespace zeabus_control{
 		this->velocity[5] = message.angular.z;
 	}
 
-	template < class array_type > listen_velocity::listen_velocity( array_type* velocity 
-					, int* set_use_velocity ){
+	listen_twist::listen_twist( double* velocity , int* set_use_velocity ){
 		this->velocity = velocity;
 		this->set_use_velocity = set_use_velocity;
 		this->use_velocity = true;
@@ -53,7 +51,7 @@ namespace zeabus_control{
 		#endif
 	}
 
-	template < class array_type > listen_velocity::listen_velocity( array_type* velocity){
+	listen_twist::listen_twist( double* velocity){
 		this->velocity = velocity;
 		this->use_velocity = false;
 		#ifdef _CHECK_ERROR_

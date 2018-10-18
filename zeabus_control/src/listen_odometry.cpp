@@ -39,18 +39,17 @@ namespace zeabus_control{
 			velocity[5] = data.twist.twist.angular.z;
 	}
 
-	template <class array_type > class listen_odometry{
+	class listen_odometry{
 		public:
 			void callback( const nav_msgs::Odometry& message);
-			listen_odometry( array_type* state , array_type* velocity);
+			listen_odometry( double* state , double* velocity);
 
 		private:
-			array_type *state;
-			array_type *velocity;
+			double *state;
+			double *velocity;
 	};
 
-	template <class array_type > listen_odometry::listen_odometry( 
-										array_type* state , array_type* velocity){
+	listen_odometry::listen_odometry( double* state , double* velocity){
 		this->state = state;
 		this->velocity = velocity;
 		#ifdef _CHECK_ERROR_
@@ -61,23 +60,21 @@ namespace zeabus_control{
 		#endif	
 	}
 
-	template <class array_type >
 	void listen_odometry::callback( const nav_msgs::Odometry& message){
 		nav_msgs_to_array( message , this->state , this->velocity);	
 	}
 
-	template < class array_type > class listen_odometry_convert{
+	class listen_odometry_convert{
 		public:
 			void callback( const nav_msgs::Odometry& message);
-			listen_odometry_convert( array_type* state , array_type* velocity);
+			listen_odometry_convert( double* state , double* velocity);
 
 		private:
-			array_type *state;
-			array_type *velocity;
+			double *state;
+			double *velocity;
 	};
 
-	template <class array_type> listen_odometry_convert::listen_odometry_convert( 
-						array_type* state , array_type* velocity){
+	listen_odometry_convert::listen_odometry_convert( double* state , double* velocity){
 		this->state = state;
 		this->velocity = velocity;
 		#ifdef _CHECK_ERROR_
@@ -88,8 +85,7 @@ namespace zeabus_control{
 		#endif	
 	}
 
-	template <class array_type> void listen_odometry_convert::callback( 
-															const nav_msgs::Odometry& message){
+	void listen_odometry_convert::callback( const nav_msgs::Odometry& message){
 		tf::Quaternion quaternion( message.pose.pose.orientation.x,
 									message.pose.pose.orientation.y,
 									message.pose.pose.orientation.z,

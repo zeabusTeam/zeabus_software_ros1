@@ -24,8 +24,12 @@ namespace zeabus_control{
 		public:
 			void callback( const geometry_msgs::Twist& message);
 			listen_velocity( array_type* velocity );
+			listen_velocity( array_type* velocity , int* set_use_velocity);
 		private:
 			array_type* velocity;
+			// for specific purpose
+			int* set_use_velocity;
+			bool use_velocity;
 	};
 
 	template <class array_type> void listen_velocity::callback(
@@ -38,8 +42,20 @@ namespace zeabus_control{
 		this->velocity[5] = message.angular.z;
 	}
 
+	template < class array_type > listen_velocity::listen_velocity( array_type* velocity 
+					, int* set_use_velocity ){
+		this->velocity = velocity;
+		this->set_use_velocity = set_use_velocity;
+		this->use_velocity = true;
+		#ifdef _CHECK_ERROR_
+			std::cout	<< "listen velocity pointer class : local --->" << this->velocity 
+						<< " : " << velocity << "\n";
+		#endif
+	}
+
 	template < class array_type > listen_velocity::listen_velocity( array_type* velocity){
 		this->velocity = velocity;
+		this->use_velocity = false;
 		#ifdef _CHECK_ERROR_
 			std::cout	<< "listen velocity pointer class : local --->" << this->velocity 
 						<< " : " << velocity << "\n";

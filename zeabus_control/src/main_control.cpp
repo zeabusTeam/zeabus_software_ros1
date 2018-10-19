@@ -42,6 +42,12 @@ int main( int argv , char** argc){
 	
 	int frequency = 30;
 
+//------------------------------> SET UP DYNAMIC RECONFIGURE <-----------------------------------
+	dynamic_reconfigure::Server<zeabus_control::pid_controlConfig> server;
+	dynamic_reconfigure::Server<zeabus_control::pid_controlConfig>::CallbackType function;
+	function = boost::bind(&dynamic_reconfigure_callback , _1 , _2); 
+	server.setCallback( function );
+
 
 //--------------------------------> SET UP PID FUNCTION <----------------------------------------
 	zeabus_control::normal_pid_bound_i pid_position[6];

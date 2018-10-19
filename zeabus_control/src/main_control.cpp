@@ -35,8 +35,10 @@ int main( int argv , char** argc){
 									, &zeabus_control::listen_twist::callback 
 									, &listen_target_velocity);
 
+	double ok_error[6]			=	{ 0.01 , 0.01 , 0.04 , 0.01 , 0.01 , 0.05 };
 	double world_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double robot_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	double bound_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double pid_force[6]			=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 }; 
 	
@@ -48,10 +50,20 @@ int main( int argv , char** argc){
 	function = boost::bind(&dynamic_reconfigure_callback , _1 , _2); 
 	server.setCallback( function );
 
-
 //--------------------------------> SET UP PID FUNCTION <----------------------------------------
+	double bound_value_i[6]		=	{ 1 , 1 , 2 , 1 , 1 , 0.5};
 	zeabus_control::normal_pid_bound_i pid_position[6];
 	zeabus_control::normal_pid_bound_i pid_velocity[6];
+	for( int run = 0 ; run < 6 ; run++){
+		pid_position[run].set_constant(	constant_position[0][run] 
+									,	constant_position[1][run]
+									,	constant_position[2][run]);
+		pid_velocity[run].set_constant(	constant_velocity[0][run] 
+									,	constant_velocity[1][run]
+									,	constant_velocity[2][run]);	
+		pid_position[run].limit_value_i_term( bound_value_i[run]);
+		pid_velocity[run].limit_value_i_term( bound_value_i[run]);
+	}
 
 	ros::Rate rate( frequency );
 

@@ -12,9 +12,9 @@
 
 #include	<iostream>
 #include	<geometry_msgs/Twist.h>
-
 #define _CHECK_ERROR_
 
+#define epsilon 2.22e-16
 #ifndef _listen_twist_cpp__
 #define _listen_twist_cpp__
 
@@ -29,6 +29,7 @@ namespace zeabus_control{
 			double* velocity;
 			// for specific purpose
 			int* set_use_velocity;
+			int set_value;
 			bool use_velocity;
 	};
 
@@ -39,12 +40,21 @@ namespace zeabus_control{
 		this->velocity[3] = message.angular.x;
 		this->velocity[4] = message.angular.y;
 		this->velocity[5] = message.angular.z;
+		if( this->use_velocity ){
+			for( int run = 0 ; run < 6 ; run++){
+				if( fabs(this->velocity[run]) < epsilon ){
+					this->set_use_velocity[run] = this->set_value;
+				}
+				else this->set_use_velocity[run] = 0;
+			}
+		}
 	}
 
 	listen_twist::listen_twist( double* velocity , int* set_use_velocity ){
 		this->velocity = velocity;
 		this->set_use_velocity = set_use_velocity;
 		this->use_velocity = true;
+		this->set_value = 10;
 		#ifdef _CHECK_ERROR_
 			std::cout	<< "listen velocity pointer class : local --->" << this->velocity 
 						<< " : " << velocity << "\n";

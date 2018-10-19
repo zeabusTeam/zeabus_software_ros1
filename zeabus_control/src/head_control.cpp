@@ -21,17 +21,23 @@
 #include	<zeabus_extension/log_data.h>
 
 #include	"listen_twist.cpp"
+#include	"other_function.cpp"
 #include	"listen_odometry.cpp"
 #include	"find_error_state.cpp"
 #include	"find_robot_error.cpp"
 #include	"normal_pid_bound_i.cpp"
 
+
+//------------------> Dynamic Reconfigure We will use in Global variable <-----------------------
 double constant_position[3][6] = {	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }};
 double constant_velocity[3][6] = {	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }};
+
+bool already_loading_constant = false;
+bool want_save_constant = false;
 
 void dynamic_reconfigure_callback( zeabus_control::pid_controlConfig &config , uint32_t level){
 	constant_position[0][0] = config.p_x_position;
@@ -81,5 +87,6 @@ void dynamic_reconfigure_callback( zeabus_control::pid_controlConfig &config , u
 	constant_velocity[0][5] = config.p_yaw_velocity;
 	constant_velocity[1][5] = config.i_yaw_velocity;
 	constant_velocity[2][5] = config.d_yaw_velocity;
-
+	
+	if( ! already_loading_constant ) want_save_constant = true;
 }

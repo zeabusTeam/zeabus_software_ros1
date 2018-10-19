@@ -37,6 +37,14 @@ namespace zeabus_control{
 		for( int run = 2 ; run < 6 ; run++ ) robot_error[run] = world_error[run];
 	}
 
+
+	template<typename number_type>void convert_robot_to_bound_error( number_type* robot_error 
+						, number_type* bound_error , number_type* ok_error , size_t size = 6){
+		for( int run = 0 ; run < size ; run++){
+			if( fabs( robot_error[run] ) <= ok_error[run] ) bound_error[run] = 0 ;
+			else bound_error[run] = robot_error[run];
+		}
+	}
 }
 
 #endif

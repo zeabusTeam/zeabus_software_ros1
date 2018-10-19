@@ -56,13 +56,8 @@ int main( int argv , char** argc){
 	double bound_value_i[6]		=	{ 1 , 1 , 2 , 1 , 1 , 0.5};
 	zeabus_control::normal_pid_bound_i pid_position[6];
 	zeabus_control::normal_pid_bound_i pid_velocity[6];
+	reset_constant( pid_position , pid_velocity );
 	for( int run = 0 ; run < 6 ; run++){
-		pid_position[run].set_constant(	constant_position[0][run] 
-									,	constant_position[1][run]
-									,	constant_position[2][run]);
-		pid_velocity[run].set_constant(	constant_velocity[0][run] 
-									,	constant_velocity[1][run]
-									,	constant_velocity[2][run]);	
 		pid_position[run].limit_value_i_term( bound_value_i[run]);
 		pid_velocity[run].limit_value_i_term( bound_value_i[run]);
 	}
@@ -72,11 +67,48 @@ int main( int argv , char** argc){
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
+//------------------------------> PART ABOUT LOAD OR SAVE CONSTANT <-----------------------------
+		if( ! already_loading_constant ){
+			file_const.load();
+			already_loading_constant = true;
+		}
+		else if( want_save_constant ){
+			file_const.save();
+			want_save_constant = false;
+		}
+		else{}
+//---------------------------------------> END PART <--------------------------------------------
+		for( int run = 0 ; run < 6 ; run++){
+			if( use_target_velocity[run] > 0 ){
+				if( run == 1 || run == 0){
+					target_state[0] = current_state[0];
+					target_state[1] = current_state[1];
+				}
+				else{
+					target_state[run] = current_state[run];
+				}
+			}
+		}
 		// find error between current_state with target_state to world_error
 		zeabus_control::find_error_position( current_state , target_state , world_error);
 		// give world_error to error in robot frame
 		zeabus_control::convert_world_to_robot_xy( world_error , robot_error , current_state );
-		// use error of robot to calculate force by pid 
-		
+		// fine bound_error by use robot_error and ok_error
+		zeabus_control::convert_robot_to_bound_error( robot_error , bound_error , ok_error); 
+		// use error of bound_error to calculate force by pid 
+		for( int run = 0 ; run < 6 ; run++){
+			if( use_target_velocity[run] > 0 ){ // use pid for velocity
+				pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
+											, pid_force[run] );
+				pid_position[run].reset_value();
+				use_target_velocity[run]--;
+			}
+			else{ // use pid for position
+				pid_position[run].get_result( bound_error[run] , pid_force[run]);
+				pid_velocity[run].reset_value();	
+			}
+		}
+		// use pid_force convert to robot_force for send to thruster
+		zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );	
 	};			
 }

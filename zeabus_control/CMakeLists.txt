@@ -13,13 +13,11 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   zeabus_extension
+  dynamic_reconfigure
 )
 
-catkin_package(
-#  INCLUDE_DIRS include
-  LIBRARIES zeabus_control
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp std_msgs zeabus_extension
-  DEPENDS system_lib
+generate_dynamic_reconfigure_options(
+	cfg/pid_control.cfg
 )
 
 include_directories(
@@ -27,6 +25,16 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+catkin_package(
+  INCLUDE_DIRS include
+  LIBRARIES zeabus_control
+  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp std_msgs zeabus_extension dynamic_reconfigure
+  DEPENDS system_lib
+)
+
+
 add_executable(control src/main_control.cpp)
+
+add_dependencies( control ${PROJECT_NAME}_gencfg )
 
 target_link_libraries( control ${catkin_LIBRARIES})

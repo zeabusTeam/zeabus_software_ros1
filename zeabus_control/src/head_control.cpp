@@ -13,6 +13,21 @@
 #include	<iostream> // standard of cpp
 #include	<ros/ros.h> // standard of ros system
 
+// include for dynamic reconfigure of ros
+#include	<dynamic_reconfigure/server.h>
+#include	<dynamic_tutorials/TutorialsConfig.h>
+
 #include	"listen_twist.cpp"
 #include	"listen_odometry.cpp"
 #include	"find_error_state.cpp"
+#include	"find_robot_error.cpp"
+#include	"normal_pid_bound_i.cpp"
+
+double constant_position[3][6] = {	{ 0 , 0 , 0 , 0 , 0 , 0 }
+								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
+								,	{ 0 , 0 , 0 , 0 , 0 , 0 }};
+double constant_velocity[3][6] = {	{ 0 , 0 , 0 , 0 , 0 , 0 }
+								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
+								,	{ 0 , 0 , 0 , 0 , 0 , 0 }};
+
+

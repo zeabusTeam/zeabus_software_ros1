@@ -26,7 +26,7 @@ namespace zeabus_control{
 		public:
 			normal_pid(); //  init object
 			void set_constant( double p_constant , double i_constant , double d_constant );
-			void get_result( double& result); // use pass by reference
+			void get_result( double error , double& result); // use pass by reference
 			void reset_value(); // reset all term
 			void set_frequency( double frequency);
 			
@@ -41,7 +41,7 @@ namespace zeabus_control{
 			double period_time;
 			
 		private:
-			void individual_calculate( double& result);
+			void individual_calculate( double error , double& result);
 	};
 
 	normal_pid::normal_pid(){
@@ -64,11 +64,11 @@ namespace zeabus_control{
 		this->result_d_term = 0 ;
 	}
 
-	void normal_pid::get_result( double& result){
-		this->individual_calculate( result );
+	void normal_pid::get_result( double error , double& result){
+		this->individual_calculate( error , result );
 	}
 	
-	void normal_pid::individual_calculate( double & result){
+	void normal_pid::individual_calculate( double error ,double & result){
 		#ifdef _CHECK_ERROR_
 			std::cout << "This is individual_calculate in class normal_pid\n";
 		#endif

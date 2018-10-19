@@ -21,7 +21,7 @@
 
 namespace zeabus_control{
 
-	template<typename number_type >convert_world_to_robot_xy(	number_type* world_error 
+	template<typename number_type >void convert_world_to_robot_xy(	number_type* world_error 
 								,	number_type* robot_error , number_type* current_state ){
 		double distance_xy = find_distance( 2 , world_error , robot_error);
 		double distance_yaw = atan( world_error[1]/world_error[0]);

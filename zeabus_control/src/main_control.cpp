@@ -42,6 +42,11 @@ int main( int argv , char** argc){
 	
 	int frequency = 30;
 
+
+//--------------------------------> SET UP PID FUNCTION <----------------------------------------
+	zeabus_control::normal_pid_bound_i pid_position[6];
+	zeabus_control::normal_pid_bound_i pid_velocity[6];
+
 	ros::Rate rate( frequency );
 
 	while( nh.ok() ){

@@ -14,7 +14,7 @@
 #include	<math.h>
 
 //#define		_CHECK_ERROR_
-
+#define PI 3.1415926535897
 #ifndef _find_error_state_cpp__
 #define _find_error_state_cpp__
 
@@ -39,7 +39,7 @@ namespace zeabus_control{
 		for( int8_t run = 0 ; run < size ; run++){
 			result += pow( point_1[run] - point_2[run] , 2);
 		}
-
+		#ifdef _CHECK_ERROR_
 			std::cout << std::dec << "sum result is " << result << "\n";
 		#endif
 		return sqrt( result );

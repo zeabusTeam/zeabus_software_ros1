@@ -15,7 +15,7 @@
 
 // include for dynamic reconfigure of ros
 #include	<dynamic_reconfigure/server.h>
-#include	<dynamic_tutorials/TutorialsConfig.h>
+#include	<zeabus_control/PIDConfig.h>
 
 #include	"listen_twist.cpp"
 #include	"listen_odometry.cpp"

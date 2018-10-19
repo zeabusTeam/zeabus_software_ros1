@@ -49,6 +49,8 @@ int main( int argv , char** argc){
 	dynamic_reconfigure::Server<zeabus_control::pid_controlConfig>::CallbackType function;
 	function = boost::bind(&dynamic_reconfigure_callback , _1 , _2); 
 	server.setCallback( function );
+	zeabus_extension::zeabus_ros::dynamic_reconfigure file_const("zeabus_control" , "constant"
+													, "set_01.yaml" , "/main_control");
 
 //--------------------------------> SET UP PID FUNCTION <----------------------------------------
 	double bound_value_i[6]		=	{ 1 , 1 , 2 , 1 , 1 , 0.5};

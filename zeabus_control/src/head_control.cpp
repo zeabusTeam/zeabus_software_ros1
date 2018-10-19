@@ -17,6 +17,9 @@
 #include	<dynamic_reconfigure/server.h>
 #include	<zeabus_control/pid_controlConfig.h>
 
+// include zeabus library when sucess to shared
+#include	<zeabus_extension/log_data.h>
+
 #include	"listen_twist.cpp"
 #include	"listen_odometry.cpp"
 #include	"find_error_state.cpp"

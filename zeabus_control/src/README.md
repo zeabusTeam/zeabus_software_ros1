@@ -1,6 +1,6 @@
 <h1>WELCOME TO CONTROL</h1>
 <h2>01. Introduction</h2>
-	<p>This control is use pid in term of discrete to control robot</p>
+	<p>This control is use pid in time-error to control robot</p>
 
 <h2>02. All File</h2>
 	<ul>
@@ -18,6 +18,8 @@
 		<p>This file is use for covert world_error into robot frame</p>
 		<li>normal_pid.cpp</li>
 		<p>This file collect pid file in standard pid</p>
+		<li>zeabus_extension/log_data.h</li>
+		<p>This file import from other package for use about load save dynamic reconfigure</p>
 	</ul>
 
 <h2>03. Print_Variable</h2>

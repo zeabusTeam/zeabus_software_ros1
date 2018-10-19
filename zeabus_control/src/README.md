@@ -12,6 +12,10 @@
 		<p>This file is about callback in subscribe node to listen state of robot </p>
 		<li>listen_twist.cpp</li>
 		<p>This file is about callbacl in subscribe node to listen twist message</p>
+		<li>find_error_state.cpp</li>
+		<p>This file error state of robot</p>
+		<li>normal_pid.cpp</li>
+		<p>This file collect pid file in standard pid</p>
 	</ul>
 
 <h2>03. Variable</h2>
@@ -29,6 +33,12 @@
 			<p>For collecting output from pid by robot_error<\p>
 		<li>robot_force</li>
 			<p>For collecting output when decision of pid_force to send to thruster</p>
+		<li>current_velocity</li>
+			<p>For collecting current velocity</p>
+		<li>target_velocity</li>
+			<p>For collecting target velocity</p>
+		<li>use_target_velocity</li>
+			<p>For count limit of use target velocity</p>
 	</ul>
 
 <h2>04. Function</h2>

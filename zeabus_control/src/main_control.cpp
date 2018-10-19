@@ -19,20 +19,39 @@ int main( int argv , char** argc){
 	ros::NodeHandle nh("");
 
 //----------------------------------> SET ABOUT STATE <------------------------------------------
-	double current_state[10]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
-	double current_velocity[10]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	double target_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	double current_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	double current_velocity[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	zeabus_control::listen_odometry_convert listen_state( current_state , current_velocity );
 	ros::Subscriber sub_state = nh.subscribe( "/auv/state" , 1 
 								, &zeabus_control::listen_odometry_convert::callback 
 								, &listen_state);
 
 //---------------------------------> SET ABOUT VELOCITY <----------------------------------------
-	double target_state[10]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
-	int use_target_velocity[10]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
-	zeabus_control::listen_twist listen_target_velocity( target_state , use_target_velocity );
+	double target_velocity[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	int use_target_velocity[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	zeabus_control::listen_twist listen_target_velocity( target_velocity , use_target_velocity );
 	ros::Subscriber sub_velocity = nh.subscribe( "/cmd/vel" , 1 
 									, &zeabus_control::listen_twist::callback 
 									, &listen_target_velocity);
+
+	double world_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	double robot_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	double pid_force[6]			=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 }; 
+	
+	int frequency = 30;
+
+	ros::Rate rate( frequency );
+
+	while( nh.ok() ){
+		rate.sleep();
+		ros::spinOnce();
+		// find error between current_state with target_state to world_error
+		zeabus_control::find_error_position( current_state , target_state , world_error);
+		// give world_error to error in robot frame
+		zeabus_control::convert_world_to_robot_xy( world_error , robot_error , current_state );
+		// use error of robot to calculate force by pid 
 		
-			
+	};			
 }

@@ -15,6 +15,7 @@ if __name__ == "__main__":
         try:
             res = call(String('flare'), String('near'))
             print ('near',res)
+            rospy.sleep(0.1)
             res = call(String('flare'),String('far'))
             print ('far',res)
         except:

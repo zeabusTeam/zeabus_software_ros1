@@ -96,3 +96,12 @@ def debug_head():
 
 def debug_end():
     print '<{:-^80}>'.format(' End Debug ')+ct.DEFAULT
+
+def center_of_contour(cnt):
+    M = cv.moments(cnt)
+    cx = int(M["m10"] / M["m00"])
+    cy = int(M["m01"] / M["m00"])
+    return (cx,cy)
+
+def clear_screen():
+    print("\033[H\033[J")

@@ -42,7 +42,7 @@ namespace zeabus_control{
 		this->velocity[5] = message.angular.z;
 		if( this->use_velocity ){
 			for( int run = 0 ; run < 6 ; run++){
-				if( fabs(this->velocity[run]) < epsilon ){
+				if( fabs(this->velocity[run]) > epsilon ){
 					this->set_use_velocity[run] = this->set_value;
 				}
 				else this->set_use_velocity[run] = 0;

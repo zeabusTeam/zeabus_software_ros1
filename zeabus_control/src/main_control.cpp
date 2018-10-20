@@ -11,12 +11,17 @@
 ///////////////////////////////////////// END PART //////////////////////////////////////////////
 
 #include	"head_control.cpp"
+#include	"other_function.cpp"
 
 int main( int argv , char** argc){
 
 	ros::init( argv , argc , "main_control");
 
 	ros::NodeHandle nh("");
+
+//------------------------------------ FOR PUBLISHER --------------------------------------------
+	ros::Publisher tell_force	=	nh.advertise<geometry_msgs::Twist>("/cmd_vel" , 10);
+	geometry_msgs::Twist message_force;
 
 //----------------------------------> SET ABOUT STATE <------------------------------------------
 	double target_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
@@ -31,7 +36,7 @@ int main( int argv , char** argc){
 	double target_velocity[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	int use_target_velocity[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	zeabus_control::listen_twist listen_target_velocity( target_velocity , use_target_velocity );
-	ros::Subscriber sub_velocity = nh.subscribe( "/cmd/vel" , 1 
+	ros::Subscriber sub_velocity = nh.subscribe( "zeabus/cmd_vel" , 1 
 									, &zeabus_control::listen_twist::callback 
 									, &listen_target_velocity);
 
@@ -59,10 +64,16 @@ int main( int argv , char** argc){
 	reset_constant( pid_position , pid_velocity );
 	for( int run = 0 ; run < 6 ; run++){
 		pid_position[run].limit_value_i_term( bound_value_i[run]);
+		pid_position[run].set_frequency( frequency );
 		pid_velocity[run].limit_value_i_term( bound_value_i[run]);
+		pid_velocity[run].set_frequency( frequency );
 	}
 
 	ros::Rate rate( frequency );
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//===================================== LOOP CONTROL ==========================================//
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 	while( nh.ok() ){
 		rate.sleep();
@@ -109,6 +120,15 @@ int main( int argv , char** argc){
 			}
 		}
 		// use pid_force convert to robot_force for send to thruster
-		zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );	
+		zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );
+
+		// publish force to thruster node
+		array_to_geometry_twist( robot_force , message_force );	
+		tell_force.publish( message_force );	
+
+		// print all data to display
+		print_all( current_state , target_state , world_error , robot_error , bound_error 
+				, pid_force , robot_force 
+				, use_target_velocity , current_velocity , target_velocity );
 	};			
 }

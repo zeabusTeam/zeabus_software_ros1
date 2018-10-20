@@ -39,7 +39,9 @@ namespace zeabus_control{
 
 	void normal_pid_bound_i::individual_calculate( double error , double& result){
 		#ifdef _CHECK_ERROR_
-			std::cout << "this individual_calculate in class normal_pid_bound_i\n";
+			std::cout	<< "this individual_calculate in normal_pid_bound_i "
+						<< " p : i : d --> " << this->p_constant << " : " 
+						<< this->i_constant << " : " << this->d_constant << "\n";
 		#endif
 		this->result_p_term = ( this->p_constant * error );
 		this->result_i_term += this->i_constant * error * this->period_time;

@@ -20,11 +20,14 @@
 // include zeabus library when sucess to shared
 #include	<zeabus_extension/log_data.h>
 
+// include message for use in main_control
+#include	<geometry_msgs/Twist.h>
+
 #include	"listen_twist.cpp"
-#include	"other_function.cpp"
 #include	"listen_odometry.cpp"
 #include	"find_error_state.cpp"
 #include	"find_robot_error.cpp"
+#include	"find_robot_force.cpp"
 #include	"normal_pid_bound_i.cpp"
 
 

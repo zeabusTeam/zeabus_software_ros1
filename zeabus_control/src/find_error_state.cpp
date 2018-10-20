@@ -36,11 +36,14 @@ namespace zeabus_control{
 															, number_type* point_1
 															, number_type* point_2 ){
 		number_type result = 0;
+		#ifdef _CHECK_ERROR_
+			std::cout << std::dec << "<--find_distance-->result is " << result << "\n";
+		#endif
 		for( int8_t run = 0 ; run < size ; run++){
 			result += pow( point_1[run] - point_2[run] , 2);
 		}
 		#ifdef _CHECK_ERROR_
-			std::cout << std::dec << "sum result is " << result << "\n";
+			std::cout << std::dec << "<--find_distance-->sum result is " << result << "\n";
 		#endif
 		return sqrt( result );
 	}

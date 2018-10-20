@@ -14,7 +14,7 @@
 #include	<math.h>
 #include	<vector>
 
-#define _CHECK_ERROR_
+//#define _CHECK_ERROR_
 
 #ifndef _normal_pid_cpp__
 #define _normal_pid_cpp__
@@ -41,7 +41,7 @@ namespace zeabus_control{
 			double period_time;
 			
 		private:
-			void individual_calculate( double error , double& result);
+			virtual void individual_calculate( double error , double& result);
 	};
 
 	normal_pid::normal_pid(){

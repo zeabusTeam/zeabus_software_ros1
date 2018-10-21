@@ -52,7 +52,7 @@ class play_gate:
 		self.client_gate = rospy.ServiceProxy('vision_gate' , vision_srv_gate )
 
 		self.auv = control_auv( "play gate")
-		self.auv.absolute_depth( -4.2)
+		self.auv.absolute_depth( -3.8)
 		self.past_step = 'don\'t move'	# don't move = 0, forward = 1 , right = 2 , left = 3
 		
 		self.already_setup = True
@@ -62,7 +62,7 @@ class play_gate:
 		if( self.already_setup ) : print( "OK You have setup")
 		else: self.setup( 5 , 4 , 1 , 2)
 
-		self.auv.absolute_depth(-4.2)	
+		self.auv.absolute_depth( -3.7)	
 		self.log_command.write("Waiting ok depth" , True , 0)
 		print("Waiting Depth")
 		while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.2) ):
@@ -72,6 +72,10 @@ class play_gate:
 #		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1) ):
 #			self.rate.sleep()		
 		self.log_command.write("I will start now", True , 0)
+		self.auv.collect_position()
+		while( not rospy.is_shutdown() and self.auv.calculate_distance() < 1 ):
+			self.auv.velocity( x = 0.1 )
+		print("Now play move forward")
 		self.move_forward( self.first_forward)
 
 # message of vision is n_obj = -1:wait image 0:don't have 1>= have object
@@ -80,6 +84,7 @@ class play_gate:
 
 	def center_x (self):
 		result = ( self.result_vision['cx_2'] + self.result_vision['cx_1'] ) / 2
+		print("cx_2 : cx_1 " + str(self.result_vision['cx_2']) + " : " + str( self.result_vision['cx_1']))
 		print("center x is result : " + str( result ))
 		return result
 
@@ -94,17 +99,47 @@ class play_gate:
 			self.analysis_data( 5 )
 			if( self.result_vision['pos'] == 0):
 				if( abs( self.center_x() ) < 0.1):
-					print( "Last move ")
+					print( "Last move and center is " + str(self.center_x()))
 					self.auv.collect_position()
-					while( not rospy.is_shutdown() and self.auv.calculate_distance() < 4):
-						self.auv.velocity( x = 0.4)
+					temporary = 0
+					while( not rospy.is_shutdown()):
+						print("Last loop while")
 						self.rate.sleep()
+						self.analysis_data( 5 )
+						if( self.result_vision['n_obj'] == 0 ):
+							temporary += 1
+							print("don't found count is " + str(temporary))
+							if( temporary < 2 ):
+								continue
+							self.auv.collect_position()
+							while( not rospy.is_shutdown() and self.auv.calculate_distance()<4):
+								self.rate.sleep()
+								print("Move direct 3 meter")
+								self.auv.velocity(x = 0.4)
+							self.auv.absolute_depth( 0 )
+							break
+						elif( abs( self.center_x()) < 0.04 ):
+							print("move forward")
+							self.auv.velocity( x = 0.3)
+						elif( self.center_x() < -0.06 ):
+							print("move left")
+							self.auv.velocity( y = 0.04)
+						elif( self.center_x() > 0.06):
+							print("move right")
+							self.auv.velocity( y = -0.04)
+					break
 				elif( self.center_x() < -0.1 ):
 					print("Move left")
 					self.auv.velocity( y = 0.1)
 				else:
 					print("Move right")
 					self.auv.velocity( y = -0.1)
+			elif( self.result_vision['pos']== -1):
+				print("move left")
+				self.auv.velocity( y = 0.1 )
+			elif( self.result_vision['pos']== 1):
+				print("move right")
+				self.auv.velocity( y = -0.1)
 			else:
 				print("Want to find middle")
 				self.auv.velocity( y = self.result_vision['pos'] * -1 * 0.2 )
@@ -200,10 +235,10 @@ class play_gate:
 		if( found == amont):
 			self.result_vision['n_obj'] = 1
 			self.result_vision['pos'] = self.data_vision['pos']
-			self.result_vision['cx_1'] /= amont
-			self.result_vision['cx_2'] /= amont
-			self.result_vision['cy_1'] /= amont
-			self.result_vision['cy_2'] /= amont
+			self.result_vision['cx_1'] = self.collect_vision['cx_1']/amont
+			self.result_vision['cx_2'] = self.collect_vision['cx_2']/amont
+			self.result_vision['cy_1'] = self.collect_vision['cy_1']/amont
+			self.result_vision['cy_2'] = self.collect_vision['cy_2']/amont
 		else:
 			self.result_vision['n_obj'] = 0
 				

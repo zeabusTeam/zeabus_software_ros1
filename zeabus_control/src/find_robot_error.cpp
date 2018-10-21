@@ -13,7 +13,6 @@
 #include	<iostream>
 #include	<math.h>
 #include	"find_error_state.cpp"
-
 //#define _CHECK_ERROR_
 
 #ifndef _find_robot_error_cpp__

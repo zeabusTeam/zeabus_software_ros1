@@ -1,0 +1,4 @@
+float64 point_1
+std_msgs/String user
+---
+bool success

@@ -27,19 +27,19 @@ namespace zeabus_control{
 			else{
 				std::cout	<< "<--ZEABUS_EXTENSION--> Error in loop function"
 							<< " convert_angular in file find_error_position.cpp\n";
-				exit( 1 );
+				//exit( 1 );
 			}
 		}
 	}
 
-	template<typename number_type> number_type find_distance( int8_t size
+	template<typename number_type> number_type find_distance( int size
 															, number_type* point_1
 															, number_type* point_2 ){
 		number_type result = 0;
 		#ifdef _CHECK_ERROR_
 			std::cout << std::dec << "<--find_distance-->result is " << result << "\n";
 		#endif
-		for( int8_t run = 0 ; run < size ; run++){
+		for( int run = 0 ; run < size ; run++){
 			result += pow( point_1[run] - point_2[run] , 2);
 		}
 		#ifdef _CHECK_ERROR_

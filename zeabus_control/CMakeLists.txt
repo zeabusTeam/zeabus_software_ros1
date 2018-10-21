@@ -14,11 +14,24 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   zeabus_extension
   dynamic_reconfigure
+  roslib
+  message_generation
 )
 
 generate_dynamic_reconfigure_options(
 	cfg/pid_control.cfg
 )
+
+add_service_files(
+	DIRECTORY srv
+	FILES
+	check_position.srv
+	get_target.srv
+	one_point.srv
+	two_point.srv
+)
+
+generate_messages( DEPENDENCIES std_msgs)
 
 include_directories(
  include
@@ -28,10 +41,9 @@ include_directories(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES zeabus_control
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp std_msgs zeabus_extension dynamic_reconfigure
+  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp std_msgs zeabus_extension dynamic_reconfigure message_runtime 
   DEPENDS system_lib
 )
-
 
 add_executable(control src/main_control.cpp)
 

@@ -19,6 +19,7 @@
 #define _find_robot_force_cpp__
 
 namespace zeabus_control{
+
 	template<typename number_type> void pid_to_robot_foce_v_1( number_type* pid_force 
 															,  number_type* robot_force){
 		// version 1 will target on x and y

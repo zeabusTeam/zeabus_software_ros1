@@ -1,14 +1,14 @@
 #!/usr/bin/python2.7
 """
     File name: statistics.py
-    Author: zeabus
+    Author: skconan
     Date created: 2018/10/16
     Python Version: 2.7
 """
 import numpy as np
 
 
-class Statistic():
+class Statistics():
     def __init__(self):
         pass
 
@@ -47,13 +47,13 @@ class Statistic():
 
     def get_quantile(self, data, q):
         data = self.convert_to_np(data)
-        return np.quantile(data, q/4.)
+        return np.quantile(data, q / 4.)
 
     def get_percentile(self, data, q):
         data = self.convert_to_np(data)
         return np.percentile(data, q)
 
-    def get_skewness(self, data):
+    def get_skewness(self, data, output_screen="True"):
         data = self.convert_to_oneD(data)
         min = self.get_min(data)
         max = self.get_max(data)
@@ -61,15 +61,24 @@ class Statistic():
         mode = self.get_mode(data)
         mean = self.get_mean(data)
         median = self.get_median(data)
-        print("MODE:",mode, "MED:",median, "MEAN:",mean, std, max, min, max - min)
+
+        skewness = ""
+
         if mean < median < mode:
-            return "Negative direction"
+            skewness = "Negative direction"
         elif mode < median < mean:
-            return "Positive direction"
+            skewness = "Positive direction"
         elif mode == median == mean:
-            return "No skew"
+            skewness = "No skew"
         else:
-            return "Don't know"
+            skewness = "Don't know"
+
+        if output_screen:
+            print("MODE:", mode, "MED:", median, "MEAN:", mean)
+            print("STD:", std, "MAX:", max, "MIN:", min, "RANGE:", max - min)
+            print("SKEWBESS:", skewness)
+
+        return skewness
 
 
 if __name__ == '__main__':

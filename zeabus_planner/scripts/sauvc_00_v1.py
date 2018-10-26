@@ -22,6 +22,18 @@ if __name__=="__main__":
 	rate = rospy.Rate(30)
 	while( not rospy.is_shutdown() and not auv.ok_position("yaw" , 0.1)):
 		rate.sleep()
+	auv.collect_position()
+	print("Connecttion Forward")
+	while( not rospy.is_shutdown() and auv.calculate_distance() < 3):
+		auv.velocity( x = 0.3)
+		rate.sleep()
+	print("Connecttion wait yaw")
+	while( not rospy.is_shutdown() and not auv.ok_position("yaw" , 0.1)):
+		rate.sleep()
+	print("Connecttion Left")
+	while( not rospy.is_shutdown() and auv.calculate_distance() < 3):
+		auv.velocity( y = 0.5)
+		rate.sleep()
 	print("Now play flare")
 
 	flare = play_flare( 30 )

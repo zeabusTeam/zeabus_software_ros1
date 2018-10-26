@@ -116,7 +116,6 @@ class play_gate:
 								self.rate.sleep()
 								print("Move direct 3 meter")
 								self.auv.velocity(x = 0.4)
-							self.auv.absolute_depth( 0 )
 							break
 						elif( abs( self.center_x()) < 0.04 ):
 							print("move forward")

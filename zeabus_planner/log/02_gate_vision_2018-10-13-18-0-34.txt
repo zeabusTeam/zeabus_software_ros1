@@ -1,0 +1,22 @@
+---------------------> 2018-10-13-18-0 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 203.0:385.0
+	point of y are 205.0:378.0
+area is 0.120532108336
+FOUND color is data: "Aon Baka"
+	point of x are 203.0:385.0
+	point of y are 205.0:377.0
+area is 0.119835390947
+FOUND color is data: "Aon Baka"
+	point of x are 203.0:385.0
+	point of y are 205.0:376.0
+area is 0.119138673557
+FOUND color is data: "Aon Baka"
+	point of x are 204.0:385.0
+	point of y are 205.0:376.0
+area is 0.118484065461
+FOUND color is data: "Aon Baka"
+	point of x are 204.0:385.0
+	point of y are 205.0:375.0
+area is 0.117791176189

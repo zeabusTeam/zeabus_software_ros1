@@ -1,0 +1,43 @@
+---------------------> 2018-10-27-15-29 <---------------------
+Waiting ok depth
+	depth is OK next wait yaw
+---------------------> 2018-10-27-15-29 <---------------------
+I will start now
+---------------------> 2018-10-27-15-29 <---------------------
+I will survey left
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode

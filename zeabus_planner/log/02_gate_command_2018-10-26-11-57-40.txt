@@ -1,0 +1,9 @@
+---------------------> 2018-10-26-11-57 <---------------------
+Waiting ok depth
+	depth is OK next wait yaw
+---------------------> 2018-10-26-11-57 <---------------------
+I will start now
+---------------------> 2018-10-26-11-57 <---------------------
+Now I move forward and distance 4
+Now I found
+Now it is last mode

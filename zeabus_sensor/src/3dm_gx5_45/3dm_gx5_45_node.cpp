@@ -61,7 +61,8 @@ int main( int argc , char **argv){
 //
 // use pointer variable
 	std::string name_port;
-	ph.param("port_imu/name_port" , name_port , std::string("/dev/ttyACM0"));
+	ph.param("port_imu/name_port" , name_port 
+								, std::string("/dev/microstrain/3dm_gx5_45_0000__6251.65903"));
 	zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port* imu 
 		= new zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port( name_port );
 	// baud rate is rate for send symbol of message have learn in DATA COMMUNICATION

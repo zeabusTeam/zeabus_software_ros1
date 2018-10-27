@@ -1,0 +1,37 @@
+---------------------> 2018-10-26-11-59 <---------------------
+Waiting ok depth
+	depth is OK next wait yaw
+---------------------> 2018-10-26-11-59 <---------------------
+I will start now
+---------------------> 2018-10-26-11-59 <---------------------
+I will survey left
+	I found in near
+---------------------> 2018-10-26-11-59 <---------------------
+I play on near mode
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward

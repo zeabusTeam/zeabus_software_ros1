@@ -36,6 +36,8 @@
 
 #define nullstring "~"
 
+#ifndef _zeabus_extension_zeabus_ros_h__
+#define _zeabus_extension_zeabus_ros_h__
 namespace zeabus_extension{
 	namespace zeabus_ros{
 
@@ -99,3 +101,4 @@ namespace zeabus_extension{
 		};
 	}
 }
+#endif

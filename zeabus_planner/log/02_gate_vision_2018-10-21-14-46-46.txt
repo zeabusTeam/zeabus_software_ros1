@@ -1,0 +1,1151 @@
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 0.195061728395:-0.59012345679
+area is 0.102865345966
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 0.185185185185:-0.585185185185
+area is 0.100924490382
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 0.185185185185:-0.575308641975
+area is 0.099630586659
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 1.0:-0.57037037037
+area is 0.205730691932
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 1.0:-0.565432098765
+area is 0.205083740071
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 1.0:-0.56049382716
+area is 0.204436788209
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 1.0:-0.555555555556
+area is 0.203789836348
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 1.0:-0.550617283951
+area is 0.203142884487
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 1.0:-0.540740740741
+area is 0.201848980764
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 1.0:-0.535802469136
+area is 0.201202028902
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.475968992248
+	point of y are 1.0:-0.530864197531
+area is 0.200555077041
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.423255813953
+	point of y are 1.0:-0.427160493827
+area is 0.205776629343
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.413953488372
+	point of y are 0.204938271605:-0.417283950617
+area is 0.0911627906977
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.413953488372
+	point of y are 0.20987654321:-0.377777777778
+area is 0.0860981912145
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.413953488372
+	point of y are 0.20987654321:-0.377777777778
+area is 0.0860981912145
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.413953488372
+	point of y are 0.20987654321:-0.377777777778
+area is 0.0860981912145
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.413953488372
+	point of y are 0.20987654321:-0.377777777778
+area is 0.0860981912145
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.417054263566
+	point of y are 0.204938271605:-0.343209876543
+area is 0.0798851564743
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.417054263566
+	point of y are 0.204938271605:-0.377777777778
+area is 0.0849229591348
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.417054263566
+	point of y are 0.204938271605:-0.407407407407
+area is 0.089241075701
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.417054263566
+	point of y are 0.204938271605:-0.422222222222
+area is 0.0914001339841
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.417054263566
+	point of y are 0.204938271605:-0.377777777778
+area is 0.0849229591348
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.417054263566
+	point of y are 0.204938271605:-0.377777777778
+area is 0.0849229591348
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 0.2:-0.323456790123
+area is 0.075880945545
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.423255813953
+	point of y are 0.2:-0.367901234568
+area is 0.0818834338214
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.423255813953
+	point of y are 0.2:-0.407407407407
+area is 0.087579672696
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.423255813953
+	point of y are 1.0:-0.377777777778
+area is 0.198656330749
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.423255813953
+	point of y are 0.2:-0.412345679012
+area is 0.0882917025553
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 0.204938271605:-0.437037037037
+area is 0.0930615369892
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 0.204938271605:-0.432098765432
+area is 0.0923456790123
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.471604938272
+area is 0.213325677098
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 0.20987654321:-0.382716049383
+area is 0.0859029572208
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 0.20987654321:-0.362962962963
+area is 0.0830395253134
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 0.20987654321:-0.358024691358
+area is 0.0823236673366
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.348148148148
+area is 0.195429227677
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.348148148148
+area is 0.195429227677
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 0.20987654321:-0.338271604938
+area is 0.0794602354292
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 0.20987654321:-0.328395061728
+area is 0.0780285194755
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 0.20987654321:-0.323456790123
+area is 0.0773126614987
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.313580246914
+area is 0.190418221839
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.303703703704
+area is 0.188986505886
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.298765432099
+area is 0.188270647909
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.288888888889
+area is 0.186838931955
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.279012345679
+area is 0.185407216002
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.279012345679
+area is 0.185407216002
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.42015503876
+	point of y are 1.0:-0.269135802469
+area is 0.183975500048
+NOT FOUND
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.392248062016
+	point of y are 0.244444444444:-0.313580246914
+area is 0.084785146904
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.389147286822
+	point of y are 0.23950617284:-0.333333333333
+area is 0.0874801416403
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.389147286822
+	point of y are 0.23950617284:-0.328395061728
+area is 0.0867260024883
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.389147286822
+	point of y are 0.23950617284:-0.323456790123
+area is 0.0859718633362
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.386046511628
+	point of y are 0.234567901235:-0.358024691358
+area is 0.0909560723514
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.382945736434
+	point of y are 0.234567901235:-0.353086419753
+area is 0.0906536510671
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.37984496124
+	point of y are 0.234567901235:-0.377777777778
+area is 0.0949373145756
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.37984496124
+	point of y are 0.234567901235:-0.372839506173
+area is 0.0941716910709
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.407407407407
+area is 0.0992592592593
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.402469135802
+area is 0.0984898076371
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.397530864198
+area is 0.0977203560149
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.392592592593
+area is 0.0969509043928
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.392592592593
+area is 0.0969509043928
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.387654320988
+area is 0.0961814527706
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.387654320988
+area is 0.0961814527706
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.387654320988
+area is 0.0961814527706
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.382716049383
+area is 0.0954120011484
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.382716049383
+area is 0.0954120011484
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.382716049383
+area is 0.0954120011484
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.382716049383
+area is 0.0954120011484
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.382716049383
+area is 0.0954120011484
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.382716049383
+area is 0.0954120011484
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.376744186047
+	point of y are 0.22962962963:-0.382716049383
+area is 0.0954120011484
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 0.214814814815:-0.535802469136
+area is 0.121611637477
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.348837209302
+	point of y are 0.214814814815:-0.535802469136
+area is 0.122193511341
+FOUND color is data: "Aon Baka"
+	point of x are -0.993798449612:-0.342635658915
+	point of y are 0.20987654321:-0.535802469136
+area is 0.121389606661
+FOUND color is data: "Aon Baka"
+	point of x are -0.984496124031:-0.339534883721
+	point of y are 0.20987654321:-0.535802469136
+area is 0.120233515169
+FOUND color is data: "Aon Baka"
+	point of x are -0.984496124031:-0.339534883721
+	point of y are 0.20987654321:-0.535802469136
+area is 0.120233515169
+FOUND color is data: "Aon Baka"
+	point of x are -0.981395348837:-0.339534883721
+	point of y are 0.20987654321:-0.530864197531
+area is 0.118863049096
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.978294573643:-0.333333333333
+	point of y are 0.204938271605:-0.535802469136
+area is 0.119437266724
+FOUND color is data: "Aon Baka"
+	point of x are -0.97519379845:-0.333333333333
+	point of y are 0.204938271605:-0.535802469136
+area is 0.118863049096
+FOUND color is data: "Aon Baka"
+	point of x are -0.97519379845:-0.333333333333
+	point of y are 0.204938271605:-0.535802469136
+area is 0.118863049096
+FOUND color is data: "Aon Baka"
+	point of x are -0.968992248062:-0.327131782946
+	point of y are 0.204938271605:-0.535802469136
+area is 0.118863049096
+FOUND color is data: "Aon Baka"
+	point of x are -0.965891472868:-0.327131782946
+	point of y are 0.204938271605:-0.535802469136
+area is 0.118288831467
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.959689922481:-0.324031007752
+	point of y are 0.204938271605:-0.535802469136
+area is 0.117714613839
+FOUND color is data: "Aon Baka"
+	point of x are -0.956589147287:-0.324031007752
+	point of y are 0.204938271605:-0.535802469136
+area is 0.11714039621
+FOUND color is data: "Aon Baka"
+	point of x are -0.950387596899:-0.317829457364
+	point of y are 0.204938271605:-0.535802469136
+area is 0.11714039621
+FOUND color is data: "Aon Baka"
+	point of x are -0.950387596899:-0.317829457364
+	point of y are 0.204938271605:-0.530864197531
+area is 0.116359460235
+FOUND color is data: "Aon Baka"
+	point of x are -0.941085271318:-0.311627906977
+	point of y are 0.204938271605:-0.530864197531
+area is 0.115789070724
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.941085271318:-0.311627906977
+	point of y are 0.204938271605:-0.530864197531
+area is 0.115789070724
+FOUND color is data: "Aon Baka"
+	point of x are -0.941085271318:-0.311627906977
+	point of y are 0.204938271605:-0.525925925926
+area is 0.115011962867
+FOUND color is data: "Aon Baka"
+	point of x are -0.941085271318:-0.311627906977
+	point of y are 0.204938271605:-0.525925925926
+area is 0.115011962867
+FOUND color is data: "Aon Baka"
+	point of x are -0.925581395349:-0.302325581395
+	point of y are 0.2:-0.530864197531
+area is 0.11387884008
+FOUND color is data: "Aon Baka"
+	point of x are -0.922480620155:-0.302325581395
+	point of y are 0.2:-0.530864197531
+area is 0.113312278687
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.913178294574:-0.296124031008
+	point of y are 0.2:-0.530864197531
+area is 0.112745717294
+FOUND color is data: "Aon Baka"
+	point of x are -0.913178294574:-0.296124031008
+	point of y are 0.2:-0.530864197531
+area is 0.112745717294
+FOUND color is data: "Aon Baka"
+	point of x are -0.913178294574:-0.296124031008
+	point of y are 0.2:-0.525925925926
+area is 0.111983921906
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-46 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-21-14-47 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND

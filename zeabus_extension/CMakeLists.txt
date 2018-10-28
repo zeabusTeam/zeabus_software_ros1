@@ -47,13 +47,6 @@ target_link_libraries( zeabus_extension
 	${Boost_LIBRARIES}
 )
 
-install( TARGETS zeabus_extension 
-	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-	RUNTIME DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION}
-)
+add_executable(init_header src/init.cpp)
 
-#install(
-#	DIRECTORY include/${PROJECT_NAME}
-#	DESTINARION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#)
+target_link_libraries( init_header ${catkin_LIBRARIES} ${Boost_LIBRARIES})

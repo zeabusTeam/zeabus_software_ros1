@@ -12,7 +12,6 @@ bgr = None
 image_result = None
 public_topic = '/vision/mission/drum/'
 sub_sampling = 1
-c = 0
 
 
 def mission_callback(msg):
@@ -27,7 +26,7 @@ def mission_callback(msg):
     if task == 'drum' and req in drum_option:
         return find_drum(req)
     elif task == 'drum' and req in golf_option:
-        return find_golf()
+        return find_golf(req)
 
 
 def image_callback(msg):
@@ -65,8 +64,8 @@ def get_mask(img, color):
         upper = np.array([120, 255, 255], dtype=np.uint8)
         lower = np.array([90, 160, 0], dtype=np.uint8)
     if color == "yellow":
-        upper = np.array([59, 255, 255], dtype=np.uint8)
-        lower = np.array([30, 160, 0], dtype=np.uint8)
+        upper = np.array([47, 255, 255], dtype=np.uint8)
+        lower = np.array([20, 17, 228], dtype=np.uint8)
     if color == "green":
         upper = np.array([90, 255, 255], dtype=np.uint8)
         lower = np.array([60, 160, 0], dtype=np.uint8)
@@ -74,36 +73,60 @@ def get_mask(img, color):
     return mask
 
 
-def get_ROI(mask,obj):
+def get_ROI(mask, obj='drop'):
     if obj == 'search':
         mat_mask = find_mat()
         if mat_mask.shape != mask.shape:
             return None
-        publish_result(mat_mask, 'gray', public_topic+'mask/mat_mask')
+        publish_result(mat_mask, 'gray', public_topic+'mask/mat/processed')
         intersect = cv.bitwise_and(mat_mask, mask)
         contours = cv.findContours(
             intersect, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
-    elif obj == 'drop':
+    elif obj == 'drop' or obj == 'pick':
         contours = cv.findContours(
             mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
     ROI = []
     for cnt in contours:
         area = cv.contourArea(cnt)
-        if area < 1000:
+        check_area = 1000
+        if obj == 'pick':
+            check_area = 200
+        if area < check_area:    
             continue
         ROI.append(cnt)
     return ROI
 
 
+def get_excess(cnt):
+    global image_result
+    himg, wimg = image_result.shape[:2]
+    x, y, w, h = cv.boundingRect(cnt)
+    cv.rectangle(image_result, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    top_excess = (y < (0.05*wimg))
+    right_excess = ((x+w) > 0.95*wimg)
+    left_excess = (x < (0.05*wimg))
+    bottom_excess = ((y+h) > 0.95*himg)
+    return top_excess, bottom_excess, left_excess, right_excess
+
+
+def get_cx(cnt):
+    global image_result
+    himg, wimg = image_result.shape[:2]
+    (cx, cy) = center_of_contour(cnt)
+    cv.circle(image_result, (cx, cy), 5, (0, 0, 255), -1)
+    cx = Aconvert(cx, wimg)
+    cy = -1.0*Aconvert(cy, himg)
+    area = cv.contourArea(cnt)/(himg*wimg)
+    return cx, cy, area
+
+
 def find_mat():
     global bgr
     mat = get_mask(bgr, "green")
-    publish_result(mat, 'gray', public_topic+'mask/mat')
+    publish_result(mat, 'gray', public_topic+'mask/mat/unprocessed')
     contours = cv.findContours(
         mat, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
     max_cnt = max(contours, key=cv.contourArea)
-    if cv.contourArea(max_cnt) < 1000:
-        return -1, -1, -1, -1
     rect = cv.minAreaRect(max_cnt)
     box = cv.boxPoints(rect)
     box = np.int64(box)
@@ -111,13 +134,10 @@ def find_mat():
     mat_mask = np.zeros((himg, wimg), np.uint8)
     cv.drawContours(mat_mask, [box], 0, (255), -1)
     return mat_mask
-    # x, y, w, h = cv.boundingRect(max_cnt)
-    # cv.rectangle(image_result, (x, y), (x+w, y+h), (0, 255, 0), 2)
-    # return x, y, w, h
 
 
 def find_drum(objective):
-    global bgr, c
+    global bgr
     if bgr is None:
         img_is_none()
         return message(n_obj=-1)
@@ -130,24 +150,58 @@ def find_drum(objective):
     if ROI is None:
         print_result("size bug plz wait", color=ct.RED)
         return message(n_obj=-2)
-    if ROI == []:
+    mode = len(ROI)
+    if mode == 0:
+        publish_result(drum_mask, 'gray', public_topic+'mask/drum')
+        publish_result(image_result, 'bgr', public_topic+'image_result')
         return message()
-    c += 1
-    cnt = max(ROI, key=cv.contourArea)
-    x, y, w, h = cv.boundingRect(cnt)
-    cv.rectangle(image_result, (x, y), (x+w, y+h), (0, 255, 0), 2)
-    publish_result(drum_mask, 'gray', public_topic+'mask/blue')
-    publish_result(image_result, 'bgr', public_topic+'image_result')
-    print c
-    return message()
+    elif mode >= 1:
+        if mode == 1:
+            print_result("FOUND DRUM", ct.GREEN)
+        elif mode > 1:
+            print_result("FOUND BUT HAVE SOME NOISE (" +
+                         str(mode) + ")", ct.YELLOW)
+        cnt = max(ROI, key=cv.contourArea)
+        cx, cy, area = get_cx(cnt)
+        forward, backward, left, right = get_excess(cnt)
+        publish_result(drum_mask, 'gray', public_topic+'mask/drum')
+        publish_result(image_result, 'bgr', public_topic+'image_result')
+        return message(n_obj=mode, cx=cx, cy=cy, forward=forward,
+                       backward=backward, left=left, right=right, area=area)
 
 
-def find_golf():
+def find_golf(objective):
     global bgr
     if bgr is None:
         img_is_none()
         return message(n_obj=-1)
-    pass
+    himg, wimg = bgr.shape[:2]
+    if himg > 1000 or wimg > 1000:
+        print_result("size bug plz wait", color=ct.RED)
+        return message(n_obj=-2)
+    golf_mask = get_mask(bgr, "yellow")
+    ROI = get_ROI(golf_mask, objective)
+    if ROI is None:
+        print_result("size bug plz wait", color=ct.RED)
+        return message(n_obj=-2)
+    mode = len(ROI)
+    if mode == 0:
+        publish_result(golf_mask, 'gray', public_topic+'mask/golf')
+        publish_result(image_result, 'bgr', public_topic+'image_result')
+        return message()
+    elif mode >= 1:
+        if mode == 1:
+            print_result("FOUND GOLF", ct.GREEN)
+        elif mode > 1:
+            print_result("FOUND BUT HAVE SOME NOISE (" +
+                         str(mode) + ")", ct.YELLOW)
+        cnt = max(ROI, key=cv.contourArea)
+        cx, cy, area = get_cx(cnt)
+        forward, backward, left, right = get_excess(cnt)
+        publish_result(golf_mask, 'gray', public_topic+'mask/golf')
+        publish_result(image_result, 'bgr', public_topic+'image_result')
+        return message(n_obj=mode, cx=cx, cy=cy, forward=forward,
+                       backward=backward, left=left, right=right, area=area)
 
 
 if __name__ == '__main__':

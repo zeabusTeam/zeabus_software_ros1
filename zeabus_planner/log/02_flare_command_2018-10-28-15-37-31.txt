@@ -1,0 +1,596 @@
+---------------------> 2018-10-28-15-37 <---------------------
+Waiting ok depth
+	depth is OK next wait yaw
+---------------------> 2018-10-28-15-37 <---------------------
+I will start now
+---------------------> 2018-10-28-15-37 <---------------------
+I will survey left
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-28-15-37 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+Don't found by use near
+---------------------> 2018-10-28-15-37 <---------------------
+I will survey left
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-28-15-37 <---------------------
+I play on far mode
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move forward
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move left
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+Don't found by use near
+I move forward
+I found near Wow
+---------------------> 2018-10-28-15-38 <---------------------
+I play on near mode
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+I move forward
+---------------------> 2018-10-28-15-38 <---------------------
+Finish this part

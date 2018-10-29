@@ -157,7 +157,6 @@ namespace zeabus_sensor{
 				if( this->temporary[0] == 'u'){
 					check_sum_01 += temporary[0];
 					check_sum_02 += check_sum_01;
-					std::cout << "\n";
 					break;
 				}
 				else{
@@ -170,7 +169,6 @@ namespace zeabus_sensor{
 				if( this->temporary[0] == 'e'){
 					check_sum_01 += temporary[0];
 					check_sum_02 += check_sum_01;
-					std::cout << "\n";
 					break;
 				}
 				else{

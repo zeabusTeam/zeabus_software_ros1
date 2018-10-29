@@ -30,9 +30,9 @@ void publishIMUData(const hg_3dm_gx4::IMUData& data)
 
   double roll,pitch,yaw;  m.getRPY(roll, pitch, yaw);
 
-//  q.setRPY(-(roll - M_PI/2.0), pitch, -yaw + M_PI);
-  q.setRPY(roll, pitch, yaw );
-
+  double new_yaw = -1*yaw;
+  std::cout << "<-----------HG_3DM----------> yaw : " << yaw << "  new_yaw : " << new_yaw << "\n";
+  q.setRPY(-(roll - M_PI/2.0), pitch, new_yaw);
 
   g_imu.orientation.w = q.w();
   g_imu.orientation.x = q.x();
@@ -83,7 +83,7 @@ int main(int argc, char **argv)
   int imu_rate;
 
   nh.param<std::string>("topic", topic,"/imu/data");
-  nh.param<std::string>("device", device,"/dev/ttyACM0");
+  nh.param<std::string>("device", device,"/dev/ttyACM2");
   nh.param<std::string>("frame_id", g_imu.header.frame_id, "microstrain_link");
   nh.param<int>("baudrate", baudrate, 460800);
   nh.param<int>("imu_rate", imu_rate, 500);

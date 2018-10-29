@@ -2,8 +2,14 @@
 
 import rospy
 import math
-from manage_log import log
-from control_auv import control_auv 
+
+try:
+	from zeabus_extension.manage_log import log
+	from zeabus_extension.control_auv import control_auv 
+except:
+	print("Pleas install setup.bash in zeabus_extension package")
+	exit()
+
 from zeabus_vision.srv import vision_srv_flare
 from zeabus_vision.msg import vision_flare
 from std_msgs.msg import String
@@ -17,7 +23,7 @@ class play_flare:
 		rospy.wait_for_service('vision_flare')
 		print("I found flare service")
 		
-		self.rate = rospy.Rate( rate)
+		self.rate = rospy.Rate( rate )
 
 	def set_up( self ):
 		self.already_setup = True
@@ -28,7 +34,7 @@ class play_flare:
 		self.data_center_x = 0
 		self.data_center_y = 0
 		self.data_area = 0
-		self.auv = control_auv( "plan flare" )
+		self.auv = control_auv( "play flare" )
 		self.past_have = False
 		self.past_center_x = 0
 		self.past_center_y = 0
@@ -40,8 +46,17 @@ class play_flare:
 	def play( self ):
 		if( not self.already_setup ):
 			self.set_up()
-		
+		self.auv.absolute_depth(-3.5)
+		self.log_command.write("Waiting ok depth" , True , 0)
+		print("Waiting Depth")
+		while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.1) ):
+			self.rate.sleep()	
+		self.log_command.write("depth is OK next wait yaw" , False , 1)
+		print("Waiting yaw")
+		while( not rospy.is_shutdown() and not self.auv.ok_position("yaw" , 0.1) ):
+			self.rate.sleep()		
 		self.log_command.write("I will start now", True , 0)
+		print("I will start now")
 		# plan is move left forward right and forward left continue
 		self.survey_left( )
 
@@ -51,9 +66,9 @@ class play_flare:
 		self.log_command.write("I will survey left", True , 0)
 		while not rospy.is_shutdown():
 
-			self.auv.velocity( y = 0.3 )
+			self.auv.velocity( y = 0.2 )
 
-			self.rate.sleep()	
+#			self.rate.sleep()	
 
 			self.request_data( 5 , "near" )
 			if( self.data_have ):
@@ -91,9 +106,9 @@ class play_flare:
 		print("Now survey right")
 		while not rospy.is_shutdown():
 
-			self.auv.velocity( y = -0.3 )
+			self.auv.velocity( y = -0.2 )
 
-			self.rate.sleep()	
+#			self.rate.sleep()	
 
 			self.request_data( 5 , "near" )
 			if( self.data_have ):
@@ -168,30 +183,43 @@ class play_flare:
 		print( "Now play on near mode ")
 		count_not_found = 0
 		while not rospy.is_shutdown():
-			self.request_data( 6 , "near")
+			self.request_data( 5 , "near")
 			self.rate.sleep()
 
 			if( self.data_have ):
 				count_not_found = 0
-				if( abs(self.data_center_x) < 0.1 ):
+				if( abs(self.data_center_x) < 0.2 ):
 					self.log_command.write("I move forward")
 					print("now move forward")
 					self.rate.sleep()
-					self.auv.velocity( x = 0.15 )
+					self.auv.velocity( x = 0.10 )
 				elif( self.data_center_x < 0 ):
 					print("now move left")
 					self.rate.sleep()
-					self.auv.velocity( y = 0.15 )
+					self.auv.velocity( y = 0.06 )
 				else:
 					self.rate.sleep()
 					print("now move right")
-					self.auv.velocity( y = -0.2 )
+					self.auv.velocity( y = -0.06 )
 			elif( count_not_found < 6):
 				count_not_found += 1
-				print( "Not found in near mode" )
+				print( "Not found in near mode count is " + str( count_not_found ))
 			elif(count_not_found == 6):
 				self.log_command.write("Finish this part" , True)
-				print("I think it finish")
+				meter = 1
+				print("I think it finish and will move forward " + str(meter) + " meter")
+				print("waiting yaw")
+				while( not rospy.is_shutdown() and not self.auv.ok_position('yaw' , 0.1)):
+					self.rate.sleep()
+				print("Now move forward")
+				self.auv.collect_position()
+				print(self.auv.calculate_distance())
+				while( not rospy.is_shutdown() ):
+					self.rate.sleep()
+					self.auv.velocity( x = 0.4)
+					print(self.auv.calculate_distance())
+					if( self.auv.calculate_distance() > meter ):
+						break
 				self.log_vision.write("I can't found in near mode. That finish?")
 				self.auv.absolute_depth(0)
 				break
@@ -203,28 +231,28 @@ class play_flare:
 	def find_far(self ):
 		self.log_command.write("I play on far mode" , True)
 		print( "Now play on far mode")
+		think_to_break = 0
 		while not rospy.is_shutdown():
-			self.request_data( 6 , "far" )
 			self.rate.sleep()
+			self.request_data( 5 , "far" )
 
 			if( self.data_have ):
 				think_to_break = 0
-				if( abs(self.data_center_x) < 0.3 ):
+				if( abs(self.data_center_x) < 0.2 ):
 					self.log_command.write("I move forward")
 					print("now move forward")
-					self.auv.velocity( x = 0.2 )
-					self.rate.sleep()
-					self.auv.velocity( x = 0.2 )
+					self.auv.velocity( x = 0.15 )
 					self.rate.sleep()
 				elif( self.data_center_x < 0 ):
 					print("move left in far mode")
 					self.log_command.write("I move left")
-					self.auv.velocity( y = 0.2)
+					self.auv.velocity( y = 0.12)
+					self.rate.sleep()
 				else:
 					print("move right in far mode")
 					self.log_command.write("I move right")
-					self.auv.velocity( y = -0.2 )
-				continue
+					self.auv.velocity( y = -0.12 )
+					self.rate.sleep()
 			else:
 				self.log_vision.write("I can't found in far mode. Why?")
 				think_to_break += 1
@@ -309,7 +337,7 @@ class play_flare:
 
 if __name__=='__main__':
 
-	rospy.init_node(" Mission Flare ")		
+	rospy.init_node("Mission Flare")		
 
 	flare = play_flare( 30 )
 	flare.set_up()

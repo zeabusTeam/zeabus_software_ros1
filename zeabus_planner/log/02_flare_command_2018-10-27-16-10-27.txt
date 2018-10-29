@@ -1,0 +1,147 @@
+---------------------> 2018-10-27-16-10 <---------------------
+Waiting ok depth
+	depth is OK next wait yaw
+---------------------> 2018-10-27-16-10 <---------------------
+I will start now
+---------------------> 2018-10-27-16-10 <---------------------
+I will survey left
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-27-16-10 <---------------------
+I play on far mode
+I move right
+Don't found by use near
+---------------------> 2018-10-27-16-10 <---------------------
+I will survey right
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I found in far
+---------------------> 2018-10-27-16-11 <---------------------
+I play on far mode
+Don't found by use near
+---------------------> 2018-10-27-16-11 <---------------------
+I will survey right
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode
+	I not found in far mode
+	I not found in near mode

@@ -1,3 +1,4 @@
+import cv2 as cv
 import rospy
 import numpy as np
 from cv_bridge import CvBridge 
@@ -69,3 +70,38 @@ def Aconvert(inp, full):
     full = float(full)
     res = (inp - (full / 2.0)) / (full / 2.0)
     return res
+
+
+def equalize(mono):
+    mono = cv.equalizeHist(mono)
+    return mono
+
+def equalize_hsv(hsv):
+    h,s,v = cv.split(hsv)
+    s = equalize(s)
+    v = equalize(v)
+    hsv = cv.merge((h,s,v))
+    return hsv
+
+def equalize_bgr(bgr):
+    b,g,r = cv.split(bgr)
+    b = equalize(b)
+    g = equalize(g)
+    r = equalize(r)
+    bgr = cv.merge((b,g,r))
+    return bgr
+
+def debug_head():
+    print ct.WHITE_HL+ct.BLACK+'<{:-^80}>'.format(' Debug ')
+
+def debug_end():
+    print '<{:-^80}>'.format(' End Debug ')+ct.DEFAULT
+
+def center_of_contour(cnt):
+    M = cv.moments(cnt)
+    cx = int(M["m10"] / M["m00"])
+    cy = int(M["m01"] / M["m00"])
+    return (cx,cy)
+
+def clear_screen():
+    print("\033[H\033[J")

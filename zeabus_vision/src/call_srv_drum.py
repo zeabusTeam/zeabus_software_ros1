@@ -17,7 +17,7 @@ if __name__ == "__main__":
             # print ('pick',res)
             # res = call(String('drum'),String('release'))
             # print ('release',res)
-            res = call(String('drum'), String('drop'))
+            res = call(String('drum'), String('pick'))
             print ('test',res)
         except:
             print('Error')

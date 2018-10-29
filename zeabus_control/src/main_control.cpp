@@ -49,6 +49,49 @@ int main( int argv , char** argc){
 	
 	int frequency = 30;
 
+//----------------------------------> SET ABOUT SERVICE <----------------------------------------
+	zeabus_control::two_point_service service_2_point(	current_state	,	target_state 
+													,	robot_error		,	ok_error );
+	ros::ServiceServer service_relative_xy = // listen fix position point x y type absolute
+		nh.advertiseService(	"/fix_rel_xy" 
+								, &zeabus_control::two_point_service::call_relative_xy
+								, &service_2_point );
+	ros::ServiceServer service_target_xy = // listen fix position point x y type absolute
+		nh.advertiseService(	"/fix_abs_xy" 
+								, &zeabus_control::two_point_service::call_absolute_xy
+								, &service_2_point );
+
+	zeabus_control::one_point_service service_1_point(	current_state	,	target_state
+													,	robot_error		,	ok_error );
+	ros::ServiceServer	service_target_depth =
+		nh.advertiseService(	"/fix_abs_depth"
+								, &zeabus_control::one_point_service::call_absolute_depth
+								, &service_1_point );
+	ros::ServiceServer	service_target_yaw =
+		nh.advertiseService(	"/fix_abs_yaw"
+								, &zeabus_control::one_point_service::call_absolute_yaw
+								, &service_1_point );
+	ros::ServiceServer	service_relative_yaw =
+		nh.advertiseService(	"/fix_rel_yaw"
+								, &zeabus_control::one_point_service::call_relative_yaw
+								, &service_1_point );
+
+	zeabus_control::check_state_service service_current_state( current_state	,	target_state
+														,	 robot_error	,	ok_error );
+	ros::ServiceServer	service_check_state =
+		nh.advertiseService(	"/ok_position"
+								, &zeabus_control::check_state_service::call_check_state
+								, &service_current_state
+							);
+
+	zeabus_control::get_target_service service_target_state( current_state	,	target_state
+														,	robot_error		,	ok_error );
+	ros::ServiceServer sevice_get_state =
+		nh.advertiseService(	"/know_target"
+								, &zeabus_control::get_target_service::call_get_target
+								, &service_target_state);
+
+
 //------------------------------> SET UP DYNAMIC RECONFIGURE <-----------------------------------
 	dynamic_reconfigure::Server<zeabus_control::pid_controlConfig> server;
 	dynamic_reconfigure::Server<zeabus_control::pid_controlConfig>::CallbackType function;
@@ -102,10 +145,13 @@ int main( int argv , char** argc){
 		}
 		// find error between current_state with target_state to world_error
 		zeabus_control::find_error_position( current_state , target_state , world_error);
+
 		// give world_error to error in robot frame
 		zeabus_control::convert_world_to_robot_xy( world_error , robot_error , current_state );
+
 		// fine bound_error by use robot_error and ok_error
 		zeabus_control::convert_robot_to_bound_error( robot_error , bound_error , ok_error); 
+
 		// use error of bound_error to calculate force by pid 
 		for( int run = 0 ; run < 6 ; run++){
 			if( use_target_velocity[run] > 0 ){ // use pid for velocity
@@ -119,6 +165,7 @@ int main( int argv , char** argc){
 				pid_velocity[run].reset_value();	
 			}
 		}
+
 		// use pid_force convert to robot_force for send to thruster
 		zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );
 
@@ -126,9 +173,10 @@ int main( int argv , char** argc){
 		array_to_geometry_twist( robot_force , message_force );	
 		tell_force.publish( message_force );	
 
-		// print all data to display
+		// print all data to display	
+		system("clear");
 		print_all( current_state , target_state , world_error , robot_error , bound_error 
 				, pid_force , robot_force 
 				, use_target_velocity , current_velocity , target_velocity );
-	};			
+	}
 }

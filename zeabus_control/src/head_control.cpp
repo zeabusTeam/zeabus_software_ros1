@@ -12,6 +12,7 @@
 
 #include	<iostream> // standard of cpp
 #include	<ros/ros.h> // standard of ros system
+#include	<cstdlib>
 
 // include for dynamic reconfigure of ros
 #include	<dynamic_reconfigure/server.h>
@@ -29,6 +30,10 @@
 #include	"find_robot_error.cpp"
 #include	"find_robot_force.cpp"
 #include	"normal_pid_bound_i.cpp"
+#include	"service_two_point.cpp"
+#include	"service_one_point.cpp"
+#include	"service_check_state.cpp"
+#include	"service_get_target.cpp"
 
 
 //------------------> Dynamic Reconfigure We will use in Global variable <-----------------------
@@ -92,4 +97,8 @@ void dynamic_reconfigure_callback( zeabus_control::pid_controlConfig &config , u
 	constant_velocity[2][5] = config.d_yaw_velocity;
 	
 	if( ! already_loading_constant ) want_save_constant = true;
+}
+
+void clear_screen(){
+	for(int run = 0 ; run < 1 ; run++ ) printf("\n\n\n\n\n\n\n\n\n\n");
 }

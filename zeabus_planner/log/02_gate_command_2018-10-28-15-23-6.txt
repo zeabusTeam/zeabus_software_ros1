@@ -1,0 +1,12 @@
+---------------------> 2018-10-28-15-23 <---------------------
+Waiting ok depth
+	depth is OK next wait yaw
+---------------------> 2018-10-28-15-23 <---------------------
+I will start now
+---------------------> 2018-10-28-15-23 <---------------------
+Now I move forward and distance 2.5
+---------------------> 2018-10-28-15-24 <---------------------
+Now on servey left distance is 4
+Wait ok yaw 
+Now I found
+Now it is last mode

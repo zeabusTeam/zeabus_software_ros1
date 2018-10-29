@@ -1,0 +1,5097 @@
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.435658914729
+	point of y are 1.0:-0.338271604938
+area is 0.18881041248
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.435658914729
+	point of y are 1.0:-0.338271604938
+area is 0.18881041248
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.398449612403
+	point of y are 1.0:-0.0913580246914
+area is 0.16412671069
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.395348837209
+	point of y are 1.0:-0.125925925926
+area is 0.170198105082
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.370542635659
+	point of y are 1.0:-0.150617283951
+area is 0.18106613073
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.175308641975
+area is 0.190418221839
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.17037037037
+area is 0.189618145277
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.17037037037
+area is 0.189618145277
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.17037037037
+area is 0.189618145277
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.17037037037
+area is 0.189618145277
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.17037037037
+area is 0.189618145277
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.17037037037
+area is 0.189618145277
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.17037037037
+area is 0.189618145277
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.18024691358
+area is 0.191218298402
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.18024691358
+area is 0.191218298402
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.18024691358
+area is 0.191218298402
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.18024691358
+area is 0.191218298402
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.18024691358
+area is 0.191218298402
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.351937984496
+	point of y are 1.0:-0.18024691358
+area is 0.191218298402
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.249612403101
+	point of y are 0.432098765432:-0.471604938272
+area is 0.169532012633
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.258914728682
+	point of y are 0.456790123457:-0.412345679012
+area is 0.161025935496
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.240310077519
+	point of y are 0.520987654321:-0.412345679012
+area is 0.177260981912
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.231007751938
+	point of y are 0.451851851852:-0.397530864198
+area is 0.16329218107
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.231007751938
+	point of y are 0.461728395062:-0.377777777778
+area is 0.161393434778
+FOUND color is data: "Aon Baka"
+	point of x are -0.848062015504:-0.218604651163
+	point of y are 0.328395061728:-0.397530864198
+area is 0.11423485501
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.848062015504:-0.221705426357
+	point of y are 0.328395061728:-0.382716049383
+area is 0.111352282515
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.813953488372:-0.212403100775
+	point of y are 0.308641975309:-0.377777777778
+area is 0.103229017131
+FOUND color is data: "Aon Baka"
+	point of x are -0.795348837209:-0.193798449612
+	point of y are 0.303703703704:-0.353086419753
+area is 0.0987730883338
+FOUND color is data: "Aon Baka"
+	point of x are -0.795348837209:-0.2
+	point of y are 0.303703703704:-0.353086419753
+area is 0.0977548090726
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.77984496124:-0.308527131783
+	point of y are 0.298765432099:-0.377777777778
+area is 0.0797167193033
+FOUND color is data: "Aon Baka"
+	point of x are -0.77984496124:-0.314728682171
+	point of y are 0.298765432099:-0.362962962963
+area is 0.0769451622165
+FOUND color is data: "Aon Baka"
+	point of x are -0.767441860465:-0.17519379845
+	point of y are 0.293827160494:-0.358024691358
+area is 0.0965144989951
+FOUND color is data: "Aon Baka"
+	point of x are -0.767441860465:-0.181395348837
+	point of y are 0.293827160494:-0.358024691358
+area is 0.095503875969
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.739534883721:-0.17519379845
+	point of y are 0.293827160494:-0.328395061728
+area is 0.0877863910422
+FOUND color is data: "Aon Baka"
+	point of x are -0.739534883721:-0.178294573643
+	point of y are 0.293827160494:-0.328395061728
+area is 0.0873040482343
+FOUND color is data: "Aon Baka"
+	point of x are -0.727131782946:-0.168992248062
+	point of y are 0.293827160494:-0.308641975309
+area is 0.0840654608096
+FOUND color is data: "Aon Baka"
+	point of x are -0.727131782946:-0.17519379845
+	point of y are 0.293827160494:-0.293827160494
+area is 0.0810871853766
+FOUND color is data: "Aon Baka"
+	point of x are -0.717829457364:-0.159689922481
+	point of y are 0.298765432099:-0.303703703704
+area is 0.0840654608096
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.717829457364:-0.162790697674
+	point of y are 0.303703703704:-0.303703703704
+area is 0.0842836635085
+FOUND color is data: "Aon Baka"
+	point of x are -0.711627906977:-0.144186046512
+	point of y are 0.303703703704:-0.288888888889
+area is 0.0840654608096
+FOUND color is data: "Aon Baka"
+	point of x are -0.711627906977:-0.147286821705
+	point of y are 0.303703703704:-0.288888888889
+area is 0.0836060867069
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.141085271318
+	point of y are 0.308641975309:-0.288888888889
+area is 0.0843028040961
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.144186046512
+	point of y are 0.308641975309:-0.288888888889
+area is 0.0838396018758
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.137984496124
+	point of y are 0.313580246914:-0.288888888889
+area is 0.0845324911475
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.144186046512
+	point of y are 0.313580246914:-0.283950617284
+area is 0.0833763996555
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.144186046512
+	point of y are 0.313580246914:-0.283950617284
+area is 0.0833763996555
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.147286821705
+	point of y are 0.313580246914:-0.283950617284
+area is 0.0824499952149
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.156589147287
+	point of y are 0.313580246914:-0.274074074074
+area is 0.0797205474208
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.159689922481
+	point of y are 0.313580246914:-0.269135802469
+area is 0.0785989089865
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.162790697674
+	point of y are 0.313580246914:-0.264197530864
+area is 0.0774849267873
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.168992248062
+	point of y are 0.313580246914:-0.259259259259
+area is 0.0754904775577
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.172093023256
+	point of y are 0.313580246914:-0.259259259259
+area is 0.075046415925
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.17519379845
+	point of y are 0.313580246914:-0.254320987654
+area is 0.0739592305484
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.181395348837
+	point of y are 0.313580246914:-0.254320987654
+area is 0.073078763518
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.184496124031
+	point of y are 0.313580246914:-0.244444444444
+area is 0.0713752512202
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.187596899225
+	point of y are 0.313580246914:-0.244444444444
+area is 0.0709426739401
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.190697674419
+	point of y are 0.313580246914:-0.23950617284
+area is 0.0698861135037
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.193798449612
+	point of y are 0.313580246914:-0.23950617284
+area is 0.0694573643411
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.671317829457:-0.122480620155
+	point of y are 0.318518518519:-0.259259259259
+area is 0.0792764857881
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.66511627907:-0.116279069767
+	point of y are 0.313580246914:-0.293827160494
+area is 0.0833419465978
+FOUND color is data: "Aon Baka"
+	point of x are -0.66511627907:-0.122480620155
+	point of y are 0.313580246914:-0.293827160494
+area is 0.0824002296871
+FOUND color is data: "Aon Baka"
+	point of x are -0.66511627907:-0.125581395349
+	point of y are 0.313580246914:-0.293827160494
+area is 0.0819293712317
+FOUND color is data: "Aon Baka"
+	point of x are -0.66511627907:-0.113178294574
+	point of y are 0.313580246914:-0.288888888889
+area is 0.083131400134
+FOUND color is data: "Aon Baka"
+	point of x are -0.66511627907:-0.119379844961
+	point of y are 0.313580246914:-0.283950617284
+area is 0.0815235907742
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.122480620155
+	point of y are 0.318518518519:-0.283950617284
+area is 0.080329218107
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.125581395349
+	point of y are 0.318518518519:-0.274074074074
+area is 0.0785529715762
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.128682170543
+	point of y are 0.318518518519:-0.249382716049
+area is 0.0748396975787
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.131782945736
+	point of y are 0.318518518519:-0.249382716049
+area is 0.0743994640635
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.13488372093
+	point of y are 0.318518518519:-0.234567901235
+area is 0.0720298593167
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.137984496124
+	point of y are 0.318518518519:-0.22962962963
+area is 0.0709618145277
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.144186046512
+	point of y are 0.318518518519:-0.22962962963
+area is 0.0701119724376
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.147286821705
+	point of y are 0.318518518519:-0.22962962963
+area is 0.0696870513925
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.150387596899
+	point of y are 0.318518518519:-0.214814814815
+area is 0.0673901808786
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.153488372093
+	point of y are 0.318518518519:-0.214814814815
+area is 0.066976744186
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.156589147287
+	point of y are 0.318518518519:-0.20987654321
+area is 0.0659469805723
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.159689922481
+	point of y are 0.318518518519:-0.20987654321
+area is 0.0655373719973
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.162790697674
+	point of y are 0.318518518519:-0.20987654321
+area is 0.0651277634223
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.172093023256
+	point of y are 0.318518518519:-0.204938271605
+area is 0.0633017513638
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:-0.17519379845
+	point of y are 0.318518518519:-0.204938271605
+area is 0.0628959709063
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.686821705426:-0.116279069767
+	point of y are 0.348148148148:-0.269135802469
+area is 0.0880467030338
+FOUND color is data: "Aon Baka"
+	point of x are -0.686821705426:-0.119379844961
+	point of y are 0.348148148148:-0.279012345679
+area is 0.0889692793569
+FOUND color is data: "Aon Baka"
+	point of x are -0.686821705426:-0.119379844961
+	point of y are 0.348148148148:-0.269135802469
+area is 0.0875681883434
+FOUND color is data: "Aon Baka"
+	point of x are -0.686821705426:-0.119379844961
+	point of y are 0.353086419753:-0.269135802469
+area is 0.0882687338501
+FOUND color is data: "Aon Baka"
+	point of x are -0.686821705426:-0.122480620155
+	point of y are 0.353086419753:-0.269135802469
+area is 0.0877863910422
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.693023255814:-0.116279069767
+	point of y are 0.348148148148:-0.279012345679
+area is 0.0904277921332
+FOUND color is data: "Aon Baka"
+	point of x are -0.693023255814:-0.122480620155
+	point of y are 0.348148148148:-0.279012345679
+area is 0.0894554502823
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.119379844961
+	point of y are 0.348148148148:-0.288888888889
+area is 0.0918518518519
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.122480620155
+	point of y are 0.348148148148:-0.288888888889
+area is 0.0913580246914
+FOUND color is data: "Aon Baka"
+	point of x are -0.693023255814:-0.119379844961
+	point of y are 0.348148148148:-0.303703703704
+area is 0.0934826299167
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.693023255814:-0.122480620155
+	point of y are 0.348148148148:-0.303703703704
+area is 0.0929773184037
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.119379844961
+	point of y are 0.348148148148:-0.293827160494
+area is 0.0930615369892
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.125581395349
+	point of y are 0.348148148148:-0.293827160494
+area is 0.0920662264332
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.119379844961
+	point of y are 0.353086419753:-0.293827160494
+area is 0.093777394966
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.119379844961
+	point of y are 0.353086419753:-0.313580246914
+area is 0.0966408268734
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.116279069767
+	point of y are 0.353086419753:-0.303703703704
+area is 0.0957182505503
+FOUND color is data: "Aon Baka"
+	point of x are -0.699224806202:-0.122480620155
+	point of y are 0.353086419753:-0.293827160494
+area is 0.0932759115705
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.125581395349
+	point of y are 0.353086419753:-0.298765432099
+area is 0.0939879414298
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.125581395349
+	point of y are 0.353086419753:-0.298765432099
+area is 0.0939879414298
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.122480620155
+	point of y are 0.358024691358:-0.313580246914
+area is 0.0973566848502
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.128682170543
+	point of y are 0.358024691358:-0.298765432099
+area is 0.0941908316585
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.122480620155
+	point of y are 0.362962962963:-0.313580246914
+area is 0.0980725428271
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.125581395349
+	point of y are 0.358024691358:-0.313580246914
+area is 0.0968360608671
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.113178294574
+	point of y are 0.362962962963:-0.293827160494
+area is 0.0972456694421
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.119379844961
+	point of y are 0.362962962963:-0.293827160494
+area is 0.0962273901809
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.116279069767
+	point of y are 0.362962962963:-0.323456790123
+area is 0.101100583788
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.119379844961
+	point of y are 0.362962962963:-0.323456790123
+area is 0.100568475452
+FOUND color is data: "Aon Baka"
+	point of x are -0.708527131783:-0.11007751938
+	point of y are 0.367901234568:-0.323456790123
+area is 0.103435735477
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.116279069767
+	point of y are 0.367901234568:-0.308641975309
+area is 0.0996458991291
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.119379844961
+	point of y are 0.367901234568:-0.303703703704
+area is 0.0983979328165
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.122480620155
+	point of y are 0.367901234568:-0.303703703704
+area is 0.0978773088334
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.125581395349
+	point of y are 0.367901234568:-0.264197530864
+area is 0.0916298210355
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.128682170543
+	point of y are 0.367901234568:-0.264197530864
+area is 0.0911398219925
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.131782945736
+	point of y are 0.367901234568:-0.264197530864
+area is 0.0906498229496
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.137984496124
+	point of y are 0.367901234568:-0.264197530864
+area is 0.0891798258207
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.141085271318
+	point of y are 0.367901234568:-0.264197530864
+area is 0.0886898267777
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.144186046512
+	point of y are 0.367901234568:-0.264197530864
+area is 0.0881998277347
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.150387596899
+	point of y are 0.367901234568:-0.244444444444
+area is 0.0844942099722
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.153488372093
+	point of y are 0.367901234568:-0.23950617284
+area is 0.0833419465978
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.156589147287
+	point of y are 0.367901234568:-0.23950617284
+area is 0.0828710881424
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.159689922481
+	point of y are 0.367901234568:-0.23950617284
+area is 0.0824002296871
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.165891472868
+	point of y are 0.367901234568:-0.234567901235
+area is 0.0807962484448
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.168992248062
+	point of y are 0.367901234568:-0.234567901235
+area is 0.080329218107
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:-0.113178294574
+	point of y are 0.362962962963:-0.318518518519
+area is 0.100901521677
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.11007751938
+	point of y are 0.358024691358:-0.328395061728
+area is 0.101632692124
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.113178294574
+	point of y are 0.353086419753:-0.328395061728
+area is 0.100373241459
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.106976744186
+	point of y are 0.353086419753:-0.323456790123
+area is 0.10069480333
+FOUND color is data: "Aon Baka"
+	point of x are -0.702325581395:-0.11007751938
+	point of y are 0.353086419753:-0.323456790123
+area is 0.10017035123
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.103875968992
+	point of y are 0.353086419753:-0.293827160494
+area is 0.0957833285482
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.106976744186
+	point of y are 0.353086419753:-0.293827160494
+area is 0.0952818451526
+FOUND color is data: "Aon Baka"
+	point of x are -0.693023255814:-0.103875968992
+	point of y are 0.353086419753:-0.298765432099
+area is 0.0960091874821
+FOUND color is data: "Aon Baka"
+	point of x are -0.693023255814:-0.106976744186
+	point of y are 0.353086419753:-0.298765432099
+area is 0.095503875969
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.11007751938
+	point of y are 0.353086419753:-0.303703703704
+area is 0.0962273901809
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.680620155039:-0.0883720930233
+	point of y are 0.362962962963:-0.323456790123
+area is 0.101632692124
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:-0.0945736434109
+	point of y are 0.367901234568:-0.288888888889
+area is 0.0987730883338
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.708527131783:-0.100775193798
+	point of y are 0.382716049383:-0.313580246914
+area is 0.105793855871
+FOUND color is data: "Aon Baka"
+	point of x are -0.708527131783:-0.100775193798
+	point of y are 0.382716049383:-0.308641975309
+area is 0.105043544837
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.116279069767
+	point of y are 0.407407407407:-0.392592592593
+area is 0.127751937984
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.122480620155
+	point of y are 0.402469135802:-0.392592592593
+area is 0.125730691932
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.125581395349
+	point of y are 0.402469135802:-0.392592592593
+area is 0.125114365011
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.125581395349
+	point of y are 0.402469135802:-0.392592592593
+area is 0.125114365011
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.128682170543
+	point of y are 0.402469135802:-0.392592592593
+area is 0.12449803809
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.131782945736
+	point of y are 0.402469135802:-0.358024691358
+area is 0.118495549813
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.13488372093
+	point of y are 0.402469135802:-0.358024691358
+area is 0.117906019715
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.13488372093
+	point of y are 0.402469135802:-0.353086419753
+area is 0.11714039621
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.137984496124
+	point of y are 0.402469135802:-0.353086419753
+area is 0.116554694229
+FOUND color is data: "Aon Baka"
+	point of x are -0.75503875969:-0.141085271318
+	point of y are 0.402469135802:-0.353086419753
+area is 0.115968992248
+FOUND color is data: "Aon Baka"
+	point of x are -0.751937984496:-0.147286821705
+	point of y are 0.402469135802:-0.353086419753
+area is 0.114211886305
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.751937984496:-0.150387596899
+	point of y are 0.402469135802:-0.353086419753
+area is 0.113626184324
+FOUND color is data: "Aon Baka"
+	point of x are -0.751937984496:-0.153488372093
+	point of y are 0.402469135802:-0.353086419753
+area is 0.113040482343
+FOUND color is data: "Aon Baka"
+	point of x are -0.751937984496:-0.156589147287
+	point of y are 0.402469135802:-0.353086419753
+area is 0.112454780362
+FOUND color is data: "Aon Baka"
+	point of x are -0.838759689922:-0.156589147287
+	point of y are 0.382716049383:-0.62962962963
+area is 0.172648100297
+FOUND color is data: "Aon Baka"
+	point of x are -0.84496124031:-0.147286821705
+	point of y are 0.387654320988:-0.624691358025
+area is 0.176571920758
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.857364341085:-0.147286821705
+	point of y are 0.387654320988:-0.61975308642
+area is 0.178834338214
+FOUND color is data: "Aon Baka"
+	point of x are -0.863565891473:-0.150387596899
+	point of y are 0.392592592593:-0.62962962963
+area is 0.18225667528
+FOUND color is data: "Aon Baka"
+	point of x are -0.863565891473:-0.150387596899
+	point of y are 0.392592592593:-0.61975308642
+area is 0.180495741219
+FOUND color is data: "Aon Baka"
+	point of x are -0.863565891473:-0.150387596899
+	point of y are 0.392592592593:-0.61975308642
+area is 0.180495741219
+FOUND color is data: "Aon Baka"
+	point of x are -0.86976744186:-0.156589147287
+	point of y are 0.397530864198:-0.61975308642
+area is 0.18137620825
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.86976744186:-0.165891472868
+	point of y are 0.397530864198:-0.61975308642
+area is 0.17901043162
+FOUND color is data: "Aon Baka"
+	point of x are -0.875968992248:-0.150387596899
+	point of y are 0.412345679012:-0.62962962963
+area is 0.189009474591
+FOUND color is data: "Aon Baka"
+	point of x are -0.879069767442:-0.150387596899
+	point of y are 0.412345679012:-0.624691358025
+area is 0.18891759977
+FOUND color is data: "Aon Baka"
+	point of x are -0.882170542636:-0.150387596899
+	point of y are 0.422222222222:-0.61975308642
+area is 0.190624940186
+FOUND color is data: "Aon Baka"
+	point of x are -0.882170542636:-0.150387596899
+	point of y are 0.422222222222:-0.61975308642
+area is 0.190624940186
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.888372093023:-0.162790697674
+	point of y are 0.437037037037:-0.60987654321
+area is 0.189905254091
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.168992248062
+	point of y are 0.461728395062:-0.604938271605
+area is 0.221602067183
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.168992248062
+	point of y are 0.491358024691:-0.595061728395
+area is 0.225705809168
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.172093023256
+	point of y are 0.516049382716:-0.595061728395
+area is 0.229974160207
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.17519379845
+	point of y are 0.516049382716:-0.59012345679
+area is 0.228094554503
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.17519379845
+	point of y are 0.516049382716:-0.59012345679
+area is 0.228094554503
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.178294573643
+	point of y are 0.516049382716:-0.585185185185
+area is 0.226222605034
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.181395348837
+	point of y are 1.0:-0.575308641975
+area is 0.322388745334
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.181395348837
+	point of y are 1.0:-0.575308641975
+area is 0.322388745334
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.184496124031
+	point of y are 1.0:-0.575308641975
+area is 0.321167575845
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.187596899225
+	point of y are 1.0:-0.575308641975
+area is 0.319946406355
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.187596899225
+	point of y are 1.0:-0.58024691358
+area is 0.320949373146
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.190697674419
+	point of y are 1.0:-0.58024691358
+area is 0.319724375538
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.193798449612
+	point of y are 1.0:-0.57037037037
+area is 0.316508756819
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.193798449612
+	point of y are 1.0:-0.575308641975
+area is 0.317504067375
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.196899224806
+	point of y are 1.0:-0.575308641975
+area is 0.316282897885
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.150387596899
+	point of y are 0.525925925926:-0.585185185185
+area is 0.236003445306
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.150387596899
+	point of y are 0.540740740741:-0.595061728395
+area is 0.241247966313
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.150387596899
+	point of y are 0.535802469136:-0.595061728395
+area is 0.240199062111
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.156589147287
+	point of y are 0.516049382716:-0.604938271605
+area is 0.236363288353
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.165891472868
+	point of y are 0.511111111111:-0.604938271605
+area is 0.232726576706
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.168992248062
+	point of y are 0.511111111111:-0.604938271605
+area is 0.231861422146
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.525925925926:-0.614814814815
+area is 0.241412575366
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 1.0:-0.624691358025
+area is 0.343830031582
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.733333333333:-0.624691358025
+area is 0.287395923055
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.471604938272:-0.634567901235
+area is 0.234097042779
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.471604938272:-0.634567901235
+area is 0.234097042779
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.491358024691:-0.644444444444
+area is 0.240367499282
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.481481481481:-0.644444444444
+area is 0.238277347115
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.461728395062:-0.649382716049
+area is 0.235142118863
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.461728395062:-0.649382716049
+area is 0.235142118863
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.461728395062:-0.654320987654
+area is 0.236187194947
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.461728395062:-0.654320987654
+area is 0.236187194947
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.150387596899
+	point of y are 0.456790123457:-0.659259259259
+area is 0.237052349507
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.150387596899
+	point of y are 0.451851851852:-0.659259259259
+area is 0.236003445306
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.147286821705
+	point of y are 0.446913580247:-0.659259259259
+area is 0.23581203943
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.147286821705
+	point of y are 0.451851851852:-0.659259259259
+area is 0.236864771748
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.147286821705
+	point of y are 0.446913580247:-0.659259259259
+area is 0.23581203943
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.147286821705
+	point of y are 0.446913580247:-0.659259259259
+area is 0.23581203943
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.141085271318
+	point of y are 0.486419753086:-0.659259259259
+area is 0.246010144511
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.141085271318
+	point of y are 0.481481481481:-0.659259259259
+area is 0.244949755958
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.137984496124
+	point of y are 0.466666666667:-0.659259259259
+area is 0.242641401091
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.137984496124
+	point of y are 0.471604938272:-0.659259259259
+area is 0.243705617762
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.13488372093
+	point of y are 0.471604938272:-0.654320987654
+area is 0.243514211886
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.13488372093
+	point of y are 0.476543209877:-0.659259259259
+area is 0.245650301464
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.128682170543
+	point of y are 0.501234567901:-0.654320987654
+area is 0.251714039621
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.128682170543
+	point of y are 0.501234567901:-0.654320987654
+area is 0.251714039621
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.137984496124
+	point of y are 0.501234567901:-0.654320987654
+area is 0.24902670112
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.141085271318
+	point of y are 0.501234567901:-0.649382716049
+area is 0.247070533065
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.144186046512
+	point of y are 0.501234567901:-0.654320987654
+area is 0.247235142119
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.147286821705
+	point of y are 0.501234567901:-0.649382716049
+area is 0.2452866303
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.150387596899
+	point of y are 0.501234567901:-0.649382716049
+area is 0.244394678917
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.150387596899
+	point of y are 0.501234567901:-0.649382716049
+area is 0.244394678917
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.153488372093
+	point of y are 0.501234567901:-0.644444444444
+area is 0.24245765145
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.156589147287
+	point of y are 0.501234567901:-0.644444444444
+area is 0.241569528185
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.156589147287
+	point of y are 0.501234567901:-0.644444444444
+area is 0.241569528185
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.159689922481
+	point of y are 0.501234567901:-0.63950617284
+area is 0.23964398507
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.162790697674
+	point of y are 0.501234567901:-0.63950617284
+area is 0.238759689922
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.162790697674
+	point of y are 0.501234567901:-0.63950617284
+area is 0.238759689922
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.168992248062
+	point of y are 0.501234567901:-0.634567901235
+area is 0.235965164131
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.172093023256
+	point of y are 0.501234567901:-0.634567901235
+area is 0.2350846971
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.172093023256
+	point of y are 0.501234567901:-0.634567901235
+area is 0.2350846971
+FOUND color is data: "Aon Baka"
+	point of x are -0.835658914729:-0.0976744186047
+	point of y are 0.466666666667:-0.614814814815
+area is 0.199529141545
+FOUND color is data: "Aon Baka"
+	point of x are -0.829457364341:-0.0976744186047
+	point of y are 0.461728395062:-0.61975308642
+area is 0.197852426069
+FOUND color is data: "Aon Baka"
+	point of x are -0.826356589147:-0.0945736434109
+	point of y are 0.456790123457:-0.61975308642
+area is 0.196948990334
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.826356589147:-0.0976744186047
+	point of y are 0.456790123457:-0.614814814815
+area is 0.195214853096
+FOUND color is data: "Aon Baka"
+	point of x are -0.817054263566:-0.0883720930233
+	point of y are 0.451851851852:-0.614814814815
+area is 0.194315245478
+FOUND color is data: "Aon Baka"
+	point of x are -0.82015503876:-0.0914728682171
+	point of y are 0.446913580247:-0.614814814815
+area is 0.19341563786
+FOUND color is data: "Aon Baka"
+	point of x are -0.807751937984:-0.0728682170543
+	point of y are 0.437037037037:-0.634567901235
+area is 0.196876256101
+FOUND color is data: "Aon Baka"
+	point of x are -0.807751937984:-0.0790697674419
+	point of y are 0.437037037037:-0.634567901235
+area is 0.195214853096
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.801550387597:-0.0697674418605
+	point of y are 0.417283950617:-0.644444444444
+area is 0.194238683128
+FOUND color is data: "Aon Baka"
+	point of x are -0.801550387597:-0.0728682170543
+	point of y are 0.417283950617:-0.644444444444
+area is 0.19341563786
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:-0.0542635658915
+	point of y are 0.412345679012:-0.664197530864
+area is 0.197783519954
+FOUND color is data: "Aon Baka"
+	point of x are -0.786046511628:-0.0604651162791
+	point of y are 0.407407407407:-0.644444444444
+area is 0.190801033592
+FOUND color is data: "Aon Baka"
+	point of x are -0.776744186047:-0.0511627906977
+	point of y are 0.397530864198:-0.669135802469
+area is 0.193488372093
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.776744186047:-0.0573643410853
+	point of y are 0.397530864198:-0.654320987654
+area is 0.189170255527
+FOUND color is data: "Aon Baka"
+	point of x are -0.767441860465:-0.0480620155039
+	point of y are 0.382716049383:-0.614814814815
+area is 0.179400899608
+FOUND color is data: "Aon Baka"
+	point of x are -0.767441860465:-0.0542635658915
+	point of y are 0.382716049383:-0.614814814815
+area is 0.177854340128
+FOUND color is data: "Aon Baka"
+	point of x are -0.767441860465:-0.0542635658915
+	point of y are 0.382716049383:-0.614814814815
+area is 0.177854340128
+FOUND color is data: "Aon Baka"
+	point of x are -0.767441860465:-0.0604651162791
+	point of y are 0.382716049383:-0.59012345679
+area is 0.171943726672
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.764341085271:-0.0635658914729
+	point of y are 0.382716049383:-0.59012345679
+area is 0.170435448368
+FOUND color is data: "Aon Baka"
+	point of x are -0.764341085271:-0.0666666666667
+	point of y are 0.382716049383:-0.59012345679
+area is 0.169681309216
+FOUND color is data: "Aon Baka"
+	point of x are -0.761240310078:-0.0759689922481
+	point of y are 0.382716049383:-0.59012345679
+area is 0.166664752608
+FOUND color is data: "Aon Baka"
+	point of x are -0.761240310078:-0.0790697674419
+	point of y are 0.382716049383:-0.59012345679
+area is 0.165910613456
+FOUND color is data: "Aon Baka"
+	point of x are -0.758139534884:-0.0821705426357
+	point of y are 0.382716049383:-0.59012345679
+area is 0.164402335152
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.758139534884:-0.0883720930233
+	point of y are 0.382716049383:-0.56049382716
+area is 0.157932816537
+FOUND color is data: "Aon Baka"
+	point of x are -0.758139534884:-0.0914728682171
+	point of y are 0.382716049383:-0.56049382716
+area is 0.157201646091
+FOUND color is data: "Aon Baka"
+	point of x are -0.758139534884:-0.0945736434109
+	point of y are 0.382716049383:-0.56049382716
+area is 0.156470475644
+FOUND color is data: "Aon Baka"
+	point of x are -0.758139534884:-0.100775193798
+	point of y are 0.382716049383:-0.56049382716
+area is 0.15500813475
+FOUND color is data: "Aon Baka"
+	point of x are -0.758139534884:-0.103875968992
+	point of y are 0.382716049383:-0.56049382716
+area is 0.154276964303
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.758139534884:-0.106976744186
+	point of y are 0.382716049383:-0.56049382716
+area is 0.153545793856
+FOUND color is data: "Aon Baka"
+	point of x are -0.736434108527:-0.122480620155
+	point of y are 0.293827160494:-0.520987654321
+area is 0.125064599483
+FOUND color is data: "Aon Baka"
+	point of x are -0.73023255814:-0.116279069767
+	point of y are 0.283950617284:-0.535802469136
+area is 0.125822566753
+FOUND color is data: "Aon Baka"
+	point of x are -0.724031007752:-0.119379844961
+	point of y are 0.274074074074:-0.540740740741
+area is 0.123169681309
+FOUND color is data: "Aon Baka"
+	point of x are -0.727131782946:-0.122480620155
+	point of y are 0.274074074074:-0.496296296296
+area is 0.116451335056
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.720930232558:-0.122480620155
+	point of y are 0.269135802469:-0.501234567901
+area is 0.115256962389
+FOUND color is data: "Aon Baka"
+	point of x are -0.720930232558:-0.128682170543
+	point of y are 0.269135802469:-0.501234567901
+area is 0.114062589722
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.708527131783:-0.122480620155
+	point of y are 0.283950617284:-0.486419753086
+area is 0.112868217054
+FOUND color is data: "Aon Baka"
+	point of x are -0.708527131783:-0.119379844961
+	point of y are 0.288888888889:-0.491358024691
+area is 0.114920088047
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.708527131783:-0.125581395349
+	point of y are 0.288888888889:-0.491358024691
+area is 0.113710402909
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.677519379845:0.0015503875969
+	point of y are 0.367901234568:-0.461728395062
+area is 0.140844099914
+FOUND color is data: "Aon Baka"
+	point of x are -0.674418604651:-0.0015503875969
+	point of y are 0.367901234568:-0.417283950617
+area is 0.132081538903
+FOUND color is data: "Aon Baka"
+	point of x are -0.674418604651:-0.0046511627907
+	point of y are 0.367901234568:-0.417283950617
+area is 0.131472868217
+FOUND color is data: "Aon Baka"
+	point of x are -0.668217054264:0.0232558139535
+	point of y are 0.382716049383:-0.427160493827
+area is 0.140001914059
+FOUND color is data: "Aon Baka"
+	point of x are -0.668217054264:0.0201550387597
+	point of y are 0.382716049383:-0.427160493827
+area is 0.139374102785
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.668217054264:0.0201550387597
+	point of y are 0.382716049383:-0.397530864198
+area is 0.134275050244
+FOUND color is data: "Aon Baka"
+	point of x are -0.668217054264:0.0170542635659
+	point of y are 0.382716049383:-0.372839506173
+area is 0.129440137812
+FOUND color is data: "Aon Baka"
+	point of x are -0.668217054264:0.0139534883721
+	point of y are 0.382716049383:-0.367901234568
+area is 0.128012249976
+FOUND color is data: "Aon Baka"
+	point of x are -0.668217054264:0.0108527131783
+	point of y are 0.382716049383:-0.367901234568
+area is 0.127430376113
+FOUND color is data: "Aon Baka"
+	point of x are -0.655813953488:0.0263565891473
+	point of y are 0.397530864198:-0.402469135802
+area is 0.136434108527
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.671317829457:0.0356589147287
+	point of y are 0.461728395062:-0.422222222222
+area is 0.156233132357
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.674418604651:0.0387596899225
+	point of y are 0.481481481481:-0.486419753086
+area is 0.172571537946
+FOUND color is data: "Aon Baka"
+	point of x are -0.677519379845:0.0387596899225
+	point of y are 0.491358024691:-0.471604938272
+area is 0.172437553833
+FOUND color is data: "Aon Baka"
+	point of x are -0.677519379845:0.0356589147287
+	point of y are 0.486419753086:-0.471604938272
+area is 0.170810603886
+FOUND color is data: "Aon Baka"
+	point of x are -0.680620155039:0.0325581395349
+	point of y are 0.501234567901:-0.481481481481
+area is 0.175212939037
+FOUND color is data: "Aon Baka"
+	point of x are -0.683720930233:0.0325581395349
+	point of y are 0.496296296296:-0.481481481481
+area is 0.175090439276
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.680620155039:0.0325581395349
+	point of y are 0.496296296296:-0.481481481481
+area is 0.174332472007
+FOUND color is data: "Aon Baka"
+	point of x are -0.68992248062:0.0325581395349
+	point of y are 0.506172839506:-0.496296296296
+area is 0.18106613073
+FOUND color is data: "Aon Baka"
+	point of x are -0.68992248062:0.0325581395349
+	point of y are 0.506172839506:-0.496296296296
+area is 0.18106613073
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:0.0356589147287
+	point of y are 0.516049382716:-0.550617283951
+area is 0.197622739018
+FOUND color is data: "Aon Baka"
+	point of x are -0.705426356589:0.0325581395349
+	point of y are 0.516049382716:-0.550617283951
+area is 0.196795865633
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.711627906977:0.0325581395349
+	point of y are 0.520987654321:-0.57037037037
+area is 0.203043353431
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.0325581395349
+	point of y are 0.516049382716:-0.535802469136
+area is 0.196508756819
+FOUND color is data: "Aon Baka"
+	point of x are -0.724031007752:0.0263565891473
+	point of y are 0.516049382716:-0.575308641975
+area is 0.204735381376
+FOUND color is data: "Aon Baka"
+	point of x are -0.724031007752:0.0263565891473
+	point of y are 0.516049382716:-0.57037037037
+area is 0.203808976936
+FOUND color is data: "Aon Baka"
+	point of x are -0.733333333333:0.0232558139535
+	point of y are 0.525925925926:-0.585185185185
+area is 0.210163652024
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.733333333333:0.0201550387597
+	point of y are 0.525925925926:-0.57037037037
+area is 0.206511627907
+FOUND color is data: "Aon Baka"
+	point of x are -0.733333333333:0.0201550387597
+	point of y are 0.525925925926:-0.565432098765
+area is 0.205581395349
+FOUND color is data: "Aon Baka"
+	point of x are -0.745736434109:0.0201550387597
+	point of y are 0.520987654321:-0.58024691358
+area is 0.210856541296
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.770542635659:0.0046511627907
+	point of y are 0.511111111111:-0.62962962963
+area is 0.221073786965
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.770542635659:0.0015503875969
+	point of y are 0.506172839506:-0.624691358025
+area is 0.218283089291
+FOUND color is data: "Aon Baka"
+	point of x are -0.770542635659:-0.0015503875969
+	point of y are 0.506172839506:-0.61975308642
+area is 0.216457077232
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0046511627907
+	point of y are 0.501234567901:-0.644444444444
+area is 0.222918939611
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0046511627907
+	point of y are 0.496296296296:-0.63950617284
+area is 0.220997224615
+FOUND color is data: "Aon Baka"
+	point of x are -0.782945736434:0.0046511627907
+	point of y are 0.486419753086:-0.644444444444
+area is 0.222666283855
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.782945736434:0.0046511627907
+	point of y are 0.486419753086:-0.63950617284
+area is 0.221693942004
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:0.0015503875969
+	point of y are 0.481481481481:-0.649382716049
+area is 0.223542922768
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:0.0015503875969
+	point of y are 0.481481481481:-0.644444444444
+area is 0.222566752799
+FOUND color is data: "Aon Baka"
+	point of x are -0.792248062016:-0.0015503875969
+	point of y are 0.476543209877:-0.679012345679
+area is 0.22842377261
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:-0.0015503875969
+	point of y are 0.476543209877:-0.669135802469
+area is 0.225583309408
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:-0.0015503875969
+	point of y are 0.476543209877:-0.669135802469
+area is 0.225583309408
+FOUND color is data: "Aon Baka"
+	point of x are -0.792248062016:-0.0015503875969
+	point of y are 0.476543209877:-0.659259259259
+area is 0.224519092736
+FOUND color is data: "Aon Baka"
+	point of x are -0.792248062016:-0.0015503875969
+	point of y are 0.476543209877:-0.659259259259
+area is 0.224519092736
+FOUND color is data: "Aon Baka"
+	point of x are -0.792248062016:-0.0015503875969
+	point of y are 0.476543209877:-0.649382716049
+area is 0.222566752799
+FOUND color is data: "Aon Baka"
+	point of x are -0.792248062016:-0.0015503875969
+	point of y are 0.476543209877:-0.649382716049
+area is 0.222566752799
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.792248062016:-0.0015503875969
+	point of y are 0.476543209877:-0.649382716049
+area is 0.222566752799
+FOUND color is data: "Aon Baka"
+	point of x are -0.792248062016:-0.0015503875969
+	point of y are 0.476543209877:-0.644444444444
+area is 0.221590582831
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:-0.0015503875969
+	point of y are 0.476543209877:-0.644444444444
+area is 0.220721600153
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:-0.0015503875969
+	point of y are 0.476543209877:-0.644444444444
+area is 0.220721600153
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:-0.0015503875969
+	point of y are 0.476543209877:-0.63950617284
+area is 0.219749258302
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:-0.0046511627907
+	point of y are 0.476543209877:-0.63950617284
+area is 0.218884103742
+FOUND color is data: "Aon Baka"
+	point of x are -0.786046511628:-0.0046511627907
+	point of y are 0.476543209877:-0.63950617284
+area is 0.218018949182
+FOUND color is data: "Aon Baka"
+	point of x are -0.786046511628:-0.0046511627907
+	point of y are 0.476543209877:-0.63950617284
+area is 0.218018949182
+FOUND color is data: "Aon Baka"
+	point of x are -0.795348837209:0.0015503875969
+	point of y are 0.466666666667:-0.659259259259
+area is 0.22431237439
+FOUND color is data: "Aon Baka"
+	point of x are -0.810852713178:0.0077519379845
+	point of y are 0.461728395062:-0.718518518519
+area is 0.241538903244
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.810852713178:0.0077519379845
+	point of y are 0.461728395062:-0.718518518519
+area is 0.241538903244
+FOUND color is data: "Aon Baka"
+	point of x are -0.810852713178:0.0077519379845
+	point of y are 0.461728395062:-0.718518518519
+area is 0.241538903244
+FOUND color is data: "Aon Baka"
+	point of x are -0.804651162791:0.0108527131783
+	point of y are 0.461728395062:-0.718518518519
+area is 0.240623983156
+FOUND color is data: "Aon Baka"
+	point of x are -0.804651162791:0.0108527131783
+	point of y are 0.461728395062:-0.718518518519
+area is 0.240623983156
+FOUND color is data: "Aon Baka"
+	point of x are -0.795348837209:0.0046511627907
+	point of y are 0.466666666667:-0.708641975309
+area is 0.235061728395
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.795348837209:0.0015503875969
+	point of y are 0.466666666667:-0.708641975309
+area is 0.234150636425
+FOUND color is data: "Aon Baka"
+	point of x are -0.786046511628:0.0201550387597
+	point of y are 0.461728395062:-0.693827160494
+area is 0.232902670112
+FOUND color is data: "Aon Baka"
+	point of x are -0.789147286822:0.0201550387597
+	point of y are 0.461728395062:-0.693827160494
+area is 0.233798449612
+FOUND color is data: "Aon Baka"
+	point of x are -0.77984496124:0.0232558139535
+	point of y are 0.456790123457:-0.683950617284
+area is 0.229032443296
+FOUND color is data: "Aon Baka"
+	point of x are -0.77984496124:0.0232558139535
+	point of y are 0.456790123457:-0.679012345679
+area is 0.228040960857
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.77984496124:0.0232558139535
+	point of y are 0.456790123457:-0.679012345679
+area is 0.228040960857
+FOUND color is data: "Aon Baka"
+	point of x are -0.77984496124:0.0232558139535
+	point of y are 0.456790123457:-0.679012345679
+area is 0.228040960857
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0325581395349
+	point of y are 0.456790123457:-0.703703703704
+area is 0.233897980668
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0325581395349
+	point of y are 0.456790123457:-0.703703703704
+area is 0.233897980668
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0325581395349
+	point of y are 0.456790123457:-0.703703703704
+area is 0.233897980668
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0325581395349
+	point of y are 0.456790123457:-0.703703703704
+area is 0.233897980668
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0325581395349
+	point of y are 0.456790123457:-0.703703703704
+area is 0.233897980668
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0325581395349
+	point of y are 0.456790123457:-0.703703703704
+area is 0.233897980668
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0325581395349
+	point of y are 0.456790123457:-0.688888888889
+area is 0.230912049
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0325581395349
+	point of y are 0.456790123457:-0.688888888889
+area is 0.230912049
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0325581395349
+	point of y are 0.456790123457:-0.688888888889
+area is 0.230912049
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0294573643411
+	point of y are 0.456790123457:-0.683950617284
+area is 0.229032443296
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0294573643411
+	point of y are 0.456790123457:-0.683950617284
+area is 0.229032443296
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0294573643411
+	point of y are 0.456790123457:-0.683950617284
+area is 0.229032443296
+FOUND color is data: "Aon Baka"
+	point of x are -0.773643410853:0.0294573643411
+	point of y are 0.456790123457:-0.664197530864
+area is 0.225066513542
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.770542635659:0.0263565891473
+	point of y are 0.456790123457:-0.659259259259
+area is 0.222344721983
+FOUND color is data: "Aon Baka"
+	point of x are -0.720930232558:0.0604651162791
+	point of y are 0.466666666667:-0.679012345679
+area is 0.223807062877
+FOUND color is data: "Aon Baka"
+	point of x are -0.720930232558:0.0604651162791
+	point of y are 0.466666666667:-0.674074074074
+area is 0.222842377261
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:0.0666666666667
+	point of y are 0.471604938272:-0.56049382716
+area is 0.196818834338
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:0.0573643410853
+	point of y are 0.471604938272:-0.56049382716
+area is 0.194418604651
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.696124031008:0.0542635658915
+	point of y are 0.471604938272:-0.56049382716
+area is 0.193618528089
+FOUND color is data: "Aon Baka"
+	point of x are -0.68992248062:0.0759689922481
+	point of y are 0.481481481481:-0.555555555556
+area is 0.198564455929
+FOUND color is data: "Aon Baka"
+	point of x are -0.68992248062:0.0759689922481
+	point of y are 0.481481481481:-0.550617283951
+area is 0.197618910901
+FOUND color is data: "Aon Baka"
+	point of x are -0.680620155039:0.0821705426357
+	point of y are 0.481481481481:-0.555555555556
+area is 0.197760551249
+FOUND color is data: "Aon Baka"
+	point of x are -0.680620155039:0.0790697674419
+	point of y are 0.481481481481:-0.550617283951
+area is 0.196018757776
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.66511627907:0.0976744186047
+	point of y are 0.486419753086:-0.535802469136
+area is 0.194935400517
+FOUND color is data: "Aon Baka"
+	point of x are -0.66511627907:0.0976744186047
+	point of y are 0.486419753086:-0.511111111111
+area is 0.190226815963
+FOUND color is data: "Aon Baka"
+	point of x are -0.652713178295:0.103875968992
+	point of y are 0.496296296296:-0.545679012346
+area is 0.197086802565
+FOUND color is data: "Aon Baka"
+	point of x are -0.652713178295:0.103875968992
+	point of y are 0.491358024691:-0.545679012346
+area is 0.196152741889
+FOUND color is data: "Aon Baka"
+	point of x are -0.643410852713:0.113178294574
+	point of y are 0.496296296296:-0.516049382716
+area is 0.191482438511
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.643410852713:0.113178294574
+	point of y are 0.496296296296:-0.516049382716
+area is 0.191482438511
+FOUND color is data: "Aon Baka"
+	point of x are -0.643410852713:0.11007751938
+	point of y are 0.496296296296:-0.486419753086
+area is 0.18511627907
+FOUND color is data: "Aon Baka"
+	point of x are -0.643410852713:0.11007751938
+	point of y are 0.496296296296:-0.481481481481
+area is 0.184186046512
+FOUND color is data: "Aon Baka"
+	point of x are -0.643410852713:0.11007751938
+	point of y are 0.496296296296:-0.481481481481
+area is 0.184186046512
+FOUND color is data: "Aon Baka"
+	point of x are -0.643410852713:0.106976744186
+	point of y are 0.496296296296:-0.481481481481
+area is 0.183428079242
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.643410852713:0.103875968992
+	point of y are 0.496296296296:-0.481481481481
+area is 0.182670111972
+FOUND color is data: "Aon Baka"
+	point of x are -0.643410852713:0.103875968992
+	point of y are 0.496296296296:-0.481481481481
+area is 0.182670111972
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.103875968992
+	point of y are 0.496296296296:-0.481481481481
+area is 0.183428079242
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.100775193798
+	point of y are 0.496296296296:-0.481481481481
+area is 0.182670111972
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.0976744186047
+	point of y are 0.496296296296:-0.481481481481
+area is 0.181912144703
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.0976744186047
+	point of y are 0.496296296296:-0.481481481481
+area is 0.181912144703
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.0945736434109
+	point of y are 0.496296296296:-0.481481481481
+area is 0.181154177433
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.0914728682171
+	point of y are 0.496296296296:-0.481481481481
+area is 0.180396210164
+FOUND color is data: "Aon Baka"
+	point of x are -0.590697674419:0.159689922481
+	point of y are 0.486419753086:-0.397530864198
+area is 0.16582639487
+FOUND color is data: "Aon Baka"
+	point of x are -0.581395348837:0.168992248062
+	point of y are 0.481481481481:-0.392592592593
+area is 0.163973585989
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.568992248062:0.168992248062
+	point of y are 0.471604938272:-0.367901234568
+area is 0.154885634989
+FOUND color is data: "Aon Baka"
+	point of x are -0.565891472868:0.165891472868
+	point of y are 0.471604938272:-0.372839506173
+area is 0.154487510767
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.553488372093:0.184496124031
+	point of y are 0.461728395062:-0.362962962963
+area is 0.152152359077
+FOUND color is data: "Aon Baka"
+	point of x are -0.553488372093:0.178294573643
+	point of y are 0.461728395062:-0.358024691358
+area is 0.149970332089
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.541085271318:0.193798449612
+	point of y are 0.456790123457:-0.353086419753
+area is 0.148791271892
+FOUND color is data: "Aon Baka"
+	point of x are -0.541085271318:0.187596899225
+	point of y are 0.456790123457:-0.358024691358
+area is 0.148435256962
+FOUND color is data: "Aon Baka"
+	point of x are -0.53488372093:0.196899224806
+	point of y are 0.451851851852:-0.372839506173
+area is 0.150873767825
+FOUND color is data: "Aon Baka"
+	point of x are -0.53488372093:0.193798449612
+	point of y are 0.451851851852:-0.372839506173
+area is 0.150234472198
+FOUND color is data: "Aon Baka"
+	point of x are -0.525581395349:0.193798449612
+	point of y are 0.441975308642:-0.362962962963
+area is 0.144764092258
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:0.190697674419
+	point of y are 0.441975308642:-0.367901234568
+area is 0.145652215523
+FOUND color is data: "Aon Baka"
+	point of x are -0.522480620155:0.218604651163
+	point of y are 0.437037037037:-0.377777777778
+area is 0.150961814528
+FOUND color is data: "Aon Baka"
+	point of x are -0.519379844961:0.206201550388
+	point of y are 0.437037037037:-0.367901234568
+area is 0.14601205857
+FOUND color is data: "Aon Baka"
+	point of x are -0.506976744186:0.22480620155
+	point of y are 0.432098765432:-0.362962962963
+area is 0.145453153412
+FOUND color is data: "Aon Baka"
+	point of x are -0.506976744186:0.221705426357
+	point of y are 0.432098765432:-0.362962962963
+area is 0.144836826491
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.497674418605:0.231007751938
+	point of y are 0.432098765432:-0.338271604938
+area is 0.140338788401
+FOUND color is data: "Aon Baka"
+	point of x are -0.497674418605:0.231007751938
+	point of y are 0.432098765432:-0.333333333333
+area is 0.139439180783
+FOUND color is data: "Aon Baka"
+	point of x are -0.485271317829:0.240310077519
+	point of y are 0.427160493827:-0.338271604938
+area is 0.138845822567
+FOUND color is data: "Aon Baka"
+	point of x are -0.485271317829:0.234108527132
+	point of y are 0.427160493827:-0.333333333333
+area is 0.136770982869
+FOUND color is data: "Aon Baka"
+	point of x are -0.482170542636:0.246511627907
+	point of y are 0.422222222222:-0.362962962963
+area is 0.143037611255
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.482170542636:0.240310077519
+	point of y are 0.422222222222:-0.358024691358
+area is 0.140928318499
+FOUND color is data: "Aon Baka"
+	point of x are -0.479069767442:0.252713178295
+	point of y are 0.417283950617:-0.377777777778
+area is 0.145453153412
+FOUND color is data: "Aon Baka"
+	point of x are -0.479069767442:0.243410852713
+	point of y are 0.417283950617:-0.372839506173
+area is 0.142712221265
+FOUND color is data: "Aon Baka"
+	point of x are -0.466666666667:0.262015503876
+	point of y are 0.422222222222:-0.377777777778
+area is 0.145736434109
+FOUND color is data: "Aon Baka"
+	point of x are -0.466666666667:0.246511627907
+	point of y are 0.422222222222:-0.362962962963
+area is 0.139994257824
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.417054263566:0.311627906977
+	point of y are 0.422222222222:-0.358024691358
+area is 0.142138003637
+FOUND color is data: "Aon Baka"
+	point of x are -0.410852713178:0.314728682171
+	point of y are 0.427160493827:-0.348148148148
+area is 0.140637381568
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.410852713178:0.308527131783
+	point of y are 0.427160493827:-0.338271604938
+area is 0.137659106135
+FOUND color is data: "Aon Baka"
+	point of x are -0.410852713178:0.305426356589
+	point of y are 0.427160493827:-0.333333333333
+area is 0.136181452771
+FOUND color is data: "Aon Baka"
+	point of x are -0.401550387597:0.311627906977
+	point of y are 0.432098765432:-0.328395061728
+area is 0.135591922672
+FOUND color is data: "Aon Baka"
+	point of x are -0.401550387597:0.308527131783
+	point of y are 0.432098765432:-0.308641975309
+area is 0.131495836922
+FOUND color is data: "Aon Baka"
+	point of x are -0.398449612403:0.33023255814
+	point of y are 0.437037037037:-0.274074074074
+area is 0.129543496985
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.401550387597:0.327131782946
+	point of y are 0.437037037037:-0.343209876543
+area is 0.142138003637
+FOUND color is data: "Aon Baka"
+	point of x are -0.401550387597:0.333333333333
+	point of y are 0.446913580247:-0.308641975309
+area is 0.138811369509
+FOUND color is data: "Aon Baka"
+	point of x are -0.401550387597:0.33023255814
+	point of y are 0.446913580247:-0.303703703704
+area is 0.137322231793
+FOUND color is data: "Aon Baka"
+	point of x are -0.401550387597:0.336434108527
+	point of y are 0.446913580247:-0.279012345679
+area is 0.133930519667
+FOUND color is data: "Aon Baka"
+	point of x are -0.401550387597:0.336434108527
+	point of y are 0.446913580247:-0.274074074074
+area is 0.133019427696
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.407751937984:0.336434108527
+	point of y are 0.456790123457:-0.303703703704
+area is 0.141487223658
+FOUND color is data: "Aon Baka"
+	point of x are -0.407751937984:0.33023255814
+	point of y are 0.451851851852:-0.293827160494
+area is 0.137574887549
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.417054263566:0.324031007752
+	point of y are 0.476543209877:-0.293827160494
+area is 0.142727533735
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.417054263566:0.336434108527
+	point of y are 0.486419753086:-0.269135802469
+area is 0.142325581395
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.448062015504:0.339534883721
+	point of y are 0.530864197531:-0.343209876543
+area is 0.172104507608
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.336434108527
+	point of y are 0.530864197531:-0.338271604938
+area is 0.169784668389
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.333333333333
+	point of y are 0.530864197531:-0.328395061728
+area is 0.167189204709
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.333333333333
+	point of y are 0.530864197531:-0.323456790123
+area is 0.16622834721
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.33023255814
+	point of y are 0.530864197531:-0.318518518519
+area is 0.164609053498
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.324031007752
+	point of y are 0.530864197531:-0.313580246914
+area is 0.162342807924
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.324031007752
+	point of y are 0.530864197531:-0.308641975309
+area is 0.161393434778
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.320930232558
+	point of y are 0.530864197531:-0.308641975309
+area is 0.1607426548
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.317829457364
+	point of y are 0.530864197531:-0.303703703704
+area is 0.15915015791
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.317829457364
+	point of y are 0.530864197531:-0.303703703704
+area is 0.15915015791
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.314728682171
+	point of y are 0.530864197531:-0.303703703704
+area is 0.158503206048
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.311627906977
+	point of y are 0.530864197531:-0.303703703704
+area is 0.157856254187
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.311627906977
+	point of y are 0.530864197531:-0.303703703704
+area is 0.157856254187
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.44496124031:0.308527131783
+	point of y are 0.530864197531:-0.303703703704
+area is 0.157209302326
+FOUND color is data: "Aon Baka"
+	point of x are -0.51007751938:0.33023255814
+	point of y are 0.575308641975:-0.382716049383
+area is 0.201259450665
+FOUND color is data: "Aon Baka"
+	point of x are -0.522480620155:0.333333333333
+	point of y are 0.585185185185:-0.407407407407
+area is 0.212368647717
+FOUND color is data: "Aon Baka"
+	point of x are -0.522480620155:0.33023255814
+	point of y are 0.585185185185:-0.402469135802
+area is 0.210546463776
+FOUND color is data: "Aon Baka"
+	point of x are -0.531782945736:0.324031007752
+	point of y are 0.59012345679:-0.446913580247
+area is 0.221877691645
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.531782945736:0.320930232558
+	point of y are 0.59012345679:-0.432098765432
+area is 0.217915590009
+FOUND color is data: "Aon Baka"
+	point of x are -0.553488372093:0.314728682171
+	point of y are 0.595061728395:-0.481481481481
+area is 0.233668293617
+FOUND color is data: "Aon Baka"
+	point of x are -0.553488372093:0.311627906977
+	point of y are 0.595061728395:-0.476543209877
+area is 0.231765719208
+FOUND color is data: "Aon Baka"
+	point of x are -0.562790697674:0.311627906977
+	point of y are 0.604938271605:-0.506172839506
+area is 0.242894056848
+FOUND color is data: "Aon Baka"
+	point of x are -0.565891472868:0.302325581395
+	point of y are 0.604938271605:-0.496296296296
+area is 0.239027658149
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.572093023256:0.283720930233
+	point of y are 0.60987654321:-0.57037037037
+area is 0.252517944301
+FOUND color is data: "Aon Baka"
+	point of x are -0.57519379845:0.283720930233
+	point of y are 0.60987654321:-0.565432098765
+area is 0.252372475835
+FOUND color is data: "Aon Baka"
+	point of x are -0.581395348837:0.308527131783
+	point of y are 0.60987654321:-0.565432098765
+area is 0.26148339554
+FOUND color is data: "Aon Baka"
+	point of x are -0.584496124031:0.308527131783
+	point of y are 0.60987654321:-0.59012345679
+area is 0.267906976744
+FOUND color is data: "Aon Baka"
+	point of x are -0.593798449612:0.305426356589
+	point of y are 0.604938271605:-0.664197530864
+area is 0.285309599005
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.593798449612:0.293023255814
+	point of y are 0.604938271605:-0.659259259259
+area is 0.280279452579
+FOUND color is data: "Aon Baka"
+	point of x are -0.590697674419:0.293023255814
+	point of y are 0.604938271605:-0.649382716049
+area is 0.277117427505
+FOUND color is data: "Aon Baka"
+	point of x are -0.590697674419:0.286821705426
+	point of y are 0.604938271605:-0.63950617284
+area is 0.273006029285
+FOUND color is data: "Aon Baka"
+	point of x are -0.590697674419:0.286821705426
+	point of y are 0.604938271605:-0.634567901235
+area is 0.271922672026
+FOUND color is data: "Aon Baka"
+	point of x are -0.590697674419:0.283720930233
+	point of y are 0.604938271605:-0.634567901235
+area is 0.270961814528
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:0.280620155039
+	point of y are 0.604938271605:-0.624691358025
+area is 0.266896353718
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:0.280620155039
+	point of y are 0.604938271605:-0.61975308642
+area is 0.265824480812
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:0.277519379845
+	point of y are 0.604938271605:-0.614814814815
+area is 0.263807062877
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:0.274418604651
+	point of y are 0.604938271605:-0.6
+area is 0.259668867834
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:0.274418604651
+	point of y are 0.604938271605:-0.595061728395
+area is 0.258604651163
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:0.271317829457
+	point of y are 0.604938271605:-0.59012345679
+area is 0.256614030051
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:0.268217054264
+	point of y are 0.604938271605:-0.585185185185
+area is 0.254631065174
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:0.268217054264
+	point of y are 0.604938271605:-0.58024691358
+area is 0.253574504737
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.314728682171
+	point of y are 0.61975308642:-0.688888888889
+area is 0.30027753852
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.320930232558
+	point of y are 0.61975308642:-0.683950617284
+area is 0.301165661786
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.6:0.327131782946
+	point of y are 0.62962962963:-0.743209876543
+area is 0.318200784764
+FOUND color is data: "Aon Baka"
+	point of x are -0.6:0.324031007752
+	point of y are 0.624691358025:-0.733333333333
+area is 0.313714231027
+FOUND color is data: "Aon Baka"
+	point of x are -0.6:0.317829457364
+	point of y are 0.624691358025:-0.733333333333
+area is 0.311608766389
+FOUND color is data: "Aon Baka"
+	point of x are -0.6:0.336434108527
+	point of y are 0.62962962963:-0.777777777778
+area is 0.329486075223
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.33023255814
+	point of y are 0.62962962963:-0.772839506173
+area is 0.327242798354
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.568992248062:0.361240310078
+	point of y are 0.624691358025:-0.698765432099
+area is 0.307780648866
+FOUND color is data: "Aon Baka"
+	point of x are -0.57519379845:0.35503875969
+	point of y are 0.624691358025:-0.698765432099
+area is 0.307780648866
+FOUND color is data: "Aon Baka"
+	point of x are -0.550387596899:0.373643410853
+	point of y are 0.624691358025:-0.506172839506
+area is 0.261238396019
+FOUND color is data: "Aon Baka"
+	point of x are -0.553488372093:0.370542635659
+	point of y are 0.624691358025:-0.506172839506
+area is 0.261238396019
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.531782945736:0.386046511628
+	point of y are 0.61975308642:-0.466666666667
+area is 0.249287013111
+FOUND color is data: "Aon Baka"
+	point of x are -0.53488372093:0.386046511628
+	point of y are 0.61975308642:-0.466666666667
+area is 0.250129198966
+FOUND color is data: "Aon Baka"
+	point of x are -0.513178294574:0.376744186047
+	point of y are 0.614814814815:-0.437037037037
+area is 0.234016652311
+FOUND color is data: "Aon Baka"
+	point of x are -0.513178294574:0.376744186047
+	point of y are 0.614814814815:-0.432098765432
+area is 0.232917982582
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:0.417054263566
+	point of y are 0.60987654321:-0.471604938272
+area is 0.248992248062
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.500775193798:0.410852713178
+	point of y are 0.60987654321:-0.461728395062
+area is 0.244226241746
+FOUND color is data: "Aon Baka"
+	point of x are -0.488372093023:0.441860465116
+	point of y are 0.6:-0.481481481481
+area is 0.251507321275
+FOUND color is data: "Aon Baka"
+	point of x are -0.488372093023:0.441860465116
+	point of y are 0.6:-0.471604938272
+area is 0.249210450761
+FOUND color is data: "Aon Baka"
+	point of x are -0.475968992248:0.451162790698
+	point of y are 0.595061728395:-0.550617283951
+area is 0.26554885635
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.435658914729:0.506976744186
+	point of y are 0.58024691358:-0.535802469136
+area is 0.263006986314
+FOUND color is data: "Aon Baka"
+	point of x are -0.435658914729:0.506976744186
+	point of y are 0.58024691358:-0.530864197531
+area is 0.261843238587
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.435658914729:0.506976744186
+	point of y are 0.58024691358:-0.525925925926
+area is 0.26067949086
+FOUND color is data: "Aon Baka"
+	point of x are -0.435658914729:0.506976744186
+	point of y are 0.58024691358:-0.525925925926
+area is 0.26067949086
+FOUND color is data: "Aon Baka"
+	point of x are -0.435658914729:0.506976744186
+	point of y are 0.58024691358:-0.525925925926
+area is 0.26067949086
+FOUND color is data: "Aon Baka"
+	point of x are -0.435658914729:0.503875968992
+	point of y are 0.58024691358:-0.525925925926
+area is 0.259821992535
+FOUND color is data: "Aon Baka"
+	point of x are -0.435658914729:0.503875968992
+	point of y are 0.58024691358:-0.525925925926
+area is 0.259821992535
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.435658914729:0.500775193798
+	point of y are 0.58024691358:-0.496296296296
+area is 0.252027945258
+FOUND color is data: "Aon Baka"
+	point of x are -0.432558139535:0.500775193798
+	point of y are 0.58024691358:-0.486419753086
+area is 0.248888888889
+FOUND color is data: "Aon Baka"
+	point of x are -0.432558139535:0.497674418605
+	point of y are 0.58024691358:-0.481481481481
+area is 0.246913580247
+FOUND color is data: "Aon Baka"
+	point of x are -0.432558139535:0.497674418605
+	point of y are 0.58024691358:-0.476543209877
+area is 0.24576514499
+FOUND color is data: "Aon Baka"
+	point of x are -0.432558139535:0.494573643411
+	point of y are 0.58024691358:-0.471604938272
+area is 0.243801320701
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.432558139535:0.491472868217
+	point of y are 0.58024691358:-0.466666666667
+area is 0.241845152646
+FOUND color is data: "Aon Baka"
+	point of x are -0.432558139535:0.491472868217
+	point of y are 0.58024691358:-0.466666666667
+area is 0.241845152646
+FOUND color is data: "Aon Baka"
+	point of x are -0.432558139535:0.488372093023
+	point of y are 0.58024691358:-0.466666666667
+area is 0.241033591731
+FOUND color is data: "Aon Baka"
+	point of x are -0.42015503876:0.562790697674
+	point of y are 0.575308641975:-0.585185185185
+area is 0.285175614891
+FOUND color is data: "Aon Baka"
+	point of x are -0.42015503876:0.568992248062
+	point of y are 0.58024691358:-0.565432098765
+area is 0.283311321658
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.42015503876:0.562790697674
+	point of y are 0.58024691358:-0.56049382716
+area is 0.280321561872
+FOUND color is data: "Aon Baka"
+	point of x are -0.413953488372:0.568992248062
+	point of y are 0.59012345679:-0.535802469136
+area is 0.276681022107
+FOUND color is data: "Aon Baka"
+	point of x are -0.417054263566:0.565891472868
+	point of y are 0.59012345679:-0.56049382716
+area is 0.282748588382
+FOUND color is data: "Aon Baka"
+	point of x are -0.417054263566:0.584496124031
+	point of y are 0.59012345679:-0.555555555556
+area is 0.286863814719
+FOUND color is data: "Aon Baka"
+	point of x are -0.417054263566:0.584496124031
+	point of y are 0.59012345679:-0.545679012346
+area is 0.284390850799
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.426356589147:0.590697674419
+	point of y are 0.595061728395:-0.63950617284
+area is 0.313905636903
+FOUND color is data: "Aon Baka"
+	point of x are -0.426356589147:0.590697674419
+	point of y are 0.595061728395:-0.634567901235
+area is 0.312650014355
+FOUND color is data: "Aon Baka"
+	point of x are -0.429457364341:0.593798449612
+	point of y are 0.6:-0.60987654321
+area is 0.309503301751
+FOUND color is data: "Aon Baka"
+	point of x are -0.429457364341:0.593798449612
+	point of y are 0.6:-0.60987654321
+area is 0.309503301751
+FOUND color is data: "Aon Baka"
+	point of x are -0.426356589147:0.593798449612
+	point of y are 0.6:-0.604938271605
+area is 0.307305962293
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.438759689922:0.587596899225
+	point of y are 0.604938271605:-0.659259259259
+area is 0.324379366447
+FOUND color is data: "Aon Baka"
+	point of x are -0.451162790698:0.587596899225
+	point of y are 0.60987654321:-0.674074074074
+area is 0.333429036271
+FOUND color is data: "Aon Baka"
+	point of x are -0.451162790698:0.587596899225
+	point of y are 0.60987654321:-0.669135802469
+area is 0.332146616901
+FOUND color is data: "Aon Baka"
+	point of x are -0.454263565891:0.593798449612
+	point of y are 0.624691358025:-0.693827160494
+area is 0.345472293999
+FOUND color is data: "Aon Baka"
+	point of x are -0.454263565891:0.590697674419
+	point of y are 0.61975308642:-0.688888888889
+area is 0.34187003541
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.454263565891:0.6
+	point of y are 0.62962962963:-0.683950617284
+area is 0.346214948799
+FOUND color is data: "Aon Baka"
+	point of x are -0.454263565891:0.596899224806
+	point of y are 0.62962962963:-0.679012345679
+area is 0.343898937697
+FOUND color is data: "Aon Baka"
+	point of x are -0.466666666667:0.612403100775
+	point of y are 0.644444444444:-0.698765432099
+area is 0.362354292277
+FOUND color is data: "Aon Baka"
+	point of x are -0.463565891473:0.612403100775
+	point of y are 0.644444444444:-0.698765432099
+area is 0.36131304431
+FOUND color is data: "Aon Baka"
+	point of x are -0.466666666667:0.618604651163
+	point of y are 0.654320987654:-0.698765432099
+area is 0.367116470476
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.466666666667:0.618604651163
+	point of y are 0.654320987654:-0.693827160494
+area is 0.365776629343
+FOUND color is data: "Aon Baka"
+	point of x are -0.482170542636:0.621705426357
+	point of y are 0.664197530864:-0.693827160494
+area is 0.374772705522
+FOUND color is data: "Aon Baka"
+	point of x are -0.482170542636:0.621705426357
+	point of y are 0.664197530864:-0.693827160494
+area is 0.374772705522
+FOUND color is data: "Aon Baka"
+	point of x are -0.488372093023:0.615503875969
+	point of y are 0.674074074074:-0.698765432099
+area is 0.378861135037
+FOUND color is data: "Aon Baka"
+	point of x are -0.488372093023:0.612403100775
+	point of y are 0.674074074074:-0.698765432099
+area is 0.377796918365
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.472868217054:0.584496124031
+	point of y are 0.683950617284:-0.614814814815
+area is 0.343317063834
+FOUND color is data: "Aon Baka"
+	point of x are -0.491472868217:0.584496124031
+	point of y are 0.683950617284:-0.718518518519
+area is 0.377253325677
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:0.618604651163
+	point of y are 0.703703703704:-0.718518518519
+area is 0.3991042205
+FOUND color is data: "Aon Baka"
+	point of x are -0.500775193798:0.612403100775
+	point of y are 0.698765432099:-0.708641975309
+area is 0.391673844387
+FOUND color is data: "Aon Baka"
+	point of x are -0.500775193798:0.609302325581
+	point of y are 0.698765432099:-0.703703703704
+area is 0.38921236482
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.500775193798:0.606201550388
+	point of y are 0.698765432099:-0.703703703704
+area is 0.388125179443
+FOUND color is data: "Aon Baka"
+	point of x are -0.500775193798:0.603100775194
+	point of y are 0.698765432099:-0.693827160494
+area is 0.38431237439
+FOUND color is data: "Aon Baka"
+	point of x are -0.500775193798:0.603100775194
+	point of y are 0.698765432099:-0.693827160494
+area is 0.38431237439
+FOUND color is data: "Aon Baka"
+	point of x are -0.500775193798:0.6
+	point of y are 0.698765432099:-0.688888888889
+area is 0.381873863528
+FOUND color is data: "Aon Baka"
+	point of x are -0.500775193798:0.6
+	point of y are 0.698765432099:-0.688888888889
+area is 0.381873863528
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.500775193798:0.596899224806
+	point of y are 0.698765432099:-0.688888888889
+area is 0.380798162504
+FOUND color is data: "Aon Baka"
+	point of x are -0.497674418605:0.596899224806
+	point of y are 0.698765432099:-0.688888888889
+area is 0.37972246148
+FOUND color is data: "Aon Baka"
+	point of x are -0.497674418605:0.593798449612
+	point of y are 0.698765432099:-0.688888888889
+area is 0.378646760456
+FOUND color is data: "Aon Baka"
+	point of x are -0.497674418605:0.593798449612
+	point of y are 0.698765432099:-0.688888888889
+area is 0.378646760456
+FOUND color is data: "Aon Baka"
+	point of x are -0.494573643411:0.590697674419
+	point of y are 0.698765432099:-0.688888888889
+area is 0.376495358408
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.494573643411:0.590697674419
+	point of y are 0.698765432099:-0.659259259259
+area is 0.368456311609
+FOUND color is data: "Aon Baka"
+	point of x are -0.491472868217:0.590697674419
+	point of y are 0.698765432099:-0.659259259259
+area is 0.36740357929
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.606201550388:0.587596899225
+	point of y are 0.743209876543:-0.950617283951
+area is 0.505522059527
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.578294573643
+	point of y are 0.738271604938:-0.935802469136
+area is 0.49443583118
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.57519379845
+	point of y are 0.738271604938:-0.935802469136
+area is 0.49313809934
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.57519379845
+	point of y are 0.738271604938:-0.930864197531
+area is 0.491683414681
+FOUND color is data: "Aon Baka"
+	point of x are -0.593798449612:0.525581395349
+	point of y are 0.738271604938:-0.906172839506
+area is 0.460189491817
+FOUND color is data: "Aon Baka"
+	point of x are -0.593798449612:0.525581395349
+	point of y are 0.738271604938:-0.901234567901
+area is 0.458807541392
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.550387596899
+	point of y are 0.738271604938:-0.945679012346
+area is 0.485604364054
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.516279069767
+	point of y are 0.733333333333:-0.935802469136
+area is 0.467099243947
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.547286821705
+	point of y are 0.733333333333:-0.98024691358
+area is 0.492820365585
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:0.547286821705
+	point of y are 0.733333333333:-0.975308641975
+area is 0.491400133984
+FOUND color is data: "Aon Baka"
+	point of x are -0.627906976744:0.531782945736
+	point of y are 0.728395061728:-1.0
+area is 0.501100583788
+FOUND color is data: "Aon Baka"
+	point of x are -0.627906976744:0.528682170543
+	point of y are 0.728395061728:-1.0
+area is 0.499760742655
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.522480620155
+	point of y are 0.723456790123:-1.0
+area is 0.503676906881
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.519379844961
+	point of y are 0.718518518519:-1.0
+area is 0.500901521677
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.516279069767
+	point of y are 0.718518518519:-1.0
+area is 0.499569336779
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.513178294574
+	point of y are 0.718518518519:-1.0
+area is 0.498237151881
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.506976744186
+	point of y are 0.718518518519:-1.0
+area is 0.495572782084
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.506976744186
+	point of y are 0.718518518519:-1.0
+area is 0.495572782084
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.503875968992
+	point of y are 0.718518518519:-1.0
+area is 0.494240597186
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.500775193798
+	point of y are 0.718518518519:-1.0
+area is 0.492908412288
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.497674418605
+	point of y are 0.718518518519:-1.0
+area is 0.49157622739
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.497674418605
+	point of y are 0.718518518519:-1.0
+area is 0.49157622739
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.494573643411
+	point of y are 0.718518518519:-1.0
+area is 0.490244042492
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.494573643411
+	point of y are 0.718518518519:-1.0
+area is 0.490244042492
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.494573643411
+	point of y are 0.718518518519:-1.0
+area is 0.490244042492
+FOUND color is data: "Aon Baka"
+	point of x are -0.646511627907:0.491472868217
+	point of y are 0.718518518519:-1.0
+area is 0.488911857594
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.854263565891:0.466666666667
+	point of y are 0.728395061728:-1.0
+area is 0.57077232271
+FOUND color is data: "Aon Baka"
+	point of x are -0.854263565891:0.460465116279
+	point of y are 0.728395061728:-1.0
+area is 0.568092640444
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.86976744186:0.460465116279
+	point of y are 0.733333333333:-1.0
+area is 0.576434108527
+FOUND color is data: "Aon Baka"
+	point of x are -0.86976744186:0.457364341085
+	point of y are 0.728395061728:-1.0
+area is 0.573452004977
+FOUND color is data: "Aon Baka"
+	point of x are -0.885271317829:0.451162790698
+	point of y are 0.733333333333:-1.0
+area is 0.579121447028
+FOUND color is data: "Aon Baka"
+	point of x are -0.885271317829:0.448062015504
+	point of y are 0.733333333333:-1.0
+area is 0.577777777778
+FOUND color is data: "Aon Baka"
+	point of x are -0.900775193798:0.413953488372
+	point of y are 0.733333333333:-1.0
+area is 0.569715762274
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.900775193798:0.410852713178
+	point of y are 0.733333333333:-1.0
+area is 0.568372093023
+FOUND color is data: "Aon Baka"
+	point of x are -0.913178294574:0.404651162791
+	point of y are 0.728395061728:-1.0
+area is 0.569432481577
+FOUND color is data: "Aon Baka"
+	point of x are -0.913178294574:0.401550387597
+	point of y are 0.728395061728:-1.0
+area is 0.568092640444
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.937984496124:0.417054263566
+	point of y are 0.738271604938:-1.0
+area is 0.58885634989
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.950387596899:0.392248062016
+	point of y are 0.743209876543:-1.0
+area is 0.585123935305
+FOUND color is data: "Aon Baka"
+	point of x are -0.950387596899:0.410852713178
+	point of y are 0.743209876543:-1.0
+area is 0.593231888219
+FOUND color is data: "Aon Baka"
+	point of x are -0.950387596899:0.407751937984
+	point of y are 0.743209876543:-1.0
+area is 0.591880562733
+FOUND color is data: "Aon Baka"
+	point of x are -0.962790697674:0.382945736434
+	point of y are 0.748148148148:-1.0
+area is 0.588136663796
+FOUND color is data: "Aon Baka"
+	point of x are -0.962790697674:0.382945736434
+	point of y are 0.748148148148:-1.0
+area is 0.588136663796
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.972093023256:0.376744186047
+	point of y are 0.758024691358:-1.0
+area is 0.592822279644
+FOUND color is data: "Aon Baka"
+	point of x are -0.97519379845:0.376744186047
+	point of y are 0.758024691358:-1.0
+area is 0.594185089482
+FOUND color is data: "Aon Baka"
+	point of x are -0.987596899225:0.373643410853
+	point of y are 0.767901234568:-1.0
+area is 0.601634606182
+FOUND color is data: "Aon Baka"
+	point of x are -0.987596899225:0.373643410853
+	point of y are 0.767901234568:-1.0
+area is 0.601634606182
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.376744186047
+	point of y are 0.772839506173:-1.0
+area is 0.608812326538
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.376744186047
+	point of y are 0.767901234568:-1.0
+area is 0.607116470476
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.376744186047
+	point of y are 0.772839506173:-1.0
+area is 0.608812326538
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.376744186047
+	point of y are 0.772839506173:-1.0
+area is 0.608812326538
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.376744186047
+	point of y are 0.772839506173:-1.0
+area is 0.608812326538
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.376744186047
+	point of y are 0.772839506173:-1.0
+area is 0.608812326538
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.373643410853
+	point of y are 0.772839506173:-1.0
+area is 0.607438032348
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.373643410853
+	point of y are 0.772839506173:-1.0
+area is 0.607438032348
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.373643410853
+	point of y are 0.772839506173:-1.0
+area is 0.607438032348
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.370542635659
+	point of y are 0.772839506173:-1.0
+area is 0.606063738157
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.370542635659
+	point of y are 0.772839506173:-1.0
+area is 0.606063738157
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.370542635659
+	point of y are 0.772839506173:-1.0
+area is 0.606063738157
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.367441860465
+	point of y are 0.772839506173:-1.0
+area is 0.604689443966
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.367441860465
+	point of y are 0.772839506173:-1.0
+area is 0.604689443966
+FOUND color is data: "Aon Baka"
+	point of x are -0.996899224806:0.367441860465
+	point of y are 0.772839506173:-1.0
+area is 0.604689443966
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.404651162791
+	point of y are 0.802469135802:-1.0
+area is 0.632960091875
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.404651162791
+	point of y are 0.817283950617:-1.0
+area is 0.638162503589
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.401550387597
+	point of y are 0.812345679012:-1.0
+area is 0.63502344722
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.398449612403
+	point of y are 0.812345679012:-1.0
+area is 0.633618528089
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.410852713178
+	point of y are 0.812345679012:-1.0
+area is 0.639238204613
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.410852713178
+	point of y are 0.812345679012:-1.0
+area is 0.639238204613
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.42015503876
+	point of y are 0.807407407407:-1.0
+area is 0.64169968418
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.417054263566
+	point of y are 0.802469135802:-1.0
+area is 0.638549143459
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.451162790698
+	point of y are 0.817283950617:-1.0
+area is 0.659293712317
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.448062015504
+	point of y are 0.812345679012:-1.0
+area is 0.656097234185
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.429457364341
+	point of y are 0.817283950617:-1.0
+area is 0.649432481577
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:0.429457364341
+	point of y are 0.817283950617:-1.0
+area is 0.649432481577
+FOUND color is data: "Aon Baka"
+	point of x are -0.993798449612:-0.435658914729
+	point of y are 0.817283950617:-1.0
+area is 0.253574504737
+FOUND color is data: "Aon Baka"
+	point of x are -0.993798449612:-0.435658914729
+	point of y are 0.812345679012:-1.0
+area is 0.252885443583
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.962790697674:-0.336434108527
+	point of y are 0.822222222222:-1.0
+area is 0.285340223945
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:0.513178294574
+	point of y are 0.822222222222:-1.0
+area is 0.668148148148
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:0.506976744186
+	point of y are 0.817283950617:-1.0
+area is 0.663519954063
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.944186046512:0.522480620155
+	point of y are 0.812345679012:-1.0
+area is 0.664526748971
+FOUND color is data: "Aon Baka"
+	point of x are -0.944186046512:0.519379844961
+	point of y are 0.812345679012:-1.0
+area is 0.66312182984
+FOUND color is data: "Aon Baka"
+	point of x are -0.931782945736:-0.367441860465
+	point of y are 0.812345679012:-1.0
+area is 0.255695281845
+FOUND color is data: "Aon Baka"
+	point of x are -0.931782945736:-0.364341085271
+	point of y are 0.812345679012:-1.0
+area is 0.257100200976
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.513178294574
+	point of y are 0.812345679012:-1.0
+area is 0.64907263853
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.807407407407:-1.0
+area is 0.645902957221
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.807407407407:-1.0
+area is 0.645902957221
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+FOUND color is data: "Aon Baka"
+	point of x are -0.919379844961:0.51007751938
+	point of y are 0.812345679012:-1.0
+area is 0.647667719399
+FOUND color is data: "Aon Baka"
+	point of x are -0.841860465116:0.621705426357
+	point of y are 0.807407407407:-1.0
+area is 0.661314958369
+FOUND color is data: "Aon Baka"
+	point of x are -0.826356589147:0.634108527132
+	point of y are 0.807407407407:-1.0
+area is 0.659913867356
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.813953488372:-0.17519379845
+	point of y are 0.782716049383:-1.0
+area is 0.284681787731
+FOUND color is data: "Aon Baka"
+	point of x are -0.813953488372:-0.17519379845
+	point of y are 0.782716049383:-1.0
+area is 0.284681787731
+FOUND color is data: "Aon Baka"
+	point of x are -0.798449612403:0.658914728682
+	point of y are 0.812345679012:-1.0
+area is 0.660311991578
+FOUND color is data: "Aon Baka"
+	point of x are -0.798449612403:0.655813953488
+	point of y are 0.812345679012:-1.0
+area is 0.658907072447
+FOUND color is data: "Aon Baka"
+	point of x are -0.77984496124:0.640310077519
+	point of y are 0.817283950617:-1.0
+area is 0.645206239832
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.77984496124:0.671317829457
+	point of y are 0.817283950617:-1.0
+area is 0.659293712317
+FOUND color is data: "Aon Baka"
+	point of x are -0.764341085271:0.693023255814
+	point of y are 0.822222222222:-1.0
+area is 0.66391042205
+FOUND color is data: "Aon Baka"
+	point of x are -0.764341085271:0.68992248062
+	point of y are 0.822222222222:-1.0
+area is 0.662497846684
+FOUND color is data: "Aon Baka"
+	point of x are -0.745736434109:0.671317829457
+	point of y are 0.827160493827:-1.0
+area is 0.647296391999
+FOUND color is data: "Aon Baka"
+	point of x are -0.745736434109:0.671317829457
+	point of y are 0.827160493827:-1.0
+area is 0.647296391999
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.733333333333:0.686821705426
+	point of y are 0.827160493827:-1.0
+area is 0.648712795483
+FOUND color is data: "Aon Baka"
+	point of x are -0.733333333333:0.724031007752
+	point of y are 0.827160493827:-1.0
+area is 0.665709637286
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.404651162791
+	point of y are 0.782716049383:-1.0
+area is 0.498884103742
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.714728682171:0.413953488372
+	point of y are 0.782716049383:-1.0
+area is 0.50302995502
+FOUND color is data: "Aon Baka"
+	point of x are -0.640310077519:0.190697674419
+	point of y are 0.748148148148:-1.0
+area is 0.363181165662
+FOUND color is data: "Aon Baka"
+	point of x are -0.631007751938:0.0387596899225
+	point of y are 0.743209876543:-1.0
+area is 0.29188630491
+FOUND color is data: "Aon Baka"
+	point of x are -0.618604651163:0.221705426357
+	point of y are 0.748148148148:-1.0
+area is 0.367246626471
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.618604651163:0.221705426357
+	point of y are 0.743209876543:-1.0
+area is 0.366209206623
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:-0.100775193798
+	point of y are 0.743209876543:-1.0
+area is 0.218914728682
+FOUND color is data: "Aon Baka"
+	point of x are -0.603100775194:-0.103875968992
+	point of y are 0.743209876543:-1.0
+area is 0.217563403196
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:0.0232558139535
+	point of y are 0.738271604938:-1.0
+area is 0.265456981529
+FOUND color is data: "Aon Baka"
+	point of x are -0.587596899225:-0.0201550387597
+	point of y are 0.733333333333:-1.0
+area is 0.245891472868
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.562790697674:0.209302325581
+	point of y are 0.723456790123:-1.0
+area is 0.332667240884
+FOUND color is data: "Aon Baka"
+	point of x are -0.562790697674:0.209302325581
+	point of y are 0.723456790123:-1.0
+area is 0.332667240884
+FOUND color is data: "Aon Baka"
+	point of x are -0.553488372093:-0.0914728682171
+	point of y are 0.718518518519:-1.0
+area is 0.198495549813
+FOUND color is data: "Aon Baka"
+	point of x are -0.553488372093:-0.100775193798
+	point of y are 0.718518518519:-1.0
+area is 0.194498995119
+FOUND color is data: "Aon Baka"
+	point of x are -0.544186046512:0.240310077519
+	point of y are 0.718518518519:-1.0
+area is 0.337042779213
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.544186046512:0.240310077519
+	point of y are 0.718518518519:-1.0
+area is 0.337042779213
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:-0.0728682170543
+	point of y are 0.703703703704:-1.0
+area is 0.194142980189
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:-0.0759689922481
+	point of y are 0.703703703704:-1.0
+area is 0.192822279644
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:-0.0790697674419
+	point of y are 0.703703703704:-1.0
+area is 0.191501579098
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:-0.0790697674419
+	point of y are 0.703703703704:-1.0
+area is 0.191501579098
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:-0.0821705426357
+	point of y are 0.703703703704:-1.0
+area is 0.190180878553
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:1.0
+	point of y are 0.827160493827:-1.0
+area is 0.698286917408
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:1.0
+	point of y are 0.827160493827:-1.0
+area is 0.698286917408
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:1.0
+	point of y are 0.827160493827:-1.0
+area is 0.698286917408
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:1.0
+	point of y are 0.827160493827:-1.0
+area is 0.698286917408
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:1.0
+	point of y are 0.827160493827:-1.0
+area is 0.698286917408
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:1.0
+	point of y are 0.827160493827:-1.0
+area is 0.698286917408
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:0.448062015504
+	point of y are 0.733333333333:-1.0
+area is 0.423255813953
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:0.302325581395
+	point of y are 0.718518518519:-1.0
+area is 0.357025552684
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:0.302325581395
+	point of y are 0.718518518519:-1.0
+area is 0.357025552684
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:0.302325581395
+	point of y are 0.718518518519:-1.0
+area is 0.357025552684
+FOUND color is data: "Aon Baka"
+	point of x are -0.448062015504:1.0
+	point of y are 0.832098765432:-1.0
+area is 0.663248157718
+FOUND color is data: "Aon Baka"
+	point of x are -0.432558139535:1.0
+	point of y are 0.832098765432:-1.0
+area is 0.656146999713
+FOUND color is data: "Aon Baka"
+	point of x are -0.432558139535:1.0
+	point of y are 0.832098765432:-1.0
+area is 0.656146999713
+FOUND color is data: "Aon Baka"
+	point of x are -0.42015503876:1.0
+	point of y are 0.832098765432:-1.0
+area is 0.650466073308
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.42015503876:1.0
+	point of y are 0.832098765432:-1.0
+area is 0.650466073308
+FOUND color is data: "Aon Baka"
+	point of x are -0.410852713178:1.0
+	point of y are 0.822222222222:-1.0
+area is 0.642721791559
+FOUND color is data: "Aon Baka"
+	point of x are -0.410852713178:1.0
+	point of y are 0.822222222222:-1.0
+area is 0.642721791559
+FOUND color is data: "Aon Baka"
+	point of x are -0.417054263566:1.0
+	point of y are 0.812345679012:-1.0
+area is 0.642048042875
+FOUND color is data: "Aon Baka"
+	point of x are -0.417054263566:1.0
+	point of y are 0.812345679012:-1.0
+area is 0.642048042875
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.417054263566:1.0
+	point of y are 0.807407407407:-1.0
+area is 0.640298593167
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.482170542636:1.0
+	point of y are 0.925925925926:-1.0
+area is 0.713637668676
+FOUND color is data: "Aon Baka"
+	point of x are -0.482170542636:1.0
+	point of y are 0.925925925926:-1.0
+area is 0.713637668676
+FOUND color is data: "Aon Baka"
+	point of x are -0.497674418605:1.0
+	point of y are 0.940740740741:-1.0
+area is 0.726649440138
+FOUND color is data: "Aon Baka"
+	point of x are -0.497674418605:1.0
+	point of y are 0.940740740741:-1.0
+area is 0.726649440138
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.497674418605:1.0
+	point of y are 0.940740740741:-1.0
+area is 0.726649440138
+FOUND color is data: "Aon Baka"
+	point of x are -0.513178294574:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.741644176476
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:0.0604651162791
+	point of y are 0.767901234568:-1.0
+area is 0.260388553929
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:0.0542635658915
+	point of y are 0.767901234568:-1.0
+area is 0.257647621782
+FOUND color is data: "Aon Baka"
+	point of x are -0.547286821705:0.240310077519
+	point of y are 0.772839506173:-1.0
+area is 0.349070724471
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.547286821705:0.237209302326
+	point of y are 0.772839506173:-1.0
+area is 0.34769643028
+FOUND color is data: "Aon Baka"
+	point of x are -0.568992248062:0.206201550388
+	point of y are 0.777777777778:-1.0
+area is 0.344530577089
+FOUND color is data: "Aon Baka"
+	point of x are -0.568992248062:0.206201550388
+	point of y are 0.772839506173:-1.0
+area is 0.343573547708
+FOUND color is data: "Aon Baka"
+	point of x are -0.593798449612:0.0418604651163
+	point of y are 0.777777777778:-1.0
+area is 0.282515073213
+FOUND color is data: "Aon Baka"
+	point of x are -0.593798449612:0.0418604651163
+	point of y are 0.777777777778:-1.0
+area is 0.282515073213
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.615503875969:0.131782945736
+	point of y are 0.802469135802:-1.0
+area is 0.336740357929
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.711627906977:-0.106976744186
+	point of y are 0.851851851852:-1.0
+area is 0.279931093885
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.841860465116:0.0821705426357
+	point of y are 0.832098765432:-1.0
+area is 0.423229017131
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.866666666667:0.162790697674
+	point of y are 0.832098765432:-1.0
+area is 0.471516891569
+FOUND color is data: "Aon Baka"
+	point of x are -0.866666666667:0.165891472868
+	point of y are 0.827160493827:-1.0
+area is 0.471662360034
+FOUND color is data: "Aon Baka"
+	point of x are -0.891472868217:-0.0046511627907
+	point of y are 0.827160493827:-1.0
+area is 0.405091396306
+FOUND color is data: "Aon Baka"
+	point of x are -0.891472868217:0.0976744186047
+	point of y are 0.822222222222:-1.0
+area is 0.450611541774
+FOUND color is data: "Aon Baka"
+	point of x are -0.916279069767:-0.339534883721
+	point of y are 0.827160493827:-1.0
+area is 0.263451047947
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.916279069767:-0.339534883721
+	point of y are 0.827160493827:-1.0
+area is 0.263451047947
+FOUND color is data: "Aon Baka"
+	point of x are -0.93488372093:-0.299224806202
+	point of y are 0.827160493827:-1.0
+area is 0.290362714135
+FOUND color is data: "Aon Baka"
+	point of x are -0.93488372093:-0.317829457364
+	point of y are 0.822222222222:-1.0
+area is 0.281102497847
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.827160493827:-1.0
+area is 0.382428940568
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.293023255814
+	point of y are 0.822222222222:-1.0
+area is 0.300878552972
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.293023255814
+	point of y are 0.822222222222:-1.0
+area is 0.300878552972
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.293023255814
+	point of y are 0.822222222222:-1.0
+area is 0.300878552972
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+FOUND color is data: "Aon Baka"
+	point of x are -0.953488372093:-0.116279069767
+	point of y are 0.822222222222:-1.0
+area is 0.381395348837
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.959689922481:-0.0914728682171
+	point of y are 0.797530864198:-1.0
+area is 0.390161737965
+NOT FOUND
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.950387596899:0.103875968992
+	point of y are 0.812345679012:-1.0
+area is 0.477672504546
+FOUND color is data: "Aon Baka"
+	point of x are -0.950387596899:0.103875968992
+	point of y are 0.812345679012:-1.0
+area is 0.477672504546
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.181395348837:0.686821705426
+	point of y are 0.901234567901:0.787654320988
+area is 0.0246530768495
+FOUND color is data: "Aon Baka"
+	point of x are -0.93488372093:-0.172093023256
+	point of y are 0.832098765432:-1.0
+area is 0.349376973873
+FOUND color is data: "Aon Baka"
+	point of x are -0.93488372093:-0.296124031008
+	point of y are 0.832098765432:-1.0
+area is 0.292567709829
+FOUND color is data: "Aon Baka"
+	point of x are -0.928682170543:-0.320930232558
+	point of y are 0.846913580247:-1.0
+area is 0.280616326921
+FOUND color is data: "Aon Baka"
+	point of x are -0.928682170543:-0.320930232558
+	point of y are 0.846913580247:-1.0
+area is 0.280616326921
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.916279069767:-0.221705426357
+	point of y are 0.856790123457:-1.0
+area is 0.322419370275
+FOUND color is data: "Aon Baka"
+	point of x are -0.916279069767:-0.339534883721
+	point of y are 0.856790123457:-1.0
+area is 0.267723227103
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.866666666667:-1.0
+area is 0.374780361757
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.866666666667:-1.0
+area is 0.374780361757
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.866666666667:-1.0
+area is 0.374780361757
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.866666666667:-1.0
+area is 0.374780361757
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.866666666667:-1.0
+area is 0.374780361757
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:0.0604651162791
+	point of y are 0.871604938272:-1.0
+area is 0.451216384343
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.871604938272:-1.0
+area is 0.375771844196
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.871604938272:-1.0
+area is 0.375771844196
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.871604938272:-1.0
+area is 0.375771844196
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.871604938272:-1.0
+area is 0.375771844196
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.871604938272:-1.0
+area is 0.375771844196
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.871604938272:-1.0
+area is 0.375771844196
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.871604938272:-1.0
+area is 0.375771844196
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.903875968992:-0.100775193798
+	point of y are 0.871604938272:-1.0
+area is 0.375771844196
+FOUND color is data: "Aon Baka"
+	point of x are -0.801550387597:-0.190697674419
+	point of y are 0.876543209877:-1.0
+area is 0.286572877787
+FOUND color is data: "Aon Baka"
+	point of x are -0.782945736434:-0.156589147287
+	point of y are 0.866666666667:-1.0
+area is 0.292299741602
+FOUND color is data: "Aon Baka"
+	point of x are -0.782945736434:-0.156589147287
+	point of y are 0.866666666667:-1.0
+area is 0.292299741602
+NOT FOUND
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.733333333333:-0.187596899225
+	point of y are 0.846913580247:-1.0
+area is 0.251982007848
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.578294573643:1.0
+	point of y are 0.945679012346:-1.0
+area is 0.767713656809
+FOUND color is data: "Aon Baka"
+	point of x are -0.578294573643:1.0
+	point of y are 0.950617283951:-1.0
+area is 0.769662168629
+FOUND color is data: "Aon Baka"
+	point of x are -0.559689922481:1.0
+	point of y are 0.955555555556:-1.0
+area is 0.762515073213
+FOUND color is data: "Aon Baka"
+	point of x are -0.559689922481:1.0
+	point of y are 0.955555555556:-1.0
+area is 0.762515073213
+FOUND color is data: "Aon Baka"
+	point of x are -0.544186046512:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.756841803043
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.544186046512:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.756841803043
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:1.0
+	point of y are 0.97037037037:-1.0
+area is 0.753017513638
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:1.0
+	point of y are 0.97037037037:-1.0
+area is 0.753017513638
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.506976744186:1.0
+	point of y are 0.97037037037:-1.0
+area is 0.742325581395
+FOUND color is data: "Aon Baka"
+	point of x are -0.506976744186:1.0
+	point of y are 0.97037037037:-1.0
+area is 0.742325581395
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.503875968992:1.0
+	point of y are 0.96049382716:-1.0
+area is 0.737084888506
+FOUND color is data: "Aon Baka"
+	point of x are -0.550387596899:1.0
+	point of y are 0.925925925926:-1.0
+area is 0.746482917026
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.556589147287:1.0
+	point of y are 0.935802469136:-1.0
+area is 0.753312278687
+FOUND color is data: "Aon Baka"
+	point of x are -0.556589147287:1.0
+	point of y are 0.935802469136:-1.0
+area is 0.753312278687
+FOUND color is data: "Aon Baka"
+	point of x are -0.565891472868:1.0
+	point of y are 0.955555555556:-1.0
+area is 0.765546942291
+FOUND color is data: "Aon Baka"
+	point of x are -0.565891472868:1.0
+	point of y are 0.955555555556:-1.0
+area is 0.765546942291
+FOUND color is data: "Aon Baka"
+	point of x are -0.565891472868:1.0
+	point of y are 0.955555555556:-1.0
+area is 0.765546942291
+---------------------> 2018-10-28-14-38 <---------------------
+Analysis data
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.584496124031:1.0
+	point of y are 1.0:-1.0
+area is 0.792248062016
+FOUND color is data: "Aon Baka"
+	point of x are -0.596899224806:-0.0139534883721
+	point of y are 0.861728395062:-1.0
+area is 0.271321657575
+FOUND color is data: "Aon Baka"
+	point of x are -0.6:-0.100775193798
+	point of y are 0.861728395062:-1.0
+area is 0.232355249306
+FOUND color is data: "Aon Baka"
+	point of x are -0.6:-0.106976744186
+	point of y are 0.861728395062:-1.0
+area is 0.229468848694
+FOUND color is data: "Aon Baka"
+	point of x are -0.609302325581:1.0
+	point of y are 1.0:-1.0
+area is 0.804651162791
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.609302325581:-0.116279069767
+	point of y are 0.861728395062:-1.0
+area is 0.229468848694
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.854263565891
+	point of y are 1.0:-1.0
+area is 0.733333333333
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+FOUND color is data: "Aon Baka"
+	point of x are -0.612403100775:0.717829457364
+	point of y are 0.96049382716:-1.0
+area is 0.65197817973
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.801550387597:-0.274418604651
+	point of y are 0.846913580247:-1.0
+area is 0.243391712126
+FOUND color is data: "Aon Baka"
+	point of x are 0.488372093023:0.897674418605
+	point of y are 1.0:0.822222222222
+area is 0.0181912144703
+FOUND color is data: "Aon Baka"
+	point of x are -0.841860465116:-0.280620155039
+	point of y are 0.856790123457:-1.0
+area is 0.260526366159
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.882170542636:-0.268217054264
+	point of y are 0.866666666667:-1.0
+area is 0.286511627907
+FOUND color is data: "Aon Baka"
+	point of x are -0.882170542636:-0.308527131783
+	point of y are 0.866666666667:-1.0
+area is 0.267700258398
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are -0.972093023256:-0.33023255814
+	point of y are 0.896296296296:-1.0
+area is 0.304289405685
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.364341085271
+	point of y are 0.950617283951:-0.916049382716
+area is 0.296640826873
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.240310077519
+	point of y are 0.950617283951:-0.901234567901
+area is 0.351708297445
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.0728682170543
+	point of y are 0.97037037037:-0.772839506173
+area is 0.404046320222
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.0728682170543
+	point of y are 0.965432098765:-0.772839506173
+area is 0.402901713083
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.252713178295
+	point of y are 0.98024691358:-0.683950617284
+area is 0.310908220882
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.0418604651163
+	point of y are 1.0:-0.57037037037
+area is 0.376158484065
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.0387596899225
+	point of y are 1.0:-0.471604938272
+area is 0.353641496794
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.0418604651163
+	point of y are 1.0:-0.466666666667
+area is 0.351317829457
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -1.0:-0.0418604651163
+	point of y are 1.0:-0.466666666667
+area is 0.351317829457
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+FOUND color is data: "Aon Baka"
+	point of x are 0.0:0.0
+	point of y are 0.0:0.0
+area is 0.0
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.770542635659:-0.0976744186047
+	point of y are 0.96049382716:-1.0
+area is 0.329788496507
+FOUND color is data: "Aon Baka"
+	point of x are -0.770542635659:-0.0976744186047
+	point of y are 0.96049382716:-1.0
+area is 0.329788496507
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.668217054264:-0.0821705426357
+	point of y are 0.955555555556:-1.0
+area is 0.286511627907
+FOUND color is data: "Aon Baka"
+	point of x are -0.668217054264:-0.0821705426357
+	point of y are 0.955555555556:-1.0
+area is 0.286511627907
+FOUND color is data: "Aon Baka"
+	point of x are -0.643410852713:-0.119379844961
+	point of y are 0.955555555556:-1.0
+area is 0.256192937123
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.615503875969:-0.116279069767
+	point of y are 0.950617283951:-1.0
+area is 0.243449133888
+FOUND color is data: "Aon Baka"
+	point of x are -0.615503875969:-0.116279069767
+	point of y are 0.950617283951:-1.0
+area is 0.243449133888
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.565891472868:0.0015503875969
+	point of y are 0.955555555556:-1.0
+area is 0.277416020672
+FOUND color is data: "Aon Baka"
+	point of x are -0.565891472868:0.0015503875969
+	point of y are 0.955555555556:-1.0
+area is 0.277416020672
+FOUND color is data: "Aon Baka"
+	point of x are -0.550387596899:0.0015503875969
+	point of y are 0.96049382716:-1.0
+area is 0.270517752895
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.550387596899:0.485271317829
+	point of y are 1.0:-1.0
+area is 0.517829457364
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.528682170543:0.479069767442
+	point of y are 1.0:-1.0
+area is 0.503875968992
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+FOUND color is data: "Aon Baka"
+	point of x are -0.342635658915:0.361240310078
+	point of y are 1.0:-0.427160493827
+area is 0.251135993875
+FOUND color is data: "Aon Baka"
+	point of x are -0.392248062016:0.410852713178
+	point of y are 1.0:-1.0
+area is 0.401550387597
+FOUND color is data: "Aon Baka"
+	point of x are -0.392248062016:0.410852713178
+	point of y are 1.0:-1.0
+area is 0.401550387597
+FOUND color is data: "Aon Baka"
+	point of x are -0.392248062016:0.413953488372
+	point of y are 1.0:-1.0
+area is 0.403100775194
+FOUND color is data: "Aon Baka"
+	point of x are -0.392248062016:0.413953488372
+	point of y are 1.0:-1.0
+area is 0.403100775194
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.367441860465:0.423255813953
+	point of y are 1.0:-1.0
+area is 0.395348837209
+FOUND color is data: "Aon Baka"
+	point of x are -0.367441860465:0.426356589147
+	point of y are 1.0:-1.0
+area is 0.396899224806
+FOUND color is data: "Aon Baka"
+	point of x are -0.348837209302:0.407751937984
+	point of y are 1.0:-1.0
+area is 0.378294573643
+FOUND color is data: "Aon Baka"
+	point of x are -0.348837209302:0.413953488372
+	point of y are 1.0:-1.0
+area is 0.381395348837
+FOUND color is data: "Aon Baka"
+	point of x are -0.33023255814:0.426356589147
+	point of y are 1.0:-1.0
+area is 0.378294573643
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.33023255814:0.426356589147
+	point of y are 1.0:-1.0
+area is 0.378294573643
+FOUND color is data: "Aon Baka"
+	point of x are -0.320930232558:0.441860465116
+	point of y are 1.0:-1.0
+area is 0.381395348837
+FOUND color is data: "Aon Baka"
+	point of x are -0.320930232558:0.832558139535
+	point of y are 1.0:-1.0
+area is 0.576744186047
+FOUND color is data: "Aon Baka"
+	point of x are -0.311627906977:0.854263565891
+	point of y are 1.0:-1.0
+area is 0.582945736434
+FOUND color is data: "Aon Baka"
+	point of x are -0.311627906977:0.854263565891
+	point of y are 1.0:-1.0
+area is 0.582945736434
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.305426356589:0.913178294574
+	point of y are 1.0:-1.0
+area is 0.609302325581
+FOUND color is data: "Aon Baka"
+	point of x are -0.305426356589:0.91007751938
+	point of y are 1.0:-1.0
+area is 0.607751937984
+FOUND color is data: "Aon Baka"
+	point of x are -0.305426356589:0.965891472868
+	point of y are 1.0:-1.0
+area is 0.635658914729
+FOUND color is data: "Aon Baka"
+	point of x are -0.305426356589:0.959689922481
+	point of y are 1.0:-1.0
+area is 0.632558139535
+FOUND color is data: "Aon Baka"
+	point of x are -0.308527131783:1.0
+	point of y are 1.0:-1.0
+area is 0.654263565891
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.308527131783:1.0
+	point of y are 1.0:-1.0
+area is 0.654263565891
+FOUND color is data: "Aon Baka"
+	point of x are -0.311627906977:1.0
+	point of y are 1.0:-1.0
+area is 0.655813953488
+FOUND color is data: "Aon Baka"
+	point of x are -0.311627906977:1.0
+	point of y are 1.0:-1.0
+area is 0.655813953488
+FOUND color is data: "Aon Baka"
+	point of x are -0.324031007752:1.0
+	point of y are 1.0:-1.0
+area is 0.662015503876
+FOUND color is data: "Aon Baka"
+	point of x are -0.324031007752:1.0
+	point of y are 1.0:-1.0
+area is 0.662015503876
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.255813953488:1.0
+	point of y are 1.0:-0.451851851852
+area is 0.455813953488
+FOUND color is data: "Aon Baka"
+	point of x are -0.252713178295:1.0
+	point of y are 1.0:-0.451851851852
+area is 0.454688486937
+FOUND color is data: "Aon Baka"
+	point of x are -0.26511627907:1.0
+	point of y are 1.0:-0.446913580247
+area is 0.457628481194
+FOUND color is data: "Aon Baka"
+	point of x are -0.26511627907:1.0
+	point of y are 1.0:-0.441975308642
+area is 0.456066609245
+FOUND color is data: "Aon Baka"
+	point of x are -0.262015503876:1.0
+	point of y are 1.0:-0.446913580247
+area is 0.45650684276
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.262015503876:1.0
+	point of y are 1.0:-0.446913580247
+area is 0.45650684276
+FOUND color is data: "Aon Baka"
+	point of x are -0.35503875969:1.0
+	point of y are 1.0:-1.0
+area is 0.677519379845
+FOUND color is data: "Aon Baka"
+	point of x are -0.35503875969:1.0
+	point of y are 1.0:-1.0
+area is 0.677519379845
+FOUND color is data: "Aon Baka"
+	point of x are -0.364341085271:0.345736434109
+	point of y are 1.0:-1.0
+area is 0.35503875969
+FOUND color is data: "Aon Baka"
+	point of x are -0.364341085271:0.413953488372
+	point of y are 1.0:-1.0
+area is 0.389147286822
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+FOUND color is data: "Aon Baka"
+	point of x are -0.293023255814:0.286821705426
+	point of y are 1.0:-0.441975308642
+area is 0.209030529237
+FOUND color is data: "Aon Baka"
+	point of x are -0.293023255814:0.286821705426
+	point of y are 1.0:-0.441975308642
+area is 0.209030529237
+FOUND color is data: "Aon Baka"
+	point of x are -0.376744186047:0.119379844961
+	point of y are 1.0:-1.0
+area is 0.248062015504
+FOUND color is data: "Aon Baka"
+	point of x are -0.376744186047:0.122480620155
+	point of y are 1.0:-1.0
+area is 0.249612403101
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+NOT FOUND
+---------------------> 2018-10-28-14-39 <---------------------
+Analysis data
+NOT FOUND
+NOT FOUND

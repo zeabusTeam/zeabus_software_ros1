@@ -29,7 +29,7 @@ class play_drum:
 		self.log_command = log( "zeabus_planner" , "log" , "02_drum_command" )
 		self.log_vision = log( "zeabus_planner" , "log" , "02_drum_vision" )
 		self.client_drum = rospy.ServiceProxy('vision_drum' , vision_srv_drum )
-		self.auv = control_auv( "play drum")
+		self.auv = control_auv( "play_drum")
 
 		self.result_vision = { "n_obj" : -1 , "cx" : 0 , "cy" : 0 , "left" : False 
 								,	"right" : False , "forward" : False , "backward" : False 
@@ -192,3 +192,7 @@ class play_drum:
 		self.collect_vision = { "n_obj" : -1 , "cx" : 0 , "cy" : 0 , "left" : False 
 								,	"right" : False , "forward" : False , "backward" : False 
 								,	"area" : 0 }
+
+if __name__=="__main__":
+	rospy.init_node("Mission Gate")	
+	mission_drum = play_drum( 30 , 4 , 7 , 1 , 5)

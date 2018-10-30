@@ -29,7 +29,7 @@ class play_drum:
 	def setup( self ):
 		self.already_setup = True
 		self.log_command = log( "zeabus_planner" , "log" , "03_drum_command")
-		self.log_vision = log( "zeabus_planner" , "log" , "03_drum_vision")
+		# self.log_vision = log( "zeabus_planner" , "log" , "03_drum_vision")
 		self.client_drum = rospy.ServiceProxy('vision_drum' , vision_srv_drum )
 		self.auv = control_auv( "play drum" )
 		self.default_depth = -3.5
@@ -44,18 +44,18 @@ class play_drum:
 		if not self.already_setup:
 			self.setup()
 		self.log_command.write('Finding drum', True, 0)
-		self.find_drum()
-		self.log_command.write('Running to drum', True, 0)
-		self.RunToDrum()
-		self.log_command.write('Dropping Golf', True, 0)
-		self.lock_n_drop()
+		if self.find_drum():
+			self.log_command.write('Running to drum', True, 0)
+			self.RunToDrum()
+			self.log_command.write('Dropping Golf', True, 0)
+			self.lock_n_drop()
 		self.log_command.write('Go UP', True, 0)
 		self.GoUp()
 	
 	def lock_n_drop( self ):
 		godown_speed = -0.06
 		self.log_command.write('Locking Pos + Go down',False,1)
-		print("Going down with speed",godown_speed)
+		print("Going down with speed"+str(godown_speed))
 		self.auv.absolute_depth(self.NearDepth)
 		self.auv.velocity(z=godown_speed)
 		logged = 0
@@ -99,6 +99,8 @@ class play_drum:
 			vis_bottom = self.client_drum(String('drum'), String('drop')).data
 			self.auv.velocity(y=self.moving_veloc*vis_front.cx*-2)
 			if vis_front.n_obj == 0 or vis_bottom.n_obj > 0 and vis_bottom.cx > -0.7:
+				self.log_command.write('Reach drum',False,1)
+				print("Reached")
 				self.auv.velocity(x=0, y=0)
 				break
 			self.rate.sleep()
@@ -106,9 +108,19 @@ class play_drum:
 
 	def find_drum( self ):
 		# Find only one side cuz flare always on the right hand side of the robot
+		self.log_command.write('Set zero yaw',False,1)
+		print("Set yaw to ZERO")
 		self.auv.absolute_yaw(0)
+		while not rospy.is_shutdown() and not self.auv.ok_position('yaw',0.1):
+			self.rate.sleep()
+		self.log_command.write('Finding drum on the left hand side.',False,1)
+		print("Finding drum on the left hand side.")
 		if self.find(y=0.2):
+			self.log_command.write('Found',False,1)
+			print("Found")
 			return True
+		self.log_command.write('Not found',False,1)
+		print("Not found")
 		return False
 
 	def find( self, **arg):
@@ -120,14 +132,20 @@ class play_drum:
 			done = time.time()
 			if vis_drum.n_obj > 0:
 				if self.foundCount < 5:
+					self.log_command.write('Found but checking for sure',False,1)
+					print("Found but checking for sure")
 					self.foundCount += 1
 				else:
+					self.log_command.write('Confirmed',False,1)
+					print("Confirmed")
 					self.auv.velocity(x=0, y=0)
 					return True
 			elif (done - start)>100:
 				break
 			self.rate.sleep()
 		self.auv.velocity(x=0, y=0)
+		self.log_command.write('Not found (Timeout)',False,1)
+		print("Not found (Timeout)")
 		return False
 
 if __name__=='__main__':

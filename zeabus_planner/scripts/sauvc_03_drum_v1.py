@@ -33,7 +33,11 @@ class play_drum:
 		self.auv = control_auv( "play drum" )
 		self.default_depth = -3.5
 		self.depth = self.default_depth
+<<<<<<< HEAD
 		self.moving_veloc = 0.05
+=======
+		self.moving_veloc = 0.5
+>>>>>>> 3e93dcdeefd356b9eadf1a7833aa190f599c107b
 		self.moving = False
 		self.satisfy = False
 		self.z_adding = 0.1
@@ -43,7 +47,11 @@ class play_drum:
 		if not self.already_setup:
 			self.setup()
 		while not rospy.is_shutdown():
+<<<<<<< HEAD
 			ser_data = self.client_drum(String('drum'), String('drop')).data
+=======
+			ser_data = self.client_drum(String('drum'), String('blue')).data
+>>>>>>> 3e93dcdeefd356b9eadf1a7833aa190f599c107b
 
 			if not self.auv.ok_position('z', self.z_adding):
 				self.rate.sleep()
@@ -65,6 +73,7 @@ class play_drum:
 					self.moving = False
 					self.rate.sleep()
  					continue
+<<<<<<< HEAD
 				self.log_command.write('Move Pool Bottom',False,0)
 				#self.auv.absolute_depth(self.default_depth-0.7)
 				self.auv.absolute_depth(self.default_depth-0.2)
@@ -109,6 +118,47 @@ class play_drum:
 	def find_drum():
 		pass
 
+=======
+				log_command.write('Move Pool Bottom',False,0)
+				self.auv.absolute_depth(self.default_depth-0.7)
+				self.satisfy = True
+			else:
+				if not (ser_data.forward or ser_data.backward or ser_data.left or ser_data.right):
+					if ser_data.cx<-0.2:
+						ser_data.forward = True
+						log_vision.write('TOO TOP',False,0)
+					elif ser_data.cx>0.2:
+						ser_data.backward = True
+						log_vision.write('TOO BOTTOM',False,0)
+					if ser_data.cy<-0.2:
+						ser_data.left = True
+						log_vision.write('TOO LEFT',False,0)
+					elif ser_data.cy>0.2:
+						ser_data.right = True
+						log_vision.write('TOO RIGHT',False,0)
+				if ser_data.forward:
+					x_move = self.moving_veloc
+					log_command.write('Move Front',False,0)
+				if ser_data.backward:
+					x_move = -self.moving_veloc
+					log_command.write('Move Back',False,0)
+				if ser_data.left:
+					y_move = self.moving_veloc
+					log_command.write('Move Left',False,0)
+				if ser_data.right:
+					y_move = -self.moving_veloc
+					log_command.write('Move Right',False,0)
+				if ser_data.forward or ser_data.backward or ser_data.left or ser_data.right:
+					self.auv.velocity(x=x_move, y=y_move)
+					log_command.write('Commit Move',False,0)
+				else:
+					self.depth += 0.1
+					self.auv.absolute_depth(self.depth)
+					self.moving = True
+					log_command.write('Move ตื้น',False,0)
+			self.rate.sleep()
+
+>>>>>>> 3e93dcdeefd356b9eadf1a7833aa190f599c107b
 if __name__=='__main__':
 
 	rospy.init_node("Mission Drum")		

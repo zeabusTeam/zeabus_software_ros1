@@ -123,12 +123,17 @@ int main( int argv , char** argc){
 		ros::spinOnce();
 //------------------------------> PART ABOUT LOAD OR SAVE CONSTANT <-----------------------------
 		if( ! already_loading_constant ){
+			printf("Downloading File Constant!\n");
 			file_const.load();
 			already_loading_constant = true;
+			printf("Finish Downloading File Constant!\n");
 		}
 		else if( want_save_constant ){
+			printf("Saving File Constant!\n");
 			file_const.save();
+			set_constant_tuning( pid_position , pid_velocity );
 			want_save_constant = false;
+			printf("Finish File Constant!\n");
 		}
 		else{}
 //---------------------------------------> END PART <--------------------------------------------
@@ -174,9 +179,11 @@ int main( int argv , char** argc){
 		tell_force.publish( message_force );	
 
 		// print all data to display	
-		system("clear");
+//		system("clear");
+/*
 		print_all( current_state , target_state , world_error , robot_error , bound_error 
 				, pid_force , robot_force 
 				, use_target_velocity , current_velocity , target_velocity );
+*/
 	}
 }

@@ -15,6 +15,7 @@
 #include	<vector>
 
 //#define _CHECK_ERROR_
+//#define _CHECK_CLASS_
 
 #ifndef _normal_pid_cpp__
 #define _normal_pid_cpp__
@@ -25,7 +26,10 @@ namespace zeabus_control{
 
 		public:
 			normal_pid(); //  init object
-			void set_constant( double p_constant , double i_constant , double d_constant );
+			virtual void set_constant(	double constant_01 = 0
+									,	double constant_02 = 0
+									,	double constant_03 = 0
+									,	double constant_04 = 0);
 			void get_result( double error , double& result); // use pass by reference
 			void reset_value(); // reset all term
 			void set_frequency( double frequency);
@@ -48,10 +52,14 @@ namespace zeabus_control{
 		for( ; this->list_error.size() < 2; ) this->list_error.push_back( 0 );
 	}
 	
-	void normal_pid::set_constant( double p_constant , double i_constant , double d_constant){
-		this->p_constant = p_constant;
-		this->i_constant = i_constant;
-		this->d_constant = d_constant;
+	void normal_pid::set_constant(	double constant_01 , double constant_02 
+								,	double constant_03 , double constant_04){
+		#ifdef _CHECK_CLASS_
+				printf("<========>NORMAL_PID::SET_CONSTANT"\n);
+		#endif
+		this->p_constant = constant_01;
+		this->i_constant = constant_02;
+		this->d_constant = constant_03;
 	}
 
 	void normal_pid::set_frequency( double frequency){

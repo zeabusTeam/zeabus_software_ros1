@@ -37,10 +37,12 @@
 
 
 //------------------> Dynamic Reconfigure We will use in Global variable <-----------------------
-double constant_position[3][6] = {	{ 0 , 0 , 0 , 0 , 0 , 0 }
+double constant_position[4][6] = {	{ 0 , 0 , 0 , 0 , 0 , 0 }
+								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }};
-double constant_velocity[3][6] = {	{ 0 , 0 , 0 , 0 , 0 , 0 }
+double constant_velocity[4][6] = {	{ 0 , 0 , 0 , 0 , 0 , 0 }
+								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }};
 
@@ -48,6 +50,7 @@ bool already_loading_constant = false;
 bool want_save_constant = false;
 
 void dynamic_reconfigure_callback( zeabus_control::pid_controlConfig &config , uint32_t level){
+	printf("Tunning constant value");
 	constant_position[0][0] = config.p_x_position;
 	constant_position[1][0] = config.i_x_position;
 	constant_position[2][0] = config.d_x_position;
@@ -96,9 +99,19 @@ void dynamic_reconfigure_callback( zeabus_control::pid_controlConfig &config , u
 	constant_velocity[1][5] = config.i_yaw_velocity;
 	constant_velocity[2][5] = config.d_yaw_velocity;
 	
-	if( ! already_loading_constant ) want_save_constant = true;
+	if( already_loading_constant ) want_save_constant = true;
 }
 
-void clear_screen(){
-	for(int run = 0 ; run < 1 ; run++ ) printf("\n\n\n\n\n\n\n\n\n\n");
+template<typename type_pid > void set_constant_tuning( type_pid* position , type_pid* velocity){
+	printf("Set constant\n");
+	for( int run = 0 ; run < 6 ; run++){
+		position[ run ].set_constant(	constant_position[ 0 ][ run ]
+									,	constant_position[ 1 ][ run ]
+									,	constant_position[ 2 ][ run ]
+									,	constant_position[ 3 ][ run ]);
+		velocity[ run ].set_constant(	constant_velocity[ 0 ][ run ]
+									,	constant_velocity[ 1 ][ run ]
+									,	constant_velocity[ 2 ][ run ]
+									,	constant_velocity[ 3 ][ run ]);
+	}	
 }

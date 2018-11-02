@@ -31,13 +31,14 @@ namespace zeabus_control{
 									,	double constant_03 = 0
 									,	double constant_04 = 0);
 			void get_result( double error , double& result); // use pass by reference
-			void reset_value(); // reset all term
+			virtual void reset_value(); // reset all term
 			void set_frequency( double frequency);
 			
 		protected:
 			double p_constant;
 			double i_constant;
 			double d_constant;
+			double offset_constant;
 			double result_p_term;
 			double result_i_term;
 			double result_d_term;
@@ -60,6 +61,7 @@ namespace zeabus_control{
 		this->p_constant = constant_01;
 		this->i_constant = constant_02;
 		this->d_constant = constant_03;
+		this->offset_constant = constant_04;
 	}
 
 	void normal_pid::set_frequency( double frequency){

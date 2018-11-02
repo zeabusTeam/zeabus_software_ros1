@@ -24,16 +24,18 @@
 // include message for use in main_control
 #include	<geometry_msgs/Twist.h>
 
-#include	"listen_twist.cpp"
-#include	"listen_odometry.cpp"
-#include	"find_error_state.cpp"
-#include	"find_robot_error.cpp"
-#include	"find_robot_force.cpp"
-#include	"normal_pid_bound_i.cpp"
-#include	"service_two_point.cpp"
-#include	"service_one_point.cpp"
-#include	"service_check_state.cpp"
-#include	"service_get_target.cpp"
+#include	"listen_twist.cpp" // Class object for listenning twist message
+#include	"listen_odometry.cpp" // Class object for listenning auv status
+#include	"find_error_state.cpp" // function for find error in world state
+#include	"find_robot_error.cpp" // function for find error in frame of robot
+#include	"find_robot_force.cpp" // function consider about important force
+#include	"normal_pid_bound_i.cpp" // for include pid
+#include	"discrete_pid.cpp" // for include pid type discrete
+//#include	"offset_pid.cpp" // for include pid type offset
+#include	"service_two_point.cpp" //  this service for one_point srv
+#include	"service_one_point.cpp" // this service for two_point srv
+#include	"service_check_state.cpp" // this service for check_position.srv
+#include	"service_get_target.cpp" // this service for get_target.srv
 
 
 //------------------> Dynamic Reconfigure We will use in Global variable <-----------------------
@@ -45,6 +47,7 @@ double constant_velocity[4][6] = {	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }
 								,	{ 0 , 0 , 0 , 0 , 0 , 0 }};
+double offset_force[6] = { 0 , 0 , 0 , 0 , 0 , 0 };
 
 bool already_loading_constant = false;
 bool want_save_constant = false;
@@ -98,20 +101,15 @@ void dynamic_reconfigure_callback( zeabus_control::pid_controlConfig &config , u
 	constant_velocity[0][5] = config.p_yaw_velocity;
 	constant_velocity[1][5] = config.i_yaw_velocity;
 	constant_velocity[2][5] = config.d_yaw_velocity;
+
+/*
+	offset_force[0] = config.x_offset;
+	offset_force[1] = config.y_offset;
+	offset_force[2] = config.z_offset;
+	offset_force[3] = config.yaw_offset;
+	offset_force[4] = config.pitch_offset;
+	offset_force[5] = config.yaw_offset;
+*/	
 	
 	if( already_loading_constant ) want_save_constant = true;
-}
-
-template<typename type_pid > void set_constant_tuning( type_pid* position , type_pid* velocity){
-	printf("Set constant\n");
-	for( int run = 0 ; run < 6 ; run++){
-		position[ run ].set_constant(	constant_position[ 0 ][ run ]
-									,	constant_position[ 1 ][ run ]
-									,	constant_position[ 2 ][ run ]
-									,	constant_position[ 3 ][ run ]);
-		velocity[ run ].set_constant(	constant_velocity[ 0 ][ run ]
-									,	constant_velocity[ 1 ][ run ]
-									,	constant_velocity[ 2 ][ run ]
-									,	constant_velocity[ 3 ][ run ]);
-	}	
 }

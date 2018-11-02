@@ -6,12 +6,15 @@
 //	Created by	: Supasan Komonlit
 //	Created on	: 2018, Oct 18
 //
-//
+//	Maintainance: -
 //
 ///////////////////////////////////////// END PART //////////////////////////////////////////////
 
+#define _OFFSET_PID_
+
 #include	"head_control.cpp"
 #include	"other_function.cpp"
+
 
 int main( int argv , char** argc){
 
@@ -47,7 +50,7 @@ int main( int argv , char** argc){
 	double pid_force[6]			=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 }; 
 	
-	int frequency = 30;
+	double frequency = 0.5;
 
 //----------------------------------> SET ABOUT SERVICE <----------------------------------------
 	zeabus_control::two_point_service service_2_point(	current_state	,	target_state 
@@ -76,7 +79,7 @@ int main( int argv , char** argc){
 								, &zeabus_control::one_point_service::call_relative_yaw
 								, &service_1_point );
 
-	zeabus_control::check_state_service service_current_state( current_state	,	target_state
+	zeabus_control::check_state_service service_current_state( current_state,	target_state
 														,	 robot_error	,	ok_error );
 	ros::ServiceServer	service_check_state =
 		nh.advertiseService(	"/ok_position"
@@ -93,15 +96,25 @@ int main( int argv , char** argc){
 
 
 //------------------------------> SET UP DYNAMIC RECONFIGURE <-----------------------------------
+	// for 3 constant
 	dynamic_reconfigure::Server<zeabus_control::pid_controlConfig> server;
 	dynamic_reconfigure::Server<zeabus_control::pid_controlConfig>::CallbackType function;
 	function = boost::bind(&dynamic_reconfigure_callback , _1 , _2); 
 	server.setCallback( function );
 	zeabus_extension::zeabus_ros::dynamic_reconfigure file_const("zeabus_control" , "constant"
 													, "set_01.yaml" , "/main_control");
-
+	// for 4 constant
+/*	dynamic_reconfigure::Server<zeabus_control::offset_controlConfig> server;
+	dynamic_reconfigure::Server<zeabus_control::offset_controlConfig>::CallbackType function;
+	function = boost::bind(&dynamic_reconfigure_callback , _1 , _2); 
+	server.setCallback( function );
+	zeabus_extension::zeabus_ros::dynamic_reconfigure file_const("zeabus_control" , "constant"
+													, "offset_01.yaml" , "/offset_control");
+*/
 //--------------------------------> SET UP PID FUNCTION <----------------------------------------
-	double bound_value_i[6]		=	{ 1 , 1 , 2 , 1 , 1 , 0.5};
+	// for normal_pid_bound_i --> start setup
+/*
+	double bound_value_i[6]		=	{ 1 , 1 , 2 , 1 , 1 , 1}; 
 	zeabus_control::normal_pid_bound_i pid_position[6];
 	zeabus_control::normal_pid_bound_i pid_velocity[6];
 	reset_constant( pid_position , pid_velocity );
@@ -110,6 +123,16 @@ int main( int argv , char** argc){
 		pid_position[run].set_frequency( frequency );
 		pid_velocity[run].limit_value_i_term( bound_value_i[run]);
 		pid_velocity[run].set_frequency( frequency );
+	}
+*/
+	// for normal_pid_bound_i --> end setup and for discrete_pid start setup
+	bool use_sum_term[6]		=	{ false , false , true , false , false , false };
+	zeabus_control::discrete_pid pid_position[6];
+	zeabus_control::discrete_pid pid_velocity[6];
+	reset_constant( pid_position , pid_velocity );
+	for( int run = 0 ; run <  6 ; run++ ){
+		pid_position[run].set_sum_term( use_sum_term[run] );
+		pid_velocity[run].set_sum_term( use_sum_term[run] );
 	}
 
 	ros::Rate rate( frequency );
@@ -124,14 +147,14 @@ int main( int argv , char** argc){
 //------------------------------> PART ABOUT LOAD OR SAVE CONSTANT <-----------------------------
 		if( ! already_loading_constant ){
 			printf("Downloading File Constant!\n");
-			file_const.load();
 			already_loading_constant = true;
+			file_const.load();
 			printf("Finish Downloading File Constant!\n");
 		}
 		else if( want_save_constant ){
 			printf("Saving File Constant!\n");
 			file_const.save();
-			set_constant_tuning( pid_position , pid_velocity );
+			reset_constant( pid_position , pid_velocity );
 			want_save_constant = false;
 			printf("Finish File Constant!\n");
 		}
@@ -172,18 +195,19 @@ int main( int argv , char** argc){
 		}
 
 		// use pid_force convert to robot_force for send to thruster
+		//		this is filter and control parity of control
 		zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );
 
-		// publish force to thruster node
+		// publish force to node thruster
 		array_to_geometry_twist( robot_force , message_force );	
 		tell_force.publish( message_force );	
 
 		// print all data to display	
-//		system("clear");
-/*
+		system("clear");
+
 		print_all( current_state , target_state , world_error , robot_error , bound_error 
 				, pid_force , robot_force 
 				, use_target_velocity , current_velocity , target_velocity );
-*/
+
 	}
 }

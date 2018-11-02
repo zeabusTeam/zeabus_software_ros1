@@ -14,12 +14,25 @@
 		<p>This file is about callbacl in subscribe node to listen twist message</p>
 		<li>find_error_state.cpp</li>
 		<p>This file error state of robot</p>
-		<li>find_robot_error.cpp<li>
+		<li>find_robot_error.cpp</li>
 		<p>This file is use for covert world_error into robot frame</p>
+		<li>find_robot_force.cpp</li>
+		<p>This file is use for manage parity of axis or axes of robot</p>
 		<li>normal_pid.cpp</li>
 		<p>This file collect pid file in standard pid</p>
 		<li>zeabus_extension/log_data.h</li>
 		<p>This file import from other package for use about load save dynamic reconfigure</p>
+		<li>service_control.cpp</li>
+		<p>This file is main class of other service by control</p>
+		<li>service_get_target.cpp</li>
+		<p>This file is subservice of control by using get_target.srv</p>
+		<li>service_one_point.cpp</li>
+		<p>This file is subservice of control by using one_point.srv</p>
+		<li>service_two_point.cpp</li>
+		<p>This file is subservice of control by using two_point.srv</p>
+		<li>service_check_state.cpp</li>
+		<p>This file is subservice of control by using check_positiob.srv</p>
+		
 	</ul>
 
 <h2>03. Print_Variable</h2>

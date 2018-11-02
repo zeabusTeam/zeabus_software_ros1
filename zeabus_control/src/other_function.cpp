@@ -23,6 +23,11 @@ template<typename pid_type>void reset_constant( pid_type* pid_position , pid_typ
 		pid_position[run].reset_value();	
 		pid_velocity[run].reset_value();	
 	}
+	#ifdef OFFSET_PID
+		for( int run = 0 ; run < 6 ; run++){
+			pid_position[run].set_offset( )
+		}
+	#endif
 }
 
 template<typename number_type> void array_to_geometry_twist( number_type* array_set 
@@ -40,7 +45,8 @@ template<typename number_type , typename count_type> void print_all(
 				, number_type* world_error		, number_type* robot_error
 				, number_type* bound_error		, number_type* pid_force 
 				, number_type* robot_force		, count_type* use_target_velocity		
-				, number_type* current_velocity , number_type* target_velocity){
+				, number_type* current_velocity , number_type* target_velocity
+				, number_type* offset_force = 0){
 	printf("Information        :%8s%8s%8s%8s%8s%8s\n\n","x","y","z","roll","pitch","yaw");
 	printf("current_state      :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				current_state[0] , current_state[1] , current_state[2]
@@ -57,6 +63,11 @@ template<typename number_type , typename count_type> void print_all(
 	printf("bound_error        :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				bound_error[0] , bound_error[1] , bound_error[2]
 			,	bound_error[3] , bound_error[4] , bound_error[5] );	
+	if( &offset_force == 0){
+		printf("offset_force       :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
+					offset_force[0] , offset_force[1] , offset_force[2]
+				,	offset_force[3] , offset_force[4] , offset_force[5] );	
+	}
 	printf("pid_force          :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				pid_force[0] , pid_force[1] , pid_force[2]
 			,	pid_force[3] , pid_force[4] , pid_force[5] );	

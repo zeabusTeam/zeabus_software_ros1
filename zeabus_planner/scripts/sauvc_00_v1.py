@@ -3,6 +3,7 @@
 import rospy
 from sauvc_01_gate_v3 import play_gate
 from sauvc_02_flare_v1 import play_flare
+from sauve_03_drum_v2 import play_drum
 
 try:
 	from zeabus_extension.manage_log import log
@@ -21,8 +22,7 @@ if __name__=="__main__":
 	print("Finish play gate")
 	auv.relative_yaw( -1.57 )
 	rate = rospy.Rate(30)
-	while( not rospy.is_shutdown() and not auv.ok_position("yaw" , 0.1)):
-		rate.sleep()
+	count_ok = 0
 	auv.collect_position()
 	print("Connection Forward")
 	while( not rospy.is_shutdown() and auv.calculate_distance() < 1.0):
@@ -30,9 +30,17 @@ if __name__=="__main__":
 		auv.velocity( x = 0.3)
 		rate.sleep()
 	print("Connection wait yaw")
-	for test in range ( 0 , 10 ):
-		rate.sleep()
 	while( not rospy.is_shutdown() and not auv.ok_position("yaw" , 0.1)):
+		if( auv.ok_position("yaw" , 0.1 )):
+			count_ok += 1
+			if(count_ok == 4 ):
+				break
+			else:
+				print( "Ok yaw is " + count_ok )
+		else:
+			if( count_ok > 0):
+				print(" reset ok yaw ")
+			count_ok = 0
 		rate.sleep()
 	print("Connection Left")
 	auv.collect_position()
@@ -40,8 +48,41 @@ if __name__=="__main__":
 		print( auv.calculate_distance() )
 		auv.velocity( y = 0.5)
 		rate.sleep()
+	print("Connection wait yaw")
+	while( not rospy.is_shutdown() and not auv.ok_position("yaw" , 0.1)):
+		if( auv.ok_position("yaw" , 0.1 )):
+			count_ok += 1
+			if(count_ok == 4 ):
+				break
+			else:
+				print( "Ok yaw is " + count_ok )
+		else:
+			if( count_ok > 0):
+				print(" reset ok yaw ")
+			count_ok = 0
+		rate.sleep()
+	print("Connection Left")
 	print("Now play flare")
 
 	flare = play_flare( 30 )
 	flare.set_up()
 	flare.play()
+
+	auv.relative_yaw( 1.57 )
+	print("Connection wait yaw")
+	while( not rospy.is_shutdown() and not auv.ok_position("yaw" , 0.1)):
+		if( auv.ok_position("yaw" , 0.1 )):
+			count_ok += 1
+			if(count_ok == 4 ):
+				break
+			else:
+				print( "Ok yaw is " + count_ok )
+		else:
+			if( count_ok > 0):
+				print(" reset ok yaw ")
+			count_ok = 0
+		rate.sleep()
+
+	print( "now playdrum")	
+	mission_drum = play_drum( 30 , 1 , 3 , 1 , 2)
+	mission_drum.play()

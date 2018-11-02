@@ -20,6 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 generate_dynamic_reconfigure_options(
 	cfg/pid_control.cfg
+	cfg/offset_control.cfg
 )
 
 add_service_files(

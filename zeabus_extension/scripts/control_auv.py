@@ -129,11 +129,11 @@ class control_auv:
 					)
 
 	def fire_gripper( self ):
-		printf("<==== Control AUV ====> Release Ball" )
+		print("<==== Control AUV ====> Release Ball" )
 		result = self.fire_torpedo( 0 )
 		return result
 
 	def pull_gripper( self ):
-		printf("<==== Control AUV ====> Pull Gripper" )
+		print("<==== Control AUV ====> Pull Gripper" )
 		result = self.hold_torpedo( 0 )
 		return result

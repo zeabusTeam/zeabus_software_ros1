@@ -10,8 +10,8 @@ except:
 	print("Pleas install setup.bash in zeabus_extension package")
 	exit()
 
-from zeabus_vision.srv import vision_srv_ball
-from zeabus_vision.msg import vision_ball
+from zeabus_vision.srv import vision_srv_drum
+from zeabus_vision.msg import vision_drum
 from std_msgs.msg import String
 
 class play_gripper:
@@ -19,7 +19,9 @@ class play_gripper:
 	def __init__( self , rate ):
 		self.auv = control_auv("play_gripper")
 		self.rate = rospy.Rate( rate )
-		self.client_drum = rospy.ServiceProxy('vision_ball' , vision_srv_ball )
+		self.client_drum = rospy.ServiceProxy('vision_pick' , vision_srv_drum )
+		self.log_command = log( "zeabus_planner" , "log" , "04_gripper_command" )
+		self.log_vision = log( "zeabus_planner" , "log" , "04_gripper_vision" )
 
 	def reset_vision_value( self ):
 		self.result_vision = { "n_obj" : 0 , "cx" : 0 , "cy" : 0 , "area" : 0 }
@@ -54,4 +56,4 @@ class play_gripper:
 		None
 
 	def individual_analysis( self ):
-
+		None

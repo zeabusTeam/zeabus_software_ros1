@@ -8,12 +8,12 @@ from zeabus_vision.srv import vision_srv_flare
 from vision_lib import *
 import color_text as ct
 import os
+import pyqtgraph as pyplt
 
 bgr = None
 image_result = None
 public_topic = '/vision/mission/flare/'
 sub_sampling = 1
-
 
 def mission_callback(msg):
     print_result('mission_callback', ct.CYAN)
@@ -48,8 +48,8 @@ def message(n_obj=0, cx=0.0, cy=0.0, area=0.0):
 def get_mask(img):
     hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
     # upper, lower = get_color_range('yellow', 'front', '1', 'flare')
-    upper = np.array([92, 255, 137], dtype=np.uint8)
-    lower = np.array([16, 0, 0], dtype=np.uint8)
+    upper = np.array([48, 255, 255], dtype=np.uint8)
+    lower = np.array([14, 0, 0], dtype=np.uint8)
     mask = cv.inRange(hsv, lower, upper)
     return mask
 
@@ -69,7 +69,7 @@ def get_ROI(mask, case):
         angle = rect[2]
         print angle
         box = cv.boxPoints(rect)
-        box = np.int64(box)
+        box = np.int0(box)
         BR = box[0]
         BL = box[1]
         TL = box[2]
@@ -98,7 +98,7 @@ def get_cx(cnt):
     himg, wimg = image_result.shape[:2]
     rect = cv.minAreaRect(cnt)
     box = cv.boxPoints(rect)
-    box = np.int64(box)
+    box = np.int0(box)
     BR = box[0]
     BL = box[1]
     TL = box[2]
@@ -137,33 +137,6 @@ def find_flare(req):
         publish_result(image_result, 'bgr', public_topic + 'image_result')
         publish_result(mask, 'gray', public_topic + 'mask')
         return message(cx=cx, cy=cy, area=area, n_obj=len(ROI))
-
-# def find_far_flare():
-#     global bgr
-#     if bgr is None:
-#         img_is_none()
-#         return message(n_obj=-1)
-#     mask = get_mask(image_result)
-#     ROI = get_ROI(mask,case = 'far')
-#     if len(ROI) == 0 :
-#         mode = 1
-#         print_result("NOT FOUND", ct.RED)
-#     elif len(ROI) == 1:
-#         mode = 2
-#         print_result("FOUND A FLARE", ct.GREEN)
-#     elif len(ROI) > 1:
-#         mode = 2
-#         print_result("FOUND BUT HAVE SOME NOISE", ct.YELLOW)
-#     if mode == 1:
-#         publish_result(image_result, 'bgr', public_topic + 'image_result')
-#         publish_result(mask, 'gray', public_topic + 'mask')
-#         return message()
-#     elif mode == 2:
-#         cx, cy, area = get_cx(cnt=max(ROI, key=cv.contourArea))
-#         publish_result(image_result, 'bgr', public_topic + 'image_result')
-#         publish_result(mask, 'gray', public_topic + 'mask')
-#         return message(cx=cx, cy=cy, area=area, n_obj=len(ROI))
-
 
 if __name__ == '__main__':
     rospy.init_node('vision_flare', anonymous=False)

@@ -12,153 +12,139 @@ import rospy
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
-from statistic import Statistic
+from statistic import Statistics
 from sensor_msgs.msg import CompressedImage
 from dynamic_reconfigure.client import Client as Client
-from histogram_matching import *
-
-bgr = None
-sub_sampling = 0.25
-stat = Statistic()
-client_name = "ueye_cam_nodelet_front"
-client = Client(client_name)
-
-p_min_default = None
-p_max_default = None
-th_p_min_default = None
-th_p_max_default = None
-# get_param_default()
-
-PATH_PKG = os.path.dirname(os.path.abspath(__file__))
-
-def image_callback(msg):
-    global bgr, sub_sampling
-    arr = np.fromstring(msg.data, np.uint8)
-    bgr = cv.resize(cv.imdecode(arr, 1), (0, 0),
-                    fx=sub_sampling, fy=sub_sampling)
 
 
-def stretching(gray):
-    global stat
-    min = stat.get_min(gray)
-    max = stat.get_max(gray)
-    print(stat.get_skewness(gray))
-    gray = (gray - min) * ((200. - 20) / (max - min))
-    gray += 20
-    gray = np.uint8(gray)
-    return gray
+class AutoExposure:
+    def __init__(self, namespace, debug=False):
+        image_topic = rospy.get_param(namespace + "/topic")
+        self.client_name = rospy.get_param(namespace + "/client")
+        self.p_lower_nth_default = rospy.get_param(
+            namespace + '/percentile_nth_min')
+        self.p_upper_nth_default = rospy.get_param(
+            namespace + '/percentile_nth_max')
 
+        self.p_lower_default = rospy.get_param(namespace + '/percentile_lower')
+        self.p_upper_default = rospy.get_param(namespace + '/percentile_upper')
 
-def RGB_to_I(bgr):
-    b, g, r = cv.split(bgr)
-    b = np.float16(b)
-    g = np.float16(g)
-    r = np.float16(r)
-    i = (r + g + b) / 3.
-    return np.uint8(i)
+        self.exposure_default = rospy.get_param(
+            namespace + '/exposure_default')
 
+        self.p_lower_nth_default = int(self.p_lower_nth_default)
+        self.p_upper_nth_default = int(self.p_upper_nth_default)
+        self.p_upper_default = int(self.p_upper_default)
+        self.p_lower_default = int(self.p_lower_default)
+        self.debug = debug
 
-def nothing(x):
-    pass
+        print("Topic: " + str(image_topic))
+        print("Client: " + str(self.client_name))
+        print("Percentile nth min: " + str(self.p_lower_nth_default))
+        print("Percentile nth max: " + str(self.p_upper_nth_default))
+        print("Percentile lower: " + str(self.p_lower_default))
+        print("Percentile upper: " + str(self.p_upper_default))
+        print("Exposure_default: " + str(self.exposure_default))
 
+        rospy.Subscriber(image_topic, CompressedImage, self.image_callback)
+        self.PATH_PKG = os.path.dirname(os.path.abspath(__file__))
+        self.image = None
+        self.client = Client(self.client_name)
+        self.sub_sampling = 0.25
+        self.stat = Statistics()
 
-def set_param(value=0.1):
-    global client, client_name
-    params = {"exposure": float(value)}
-    client.update_configuration(params)
+        self.p_lower_nth_default = None
+        self.p_upper_nth_default = None
+        self.p_lower_default = None
+        self.p_upper_default = None
 
+    def image_callback(self, msg):
+        arr = np.fromstring(msg.data, np.uint8)
+        self.image = cv.resize(cv.imdecode(arr, 1), (0, 0),
+                               fx=self.sub_sampling, fy=self.sub_sampling)
 
-def get_exposure():
-    global client_name
-    value = rospy.get_param("/" + client_name + "/exposure", None)
-    return value
+    def nothing(self, x):
+        pass
 
-def pre_processing(bgr):
-    blur = cv.blur(bgr.copy(), (11, 11))
-    return blur
+    def set_param(self, value=0.1):
+        params = {"exposure": float(value)}
+        self.client.update_configuration(params)
 
-def get_param_default():
-    global p_min_default, p_max_default, th_p_min_default, th_p_max_default, PATH_PKG
-    img_ref = cv.imread(PATH_PKG+'/ref.png',0)
+    def get_exposure(self):
+        value = rospy.get_param("/" + self.client_name + "/exposure", None)
+        return value
 
-    p_min_default = 5
-    p_max_default = 75
-    
-    th_p_min_default = stat.get_percentile(img_ref, p_min_default)
-    th_p_max_default = stat.get_percentile(img_ref, p_max_default)
+    def pre_processing(self, image):
+        blur = cv.blur(image.copy(), (11, 11))
+        return blur
 
-    th_p_max_default = int(th_p_max_default)
-    th_p_min_default = int(th_p_min_default)
+    def run(self):
+        if self.debug:
+            cv.namedWindow('image')
+            cv.moveWindow('image', 100, 100)
 
-def auto_exposure_hist():
-    global bgr, stat, p_min_default, p_max_default, th_p_min_default, th_p_max_default
-    get_param_default()
-    cv.namedWindow('image')
+            cv.createTrackbar('p_lower', 'image', 0, 50, self.nothing)
+            cv.createTrackbar('p_upper', 'image', 50, 100, self.nothing)
 
-    cv.createTrackbar('p_min', 'image', 0, 50, nothing)
-    cv.createTrackbar('p_max', 'image', 50, 100, nothing)
+            cv.createTrackbar('th_p_lower', 'image', 0, 255, self.nothing)
+            cv.createTrackbar('th_p_upper', 'image', 0, 255, self.nothing)
 
-    cv.createTrackbar('th_p_min', 'image', 0, 255, nothing)
-    cv.createTrackbar('th_p_max', 'image', 0, 255, nothing)
+            cv.setTrackbarPos('p_lower', 'image', self.p_lower_nth_default)
+            cv.setTrackbarPos('p_upper', 'image', self.p_upper_nth_default)
+            cv.setTrackbarPos('th_p_lower', 'image', self.p_lower_default)
+            cv.setTrackbarPos('th_p_upper', 'image', self.p_upper_default)
 
-    cv.moveWindow('image', 100, 100)
+        p_upper = self.p_upper_nth_default
+        p_lower = self.p_lower_nth_default
 
-    cv.setTrackbarPos('p_min', 'image', p_min_default)
-    cv.setTrackbarPos('p_max', 'image', p_max_default)
-    cv.setTrackbarPos('th_p_min', 'image', th_p_min_default)
-    cv.setTrackbarPos('th_p_max', 'image', th_p_max_default)
+        th_p_lower = self.p_lower_default
+        th_p_upper = self.p_upper_default
+        previous_ev = self.exposure_default
 
-    while not rospy.is_shutdown():
-        if bgr is None:
-            continue
-        pre_process_bgr = pre_processing(bgr.copy())
-        gray = cv.cvtColor(pre_process_bgr, cv.COLOR_BGR2GRAY)
-        hsv = cv.cvtColor(pre_process_bgr, cv.COLOR_BGR2HSV)
-        h, s, v = cv.split(hsv)
-        p_min = cv.getTrackbarPos('p_min', 'image')
-        p_max = cv.getTrackbarPos('p_max', 'image')
+        while not rospy.is_shutdown():
+            if self.image is None:
+                continue
+            pre_process_bgr = self.pre_processing(self.image)
+            gray = cv.cvtColor(pre_process_bgr, cv.COLOR_BGR2GRAY)
 
-        th_p_min = cv.getTrackbarPos('th_p_min', 'image')
-        th_p_max = cv.getTrackbarPos('th_p_max', 'image')
+            current_ev = self.get_exposure()
 
-        ev = get_exposure()
+            if current_ev is None:
+                ev = previous_ev
 
-        stat_p_min = stat.get_percentile(gray, p_min)
-        stat_p_max = stat.get_percentile(gray, p_max)
+            if self.debug:
+                p_lower = cv.getTrackbarPos('p_lower', 'image')
+                p_upper = cv.getTrackbarPos('p_upper', 'image')
 
-        print('=='*20)
-        print(stat_p_min, stat_p_max, ev)
+                th_p_lower = cv.getTrackbarPos('th_p_lower', 'image')
+                th_p_upper = cv.getTrackbarPos('th_p_upper', 'image')
 
-        if stat_p_min < th_p_min:
-            set_param(ev + 0.1)
-        if stat_p_max > th_p_max:
-            set_param(ev - 0.1)
+                cv.imshow('gray', gray)
+                cv.imshow('image', self.image)
+                cv.imshow('pre_process_bgr', pre_process_bgr)
 
-        stretch = stretching(gray)
-        stretch_v = stretching(v)
+                k = cv.waitKey(1) & 0xff
+                if k == ord('q'):
+                    break
+                histr = cv.calcHist([gray], [0], None, [256], [0, 256])
+                plt.plot(histr, color='blue')
 
-        hist_matching = histogram_matching(stretch_v, gray)
+                plt.pause(0.00001)
+                plt.clf()
 
-        cv.imshow('gray', gray)
-        cv.imshow('image', bgr)
-        cv.imshow('pre_process_bgr', pre_process_bgr)
-        cv.imshow('strect', stretch)
-        cv.imshow('hist_matching', hist_matching)
+            current_p_lower = self.stat.get_percentile(gray, p_lower)
+            current_p_upper = self.stat.get_percentile(gray, p_upper)
 
-        k = cv.waitKey(1) & 0xff
-        if k == ord('q'):
-            break
-        histr = cv.calcHist([gray], [0], None, [256], [0, 256])
-        plt.plot(histr, color='blue')
+            print('==' * 20)
+            print(current_p_lower, current_p_upper, ev)
 
-        plt.pause(0.00001)
-        plt.clf()
-    plt.close()
-    cv.destroyAllWindows()
+            if current_p_lower < th_p_lower:
+                self.set_param(ev + 0.1)
+            if current_p_upper > th_p_upper:
+                self.set_param(ev - 0.1)
 
+            previous_ev = current_ev
 
-if __name__ == '__main__':
-    rospy.init_node('auto_exposure_hist')
-    image_topic = "/vision/front/image_raw/compressed"
-    rospy.Subscriber(image_topic, CompressedImage, image_callback)
-    auto_exposure_hist()
+        if self.debug:
+            plt.close()
+            cv.destroyAllWindows()

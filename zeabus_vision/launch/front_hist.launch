@@ -1,0 +1,60 @@
+<launch>
+    <arg name="nodelet_manager_name" value="front" />
+    <arg name="camera_name" value="vision/front" />
+    <arg name="camera_topic" value="image_raw" />
+    <arg name="camera_id" value="1" />
+    <arg name="image_width" value="1936" />
+    <arg name="image_height" value="1216" />
+    <arg name="color_mode" value="bgr8" />
+    <arg name="auto_gain" value="False" />
+    <arg name="master_gain" value="10" />
+    <arg name="red_gain" value="50" />
+    <arg name="green_gain" value="0" />
+    <arg name="blue_gain" value="60" />
+    <arg name="auto_exposure" value="False" />
+    <arg name="exposure" value="33.0" />
+    <arg name="auto_white_balance" value="False" />
+    <arg name="ext_trigger_mode" value="False" />
+    <arg name="auto_frame_rate" value="False" />
+    <arg name="frame_rate" value="10.0" />
+    <arg name="pixel_clock" value="30" />
+    <arg name="flip_lr" value="False" />
+
+    <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)" args="manager" output="screen" />
+    <node pkg="nodelet" type="nodelet" name="ueye_cam_nodelet_$(arg nodelet_manager_name)" args="load ueye_cam/ueye_cam_nodelet $(arg nodelet_manager_name)">
+        <param name="camera_name" type="str" value="$(arg camera_name)" />
+        <param name="camera_topic" type="str" value="$(arg camera_topic)" />
+        <param name="camera_id" type="int" value="$(arg camera_id)" />
+		<param name="camera_intrinsics_file" type="str" value="$(find zeabus_vision)/camera_info/intrinsics/ost.yaml"/>
+        <param name="image_width" type="int" value="$(arg image_width)" />
+        <param name="image_height" type="int" value="$(arg image_height)" />
+        <param name="color_mode" type="str" value="$(arg color_mode)" />
+        <param name="auto_gain" type="bool" value="$(arg auto_gain)" />
+        <param name="master_gain" type="int" value="$(arg master_gain)" />
+        <param name="red_gain" type="int" value="$(arg red_gain)" />
+        <param name="green_gain" type="int" value="$(arg green_gain)" />
+        <param name="blue_gain" type="int" value="$(arg blue_gain)" />
+        <param name="auto_exposure" type="bool" value="$(arg auto_exposure)" />
+        <param name="exposure" type="double" value="$(arg exposure)" />
+        <param name="auto_white_balance" type="bool" value="$(arg auto_white_balance)" />
+        <param name="ext_trigger_mode" type="bool" value="$(arg ext_trigger_mode)" />
+        <param name="auto_frame_rate" type="bool" value="$(arg auto_frame_rate)" />
+        <param name="frame_rate" type="double" value="$(arg frame_rate)" />
+        <param name="pixel_clock" type="int" value="$(arg pixel_clock)" />
+        <param name="flip_lr" type="bool" value="$(arg flip_lr)" />
+    </node>
+
+	<node pkg="image_proc" name="image_proc" type="image_proc" output="screen" ns="/vision/front"></node>
+    
+
+	<arg name="place" value="ku"/>
+	<rosparam ns="auto_exposure_hist_front" command="load" file="$(find zeabus_vision)/camera_info/$(arg place)/front/exposure.yaml"/>
+    <node pkg="zeabus_vision" name="auto_exposure_hist_front" type="auto_exposure_hist_front.py" output="screen">
+        <param name="topic" type="str" value="/$(arg camera_name)/$(arg camera_topic)/compressed"/>
+        <param name="client" type="str" value="/ueye_cam_nodelet_$(arg nodelet_manager_name)/"/>
+        <param name="exposure_default" type="double" value="$(arg exposure)"/>
+    </node>
+
+
+
+</launch>

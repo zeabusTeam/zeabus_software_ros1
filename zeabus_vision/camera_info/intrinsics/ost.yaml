@@ -1,6 +1,6 @@
 image_width: 1936
 image_height: 1216
-camera_name: narrow_stereo
+camera_name: vision/front/
 camera_matrix:
   rows: 3
   cols: 3

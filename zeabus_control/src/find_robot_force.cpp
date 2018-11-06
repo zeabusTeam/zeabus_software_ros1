@@ -50,6 +50,7 @@ namespace zeabus_control{
 		
 	}
 
+	// version 2 will add force for maintain depth of robot
 	template<typename number_type> void pid_to_robot_foce_v_2( number_type* pid_force 
 															,  number_type* robot_force){
 		// version 1 will target on x and y

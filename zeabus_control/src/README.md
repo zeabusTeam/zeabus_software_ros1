@@ -8,6 +8,8 @@
 		<p>this file have main thread to run program</p>
 		<li>head_control.cpp</li>
 		<p>This file will collect other file to this file code</p>
+		<li>other_function.cpp</li>
+		<p>This file collect other function to use only this part</p>
 		<li>listen_odometry.cpp</li>
 		<p>This file is about callback in subscribe node to listen state of robot </p>
 		<li>listen_twist.cpp</li>
@@ -20,6 +22,10 @@
 		<p>This file is use for manage parity of axis or axes of robot</p>
 		<li>normal_pid.cpp</li>
 		<p>This file collect pid file in standard pid</p>
+		<li>normal_pid_bound_i.cpp</li>
+		<p>This file is child of normal_pid but adding condition to bound term force</p>
+		<li>discrete_pid.cpp</li>
+		<p>This file is child of normal_pid but change alogorithym to calculate force</p>
 		<li>zeabus_extension/log_data.h</li>
 		<p>This file import from other package for use about load save dynamic reconfigure</p>
 		<li>service_control.cpp</li>
@@ -42,12 +48,12 @@
 			<p>For collecting current state of robot</p>
 		<li>target_state</li>
 			<p>For collecting target state of robot</p>
-		<li>ok_error</li>
-			<p>set about value of error when happand form error of sensor</p>
 		<li>world_error</li>
 			<p>For collecting error in term of world don't care state of robot</p>
 		<li>robot_error</li>
 			<p>For collecting error in term of robot term</p>
+		<li>ok_error</li>
+			<p>set about value of error when happand form error of sensor</p>
 		<li>bound_error</li>
 			<p>For callecting error from robot error after checking dicision about ok_error</p>
 		<li>pid_force</li>
@@ -58,6 +64,8 @@
 			<p>For collecting current velocity</p>
 		<li>target_velocity</li>
 			<p>For collecting target velocity</p>
+		<li>error_velocity</li>
+			<p>For collecting error velocity when use target velocity</p>
 		<li>use_target_velocity</li>
 			<p>For count limit of use target velocity</p>
 	</ul>

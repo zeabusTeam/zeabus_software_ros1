@@ -35,9 +35,6 @@ set( zeabus_extension_sources
 	src/ros.cpp
 	src/generate_message.cpp
 	src/manage_port.cpp
-	src/find_error_position.cpp
-	src/pid_control.cpp
-	src/discrete_pid.cpp
 )
 
 add_library( zeabus_extension ${zeabus_extension_sources})
@@ -47,6 +44,3 @@ target_link_libraries( zeabus_extension
 	${Boost_LIBRARIES}
 )
 
-add_executable(init_header src/init.cpp)
-
-target_link_libraries( init_header ${catkin_LIBRARIES} ${Boost_LIBRARIES})

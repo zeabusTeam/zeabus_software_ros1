@@ -17,5 +17,4 @@ class read_file:
 			data = raw_data.split(char)
 			information.append(float(data[column]))
 		document.close()
-		return information
-		
+		return information		

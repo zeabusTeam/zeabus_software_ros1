@@ -48,7 +48,7 @@ class log:
 
 		answer =	str( current_time.tm_year ) + "-" + str( current_time.tm_mon ) 
 		answer +=	"-" + str( current_time.tm_mday ) + "-" + str( current_time.tm_hour) 
-		answer +=	"-" + str( current_time.tm_min)
+		answer +=	"-" + str( current_time.tm_min) + "-" + str( current_time.tm_sec)
 		return str(answer)
 
 	def close( self ):

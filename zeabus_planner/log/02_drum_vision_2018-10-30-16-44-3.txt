@@ -1,7 +1,0 @@
----------------------> 2018-10-30-16-44 <---------------------
-Want to find Drum
-	Found Result is [ False , True , False , True ]
-	Found Result is [ False , True , False , True ]
-	Found Result is [ False , True , False , True ]
-	Found Result is [ False , True , False , True ]
-	Found Result is [ False , True , False , True ]

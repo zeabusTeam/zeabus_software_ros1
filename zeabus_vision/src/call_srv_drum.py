@@ -13,10 +13,12 @@ if __name__ == "__main__":
     call = rospy.ServiceProxy(service_name, vision_srv_drum)
     while not rospy.is_shutdown():
         try:
+            # res = call(String('drum'), String('pick'))
+            # print ('pick',res)
+            # res = call(String('drum'),String('release'))
+            # print ('release',res)
             res = call(String('drum'), String('pick'))
-            print ('pick',res)
-            res = call(String('drum'),String('release'))
-            print ('release',res)
+            print ('test',res)
         except:
             print('Error')
         rospy.sleep(0.1)

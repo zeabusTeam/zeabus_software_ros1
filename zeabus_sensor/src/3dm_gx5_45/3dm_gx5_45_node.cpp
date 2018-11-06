@@ -62,7 +62,7 @@ int main( int argc , char **argv){
 // use pointer variable
 	std::string name_port;
 	ph.param("port_imu/name_port" , name_port 
-								, std::string("/dev/microstrain/3dm_gx5_45_0000__6251.65903"));
+								, std::string("/dev/microstrain/3dm_gx5_45_0000__6236.40569"));
 	zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port* imu 
 		= new zeabus_sensor::MIP_COMMUNICATION::microstrain_imu_port( name_port );
 	// baud rate is rate for send symbol of message have learn in DATA COMMUNICATION
@@ -109,7 +109,7 @@ int main( int argc , char **argv){
 			zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::SCALED_GYRO_VECTOR
 		);
 	imu_message_format.push_back(
-			zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::DELTA_VELOCITY_VECTOR
+			zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::SCALED_ACCELEROMETER_VECTOR
 		);
 	imu_message_format.push_back(
 			zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::CF_EULER_ANGLES
@@ -162,7 +162,7 @@ int main( int argc , char **argv){
 					//	skip to read length data for each set 1 bytes
 				}
 				else if(data[run] ==
-					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::DELTA_VELOCITY_VECTOR){
+					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::SCALED_ACCELEROMETER_VECTOR){
 					run++; // finish read data descriptor field
 					temporary  = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
 								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);

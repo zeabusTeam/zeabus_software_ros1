@@ -3,7 +3,8 @@
 import rospy
 from sauvc_01_gate_v3 import play_gate
 from sauvc_02_flare_v1 import play_flare
-from sauve_03_drum_v2 import play_drum
+from sauvc_03_drum_v2 import play_drum
+from sauve_04_gripper_v1 import play_gripper
 
 try:
 	from zeabus_extension.manage_log import log

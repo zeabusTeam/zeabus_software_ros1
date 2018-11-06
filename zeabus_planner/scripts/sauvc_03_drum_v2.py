@@ -131,10 +131,22 @@ class play_drum:
 					print("cx is ok move forward or backward")
 					if( abs(self.result_vision['cy'] < 0.10) ):
 						print("\tcy is ok too")
-						self.auv.absolute_depth( -4.3 )
-						print("Ok go to depth")
-						while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.05)):
+						print("\tplay move right for male right false")
+						while( not rospy.is_shutdown() ):
+							print("\t\tresult_vision[\'right\'] ", self.result_vision['right'])
 							self.rate.sleep()
+							self.auv.velocity( y = -0.08)
+							self.analysis_all( 5 )
+							if( not self.result_vision['right']):
+								break
+						self.auv.absolute_depth( -4.8 )
+						print("Ok go to depth")
+						count_time = 0
+						while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.3)):
+							count_time += 1
+							self.rate.sleep()
+							if( count_time >300 ):
+								break
 						print("Finish Game")
 						break
 					elif( self.result_vision['cy'] < 0 ):
@@ -149,7 +161,14 @@ class play_drum:
 				else:
 					print("Last mode move right")
 					self.auv.velocity( y = -0.12)
-		print("Try to drop ball")
+		if( count_unfound == 5):
+			print("I don't found let go up ")
+			self.auv.absolute_depth( 0 )
+		else:
+			print("Try to drop ball")
+			self.auv.fire_gripper()
+			print("Release Ball")
+			
 
 	def analysis_all( self , amont ):
 		self.reset_vision_data()

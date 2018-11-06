@@ -53,10 +53,7 @@ class AutoExposure:
         self.sub_sampling = 0.25
         self.stat = Statistics()
 
-        self.p_lower_nth_default = None
-        self.p_upper_nth_default = None
-        self.p_lower_default = None
-        self.p_upper_default = None
+        
 
     def image_callback(self, msg):
         arr = np.fromstring(msg.data, np.uint8)
@@ -111,6 +108,8 @@ class AutoExposure:
 
             if current_ev is None:
                 ev = previous_ev
+            else:
+                ev = current_ev
 
             if self.debug:
                 p_lower = cv.getTrackbarPos('p_lower', 'image')
@@ -136,6 +135,7 @@ class AutoExposure:
             current_p_upper = self.stat.get_percentile(gray, p_upper)
 
             print('==' * 20)
+            print(th_p_lower, th_p_upper, ev)
             print(current_p_lower, current_p_upper, ev)
 
             if current_p_lower < th_p_lower:

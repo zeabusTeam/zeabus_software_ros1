@@ -28,10 +28,10 @@ class thrust_mapper:
 		if(self.print_data):
 			print '============d============='
 	#green robot
-		self.d = array([[0, 0, -1],
-			[0, 0, -1],
-			[0, 0, -1],
-			[0, 0, -1],
+		self.d = array([[0, 0, 1],
+			[0, 0, 1],
+			[0, 0, 1],
+			[0, 0, 1],
 			[math.cos(math.radians(45)), -math.sin(math.radians(45)), 0],
 			[math.cos(math.radians(45)), math.sin(math.radians(45)), 0],
 			[-math.cos(math.radians(45)), -math.sin(math.radians(45)), 0],
@@ -51,14 +51,14 @@ class thrust_mapper:
 					[-0.3536,  0.3536, -0.023],  #thruster 7
 					[-0.3536, -0.3536, -0.023]]) #thruster 8
 
-#		self.r = array([[ 0.332,  0.2202, 0],   #thruster 1
-#	        [ 0.332, -0.2202, 0],   #thruster 2
-#			[-0.332,  0.2202, 0],   #thruster 3  
-#            [-0.332, -0.2202, 0],   #thruster 4
-#			[ 0.3536,  0.3536, -0.023],  #thruster 5
-#		   	[ 0.3536, -0.3536, -0.023],  #thruster 6
-#			[-0.3536,  0.3536, -0.023],  #thruster 7
-#			[-0.3536, -0.3536, -0.023]]) #thruster 8
+		self.min_force = array([	[ -0.048, 0.045]
+								,	[ -0.048, 0.045]
+								,	[ -0.048, 0.045]
+								,	[ -0.048, 0.045]
+								,	[ -0.01	, 0.01]
+								,	[ -0.01	, 0.01]
+								,	[ -0.01	, 0.01]
+								,	[ -0.01	, 0.01]])
 
 		if(self.print_data):
 			print self.r
@@ -96,46 +96,38 @@ class thrust_mapper:
 		return x
 
 	def joy_callback(self , message):
-	#print '** input ** '
-	#print message
 		pwm_command = Pwm()
 		pwm_command.pwm = [1500]*8
 
-	#compute thrust for each thruster based on joy stick command
 	
-	#trusts_scale = [3,3,4.1,2.4,2.4,2.4]
-	#F = array([message.linear.x*3, message.linear.y*3, message.linear.z*4.1,
-	#	   message.angular.x*2.4, message.angular.y*2.4, message.angular.z*1.6])
-	#F = array([message.linear.x*3, message.linear.y*3, message.linear.z*4.1,
-	#	   message.angular.x*2.4, message.angular.y*2.4, message.angular.z*2.4])
 		F = array([message.linear.x, message.linear.y, message.linear.z,
 		   	message.angular.x, message.angular.y, message.angular.z])
-		if(self.print_data):
-			print '======= M ========'
-			print self.M
-			print '======= F ========'
-			print F
-			print F.T
 		t = dot(self.M, F.T)
-		if(self.print_data):
-			print '=================** thrust **=============='
-			print t
+
+		for run in range( 0 , 8):
+			if( t[run] < 0 ):
+				if( t[run] > self.min_force[run][0]/2 ):
+					t[run] = 0
+				else:
+					t[run] = self.min_force[run][0]
+			else:
+				if( t[run] < self.min_force[run][1]/2 ):
+					t[run] = 0
+				else:
+					t[run] = self.min_force[run][1]
+
+		print( "=============== last force ==============" )
+		print( t )
 
 		cmd = []
 		for i in range (0,4):
 			cmd.append(lup.lookup_pwm_02(t[i]))
                         if( cmd[i] > 1477 and cmd[i] < 1525 ):
                             cmd[i] = 1500
-#		cmd.append(lup.lookup_pwm_02(-1*t[3]))
 		for i in range(4,8):
 			cmd.append(lup.lookup_pwm_01(t[i]))
                         if( cmd[i] > 1447 and cmd[i] < 1552 ):
                             cmd[i] = 1500
-
-#		print '=========== cmd ==========='
-#		print cmd
-		
-	#tmp = [i-1500 for i in cmd]
 
 	#green robot
 		force = 1
@@ -148,28 +140,13 @@ class thrust_mapper:
 		pwm_command.pwm[6] = cmd[6]*force #500*t[6]; #thrust 7 			
 		pwm_command.pwm[7] = cmd[7]*force #500*t[7]; #thrust 8		
 
-                pwm = pwm_command.pwm
+		pwm = pwm_command.pwm
 		print '=========== PWM ==========='
-		print(str(pwm[0]) + "\t" + str(pwm[1]) + "\t" + str(pwm[2]) + "\t" + str(pwm[3]) 
-                                 + "\n" + str(pwm[4]) + "\t" +  str(pwm[5]) + "\t" + str(pwm[6]) + "\t" + str(pwm[7]) )
+		print( str( pwm[0] ) + "\t" +	str( pwm[1] ) + "\t" 
+			+  str( pwm[2] ) + "\t" +	str( pwm[3] ) + "\n" 
+			+  str( pwm[4] ) + "\t" +	str( pwm[5] ) + "\t" 
+			+  str( pwm[6] ) + "\t" +	str( pwm[7] ) )
 
-#		if(self.print_data):
-#			print '\n============PWM before bound============='
-#			print pwm_command
-#		for i in range(8) :
-#			if pwm_command.pwm[i] > 1900 :	#at first 1800 2200 2000
-#				pwm_command.pwm[i] = 1900
-#			elif pwm_command.pwm[i] < 1100 :
-#				pwm_command.pwm[i] = 1100  #at first 1200 800 900
-#		if(message.linear.x == 0 and message.linear.y == 0  and message.angular.z == 0):
-#			pwm_command.pwm[4] = 1500
-#			pwm_command.pwm[5] = 1500
-#			pwm_command.pwm[6] = 1500
-#			pwm_command.pwm[7] = 1500
-#		if(self.print_data):
-#			print '\n============PWM============='
-#			print pwm_command
-#		pwm_command.header.stamp = rospy.Time.now()
 		self.pwm_publisher.publish(pwm_command)
 	
 if __name__ == '__main__':

@@ -23,6 +23,13 @@ generate_dynamic_reconfigure_options(
 	cfg/offset_control.cfg
 )
 
+add_message_files(
+	FILES
+	State.msg
+	Point3.msg
+	Type2.msg
+)
+
 add_service_files(
 	DIRECTORY srv
 	FILES

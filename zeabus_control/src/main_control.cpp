@@ -24,6 +24,15 @@ int main( int argv , char** argc){
 
 //------------------------------------ FOR PUBLISHER --------------------------------------------
 	ros::Publisher tell_force	=	nh.advertise<geometry_msgs::Twist>("/cmd_vel" , 10);
+	ros::Publisher tell_target  =	nh.advertise<zeabus_control::State>("/control/target_state" 
+																	, 1);
+	ros::Publisher tell_state	=	nh.advertise<zeabus_control::State>("/control/current_state"
+																	, 1);
+	ros::Publisher tell_robot_error =	nh.advertise<zeabus_control::Type2>("control/robot_error"
+																	, 1 );
+	zeabus_control::Type2 message_robot_error;
+	zeabus_control::State message_robot_target;
+	zeabus_control::State message_robot_state;
 	geometry_msgs::Twist message_force;
 
 //----------------------------------> SET ABOUT STATE <------------------------------------------
@@ -126,7 +135,7 @@ int main( int argv , char** argc){
 	}
 */
 	// for normal_pid_bound_i --> end setup and for discrete_pid start setup
-	bool use_sum_term[6]		=	{ false , false , true , false , false , false };
+	bool use_sum_term[6]		=	{ false , false , true , false , false , true };
 	zeabus_control::discrete_pid pid_position[6];
 	zeabus_control::discrete_pid pid_velocity[6];
 	reset_constant( pid_position , pid_velocity );
@@ -197,6 +206,14 @@ int main( int argv , char** argc){
 		// use pid_force convert to robot_force for send to thruster
 		//		this is filter and control parity of control
 		zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );
+
+		// publish state for debug
+		array_to_state_msg( target_state , target_velocity , message_robot_target );
+		array_to_state_msg( current_state, current_velocity , message_robot_state );
+		array_to_type2_msg( robot_error , message_robot_error );
+		tell_target.publish( message_robot_target );
+		tell_robot_error.publish( message_robot_error );
+		tell_state.publish( message_robot_state);
 
 		// publish force to node thruster
 		array_to_geometry_twist( robot_force , message_force );	

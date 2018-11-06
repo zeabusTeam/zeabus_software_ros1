@@ -23,6 +23,9 @@
 
 // include message for use in main_control
 #include	<geometry_msgs/Twist.h>
+#include	<zeabus_control/State.h>
+#include	<zeabus_control/Type2.h>
+#include	<zeabus_control/Point3.h>
 
 #include	"listen_twist.cpp" // Class object for listenning twist message
 #include	"listen_odometry.cpp" // Class object for listenning auv status

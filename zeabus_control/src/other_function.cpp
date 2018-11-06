@@ -40,6 +40,31 @@ template<typename number_type> void array_to_geometry_twist( number_type* array_
 	data.angular.z	= array_set[5];
 }
 
+template<typename number_type> void array_to_point3_msg( number_type* array_set
+										, zeabus_control::Point3& data){
+	data.x = array_set[0];
+	data.y = array_set[1];
+	data.z = array_set[2];
+}
+
+template<typename number_type> void array_to_type2_msg( number_type* array_set
+										, zeabus_control::Type2& data){
+	double linear_set[3]=  { array_set[0] , array_set[1] , array_set[2]};
+	array_to_point3_msg( linear_set , data.linear );
+	double angular_set[3] = { array_set[3] , array_set[4] , array_set[5]};
+	array_to_point3_msg( angular_set , data.angular );
+}
+
+template<typename number_type> void array_to_state_msg( number_type* state_set
+										, number_type* velocity_set
+										, zeabus_control::State& data){
+	data.header.stamp = ros::Time::now();
+	array_to_type2_msg( state_set , data.position );
+	array_to_type2_msg( velocity_set , data.velocity );
+}
+
+
+
 template<typename number_type , typename count_type> void print_all( 
 				  number_type* current_state	, number_type* target_state 
 				, number_type* world_error		, number_type* robot_error

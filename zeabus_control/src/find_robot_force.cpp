@@ -49,6 +49,22 @@ namespace zeabus_control{
 		}
 		
 	}
+
+	template<typename number_type> void pid_to_robot_foce_v_2( number_type* pid_force 
+															,  number_type* robot_force){
+		// version 1 will target on x and y
+		#ifdef _CHECK_ERROR_
+			printf("<--pid_to_robot-->\tPID_FORCE : ");
+			for( int run = 0 ; run < 6 ; run++){
+				printf("%8.3f\n", pid_force[run]);
+			}
+			printf("\n");
+		#endif
+
+		for( int run = 0 ; run < 6 ; run++) robot_force[run] = pid_force[run];
+
+		robot_force[2] += -1;
+	}	
 }
 
 #endif

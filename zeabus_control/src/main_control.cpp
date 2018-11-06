@@ -15,6 +15,7 @@
 #include	"head_control.cpp"
 #include	"other_function.cpp"
 
+//#define _DEBUG_
 
 int main( int argv , char** argc){
 
@@ -52,14 +53,14 @@ int main( int argv , char** argc){
 									, &zeabus_control::listen_twist::callback 
 									, &listen_target_velocity);
 
-	double ok_error[6]			=	{ 0.01 , 0.01 , 0.04 , 0.01 , 0.01 , 0.05 };
+	double ok_error[6]			=	{ 0.01 , 0.01 , 0.06 , 0.01 , 0.01 , 0.02 };
 	double world_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double robot_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double bound_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double pid_force[6]			=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 }; 
 	
-	double frequency = 0.5;
+	double frequency = 50;
 
 //----------------------------------> SET ABOUT SERVICE <----------------------------------------
 	zeabus_control::two_point_service service_2_point(	current_state	,	target_state 
@@ -135,13 +136,15 @@ int main( int argv , char** argc){
 	}
 */
 	// for normal_pid_bound_i --> end setup and for discrete_pid start setup
-	bool use_sum_term[6]		=	{ false , false , true , false , false , true };
+	bool use_sum_term_position[6]	=	{ false , false , true , false , false , true };
+	bool use_sum_term_velocity[6]	=	{ true  , true	, true , false , false , false};
+	double bound_sum_value[6]		=	{	1.5	, 1.5	, 1.4  , 1	   , 1	   , 1	  };
 	zeabus_control::discrete_pid pid_position[6];
 	zeabus_control::discrete_pid pid_velocity[6];
 	reset_constant( pid_position , pid_velocity );
 	for( int run = 0 ; run <  6 ; run++ ){
-		pid_position[run].set_sum_term( use_sum_term[run] );
-		pid_velocity[run].set_sum_term( use_sum_term[run] );
+		pid_position[run].set_sum_term( use_sum_term_position[run] , bound_sum_value[run]);
+		pid_velocity[run].set_sum_term( use_sum_term_velocity[run] , bound_sum_value[run]);
 	}
 
 	ros::Rate rate( frequency );
@@ -196,16 +199,23 @@ int main( int argv , char** argc){
 											, pid_force[run] );
 				pid_position[run].reset_value();
 				use_target_velocity[run]--;
+				#ifdef _DEBUG_ 
+					printf("reset_value_of_position");
+				#endif
 			}
 			else{ // use pid for position
 				pid_position[run].get_result( bound_error[run] , pid_force[run]);
 				pid_velocity[run].reset_value();	
+				#ifdef _DEBUG_ 
+					printf("reset_value_of_velocity");
+				#endif
 			}
 		}
 
 		// use pid_force convert to robot_force for send to thruster
 		//		this is filter and control parity of control
-		zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );
+		//zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );
+		zeabus_control::pid_to_robot_foce_v_2( pid_force , robot_force );
 
 		// publish state for debug
 		array_to_state_msg( target_state , target_velocity , message_robot_target );

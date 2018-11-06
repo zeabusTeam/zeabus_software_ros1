@@ -38,10 +38,11 @@ class play_drum:
 		self.collect_vision = { "n_obj" : -1 , "cx" : 0 , "cy" : 0 , "left" : False 
 								,	"right" : False , "forward" : False , "backward" : False 
 								,	"area" : 0 }
+		self.target_depth = -3.4
 
 	def play( self ):
-		self.auv.absolute_depth( -3.5 )
-		while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.5 ) ):
+		self.auv.absolute_depth( self.target_depth )
+		while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.1 ) ):
 			self.rate.sleep()
 		self.survey_mode()
 
@@ -75,13 +76,13 @@ class play_drum:
 # move survey and try to find object
 		while( not rospy.is_shutdown() and self.auv.calculate_distance() < self.distance ):
 			if( self.mode in [-2 , 0 ] ):
-				self.auv.velocity( x = 0.15 )
+				self.auv.velocity( x = 0.10 )
 				print( "move_forward : " + str( self.auv.calculate_distance() ) )
 			elif( self.mode in [-1 , 1 ]):
-				self.auv.velocity( y = 0.2 )
+				self.auv.velocity( y = 0.07 )
 				print( "move_left : " + str( self.auv.calculate_distance() ) )
 			else:
-				self.auv.velocity( y = -0.2 )
+				self.auv.velocity( y = -0.07 )
 				print( "move_right : " + str( self.auv.calculate_distance() ) )
 			self.rate.sleep()
 			self.analysis_all( 5 )
@@ -114,62 +115,29 @@ class play_drum:
 			self.survey_mode()
 
 	def move_to_center( self ):
-		print("Now I want to move to center")
-		self.log_command.write("Now Last mode move to center of drum" , True , 0 )
-		count_unfound = 0
-		while( not rospy.is_shutdown() ):
-			self.rate.sleep()
-			self.analysis_all( 5 )
-			if( self.result_vision["n_obj"] != 1):
-				print("Why not found in this mode")
-				count_unfound += 1
-				if( count_unfound == 5):
-					print("I don't play I not found 5 round")
-					break
-			else:
-				if( abs(self.result_vision['cx']) < 0.1 ):
-					print("cx is ok move forward or backward")
-					if( abs(self.result_vision['cy'] < 0.10) ):
-						print("\tcy is ok too")
-						print("\tplay move right for male right false")
-						while( not rospy.is_shutdown() ):
-							print("\t\tresult_vision[\'right\'] ", self.result_vision['right'])
-							self.rate.sleep()
-							self.auv.velocity( y = -0.08)
-							self.analysis_all( 5 )
-							if( not self.result_vision['right']):
-								break
-						self.auv.absolute_depth( -4.8 )
-						print("Ok go to depth")
-						count_time = 0
-						while( not rospy.is_shutdown() and not self.auv.ok_position("z" , 0.3)):
-							count_time += 1
-							self.rate.sleep()
-							if( count_time >300 ):
-								break
-						print("Finish Game")
-						break
-					elif( self.result_vision['cy'] < 0 ):
-						self.auv.velocity( x = -0.08)
-						print("\tmove backword")
+		print( "Mode move to center")
+		while( not rospy.is_shutdown() and self.target_depth > -4.2 ):
+			print("move to center")
+			while( not rospy.is_shutdown() ):
+				self.analysis_all( 5 )
+				self.rate.sleep():
+				if( abs( self.result_vision['cx']) < 0.1 and
+						abs( self.result_vision['cy']) < 0.1 ):
+					print("ok")
+				elif( abs( self.result_vision['cx']) > abs( self.result_vision['cy']) ):
+					print("Play X and center is " + str( self.result_vision['cx']))
+					if( self.result_vision['cx'] < 0 ):
+						self.auv.velocity( y = -0.15 )
 					else:
-						self.auv.velocity( x = 0.08)
-						print("\tmove forward")
-				elif( self.result_vision['cx'] < 0):
-					print("Last mode move left")
-					self.auv.velocity( y = 0.12)
+						self.auv.velocity( y = 0.15) 
 				else:
-					print("Last mode move right")
-					self.auv.velocity( y = -0.12)
-		if( count_unfound == 5):
-			print("I don't found let go up ")
-			self.auv.absolute_depth( 0 )
-		else:
-			print("Try to drop ball")
-			self.auv.fire_gripper()
-			print("Release Ball")
+					print("Play Y and center is " + str( self.result_vision['cy']))
+					if( self.result_vision['cy'] < 0):
+						self.auv.velocity( x = -0.1 )
+					else:
+						self.auv.velocity( x = 0.1 )
 			
-
+			
 	def analysis_all( self , amont ):
 		self.reset_vision_data()
 		found = 0

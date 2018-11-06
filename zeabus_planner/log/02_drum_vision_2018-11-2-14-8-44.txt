@@ -1,0 +1,137 @@
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Not Found
+	Found Result is [ False , False , False , False ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+	Found Result is [ False , False , False , False ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Not Found
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Not Found
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Not Found
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+---------------------> 2018-11-2-14-8 <---------------------
+Want to find Drum
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]
+	Found Result is [ False , False , False , True ]

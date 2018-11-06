@@ -25,12 +25,13 @@ namespace zeabus_control{
 	class discrete_pid: public normal_pid{
 		public:
 			discrete_pid();
-			void set_sum_term( bool use_sum_term);
+			void set_sum_term( bool use_sum_term , double bound_sum_value);
 			void reset_value();
 
 		private:
 			void individual_calculate( double error , double& result);
 			bool use_sum_term;
+			double bound_sum_value;
 			std::vector< double > result;
 	};
 
@@ -39,7 +40,8 @@ namespace zeabus_control{
 		for( ; this->result.size() < 2 ; ) this->result.push_back(0);
 	}
 
-	void discrete_pid::set_sum_term( bool use_sum_term ){
+	void discrete_pid::set_sum_term( bool use_sum_term , double bound_sum_value ){
+		this->bound_sum_value = bound_sum_value;
 		this->use_sum_term = use_sum_term;
 	}
 
@@ -58,6 +60,10 @@ namespace zeabus_control{
 		this->result_d_term = (this->list_error[2] - 2*this->list_error[1] + this->list_error[0])
 							* this->d_constant;
 		if( use_sum_term){
+			if( fabs( this->result[0]) > this->bound_sum_value ){
+				this->result[0] = this->result[0]/fabs( this->result[0]) 
+								* this->bound_sum_value;	
+			}
 			this->result[1] = this->result[0] 
 							+ this->result_p_term
 							+ this->result_i_term
@@ -65,7 +71,7 @@ namespace zeabus_control{
 			this->result[0] = this->result[1];
 		}
 		else{
-			this->result[1] = this->result_p_term
+			this->result[1] = this->list_error[2] * this->p_constant;
 							+ this->result_i_term
 							+ this->result_d_term;
 		}

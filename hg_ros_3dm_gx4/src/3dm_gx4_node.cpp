@@ -30,9 +30,7 @@ void publishIMUData(const hg_3dm_gx4::IMUData& data)
 
   double roll,pitch,yaw;  m.getRPY(roll, pitch, yaw);
 
-  double new_yaw = -1*yaw;
-  std::cout << "<-----------HG_3DM----------> yaw : " << yaw << "  new_yaw : " << new_yaw << "\n";
-  q.setRPY(-(roll - M_PI/2.0), pitch, new_yaw);
+  q.setRPY(-(roll - M_PI/2.0), pitch, yaw);
 
   g_imu.orientation.w = q.w();
   g_imu.orientation.x = q.x();

@@ -102,18 +102,20 @@ class thrust_mapper:
 	
 		F = array([message.linear.x, message.linear.y, message.linear.z,
 		   	message.angular.x, message.angular.y, message.angular.z])
+#		F = array([message.linear.x * 2, message.linear.y * 2, message.linear.z,
+#		   	message.angular.x, message.angular.y, message.angular.z])
 		t = dot(self.M, F.T)
 
 		for run in range( 0 , 8):
 			if( t[run] < 0 ):
 				if( t[run] > self.min_force[run][0]/2 ):
 					t[run] = 0
-				else:
+				elif( t[run] > self.min_force[run][0]):
 					t[run] = self.min_force[run][0]
 			else:
 				if( t[run] < self.min_force[run][1]/2 ):
 					t[run] = 0
-				else:
+				elif( t[run] < self.min_force[run][1]):
 					t[run] = self.min_force[run][1]
 
 		print( "=============== last force ==============" )
@@ -122,12 +124,12 @@ class thrust_mapper:
 		cmd = []
 		for i in range (0,4):
 			cmd.append(lup.lookup_pwm_02(t[i]))
-                        if( cmd[i] > 1477 and cmd[i] < 1525 ):
-                            cmd[i] = 1500
+			if( t[i] == 0 ):
+				cmd[i] = 1500
 		for i in range(4,8):
 			cmd.append(lup.lookup_pwm_01(t[i]))
-                        if( cmd[i] > 1447 and cmd[i] < 1552 ):
-                            cmd[i] = 1500
+			if( t[i] == 0 ):
+				cmd[i] = 1500
 
 	#green robot
 		force = 1

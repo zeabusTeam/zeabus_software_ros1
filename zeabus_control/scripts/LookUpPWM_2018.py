@@ -9,12 +9,15 @@ print("finish import")
 #set variable to find locate of package
 rospack = rospkg.RosPack()
 
-name_package = 'zeabus_condition'
+name_package = 'zeabus_controller'
 print("finish init node")
-location_file_01 = '/scripts/linear_teledyne_2018.txt'
+#location_file_01 = '/script/teledyne_2018_bound_min.txt'
+location_file_01 = '/script/thruster_mapper/linear_teledyne_2018.txt'
+#location_file_01 = '/script/temporary.txt'
 pwm_force_data_01 = read_file( rospack.get_path(name_package) + location_file_01 )
 
-location_file_02 = '/scripts/blue_robotics_2018_bound_min.txt'
+#2location_file_02 = '/script/blue_robotics_2018_convert_update.txt'
+location_file_02 = '/script/thruster_mapper/linear_bluerobotics_2018.txt'
 pwm_force_data_02 = read_file( rospack.get_path(name_package) + location_file_02 )
 
 PWM_TABLE_01 = pwm_force_data_01.get_column(0, ',')
@@ -34,9 +37,6 @@ def _float_equal(in1, in2, epsilon=0.000001):
     return True if abs(in1-in2) < epsilon else False
 
 def lookup_pwm_01(force):
-#    "look for pwm from force"
-    # FORCE_LOOKUP = [1, 2, 3, 4, 5]
-    # pwm_table = [2, 3, 8, 10, 11]
     idx = bisect.bisect_left(FORCE_LOOKUP_01, force)
     if idx == 0:
         out_pwm = PWM_TABLE_01[0]
@@ -55,9 +55,6 @@ def lookup_pwm_array_01(force):
     return out
 
 def lookup_pwm_02(force):
-#    "look for pwm from force"
-    # FORCE_LOOKUP = [1, 2, 3, 4, 5]
-    # pwm_table = [2, 3, 8, 10, 11]
     idx = bisect.bisect_left(FORCE_LOOKUP_02, force)
     if idx == 0:
         out_pwm = PWM_TABLE_02[0]
@@ -97,8 +94,6 @@ def main():
 		print(answer[4:])
 #		print(lookup_pwm_array_01(answer[4:]))
 
-#    print(lookup_pwm_array_01(aaaa))
-#    print(len(PWM_TABLE_01),len(FORCE_LOOKUP_01));
 
 if __name__ == "__main__":
 	rospy.init_node("test_find_force")

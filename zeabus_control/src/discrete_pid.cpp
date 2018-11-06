@@ -84,7 +84,6 @@ namespace zeabus_control{
 
 #endif
 
-
 #ifdef _CHECK_ERROR_
 	#undef _CHECK_ERROR_
 #endif

@@ -12,12 +12,10 @@ rospack = rospkg.RosPack()
 name_package = 'zeabus_controller'
 print("finish init node")
 #location_file_01 = '/script/teledyne_2018_bound_min.txt'
-location_file_01 = '/script/thruster_mapper/linear_teledyne_2018.txt'
-#location_file_01 = '/script/temporary.txt'
+location_file_01 = '/scripts/thruster_mapper/teledyne_9th_degree_bound_min.txt'
 pwm_force_data_01 = read_file( rospack.get_path(name_package) + location_file_01 )
 
-#2location_file_02 = '/script/blue_robotics_2018_convert_update.txt'
-location_file_02 = '/script/thruster_mapper/linear_bluerobotics_2018.txt'
+location_file_02 = '/scripts/blue_robotics_2018_bound_min.txt'
 pwm_force_data_02 = read_file( rospack.get_path(name_package) + location_file_02 )
 
 PWM_TABLE_01 = pwm_force_data_01.get_column(0, ',')

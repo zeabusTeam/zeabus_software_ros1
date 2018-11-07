@@ -46,8 +46,6 @@ class plot_state:
 		rospy.Subscriber( self.sub_topic , Type2 , self.sub_state , queue_size = 1)
 		
 		plt.show()
-
-
 		
 	def sub_state( self , message ):
 		self.all_data[0].append( message.linear.x )
@@ -58,23 +56,38 @@ class plot_state:
 		self.all_data[5].append( message.angular.z )
 
 		print( "message receive " , self.count , message )
-		self.count += 1
+		
 		for run in range ( 0 , 6 ):
-			self.all_data[ run ] = self.all_data[ run ][ (-1*self.max_data) :] 
+			self.all_data[ run ] = self.all_data[ run ][-1*self.max_data:] 
 		print( "result z " ,  self.all_data[2])
 
-		for run in range( 0 , 3 ):
-			self.my_graph[run].clear()
-			self.my_graph[run].set_xlabel( self.x_label[run])
-			self.my_graph[run].plot( self.run_data , self.all_data[run] , self.style_data[run])	
+		#for run in range( 0 , 3 ):
+			#self.my_graph[run].clear()
+		#	self.my_graph[run].set_xlabel( self.x_label[run])
+		#	self.my_graph[run].plot( self.run_data , self.all_data[run] , self.style_data[run])	
+		
+		self.count += 1
+
+		print("count:",self.count)
+		print(self.all_data[0])
+		if self.count >= 20:
+			print("in for loop")
+			for run in range(0 , 3):
+				self.my_graph[run].set_xlabel( self.x_label[run])
+				self.my_graph[run].plot(self.all_data[run] , self.style_data[run])	
+			self.count = 0
+			plt.pause(0.0001)
+			for run in range(0 , 3):
+				self.my_graph[run].clear()
 		self.my_graph[3].clear()
 		self.my_graph[3].set_xlabel( self.x_label[5])
 		self.my_graph[3].plot( self.run_data , self.all_data[5] , self.style_data[5])	
 		print( "After plot")
-
+		
 	
 if __name__=="__main__":
 	plot_graph = plot_state()	
 	print("before spin")
 	rospy.spin()
 	print("after spin")
+

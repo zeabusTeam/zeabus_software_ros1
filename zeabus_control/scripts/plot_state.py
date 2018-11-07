@@ -26,17 +26,16 @@ class plot_state:
 		self.x_label = [ 'axis_X' , 'axis_Y' , 'axis_Z' , 'ROLL' , 'PITCH' , 'YAW']
 
 		self.my_figure	= plt.figure( tight_layout=True)
-		self.my_grids	= gridspec.GridSpec( 3 , 2 )
+		self.my_grids	= gridspec.GridSpec( 4 , 2 )
 		self.my_graph	= []
 		self.my_graph.append( self.my_figure.add_subplot( self.my_grids[1 , 0] ))
 		self.my_graph.append( self.my_figure.add_subplot( self.my_grids[1 , 1] ))
 		self.my_graph.append( self.my_figure.add_subplot( self.my_grids[0 , :] ))
-#		self.my_graph.append( self.my_figure.add_subplot( self.my_grids[3 , 0] ))
-#		self.my_graph.append( self.my_figure.add_subplot( self.my_grids[3 , 1] ))
+		self.my_graph.append( self.my_figure.add_subplot( self.my_grids[3 , 0] ))
+		self.my_graph.append( self.my_figure.add_subplot( self.my_grids[3 , 1] ))
 		self.my_graph.append( self.my_figure.add_subplot( self.my_grids[2 , :] ))
 
 
-		print("test run_data" , self.run_data )
 		self.all_data = [ [0]*self.max_data , [0]*self.max_data , [0]*self.max_data 
 						, [0]*self.max_data , [0]*self.max_data , [0]*self.max_data ]
 		self.style_data = [ 'b' , 'g' , 'c' , 'm' , 'y' , 'k'];
@@ -55,34 +54,17 @@ class plot_state:
 		self.all_data[4].append( message.angular.y )
 		self.all_data[5].append( message.angular.z )
 
-		print( "message receive " , self.count , message )
 		
 		for run in range ( 0 , 6 ):
 			self.all_data[ run ] = self.all_data[ run ][-1*self.max_data:] 
-		print( "result z " ,  self.all_data[2])
-
-		#for run in range( 0 , 3 ):
-			#self.my_graph[run].clear()
-		#	self.my_graph[run].set_xlabel( self.x_label[run])
-		#	self.my_graph[run].plot( self.run_data , self.all_data[run] , self.style_data[run])	
 		
-		self.count += 1
 
-		print("count:",self.count)
-		print(self.all_data[0])
-		if self.count >= 20:
-			print("in for loop")
-			for run in range(0 , 3):
-				self.my_graph[run].set_xlabel( self.x_label[run])
-				self.my_graph[run].plot(self.all_data[run] , self.style_data[run])	
-			self.count = 0
-			plt.pause(0.0001)
-			for run in range(0 , 3):
-				self.my_graph[run].clear()
-		self.my_graph[3].clear()
-		self.my_graph[3].set_xlabel( self.x_label[5])
-		self.my_graph[3].plot( self.run_data , self.all_data[5] , self.style_data[5])	
-		print( "After plot")
+		for run in range(0 , 6):
+			self.my_graph[run].set_xlabel( self.x_label[run] )
+			self.my_graph[run].plot(self.all_data[run] , self.style_data[run])	
+		plt.pause(0.000000000000000000001)
+		for run in range(0 , 6):
+			self.my_graph[run].clear()
 		
 	
 if __name__=="__main__":

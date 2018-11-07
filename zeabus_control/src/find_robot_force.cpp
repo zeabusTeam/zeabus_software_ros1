@@ -64,7 +64,7 @@ namespace zeabus_control{
 
 		for( int run = 0 ; run < 6 ; run++) robot_force[run] = pid_force[run];
 
-		robot_force[2] += -1;
+//		robot_force[2] += -1;
 	}	
 }
 

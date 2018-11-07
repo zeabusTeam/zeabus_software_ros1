@@ -15,8 +15,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 queue = []
-pub = rospy.Publisher("/barometer/data", Odometry, queue_size=90)
-pub_float = rospy.Publisher("/baro/float64", Float64, queue_size=90)
+pub = rospy.Publisher("/barometer/data", Odometry, queue_size=1)
+# pub_float = rospy.Publisher("/baro/float64", Float64, queue_size=90)
 count = 0
 r = 0.05
 
@@ -24,17 +24,18 @@ r = 0.05
 def mean_filtering(z):
     global pub, queue, count, r
     queue.append(z)
-    if len(queue) >= 10:
+    len_q = len(queue)
+    if len_q >= 10:
         first = queue[0]
         threshold = np.mean(queue)
         if abs(threshold) - r < abs(first) < abs(threshold) + r:
             m = Odometry()
             m.pose.pose.position.z = first
             pub.publish(m)
-            pub_float.publish(first)
+            # pub_float.publish(first)
 
         queue = queue[1:]
-    count += 1
+    # count += 1
 
 
 
@@ -50,5 +51,4 @@ if __name__ == '__main__':
     rospy.init_node('PressureFilter')
     rospy.Subscriber("/baro/odom", Odometry, baro_callback)
     print("BARO FILTER")
-    while not rospy.is_shutdown():
-        pass
+    rospy.spin()

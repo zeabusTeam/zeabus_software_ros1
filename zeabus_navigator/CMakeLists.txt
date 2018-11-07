@@ -10,7 +10,6 @@ project(zeabus_navigator)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  zeabus_control
 )
 
 ## System dependencies are found with CMake's conventions

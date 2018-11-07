@@ -40,7 +40,9 @@ int main( int argv , char** argc){
 	double target_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double current_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double current_velocity[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
-	zeabus_control::listen_odometry_convert listen_state( current_state , current_velocity );
+	zeabus_control::listen_odometry_convert listen_state( current_state 
+														, current_velocity 
+														, target_state );
 	ros::Subscriber sub_state = nh.subscribe( "/auv/state" , 1 
 								, &zeabus_control::listen_odometry_convert::callback 
 								, &listen_state);
@@ -112,7 +114,7 @@ int main( int argv , char** argc){
 	function = boost::bind(&dynamic_reconfigure_callback , _1 , _2); 
 	server.setCallback( function );
 	zeabus_extension::zeabus_ros::dynamic_reconfigure file_const("zeabus_control" , "constant"
-													, "set_01.yaml" , "/main_control");
+													, "set_02.yaml" , "/main_control");
 	// for 4 constant
 /*	dynamic_reconfigure::Server<zeabus_control::offset_controlConfig> server;
 	dynamic_reconfigure::Server<zeabus_control::offset_controlConfig>::CallbackType function;
@@ -136,9 +138,9 @@ int main( int argv , char** argc){
 	}
 */
 	// for normal_pid_bound_i --> end setup and for discrete_pid start setup
-	bool use_sum_term_position[6]	=	{ false , false , true , false , false , true };
+	bool use_sum_term_position[6]	=	{ true	, true , true , false , false , true };
 	bool use_sum_term_velocity[6]	=	{ true  , true	, true , false , false , false};
-	double bound_sum_value[6]		=	{	1.5	, 1.5	, 1.4  , 1	   , 1	   , 1	  };
+	double bound_sum_value[6]		=	{	2.5	, 2.5	, 1.6  , 1	   , 1	   , 1	  };
 	zeabus_control::discrete_pid pid_position[6];
 	zeabus_control::discrete_pid pid_velocity[6];
 	reset_constant( pid_position , pid_velocity );

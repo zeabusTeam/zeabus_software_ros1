@@ -47,6 +47,7 @@ namespace zeabus_control{
 		private:
 			double *state;
 			double *velocity;
+			double *target;
 	};
 
 	listen_odometry::listen_odometry( double* state , double* velocity){
@@ -67,16 +68,22 @@ namespace zeabus_control{
 	class listen_odometry_convert{
 		public:
 			void callback( const nav_msgs::Odometry& message);
-			listen_odometry_convert( double* state , double* velocity);
+			listen_odometry_convert( double* state , double* velocity , double* target);
 
 		private:
+			bool first_time;
 			double *state;
 			double *velocity;
+			double *target;
 	};
 
-	listen_odometry_convert::listen_odometry_convert( double* state , double* velocity){
+	listen_odometry_convert::listen_odometry_convert( double* state 
+													, double* velocity
+													, double* target){
+		this->first_time = true;
 		this->state = state;
 		this->velocity = velocity;
+		this->target = target;
 		#ifdef _CHECK_ERROR_
 		std::cout	<< "pointer of data : number <----> " << this->state 
 					<< " : " << state << "\n";
@@ -104,7 +111,16 @@ namespace zeabus_control{
 		this->velocity[2] = message.twist.twist.linear.z;
 		this->velocity[3] = message.twist.twist.angular.x;
 		this->velocity[4] = message.twist.twist.angular.y;
-		this->velocity[5] = message.twist.twist.angular.z;	
+		this->velocity[5] = message.twist.twist.angular.z;
+		if( this->first_time ){
+			this->target[0] = this->state[0];
+			this->target[1] = this->state[1];
+			this->target[2] = this->state[2];
+			this->target[3] = 0;
+			this->target[4] = 0;
+			this->target[5] = this->state[5];
+			this->first_time = false;
+		}	
 	}
 
 }

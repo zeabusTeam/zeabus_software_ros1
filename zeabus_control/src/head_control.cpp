@@ -34,6 +34,7 @@
 #include	"find_robot_force.cpp" // function consider about important force
 #include	"normal_pid_bound_i.cpp" // for include pid
 #include	"discrete_pid.cpp" // for include pid type discrete
+#include	"sum_pid_bound_id.cpp"
 //#include	"offset_pid.cpp" // for include pid type offset
 #include	"service_two_point.cpp" //  this service for one_point srv
 #include	"service_one_point.cpp" // this service for two_point srv
@@ -105,14 +106,14 @@ void dynamic_reconfigure_callback( zeabus_control::pid_controlConfig &config , u
 	constant_velocity[1][5] = config.i_yaw_velocity;
 	constant_velocity[2][5] = config.d_yaw_velocity;
 
-/*
-	offset_force[0] = config.x_offset;
-	offset_force[1] = config.y_offset;
-	offset_force[2] = config.z_offset;
-	offset_force[3] = config.yaw_offset;
-	offset_force[4] = config.pitch_offset;
-	offset_force[5] = config.yaw_offset;
-*/	
+	#ifdef _OFFSET_PID__
+		offset_force[0] = config.x_offset;
+		offset_force[1] = config.y_offset;
+		offset_force[2] = config.z_offset;
+		offset_force[3] = config.yaw_offset;
+		offset_force[4] = config.pitch_offset;
+		offset_force[5] = config.yaw_offset;
+	#endif
 	
 	if( already_loading_constant ) want_save_constant = true;
 }

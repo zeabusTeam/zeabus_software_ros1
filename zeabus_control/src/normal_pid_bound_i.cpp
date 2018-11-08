@@ -45,8 +45,8 @@ namespace zeabus_control{
 		#endif
 		this->result_p_term = ( this->p_constant * error );
 		this->result_i_term += this->i_constant * error * this->period_time;
-		if( fabs( this->result_i_term) > limit_value ){
-			this->result_i_term = copysign( limit_value , this->result_i_term);
+		if( fabs( this->result_i_term) > this->limit_value ){
+			this->result_i_term = copysign( this->limit_value , this->result_i_term);
 		}
 		this->result_d_term = ( error - this->list_error[0] ) / 
 								this->period_time * this->d_constant ;

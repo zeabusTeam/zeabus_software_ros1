@@ -23,7 +23,7 @@ template<typename pid_type>void reset_constant( pid_type* pid_position , pid_typ
 		pid_position[run].reset_value();	
 		pid_velocity[run].reset_value();	
 	}
-	#ifdef OFFSET_PID
+	#ifdef _OFFSET_PID__
 		for( int run = 0 ; run < 6 ; run++){
 			pid_position[run].set_offset( )
 		}

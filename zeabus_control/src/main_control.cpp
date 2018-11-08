@@ -10,12 +10,15 @@
 //
 ///////////////////////////////////////// END PART //////////////////////////////////////////////
 
-#define _OFFSET_PID_
-
 #include	"head_control.cpp"
 #include	"other_function.cpp"
 
+#define _BOUND_ID_PID__
+//#define _NORMAL_PID__
+//#define _DISCRETE_PID__
+//#define _OFFSET_PID__
 //#define _DEBUG_
+
 
 int main( int argv , char** argc){
 
@@ -55,9 +58,9 @@ int main( int argv , char** argc){
 									, &zeabus_control::listen_twist::callback 
 									, &listen_target_velocity);
 
-	double ok_error[6]			=	{ 0.01 , 0.01 , 0.06 , 0.01 , 0.01 , 0.02 };
 	double world_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double robot_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	double ok_error[6]			=	{ 0.01 , 0.01 , 0.06 , 0.01 , 0.01 , 0.02 };
 	double bound_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double pid_force[6]			=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 }; 
@@ -109,45 +112,58 @@ int main( int argv , char** argc){
 
 //------------------------------> SET UP DYNAMIC RECONFIGURE <-----------------------------------
 	// for 3 constant
+	#ifdef _BOUND_ID_PID__ 
 	dynamic_reconfigure::Server<zeabus_control::pid_controlConfig> server;
 	dynamic_reconfigure::Server<zeabus_control::pid_controlConfig>::CallbackType function;
 	function = boost::bind(&dynamic_reconfigure_callback , _1 , _2); 
 	server.setCallback( function );
 	zeabus_extension::zeabus_ros::dynamic_reconfigure file_const("zeabus_control" , "constant"
-													, "set_02.yaml" , "/main_control");
-	// for 4 constant
-/*	dynamic_reconfigure::Server<zeabus_control::offset_controlConfig> server;
+													, "set_01.yaml" , "/main_control");
+	#endif
+	#ifdef _OFFSET_PID__ // for 4 constant
+	dynamic_reconfigure::Server<zeabus_control::offset_controlConfig> server;
 	dynamic_reconfigure::Server<zeabus_control::offset_controlConfig>::CallbackType function;
 	function = boost::bind(&dynamic_reconfigure_callback , _1 , _2); 
 	server.setCallback( function );
 	zeabus_extension::zeabus_ros::dynamic_reconfigure file_const("zeabus_control" , "constant"
 													, "offset_01.yaml" , "/offset_control");
-*/
+	#endif
 //--------------------------------> SET UP PID FUNCTION <----------------------------------------
-	// for normal_pid_bound_i --> start setup
-/*
-	double bound_value_i[6]		=	{ 1 , 1 , 2 , 1 , 1 , 1}; 
-	zeabus_control::normal_pid_bound_i pid_position[6];
-	zeabus_control::normal_pid_bound_i pid_velocity[6];
-	reset_constant( pid_position , pid_velocity );
-	for( int run = 0 ; run < 6 ; run++){
-		pid_position[run].limit_value_i_term( bound_value_i[run]);
-		pid_position[run].set_frequency( frequency );
-		pid_velocity[run].limit_value_i_term( bound_value_i[run]);
-		pid_velocity[run].set_frequency( frequency );
-	}
-*/
-	// for normal_pid_bound_i --> end setup and for discrete_pid start setup
-	bool use_sum_term_position[6]	=	{ true	, true , true , false , false , true };
-	bool use_sum_term_velocity[6]	=	{ true  , true	, true , false , false , false};
-	double bound_sum_value[6]		=	{	2.5	, 2.5	, 1.6  , 1	   , 1	   , 1	  };
-	zeabus_control::discrete_pid pid_position[6];
-	zeabus_control::discrete_pid pid_velocity[6];
-	reset_constant( pid_position , pid_velocity );
-	for( int run = 0 ; run <  6 ; run++ ){
-		pid_position[run].set_sum_term( use_sum_term_position[run] , bound_sum_value[run]);
-		pid_velocity[run].set_sum_term( use_sum_term_velocity[run] , bound_sum_value[run]);
-	}
+	#ifdef _NORMAL_PID__ // for using normal_pid
+		double bound_value_i[6]		=	{ 1 , 1 , 2 , 1 , 1 , 1}; 
+		zeabus_control::normal_pid_bound_i pid_position[6];
+		zeabus_control::normal_pid_bound_i pid_velocity[6];
+		reset_constant( pid_position , pid_velocity );
+		for( int run = 0 ; run < 6 ; run++){
+			pid_position[run].limit_value_i_term( bound_value_i[run]);
+			pid_position[run].set_frequency( frequency );
+			pid_velocity[run].limit_value_i_term( bound_value_i[run]);
+			pid_velocity[run].set_frequency( frequency );
+		}
+	#endif
+	#ifdef _DISCRETE_PID__ // for use discrete_pid
+		bool use_sum_term_position[6]	=	{ true	, true , true , false , false , true };
+		bool use_sum_term_velocity[6]	=	{ true  , true	, true , false , false , false};
+		double bound_sum_value[6]		=	{	2.5	, 2.5	, 1.6  , 1	   , 1	   , 1	  };
+		zeabus_control::discrete_pid pid_position[6];
+		zeabus_control::discrete_pid pid_velocity[6];
+		reset_constant( pid_position , pid_velocity );
+		for( int run = 0 ; run <  6 ; run++ ){
+			pid_position[run].set_sum_term( use_sum_term_position[run] , bound_sum_value[run]);
+			pid_velocity[run].set_sum_term( use_sum_term_velocity[run] , bound_sum_value[run]);
+		}
+	#endif
+	#ifdef _BOUND_ID_PID__ // for using sum_pid_bound_id
+		double bound_sum_value_position[6]	=	{ 3		, 3		, 1.6	, 1		, 1		, 1};
+		double bound_sum_value_velocity[6]	=	{ 2.2	, 2.2	, 1.6	, 1		, 1		, 1};
+		zeabus_control::sum_pid_bound_id pid_position[6];
+		zeabus_control::sum_pid_bound_id pid_velocity[6];
+		reset_constant( pid_position , pid_velocity );
+		for( int run = 0 ; run <  6 ; run++){
+			pid_position[run].limit_value_sum_term( bound_sum_value_position[run] );
+			pid_velocity[run].limit_value_sum_term( bound_sum_value_velocity[run] );
+		}
+	#endif
 
 	ros::Rate rate( frequency );
 

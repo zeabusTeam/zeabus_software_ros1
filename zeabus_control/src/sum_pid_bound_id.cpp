@@ -14,6 +14,7 @@
 #include	<math.h>
 #include	"normal_pid.cpp"
 
+
 namespace zeabus_control{
 
 	class sum_pid_bound_id : public normal_pid{
@@ -36,9 +37,11 @@ namespace zeabus_control{
 	}
 
 	void sum_pid_bound_id::individual_calculate( double error , double& result ){
+		printf("error is %.4f\t" , error );
 		this->list_error[0] = this->list_error[1];
+		this->list_error[1] = error;
 		this->result_p_term = this->list_error[1] * this->p_constant;
-		this->result_id_term = ( this->list_error[1] + this->list_error[0] ) / 2 
+		this->result_id_term += ( this->list_error[1] + this->list_error[0] ) / 2 
 									* this->i_constant * this->period_time 
 							+ ( this->list_error[1] - this->list_error[2] ) / this->period_time
 									* this->d_constant;
@@ -47,6 +50,9 @@ namespace zeabus_control{
 		}
 
 		result = this->result_p_term + this->result_id_term ;
+		printf("result is %.4f\t%.4f\t%.4f\n" , this->result_p_term 
+											, this->result_id_term 
+											, result);
 	}
 
 	void sum_pid_bound_id::reset_value(){

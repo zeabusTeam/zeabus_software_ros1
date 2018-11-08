@@ -144,7 +144,7 @@ int main( int argv , char** argc){
 	#ifdef _DISCRETE_PID__ // for use discrete_pid
 		bool use_sum_term_position[6]	=	{ true	, true , true , false , false , true };
 		bool use_sum_term_velocity[6]	=	{ true  , true	, true , false , false , false};
-		double bound_sum_value[6]		=	{	2.5	, 2.5	, 1.6  , 1	   , 1	   , 1	  };
+		double bound_sum_value[6]		=	{	2.5	, 2.5	, 0.5  , 1	   , 1	   , 1	  };
 		zeabus_control::discrete_pid pid_position[6];
 		zeabus_control::discrete_pid pid_velocity[6];
 		reset_constant( pid_position , pid_velocity );
@@ -162,6 +162,8 @@ int main( int argv , char** argc){
 		for( int run = 0 ; run <  6 ; run++){
 			pid_position[run].limit_value_sum_term( bound_sum_value_position[run] );
 			pid_velocity[run].limit_value_sum_term( bound_sum_value_velocity[run] );
+			pid_position[run].set_frequency( frequency );
+			pid_velocity[run].set_frequency( frequency );
 		}
 	#endif
 

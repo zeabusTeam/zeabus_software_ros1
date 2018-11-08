@@ -28,6 +28,7 @@ add_message_files(
 	State.msg
 	Point3.msg
 	Type2.msg
+	ArrayFloat.msg
 )
 
 add_service_files(

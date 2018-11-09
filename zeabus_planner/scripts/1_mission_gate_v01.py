@@ -36,7 +36,7 @@ class mission_gate:
 							, "area" : None }
 
 		print("Waiting gate service")
-#		rospy.wait_for_service('vision_gate')
+		rospy.wait_for_service('vision_gate')
 		print("I found gate service")
 
 		self.rate = rospy.Rate( 30 )
@@ -57,6 +57,7 @@ class mission_gate:
 		print( "<--- MISSION GATE ---> PLAY FORWARD MODE ")
 		count_unfound = 0
 		while( not rospy.is_shutdown() and count_unfound < 3 ):
+			self.rate.sleep()
 			self.analysis_data( 5 )
 			if( self.result_vision['n_obj'] < 1 ):
 				print( "<--- MISSION GATE ---> Not found gate")
@@ -82,11 +83,32 @@ class mission_gate:
 			
 	def play_backward( self ):
 		print( "<--- MISSION GATE ---> PLAY BACKWORD MODE " )
+		self.auv.relative_yaw( 3.14 )
+		count = 0;
 		while( not rospy.is_shutdown() ):
+			self.rate.sleep()
+			if( self.auv.ok_state( 'yaw' , 0.1 ) ):
+				count += 1
+			else:
+				count = 0
+			print("<- BACKWARD -> Waitting yaw " + str( count ))
+			if(  count > 5 ):
+				break
+		print("<--- MISSION GATE ---> Move BACKWARD")	
+		while( not rospy.is_shutdown() ):
+			self.rate.sleep()
 			self.analysis_data( 5 )
+			count = 0
 			if( self.result_vision['n_obj'] > 0 ):
+				count += 1
+				print("<- BACKWARD -> Found " + str( count ))
+			else:
+				count = 0
+			if( count > 2 ):
 				self.sucess_mission = True
 				break
+
+		print("<--- MISSION GATE ---> FINISH BACKWARD")
 			
 			
 	def find_center( self , type_center ):

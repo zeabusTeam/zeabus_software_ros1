@@ -215,8 +215,11 @@ int main( int argv , char** argc){
 		// use error of bound_error to calculate force by pid 
 		for( int run = 0 ; run < 6 ; run++){
 			if( use_target_velocity[run] > 0 ){ // use pid for velocity
-				pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
-											, pid_force[run] );
+				// When have state about velocity
+//				pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
+//											, pid_force[run] );
+				// When don't have data to tell velocity of robot
+				pid_force[run] = target_velocity[run];
 				pid_position[run].reset_value();
 				use_target_velocity[run]--;
 				#ifdef _DEBUG_ 
@@ -233,7 +236,7 @@ int main( int argv , char** argc){
 		}
 
 		// use pid_force convert to robot_force for send to thruster
-		//		this is filter and control parity of control
+		//		this is filter and manage parity of control
 		//zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );
 		zeabus_control::pid_to_robot_foce_v_2( pid_force , robot_force );
 

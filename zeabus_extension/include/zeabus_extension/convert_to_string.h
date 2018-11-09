@@ -60,6 +60,8 @@ namespace zeabus_extension{
 
 		std::string to_string( char data );
 
+//		template< typename type_variable > std::string to_string( type_variable data);
+
 		std::string to_string( double data , bool assign_position = false
 							, bool have_point = false
 							, int front = 3 , int back = 2 );

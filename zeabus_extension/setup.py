@@ -3,7 +3,7 @@ from distutils.core import setup
 print("----------------------------------------------run setup python")
 
 setup(name='zeabus_python_package',
-      version='1.0',
+      version='1.1',
       description='Export Library ROS for zeabus',
       author='Supasan Komonlit',
       author_email='supasan.k@ku.th',

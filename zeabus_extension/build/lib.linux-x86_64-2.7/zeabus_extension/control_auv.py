@@ -5,6 +5,7 @@ from geometry_msgs.msg import Twist, Pose
 from nav_msgs.msg import Odometry
 from zeabus_controller.srv import *
 from std_msgs.msg import String
+from zeabus_elec_ros_hardware_interface.srv import Torpedo
 
 class control_auv:
 
@@ -40,6 +41,8 @@ class control_auv:
 		self.client_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , fix_abs_yaw )
 		self.client_target_position = rospy.ServiceProxy('/know_target' , target_service )
 		self.client_ok_position		= rospy.ServiceProxy('/ok_position' , ok_position)
+		self.fire_torpedo			= rospy.ServiceProxy('/fire_torpedo' , Torpedo )
+		self.hold_torpedo			= rospy.ServiceProxy('/hold_torpedo' , Torpedo )
 
 		self.message.data = "xy"
 		receive_data = self.client_target_position( self.message )
@@ -124,3 +127,13 @@ class control_auv:
 						math.pow( receive_data.target_01 - self.collect_x , 2 ) +
 						math.pow( receive_data.target_02 - self.collect_y , 2 )
 					)
+
+	def fire_gripper( self ):
+		print("<==== Control AUV ====> Release Ball" )
+		result = self.fire_torpedo( 0 )
+		return result
+
+	def pull_gripper( self ):
+		print("<==== Control AUV ====> Pull Gripper" )
+		result = self.hold_torpedo( 0 )
+		return result

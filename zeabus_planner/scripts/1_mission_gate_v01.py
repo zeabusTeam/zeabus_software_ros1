@@ -36,14 +36,38 @@ class mission_gate:
 							, "area" : None }
 
 		print("Waiting gate service")
-		rospy.wait_for_service('vision_gate')
+#		rospy.wait_for_service('vision_gate')
 		print("I found gate service")
 
+		self.rate = rospy.Rate( 30 )
 		self.request_data = rospy.ServiceProxy('/vision_gate' , vision_srv_gate )
 		self.mission_planner = rospy.Service('/mission_gate' , mission_result , self.main_play)
 
 	def main_play( self , request ):
-		return self.mission_result.Response( Bool( True ) , Int8( 1 )  )
+			
+
+		return Bool( True ) , Int8( 1 ) 
+
+	def play_forward( self ):
+		print( "<--- MISSION GATE ---> PLAY FORWARD MODE ")
+		count_unfound = 0
+		while( not rospy.is_shutdown() and count_unfound < 3 ):
+			self.analysis_data( 5 )
+			if( self.result_vision['n_obj'] < 1 ):
+				print( "<--- MISSION GATE ---> Not found gate")
+				count_unfound += 1
+				continue
+			if( self.result_vision['pos'] == 0 ):
+				
+			
+	def find_center( self , type_center ):
+		if( type_center == 'x'):
+			return ( self.result_vision['cx_1'] + self.result_vision['cx_2'] )/2
+		elif( type_center == 'y'):
+			return ( self.result_vision['cy_1'] + self.result_vision['cy_2'] )/2
+		else:
+			print("<---------- WARNING GATE ----------> Don't found this type")
+			return -5
 		
 	def reset_collect_vision( self ):
 		self.collect_vision = { "n_obj":None , "pos":0 , "cx_1":0.0 , "cx_2":0.0

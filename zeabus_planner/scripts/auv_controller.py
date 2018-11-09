@@ -30,7 +30,7 @@ class auv_controller:
 
 		self.velocity_data = Twist()
 
-		self.velocity_publisher		= rospy.Publisher('/zeabus/cmd_vel' , Twist )
+		self.velocity_publisher		= rospy.Publisher('/zeabus/cmd_vel', Twist , queue_size = 10)
 		self.request_absolute_depth	= rospy.ServiceProxy('/fix_abs_depth' , one_point )
 		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , one_point )
 		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , one_point )
@@ -75,3 +75,11 @@ class auv_controller:
 			self.velocity_data.linear.x = value
 		elif( type_velocity == "y"):
 			self.velocity_data.linear.y = value	
+
+#	def fire_gripper( self ):
+#		result = self.release_ball( 0 )
+#		return result
+
+#	def pull_gripper( self ):
+#		result = self.hold_ball( 0 )
+#		return result

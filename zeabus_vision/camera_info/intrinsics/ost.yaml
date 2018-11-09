@@ -1,0 +1,20 @@
+image_width: 1936
+image_height: 1216
+camera_name: vision/front/
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [1443.422183, 0.000000, 997.861930, 0.000000, 1436.886498, 629.658405, 0.000000, 0.000000, 1.000000]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.060814, 0.460061, -0.001013, 0.003851, 0.000000]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [1653.029785, 0.000000, 995.744853, 0.000000, 0.000000, 1647.675537, 626.574940, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]

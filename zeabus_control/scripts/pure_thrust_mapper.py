@@ -36,6 +36,7 @@ class thrust_mapper:
 			[math.cos(math.radians(45)), math.sin(math.radians(45)), 0],
 			[-math.cos(math.radians(45)), -math.sin(math.radians(45)), 0],
 			[-math.cos(math.radians(45)), math.sin(math.radians(45)), 0]])
+#			[0, 0, 0]])
 
 		if(self.print_data):
 			print self.d
@@ -50,6 +51,7 @@ class thrust_mapper:
 		   			[ 0.3536, -0.3536, -0.023],  #thruster 6
 					[-0.3536,  0.3536, -0.023],  #thruster 7
 					[-0.3536, -0.3536, -0.023]]) #thruster 8
+#					[0, 0, 0]]) #thruster 8
 
 		self.min_force = array([	[ -0.048, 0.045]
 								,	[ -0.048, 0.045]
@@ -120,7 +122,7 @@ class thrust_mapper:
 
 		print( "=============== last force ==============" )
 		print( t )
-
+		t[6] = t[6]*1.5
 		cmd = []
 		for i in range (0,4):
 			cmd.append(lup.lookup_pwm_02(t[i]))
@@ -130,6 +132,7 @@ class thrust_mapper:
 			cmd.append(lup.lookup_pwm_01(t[i]))
 			if( t[i] == 0 ):
 				cmd[i] = 1500
+
 
 	#green robot
 		force = 1

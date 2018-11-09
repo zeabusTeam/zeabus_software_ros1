@@ -214,16 +214,17 @@ int main( int argv , char** argc){
 		zeabus_control::convert_world_to_robot_xy( world_error , robot_error , current_state );
 
 		// fine bound_error by use robot_error and ok_error
-		zeabus_control::convert_robot_to_bound_error( robot_error , bound_error , ok_error); 
+//		zeabus_control::convert_robot_to_bound_error( robot_error, bound_error, ok_error); 
+		zeabus_control::convert_robot_to_bound_error_no_xy( robot_error, bound_error, ok_error); 
 
 		// use error of bound_error to calculate force by pid 
 		for( int run = 0 ; run < 6 ; run++){
 			if( use_target_velocity[run] > 0 ){ // use pid for velocity
 				// When have state about velocity
-				pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
-											, pid_force[run] );
+//				pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
+//											, pid_force[run] );
 				// When don't have data to tell velocity of robot
-//				pid_force[run] = target_velocity[run];
+				pid_force[run] = target_velocity[run];
 				pid_position[run].reset_value();
 				use_target_velocity[run]--;
 				#ifdef _DEBUG_ 

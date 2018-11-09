@@ -65,20 +65,20 @@ class mission_gate:
 				continue
 			if( self.result_vision['pos'] == 0 ):
 				if( abs(self.find_center('x')) < 0.05 ):
-					self.auv.velocity( 'x' , 0.4 )
+					self.auv.velocity( 'x' , 0.6 )
 					print( "------> POS : 0 -----> FORWARD")
 					self.can_play_backward = True
 				else:
-					self.auv.velocity( 'y' , math.copysign( 0.6 , -1*self.find_center('x')))	
+					self.auv.velocity( 'y' , math.copysign( 0.9 , -1*self.find_center('x')))	
 					print( "------> POS : 0 -----> SURVEY ")
 					self.can_play_backward = True
 			elif( self.result_vision['pos'] == -1 ):
 				print( "------> POS : -1 -----> LEFT")
-				self.auv.velocity( 'y' , 0.6 )
+				self.auv.velocity( 'y' , 0.9 )
 				self.can_play_backward = False
 			elif( self.result_vision['pos'] == 1 ):
 				print( "------> POS : 1 -----> RIGHT")
-				self.auv.velocity( 'y' , -0.6 )
+				self.auv.velocity( 'y' , -0.9 )
 				self.can_play_backward = False
 			
 	def play_backward( self ):
@@ -97,6 +97,7 @@ class mission_gate:
 		print("<--- MISSION GATE ---> Move BACKWARD")	
 		while( not rospy.is_shutdown() ):
 			self.rate.sleep()
+			self.auv.velocity( 'x' , -1.0)
 			self.analysis_data( 5 )
 			count = 0
 			if( self.result_vision['n_obj'] > 0 ):
@@ -130,21 +131,23 @@ class mission_gate:
 		self.reset_collect_vision()
 		while( found < amont and unfound < amont ):
 			self.request_result()
-			if( self.collect_vision['n_obj'] >= 1 ):
+			if( self.data_vision['n_obj'] >= 1 ):
 				found += 1
 				for i in ['cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area' , 'pos']:
 					self.collect_vision[i] = self.data_vision[i]
 			else:
 				unfound += 1
 		if( found == amont ):
-			self.result_vision['n_obj'] = 1
+			print("Last result is FOUND")
+			self.result_vision['n_obj'] = 2
 			for i in ['cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area' , 'pos']:
 				self.result_vision[i] = self.collect_vision[i] / amont
 		elif( unfound == amont ):
+			print("Last result is UNFOUND")
 			self.result_vision['n_obj'] = 0
 
 	def request_result( self ):
-		receive_data = self.request_data( first_order , second_order)
+		receive_data = self.request_data( String('gate') , String("Sevinar"))
 		self.data_vision['n_obj'] = receive_data.data.n_obj
 		self.data_vision['pos'] = receive_data.data.pos
 		self.data_vision['cx_1'] = receive_data.data.cx1	

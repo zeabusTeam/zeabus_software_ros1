@@ -48,7 +48,7 @@ include_directories(
 )
 
 catkin_package(
-  INCLUDE_DIRS include
+#  INCLUDE_DIRS include
   LIBRARIES zeabus_control
   CATKIN_DEPENDS geometry_msgs nav_msgs roscpp std_msgs zeabus_extension dynamic_reconfigure message_runtime 
   DEPENDS system_lib

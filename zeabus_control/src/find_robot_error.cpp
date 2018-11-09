@@ -39,25 +39,24 @@ namespace zeabus_control{
 
 	template<typename number_type>void convert_robot_to_bound_error( number_type* robot_error 
 						, number_type* bound_error , number_type* ok_error , int size = 6){
-		#ifdef _CHECK_ERROR_
-			printf("<--robot_to_bound_error-->robot_error : ");
-			for( int run = 0 ; run < 6 ; run++){
-				printf("%8.3lf", robot_error[run]);
-			}
-			printf("\n");
-		#endif
 		for( int run = 0 ; run < size ; run++){
 			if( fabs( robot_error[run] ) <= ok_error[run] ) bound_error[run] = 0 ;
 			else bound_error[run] = robot_error[run];
 		}
-		#ifdef _CHECK_ERROR_
-			printf("<--robot_to_bound_error-->bound_error : ");
-			for( int run = 0 ; run < 6 ; run++){
-				printf("%8.3lf", bound_error[run]);
-			}
-			printf("\n");
-		#endif
 	}
+
+	template<typename number_type>void convert_robot_to_bound_error_no_xy( 
+									number_type* robot_error 
+									, number_type* bound_error 
+									, number_type* ok_error , int size = 6){
+		bound_error[0] = 0;
+		bound_error[1] = 0;
+		for( int run = 2 ; run < size ; run++){
+			if( fabs( robot_error[run] ) <= ok_error[run] ) bound_error[run] = 0 ;
+			else bound_error[run] = robot_error[run];
+		}
+	}
+
 }
 
 #endif

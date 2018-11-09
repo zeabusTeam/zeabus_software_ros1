@@ -4,7 +4,7 @@ import rospy
 import math
 
 from zeabus_control.srv import check_position , get_target , one_point , two_point
-#from zeabus_elec_ros_hardware_interface import Torpedo
+from zeabus_elec_ros_hardware_interface.srv import Torpedo
 
 from zeabus_control.msg import Point3 , State , Type2
 
@@ -35,7 +35,7 @@ class auv_controller:
 		self.request_relative_depth = rospy.ServiceProxy('/fix_rel_depth' , one_point )
 		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , one_point )
 		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , one_point )
-		self.request_check_state	= rospy.ServiceProxy('/ok_state' , check_position )
+		self.request_check_state	= rospy.ServiceProxy('/ok_position' , check_position )
 		self.request_know_target	= rospy.ServiceProxy('/know_target' , get_target )
 		self.release_ball			= rospy.ServiceProxy('/fire_torpedo' , Torpedo )
 		self.hold_ball				= rospy.ServiceProxy('/hold_torpedo' , Torpedo )
@@ -43,28 +43,24 @@ class auv_controller:
 	def absolute_z( self , value ):
 		try:
 			result = self.request_absolute_depth( value , self.name )
-			print("Finish Request Depth " + str(value) + " by " + self.name ) 
 		except rospy.ServiceException , error :
 			print("Service Depth Failse error : " + error )
 
 	def relative_z( self , value ):
 		try:
 			result = self.request_relative_depth( value , self.name )
-			print("Finish Request Depth " + str(value) + " by " + self.name ) 
 		except rospy.ServiceException , error :
 			print("Service Depth Failse error : " + error )
 
 	def absolute_yaw( self , value ):
 		try:
 			result = self.request_absolute_yaw( value , self.name )
-			print("Finish Request absolute yaw " + str(value) + " by " + self.name ) 
 		except rospy.ServiceException , error :
 			print("Service yaw Failse error : " + error )
 
 	def relative_yaw( self , value ):
 		try:
 			result = self.request_relative_yaw( value , self.name )
-			print("Finish Request relative yaw " + str(value) + " by " + self.name ) 
 		except rospy.ServiceException , error :
 			print("Service yaw Failse error : " + error )
 		
@@ -89,9 +85,10 @@ class auv_controller:
 			self.velocity_data.linear.x = value
 		elif( type_velocity == "y"):
 			self.velocity_data.linear.y = value	
+		self.velocity_publisher.publish( self.velocity_data )
 
 	def ok_state( self , type_state , value):
-		return self.request_check_state( String( type_state ) , value , self.name )
+		return self.request_check_state( String( type_state ) , value , self.name ).ok
 
 	def fire_gripper( self ):
 		result = self.release_ball( 0 )

@@ -44,9 +44,14 @@ class mission_gate:
 		self.mission_planner = rospy.Service('/mission_gate' , mission_result , self.main_play)
 
 	def main_play( self , request ):
-			
+		self.can_play_backward = False
+		self.sucess_mission = False
 
-		return Bool( True ) , Int8( 1 ) 
+		self.play_forward()	
+		if( self.can_play_backward ):
+			self.play_backward()
+
+		return Bool( self.sucess_mission ) , Int8( 1 ) 
 
 	def play_forward( self ):
 		print( "<--- MISSION GATE ---> PLAY FORWARD MODE ")
@@ -58,7 +63,31 @@ class mission_gate:
 				count_unfound += 1
 				continue
 			if( self.result_vision['pos'] == 0 ):
-				
+				if( abs(self.find_center('x')) < 0.05 ):
+					self.auv.velocity( 'x' , 0.4 )
+					print( "------> POS : 0 -----> FORWARD")
+					self.can_play_backward = True
+				else:
+					self.auv.velocity( 'y' , math.copysign( 0.6 , -1*self.find_center('x')))	
+					print( "------> POS : 0 -----> SURVEY ")
+					self.can_play_backward = True
+			elif( self.result_vision['pos'] == -1 ):
+				print( "------> POS : -1 -----> LEFT")
+				self.auv.velocity( 'y' , 0.6 )
+				self.can_play_backward = False
+			elif( self.result_vision['pos'] == 1 ):
+				print( "------> POS : 1 -----> RIGHT")
+				self.auv.velocity( 'y' , -0.6 )
+				self.can_play_backward = False
+			
+	def play_backward( self ):
+		print( "<--- MISSION GATE ---> PLAY BACKWORD MODE " )
+		while( not rospy.is_shutdown() ):
+			self.analysis_data( 5 )
+			if( self.result_vision['n_obj'] > 0 ):
+				self.sucess_mission = True
+				break
+			
 			
 	def find_center( self , type_center ):
 		if( type_center == 'x'):

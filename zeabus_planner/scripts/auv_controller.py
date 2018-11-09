@@ -34,8 +34,9 @@ class auv_controller:
 		self.request_absolute_depth	= rospy.ServiceProxy('/fix_abs_depth' , one_point )
 		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , one_point )
 		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , one_point )
-#		self.release_ball			= rospy.ServiceProxy('/fire_torpedo' , Torpedo )
-#		self.hold_ball				= rospy.ServiceProxy('/hold_torpedo' , Torpedo )
+		self.request_check_state	= rospy.ServiceProxy('/ok_state' , check_position )
+		self.release_ball			= rospy.ServiceProxy('/fire_torpedo' , Torpedo )
+		self.hold_ball				= rospy.ServiceProxy('/hold_torpedo' , Torpedo )
 
 	def absolute_z( self , value ):
 		try:
@@ -76,10 +77,13 @@ class auv_controller:
 		elif( type_velocity == "y"):
 			self.velocity_data.linear.y = value	
 
-#	def fire_gripper( self ):
-#		result = self.release_ball( 0 )
-#		return result
+	def ok_state( self , type_state , value):
+		return self.request_check_state( String( type_state ) , value , self.name )
 
-#	def pull_gripper( self ):
-#		result = self.hold_ball( 0 )
-#		return result
+	def fire_gripper( self ):
+		result = self.release_ball( 0 )
+		return result
+
+	def pull_gripper( self ):
+		result = self.hold_ball( 0 )
+		return result

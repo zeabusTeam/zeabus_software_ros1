@@ -28,6 +28,8 @@ namespace zeabus_control{
 											, robot_error , ok_error ){}
 			bool call_absolute_depth( one_point::Request &req ,
 								 one_point::Response &res );
+			bool call_relative_depth( one_point::Request &req ,
+								 one_point::Response &res );
 			bool call_absolute_yaw(	zeabus_control::one_point::Request &req ,
 								one_point::Response &res);
 			bool call_relative_yaw(	zeabus_control::one_point::Request &req ,
@@ -37,6 +39,12 @@ namespace zeabus_control{
 	bool one_point_service::call_absolute_depth( one_point::Request &req ,
 								 one_point::Response &res ){
 		this->target_state[2] = req.point_1;
+		res.success = true;
+		return true;
+	}
+	bool one_point_service::call_relative_depth( one_point::Response &req ,
+								one_point::Response &req){
+		this->target_state[2] += req.point_1;
 		res.success = true;
 		return true;
 	}

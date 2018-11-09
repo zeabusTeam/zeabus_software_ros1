@@ -85,6 +85,10 @@ int main( int argv , char** argc){
 		nh.advertiseService(	"/fix_abs_depth"
 								, &zeabus_control::one_point_service::call_absolute_depth
 								, &service_1_point );
+	ros::ServiceServer	service_relative_depth =
+		nh.advertiseService(	"/fix_rel_depth"
+								, &zeabus_control::one_point_service::call_relative_depth
+								, &service_1_point );
 	ros::ServiceServer	service_target_yaw =
 		nh.advertiseService(	"/fix_abs_yaw"
 								, &zeabus_control::one_point_service::call_absolute_yaw

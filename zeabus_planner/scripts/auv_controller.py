@@ -32,6 +32,7 @@ class auv_controller:
 
 		self.velocity_publisher		= rospy.Publisher('/zeabus/cmd_vel', Twist , queue_size = 10)
 		self.request_absolute_depth	= rospy.ServiceProxy('/fix_abs_depth' , one_point )
+		self.request_relative_depth = rospy.ServiceProxy('/fix_rel_depth' , one_point )
 		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , one_point )
 		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , one_point )
 		self.request_check_state	= rospy.ServiceProxy('/ok_state' , check_position )
@@ -41,6 +42,13 @@ class auv_controller:
 	def absolute_z( self , value ):
 		try:
 			result = self.request_absolute_depth( value , self.name )
+			print("Finish Request Depth " + str(value) + " by " + self.name ) 
+		except rospy.ServiceException , error :
+			print("Service Depth Failse error : " + error )
+
+	def relative_z( self , value ):
+		try:
+			result = self.request_relative_depth( value , self.name )
 			print("Finish Request Depth " + str(value) + " by " + self.name ) 
 		except rospy.ServiceException , error :
 			print("Service Depth Failse error : " + error )

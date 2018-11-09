@@ -41,12 +41,13 @@ namespace zeabus_control{
 						&& fabs(robot_error[1]) < ok_error[1] + request.adding){
 					response.ok = true;
 
-			} else if(request.type.data == "z"){
-
+			} 
+			else if(request.type.data == "z"){
 				if( fabs(robot_error[2]) < ok_error[2] + request.adding){
 					response.ok = true;
-
-			} else if(request.type.data == "xyz"){
+				}
+			} 
+			else if(request.type.data == "xyz"){
 
 				if(	fabs(robot_error[0]) < ok_error[0] + request.adding
 						&& fabs(robot_error[1]) < ok_error[1] + request.adding
@@ -56,13 +57,15 @@ namespace zeabus_control{
 					response.ok = false;
 				}
 
-			} else if(request.type.data == "yaw"){
+			} 
+			else if(request.type.data == "yaw"){
 
 				if( fabs(robot_error[5]) < ok_error[5] + request.adding){
 					response.ok = true;
 				}
 			} 
 		}
+	}
 }
 
 #endif

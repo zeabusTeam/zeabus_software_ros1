@@ -36,6 +36,7 @@ class auv_controller:
 		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , one_point )
 		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , one_point )
 		self.request_check_state	= rospy.ServiceProxy('/ok_state' , check_position )
+		self.request_know_target	= rospy.ServiceProxy('/know_target' , get_target )
 		self.release_ball			= rospy.ServiceProxy('/fire_torpedo' , Torpedo )
 		self.hold_ball				= rospy.ServiceProxy('/hold_torpedo' , Torpedo )
 
@@ -77,6 +78,10 @@ class auv_controller:
 		self.velocity_data.angular.x = 0
 		self.velocity_data.angular.y = 0
 		self.velocity_data.angular.z = 0
+
+	def receive_target( self , type_state ):
+		result = self.request_know_target( String( type_state ))
+		return [ result.target_01 , result.target_02 ]
 
 	def velocity( self , type_velocity , value ):
 		self.reset_velocity()

@@ -38,9 +38,11 @@ namespace zeabus_control{
 		}
 		else if( req.type.data == "yaw"){
 			res.target_01 = target_state[5];
+			res.target_02 = 0;
 		}
 		else if( req.type.data == "z"){
 			res.target_01 = target_state[2];
+			res.target_02 = 0;
 		}
 		else{
 			std::cout << "Don't have this type In target_service\n"; 

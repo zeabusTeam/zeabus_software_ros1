@@ -22,10 +22,15 @@
 #include	<zeabus_extension/log_data.h>
 
 // include message for use in main_control
+#include	<nav_msgs/Odometry.h>
 #include	<geometry_msgs/Twist.h>
-#include	<zeabus_control/State.h>
-#include	<zeabus_control/Type2.h>
 #include	<zeabus_control/Point3.h>
+#include	<zeabus_control/Type2.h>
+#include	<zeabus_control/State.h>
+
+#include	"service_one_point.cpp" // this service for two_point srv
+#include	"service_check_state.cpp" // this service for check_position.srv
+#include	"service_get_target.cpp" // this service for get_target.srv
 
 #include	"listen_twist.cpp" // Class object for listenning twist message
 #include	"listen_odometry.cpp" // Class object for listenning auv status
@@ -37,9 +42,6 @@
 #include	"sum_pid_bound_id.cpp"
 //#include	"offset_pid.cpp" // for include pid type offset
 #include	"service_two_point.cpp" //  this service for one_point srv
-#include	"service_one_point.cpp" // this service for two_point srv
-#include	"service_check_state.cpp" // this service for check_position.srv
-#include	"service_get_target.cpp" // this service for get_target.srv
 
 
 //------------------> Dynamic Reconfigure We will use in Global variable <-----------------------

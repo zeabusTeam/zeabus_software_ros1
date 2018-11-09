@@ -111,8 +111,8 @@ int main( int argv , char** argc){
 	ros::ServiceServer sevice_get_state =
 		nh.advertiseService(	"/know_target"
 								, &zeabus_control::get_target_service::call_get_target
-								, &service_target_state);
-
+								, &service_target_state
+							);
 
 //------------------------------> SET UP DYNAMIC RECONFIGURE <-----------------------------------
 	// for 3 constant
@@ -220,10 +220,10 @@ int main( int argv , char** argc){
 		for( int run = 0 ; run < 6 ; run++){
 			if( use_target_velocity[run] > 0 ){ // use pid for velocity
 				// When have state about velocity
-//				pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
-//											, pid_force[run] );
+				pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
+											, pid_force[run] );
 				// When don't have data to tell velocity of robot
-				pid_force[run] = target_velocity[run];
+//				pid_force[run] = target_velocity[run];
 				pid_position[run].reset_value();
 				use_target_velocity[run]--;
 				#ifdef _DEBUG_ 

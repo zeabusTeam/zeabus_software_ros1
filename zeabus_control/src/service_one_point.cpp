@@ -30,9 +30,9 @@ namespace zeabus_control{
 								 one_point::Response &res );
 			bool call_relative_depth( one_point::Request &req ,
 								 one_point::Response &res );
-			bool call_absolute_yaw(	zeabus_control::one_point::Request &req ,
+			bool call_absolute_yaw(	one_point::Request &req ,
 								one_point::Response &res);
-			bool call_relative_yaw(	zeabus_control::one_point::Request &req ,
+			bool call_relative_yaw(	one_point::Request &req ,
 								one_point::Response &res);
 	};
 
@@ -42,8 +42,8 @@ namespace zeabus_control{
 		res.success = true;
 		return true;
 	}
-	bool one_point_service::call_relative_depth( one_point::Response &req ,
-								one_point::Response &req){
+	bool one_point_service::call_relative_depth( one_point::Request &req ,
+								one_point::Response &res){
 		this->target_state[2] += req.point_1;
 		res.success = true;
 		return true;

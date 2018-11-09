@@ -38,7 +38,40 @@ class misson_drum:
 		print("Waiting drum service")
 		rospy.wait_for_service('vision_drum')
 		print("I found drum service")
+
+		self.max_depth = -5
+		self.last_count = 60 # chose have value equal frequency * 2
+		self.rate = rospy.Rate( 30 )
+		self.request_data = rospy.ServiceProxy('/vision_drum' , vision_srv_drum )
+		self.mission_planner = rospy.Service('/mission_drum' , mission_result , self.main_play)
+
+	def main_play( self , request ):
+		self.current_depth = self.auv.receive_target('z')[0]
+		self.sucess_mission = False
+		print( "<--- MISSION DRUM ---> Start depth at " + str( self.current_depth))
+		while( not rospy.is_shutdown() ):
+			self.rate.sleep()
+			self.analysis_all()
+			if( self.current_depth < self.max_depth + 0.5 ):
+				last_result = self.check_type_vision()		
+			elif(  )
+
+		return Bool( self.sucess_mission ) , Int8( 1 ) 
 		
+	# type 1 False only Right 2 True only Top and Bottom and Right
+	def check_type_vision( self ):
+		if( self.result_vision['forward']	and self.result_vision['backward'] ):
+			if( self.result_vision['right'] ):
+				return 2
+			else:
+				return 1
+		elif( self.result_vision['forward']):
+			return 3
+		elif( self.result_vision['backward']):
+			return 4
+		else:
+			return 5
+
 	def analysis_all( self , amont ):
 		self.reset_vision_data()
 		found = 0
@@ -55,11 +88,15 @@ class misson_drum:
 			self.result_vision["cx"] /= amont
 			self.result_vision["cy"] /= amont
 			self.result_vision["area"] /= amont
+			self.result_vision["left"] = self.collect_vision["left"]
+			self.result_vision["right"] = self.collect_vision["right"]
+			self.result_vision["forward"] = self.collect_vision["forward"]
+			self.result_vision["backward"] = self.collect_vision["backward"]
 		else:
 			self.result_vision["n_obj"] = 0
 			
 	def individual_analysis( self ):
-		temporary = self.client_drum( String("drum") , String("drop")).data
+		temporary = self.result_data( String("drum") , String("drop")).data
 		if( temporary.n_obj == 1 ):
 			self.collect_vision[ "n_obj" ] = temporary.n_obj
 			self.collect_vision[ "cx" ] += temporary.cx

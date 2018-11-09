@@ -4,9 +4,9 @@ import rospy
 import math
 
 from zeabus_control.srv import check_position , get_target , one_point , two_point
-from zeabus_elec_ros_hardware_interface import Torpedo
+#from zeabus_elec_ros_hardware_interface import Torpedo
 
-from zeabus_control.msg import Point3 , State , Type
+from zeabus_control.msg import Point3 , State , Type2
 
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
@@ -15,12 +15,6 @@ class auv_controller:
 
 	data_velocity = { 'x':0 , 'y':0 , 'z':0 , 'roll':0 , 'pitch':0 , 'yaw':0 }
 
-	self.velocity_publisher		= rospy.Publisher('/zeabus/cmd_vel' , Twist )
-	self.request_absolute_depth	= rospy.ServiceProxy('/fix_abs_depth' , one_point )
-	self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , one_point )
-	self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , one_point )
-	self.release_ball			= rospy.ServiceProxy('/fire_torpedo' , Torpedo )
-	self.hold_ball				= rospy.ServiceProxy('/hold_torpedo' , Torpedo )
 
 	def __init__( self , name_user = "" , want_init_node = False ):
 
@@ -32,9 +26,16 @@ class auv_controller:
 				self.set_name("robot_controller")
 			else:
 				rospy.init_node( name_user )
-				self.set_name( name_node)
+				self.set_name( name_user)
 
 		self.velocity_data = Twist()
+
+		self.velocity_publisher		= rospy.Publisher('/zeabus/cmd_vel' , Twist )
+		self.request_absolute_depth	= rospy.ServiceProxy('/fix_abs_depth' , one_point )
+		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , one_point )
+		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , one_point )
+#		self.release_ball			= rospy.ServiceProxy('/fire_torpedo' , Torpedo )
+#		self.hold_ball				= rospy.ServiceProxy('/hold_torpedo' , Torpedo )
 
 	def absolute_z( self , value ):
 		try:

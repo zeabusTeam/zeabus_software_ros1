@@ -13,7 +13,8 @@
 #include	<iostream>
 #include	<zeabus_control/two_point.h>
 
-#include	"service_control.cpp"
+//#include	"service_control.cpp"
+#include	<zeabus_library/control/service_control.h>
 //#define _CHECK_ERROR_
 
 #ifndef _service_two_point_cpp__

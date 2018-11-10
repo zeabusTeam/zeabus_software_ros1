@@ -12,7 +12,8 @@
 
 #include	<iostream>
 #include	<zeabus_control/one_point.h>
-#include	"service_control.cpp"
+//#include	"service_control.cpp"
+#include	<zeabus_library/control/service_control.h>
 //#define _CHECK_ERROR_
 
 #ifndef _service_one_point_cpp__

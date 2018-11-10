@@ -37,9 +37,9 @@ set( zeabus_extension_sources
 	src/manage_port.cpp
 )
 
-add_library( zeabus_extension ${zeabus_extension_sources})
+add_library( zeabus_extention ${zeabus_extension_sources})
 
-target_link_libraries( zeabus_extension
+target_link_libraries( zeabus_extention
 	${catkin_LIBRARIES}
 	${Boost_LIBRARIES}
 )

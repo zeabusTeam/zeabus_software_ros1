@@ -11,30 +11,12 @@
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
 
-#include	<iostream>
-#include	<math.h>
-#include	<zeabus_control/check_position.h>
-//#include	"service_control.cpp"
-#include	<zeabus_library/control/service_control.h>
-//#define	_CHECK_ERROR_
-
-#ifndef _service_check_state_cpp__
-#define _service_check_state_cpp__
+#include	<zeabus_library/zeabus_control/service_check_state.h>
 
 namespace zeabus_control{
-	class check_state_service : public main_service{
-		public:
-			check_state_service ( double* current_state , double* target_state 
-					, double* robot_error , double * ok_error ) :
-						main_service(	current_state		,	target_state 
-									,	robot_error			,	ok_error ){}
-			bool call_check_state(	check_position::Request &req
-							,	check_position::Response &res
-							);
-	};
 
-	bool check_state_service::call_check_state(	check_position::Request &request
-										,	check_position::Response &response ){
+	bool check_state_service::call_check_state(	zeabus_library::check_position::Request &request
+										,	zeabus_library::check_position::Response &response ){
 		response.ok = false;
 		if(request.type.data == "xy"){
 			if( fabs(robot_error[0]) < ok_error[0] + request.adding 
@@ -65,9 +47,3 @@ namespace zeabus_control{
 	}
 
 }
-
-#endif
-
-#ifdef _CHECK_ERROR_
-	#undef _CHECK_ERROR_
-#endif

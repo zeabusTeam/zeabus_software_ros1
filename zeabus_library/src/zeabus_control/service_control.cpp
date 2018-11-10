@@ -10,10 +10,7 @@
 //
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
-#include	<zeabus_control/service_control.h>
-
-#ifndef		_ZEABUS_CONTROL_SERVICE_CONTROL_CPP__
-#define		_ZEABUS_CONTROL_SERVICE_CONTROL_CPP__
+#include	<zeabus_library/zeabus_control/service_control.h>
 
 zeabus_control::main_service::main_service( double* current_state , double* target_state
 								, double* robot_error , double* ok_error ){
@@ -22,5 +19,3 @@ zeabus_control::main_service::main_service( double* current_state , double* targ
 	this->robot_error = robot_error;
 	this->ok_error = ok_error;
 }
-
-#endif

@@ -47,6 +47,16 @@ def range_str2array(string):
     return np.array([int(string[0]), int(string[1]), int(string[2])], dtype=np.uint8)
 
 
+def get_kernel(shape='rect', ksize=(5, 5)):
+    if shape == 'rect':
+        return cv.getStructuringElement(cv.MORPH_RECT, ksize)
+    elif shape == 'ellipse':
+        return cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize)
+    elif shape == 'plus':
+        return cv.getStructuringElement(cv.MORPH_CROSS, ksize)
+    else:
+        return None
+        
 # def get_color_range(color, camera_position, number, mission):
 #     lower = None
 #     upper = None

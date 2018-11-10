@@ -33,8 +33,10 @@
 #include	<zeabus_library/zeabus_control/service_check_state.h>
 #include	<zeabus_library/zeabus_control/service_get_target.h>
 
-#include	"listen_twist.cpp" // Class object for listenning twist message
-#include	"listen_odometry.cpp" // Class object for listenning auv status
+#include	<zeabus_library/zeabus_control/listen_twist.h> 
+			// Class object for listenning twist message
+#include	<zeabus_library/zeabus_control/listen_odometry.h> 
+			// Class object for listenning auv status
 #include	"find_error_state.cpp" // function for find error in world state
 #include	"find_robot_error.cpp" // function for find error in frame of robot
 #include	"find_robot_force.cpp" // function consider about important force

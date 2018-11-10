@@ -4,21 +4,13 @@
 //	Purpose		: for call about listen state
 //
 //	Created by	: Supasan Komonlit
-//	Created on	: 2018, Oct 18
+//	Created on	: 2018, Nov 10
 //
 //	namespace	: zeabus_control
 //
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
-#include	<iostream>
-#include	<nav_msgs/Odometry.h>
-#include 	<tf/transform_datatypes.h>
-#include	<tf/transform_listener.h>
-
-#define	_CHECK_ERROR_	
-
-#ifndef _LISTEN_ODOMETRY_CPP__
-#define _LISTEN_ODOMETRY_CPP__
+#include	<zeabus_library/zeabus_control/listen_odometry.h>
 
 namespace zeabus_control{
 
@@ -39,17 +31,6 @@ namespace zeabus_control{
 			velocity[5] = data.twist.twist.angular.z;
 	}
 
-	class listen_odometry{
-		public:
-			void callback( const nav_msgs::Odometry& message);
-			listen_odometry( double* state , double* velocity);
-
-		private:
-			double *state;
-			double *velocity;
-			double *target;
-	};
-
 	listen_odometry::listen_odometry( double* state , double* velocity){
 		this->state = state;
 		this->velocity = velocity;
@@ -64,18 +45,6 @@ namespace zeabus_control{
 	void listen_odometry::callback( const nav_msgs::Odometry& message){
 		nav_msgs_to_array( message , this->state , this->velocity);	
 	}
-
-	class listen_odometry_convert{
-		public:
-			void callback( const nav_msgs::Odometry& message);
-			listen_odometry_convert( double* state , double* velocity , double* target);
-
-		private:
-			bool first_time;
-			double *state;
-			double *velocity;
-			double *target;
-	};
 
 	listen_odometry_convert::listen_odometry_convert( double* state 
 													, double* velocity
@@ -125,8 +94,3 @@ namespace zeabus_control{
 
 }
 
-#endif
-
-#ifdef _CHECK_ERROR_
-	#undef _CHECK_ERROR_
-#endif

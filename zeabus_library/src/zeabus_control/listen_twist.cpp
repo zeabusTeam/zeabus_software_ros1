@@ -4,35 +4,16 @@
 //	Purpose		: for callback about listen velocity
 //
 //	Created by	: Supasan Komonlit
-//	Created on	: 2018, Oct 18
+//	Created on	: 2018, Nov 10
 //
 //	namespace	: zeabus_control
 //
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
-#include	<iostream>
-#include	<geometry_msgs/Twist.h>
-#define _CHECK_ERROR_
-
-#define epsilon 2.22e-16
-#ifndef _listen_twist_cpp__
-#define _listen_twist_cpp__
+#include	<zeabus_library/zeabus_control/listen_twist.h>
 
 namespace zeabus_control{
 	
-	class listen_twist{
-		public:
-			void callback( const geometry_msgs::Twist& message);
-			listen_twist( double* velocity );
-			listen_twist( double* velocity , int* set_use_velocity);
-		private:
-			double* velocity;
-			// for specific purpose
-			int* set_use_velocity;
-			int set_value;
-			bool use_velocity;
-	};
-
 	void listen_twist::callback( const geometry_msgs::Twist& message){
 		this->velocity[0] = message.linear.x;
 		this->velocity[1] = message.linear.y;
@@ -71,9 +52,3 @@ namespace zeabus_control{
 	}
   
 }
-
-#endif
-
-#ifdef _CHECK_ERROR_
-	#undef _CHECK_ERROR_
-#endif

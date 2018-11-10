@@ -46,13 +46,15 @@ set( zeabus_control_sources
 	src/zeabus_control/service_two_point.cpp
 	src/zeabus_control/listen_odometry.cpp
 	src/zeabus_control/listen_twist.cpp
+	src/zeabus_control/find_error_state_double.cpp
+	src/zeabus_control/find_robot_error_double.cpp
+	src/zeabus_control/find_robot_force_double.cpp
 )
 
-add_library( zeabus_library		${zeabus_control_sources}
+add_library( zeabus_library	STATIC ${zeabus_control_sources}
 )
 
 add_dependencies( zeabus_library	${${PROJECT_NAME}_EXPORTED_TARGETS}
 									${catkin_EXPORTED_TARGETS})
 
-target_link_libraries( zeabus_library	${catkin_LIBRARIES}
-)
+target_link_libraries( zeabus_library	${catkin_LIBRARIES} )

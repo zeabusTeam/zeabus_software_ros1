@@ -4,19 +4,13 @@
 //	Purpose		: for calculating error state of robot
 //
 //	Created by	: Supasan Komonlit
-//	Created on	: 2018, Oct 18
+//	Created on	: 2018, Nov 10
 //
 //	namespace	: zeabus_control
 //
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
-#include	<iostream>
-#include	<math.h>
-
-//#define		_CHECK_ERROR_
-#define PI 3.1415926535897
-#ifndef _find_error_state_cpp__
-#define _find_error_state_cpp__
+//#include	<zeabus_library/zeabus_control/find_error_state.h>
 
 namespace zeabus_control{
 
@@ -27,7 +21,6 @@ namespace zeabus_control{
 			else{
 				std::cout	<< "<--ZEABUS_EXTENSION--> Error in loop function"
 							<< " convert_angular in file find_error_position.cpp\n";
-				//exit( 1 );
 			}
 		}
 	}
@@ -36,40 +29,25 @@ namespace zeabus_control{
 															, number_type* point_1
 															, number_type* point_2 ){
 		number_type result = 0;
-		#ifdef _CHECK_ERROR_
-			std::cout << std::dec << "<--find_distance-->result is " << result << "\n";
-		#endif
 		for( int run = 0 ; run < size ; run++){
 			result += pow( point_1[run] - point_2[run] , 2);
 		}
-		#ifdef _CHECK_ERROR_
-			std::cout << std::dec << "<--find_distance-->sum result is " << result << "\n";
-		#endif
 		return sqrt( result );
 	}
 
 	template<typename number_type> void find_min_angular( number_type& start 
 												, number_type& target , number_type& result){
-		#ifdef _CHECK_ERROR_
-			std::cout << "before convert start " << start << "\n";
-		#endif
 		convert_angular( start );
-		#ifdef _CHECK_ERROR_
-			std::cout << "after convert start " << start << "\n";
-		#endif
 		convert_angular( target );
 		number_type result_01 = target - start;
 		number_type result_02;
 		if( result_01 < 0 )  result_02 = PI*2 + ( result_01 );
 		else  result_02 = -1 * ( PI*2 - ( result_01 ) );
-		#ifdef _CHECK_ERROR_
-		std::cout	<< "fabs of result_01 " << result_01 
-					<< " and fabs of result_02 " << result_02 << "\n";
-		#endif
 		if( fabs( result_01 ) < fabs( result_02 ) ) result = result_01;
 		else result = result_02;
 	}
-// this is find distance when roll and pitch = 0 radian
+
+	// this is find distance when roll and pitch = 0 radian
 	template<typename number_type> void find_error_position( number_type *point_1 
 					, number_type *point_2 , number_type *point_result ){
 		point_result[0] = point_2[0] - point_1[0];	
@@ -81,8 +59,3 @@ namespace zeabus_control{
 	}
 }
 
-#endif
-
-#ifdef _CHECK_ERROR_
-	#undef _CHECK_ERROR_
-#endif	

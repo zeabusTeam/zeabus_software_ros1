@@ -1,35 +1,21 @@
 ////////////////////////////////////// DETAIL ///////////////////////////////////////////////////
 //
-//	File		: find_robot_force.cpp 
+//	File		: find_robot_force_double.cpp 
 //	Purpose		: for can make parity of force to do that
 //
 //	Created by	: Supasan Komonlit
-//	Created on	: 2018, Oct 20
+//	Created on	: 2018, Nov 10
 //
 //	namespace	: zeabus_control
 //
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
-#include	<iostream>
-#include	<math.h>
-
-#define _CHECK_ERROR_
-
-#ifndef _find_robot_force_cpp__
-#define _find_robot_force_cpp__
+#include	<zeabus_library/zeabus_control/find_robot_force_double.h>
 
 namespace zeabus_control{
 
-	template<typename number_type> void pid_to_robot_foce_v_1( number_type* pid_force 
-															,  number_type* robot_force){
-		// version 1 will target on x and y
-		#ifdef _CHECK_ERROR_
-			printf("<--pid_to_robot-->\tPID_FORCE : ");
-			for( int run = 0 ; run < 6 ; run++){
-				printf("%8.3f", pid_force[run]);
-			}
-			printf("\n");
-		#endif
+	// version 1 will target on x and y
+	void pid_to_robot_foce_v_1( double* pid_force ,  double* robot_force){
 
 		for( int run = 2 ; run < 6 ; run++) robot_force[run] = pid_force[run];
 
@@ -51,16 +37,7 @@ namespace zeabus_control{
 	}
 
 	// version 2 will add force for maintain depth of robot
-	template<typename number_type> void pid_to_robot_foce_v_2( number_type* pid_force 
-															,  number_type* robot_force){
-		// version 1 will target on x and y
-		#ifdef _CHECK_ERROR_
-			printf("<--pid_to_robot-->\tPID_FORCE : ");
-			for( int run = 0 ; run < 6 ; run++){
-				printf("%8.3f\n", pid_force[run]);
-			}
-			printf("\n");
-		#endif
+	void pid_to_robot_foce_v_2( double* pid_force ,  double* robot_force){
 
 		for( int run = 0 ; run < 6 ; run++) robot_force[run] = pid_force[run];
 
@@ -68,4 +45,3 @@ namespace zeabus_control{
 	}	
 }
 
-#endif

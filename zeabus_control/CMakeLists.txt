@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(zeabus_control)
 
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  roslib
-  nav_msgs
-  std_msgs
-  geometry_msgs
-  zeabus_library
-  zeabus_extension
-  message_generation
-  dynamic_reconfigure
+find_package(catkin REQUIRED COMPONENTS	
+	roscpp
+	roslib
+	nav_msgs
+	std_msgs
+	geometry_msgs
+	zeabus_library
+	zeabus_extension
+	message_generation
+	dynamic_reconfigure
 )
 
 find_package(Boost REQUIRED COMPONENTS system)

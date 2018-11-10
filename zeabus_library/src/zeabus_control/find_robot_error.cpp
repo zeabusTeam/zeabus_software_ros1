@@ -4,19 +4,13 @@
 //	Purpose		: for calculating fine error of robot on robot frame
 //
 //	Created by	: Supasan Komonlit
-//	Created on	: 2018, Oct 18
+//	Created on	: 2018, Nov 10
 //
 //	namespace	: zeabus_control
 //
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
-#include	<iostream>
-#include	<math.h>
-#include	"find_error_state.cpp"
-//#define _CHECK_ERROR_
-
-#ifndef _find_robot_error_cpp__
-#define _find_robot_error_cpp__
+//#include	<zeabus_library/zeabus_control/find_robot_error.h>
 
 namespace zeabus_control{
 
@@ -26,11 +20,6 @@ namespace zeabus_control{
 		double distance_yaw = atan2( world_error[1] , world_error[0]);
 		double different_yaw;
 		find_min_angular( current_state[5] , distance_yaw , different_yaw );
-		#ifdef _CHECK_ERROR_
-			std::cout	<< "In covert error to robot frame distance_xy : " << distance_xy 
-						<< " <----> distance_yaw : " << distance_yaw << " <-----> different_yaw "
-						<< " : " << different_yaw << "\n";
-		#endif
 		robot_error[0] = distance_xy * cos( different_yaw );
 		robot_error[1] = distance_xy * sin( different_yaw );	
 		for( int run = 2 ; run < 6 ; run++ ) robot_error[run] = world_error[run];
@@ -38,7 +27,7 @@ namespace zeabus_control{
 
 
 	template<typename number_type>void convert_robot_to_bound_error( number_type* robot_error 
-						, number_type* bound_error , number_type* ok_error , int size = 6){
+						, number_type* bound_error , number_type* ok_error , int size ){
 		for( int run = 0 ; run < size ; run++){
 			if( fabs( robot_error[run] ) <= ok_error[run] ) bound_error[run] = 0 ;
 			else bound_error[run] = robot_error[run];
@@ -48,7 +37,7 @@ namespace zeabus_control{
 	template<typename number_type>void convert_robot_to_bound_error_no_xy( 
 									number_type* robot_error 
 									, number_type* bound_error 
-									, number_type* ok_error , int size = 6){
+									, number_type* ok_error , int size ){
 		bound_error[0] = 0;
 		bound_error[1] = 0;
 		for( int run = 2 ; run < size ; run++){
@@ -58,9 +47,3 @@ namespace zeabus_control{
 	}
 
 }
-
-#endif
-
-#ifdef _CHECK_ERROR_
-	#undef _CHECK_ERROR_
-#endif

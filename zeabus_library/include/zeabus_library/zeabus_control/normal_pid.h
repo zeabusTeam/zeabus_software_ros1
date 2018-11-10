@@ -1,6 +1,6 @@
 ////////////////////////////////////////// DETAIL ///////////////////////////////////////////////
 //
-//	File		: normal_pid.cpp 
+//	File		: normal_pid.h 
 //	Purpose		: for use pid control
 //
 //	Created by	: Supasan Komonlit
@@ -14,11 +14,8 @@
 #include	<math.h>
 #include	<vector>
 
-//#define _CHECK_ERROR_
-//#define _CHECK_CLASS_
-
-#ifndef _normal_pid_cpp__
-#define _normal_pid_cpp__
+#ifndef _ZEABUS_LIBRARY_ZEABUS_CONTROL_NORMAL_PID_H__
+#define _ZEABUS_LIBRARY_ZEABUS_CONTROL_NORMAL_PID_H__
 
 namespace zeabus_control{
 
@@ -49,44 +46,6 @@ namespace zeabus_control{
 			virtual void individual_calculate( double error , double& result);
 	};
 
-	normal_pid::normal_pid(){
-		for( ; this->list_error.size() < 2; ) this->list_error.push_back( 0 );
-	}
-	
-	void normal_pid::set_constant(	double constant_01 , double constant_02 
-								,	double constant_03 , double constant_04){
-		#ifdef _CHECK_CLASS_
-				printf("<========>NORMAL_PID::SET_CONSTANT"\n);
-		#endif
-		this->p_constant = constant_01;
-		this->i_constant = constant_02;
-		this->d_constant = constant_03;
-		this->offset_constant = constant_04;
-	}
-
-	void normal_pid::set_frequency( double frequency){
-		this->period_time = 1/frequency;
-	}
-
-	void normal_pid::reset_value(){
-		this->result_p_term = 0 ;
-		this->result_i_term = 0 ;
-		this->result_d_term = 0 ;
-	}
-
-	void normal_pid::get_result( double error , double& result){
-		this->individual_calculate( error , result );
-	}
-	
-	void normal_pid::individual_calculate( double error ,double & result){
-		#ifdef _CHECK_ERROR_
-			std::cout << "This is individual_calculate in class normal_pid\n";
-		#endif
-	}
 }
 
-#endif
-
-#ifdef _CHECK_ERROR_
-	#undef _CHECK_ERROR_
 #endif

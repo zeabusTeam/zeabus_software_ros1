@@ -49,6 +49,7 @@ set( zeabus_control_sources
 	src/zeabus_control/find_error_state_double.cpp
 	src/zeabus_control/find_robot_error_double.cpp
 	src/zeabus_control/find_robot_force_double.cpp
+	src/zeabus_control/sum_pid_bound_id.cpp
 )
 
 add_library( zeabus_library	STATIC ${zeabus_control_sources}

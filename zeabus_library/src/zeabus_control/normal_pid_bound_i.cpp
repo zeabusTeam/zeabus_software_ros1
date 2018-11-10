@@ -10,26 +10,9 @@
 //
 ///////////////////////////////////////// END PART //////////////////////////////////////////////
 
-#include	<iostream>
-#include	<math.h>
-#include	"normal_pid.cpp"
-
-#define _CHECK_ERROR_
-
-#ifndef _normal_pid_bound_i_cpp__
-#define _normal_pid_bound_i_cpp__
+#include	<zeabus_library/zeabus_control/normal_pid_bound_i.h>
 
 namespace zeabus_control{
-
-	class normal_pid_bound_i: public normal_pid{
-		public:
-			normal_pid_bound_i();
-			void limit_value_i_term( double value);
-
-		private:
-			void individual_calculate( double error , double& result);
-			double limit_value;
-	};
 
 	normal_pid_bound_i::normal_pid_bound_i() : normal_pid(){}
 
@@ -38,11 +21,6 @@ namespace zeabus_control{
 	}
 
 	void normal_pid_bound_i::individual_calculate( double error , double& result){
-		#ifdef _CHECK_ERROR_
-			std::cout	<< "this individual_calculate in normal_pid_bound_i "
-						<< " p : i : d --> " << this->p_constant << " : " 
-						<< this->i_constant << " : " << this->d_constant << "\n";
-		#endif
 		this->result_p_term = ( this->p_constant * error );
 		this->result_i_term += this->i_constant * error * this->period_time;
 		if( fabs( this->result_i_term) > this->limit_value ){
@@ -54,10 +32,3 @@ namespace zeabus_control{
 	}	
 
 }
-
-#endif
-
-
-#ifdef _CHECK_ERROR_
-	#undef _CHECK_ERROR_
-#endif

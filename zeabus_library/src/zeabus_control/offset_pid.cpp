@@ -10,26 +10,9 @@
 //
 ///////////////////////////////////////// END PART //////////////////////////////////////////////
 
-#include	<iostream>
-#include	<math.h>
-#include	"normal_pid.cpp"
-
-#define _CHECK_ERROR_
-
-#ifndef _offset_pid_cpp__
-#define _offset_pid_cpp__
+#include	<zeabus_library/zeabus_control/offset_pid.h>
 
 namespace zeabus_control{
-
-	class offset_pid: public normal_pid{
-		public:
-			offset_pid();
-			void set_offset( double offset_value);
-
-		private:
-			void individual_calculate( double error , double& result);
-			double offset_value;
-	};
 
 	offset_pid::offset_pid() : normal_pid(){}
 
@@ -49,9 +32,3 @@ namespace zeabus_control{
 	}
 
 }
-
-#endif
-
-#ifdef _CHECK_ERROR_
-	#undef _CHECK_ERROR_
-#endif

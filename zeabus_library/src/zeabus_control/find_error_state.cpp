@@ -10,7 +10,7 @@
 //
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
-//#include	<zeabus_library/zeabus_control/find_error_state.h>
+#include	<zeabus_library/zeabus_control/find_error_state.h>
 
 namespace zeabus_control{
 

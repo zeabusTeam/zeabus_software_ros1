@@ -10,7 +10,7 @@
 //
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
-//#include	<zeabus_library/zeabus_control/find_robot_force.h>
+#include	<zeabus_library/zeabus_control/find_robot_force.h>
 
 namespace zeabus_control{
 

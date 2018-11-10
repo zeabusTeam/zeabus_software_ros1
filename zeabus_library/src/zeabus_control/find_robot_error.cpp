@@ -10,7 +10,7 @@
 //
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
-//#include	<zeabus_library/zeabus_control/find_robot_error.h>
+#include	<zeabus_library/zeabus_control/find_robot_error.h>
 
 namespace zeabus_control{
 

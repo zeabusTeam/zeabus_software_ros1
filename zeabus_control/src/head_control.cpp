@@ -43,9 +43,10 @@
 			// function for find error in frame of robot
 #include	<zeabus_library/zeabus_control/find_robot_force.h>
 			// function consider about important force
-#include	"normal_pid_bound_i.cpp" // for include pid
-#include	"discrete_pid.cpp" // for include pid type discrete
-#include	"sum_pid_bound_id.cpp"
+#include	<zeabus_library/zeabus_control/sum_pid_bound_id.h>
+			// two line below don't already to choose now
+//#include	<zeabus_library/zeabus_control/normal_pid_bound_i.h> // for include pid
+//#include	<zeabus_library/zeabus_control/discrete_pid.h> // for include pid type discrete
 //#include	"offset_pid.cpp" // for include pid type offset
 
 

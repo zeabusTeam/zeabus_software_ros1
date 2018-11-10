@@ -10,30 +10,9 @@
 //
 ///////////////////////////////////////// END PART //////////////////////////////////////////////
 
-#include	<iostream>
-#include	<math.h>
-#include	<vector>
-#include	"normal_pid.cpp"
-
-#define _CHECK_ERROR_
-
-#ifndef _discrete_pid_cpp__
-#define _discrete_pid_cpp__
+#include	<zeabus_library/zeabus_control/discrete_pid.h>
 
 namespace zeabus_control{
-
-	class discrete_pid: public normal_pid{
-		public:
-			discrete_pid();
-			void set_sum_term( bool use_sum_term , double bound_sum_value);
-			void reset_value();
-
-		private:
-			void individual_calculate( double error , double& result);
-			bool use_sum_term;
-			double bound_sum_value;
-			std::vector< double > result;
-	};
 
 	discrete_pid::discrete_pid() : normal_pid(){
 		for( ; this->list_error.size() < 3 ; ) this->list_error.push_back(0);
@@ -81,9 +60,3 @@ namespace zeabus_control{
 	}
 
 }
-
-#endif
-
-#ifdef _CHECK_ERROR_
-	#undef _CHECK_ERROR_
-#endif

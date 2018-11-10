@@ -27,16 +27,17 @@ int main( int argv , char** argc){
 	ros::NodeHandle nh("");
 
 //------------------------------------ FOR PUBLISHER --------------------------------------------
-	ros::Publisher tell_force	=	nh.advertise<geometry_msgs::Twist>("/cmd_vel" , 10);
-	ros::Publisher tell_target  =	nh.advertise<zeabus_control::State>("/control/target_state" 
-																	, 1);
-	ros::Publisher tell_state	=	nh.advertise<zeabus_control::State>("/control/current_state"
-																	, 1);
-	ros::Publisher tell_robot_error =	nh.advertise<zeabus_control::Type2>("control/robot_error"
-																	, 1 );
-	zeabus_control::Type2 message_robot_error;
-	zeabus_control::State message_robot_target;
-	zeabus_control::State message_robot_state;
+	ros::Publisher tell_force	=	
+			nh.advertise<geometry_msgs::Twist>("/cmd_vel" , 10);
+	ros::Publisher tell_target  =	
+			nh.advertise<zeabus_library::State>("/control/target_state"		, 1 );
+	ros::Publisher tell_state	=	
+			nh.advertise<zeabus_library::State>("/control/current_state"	, 1 );
+	ros::Publisher tell_robot_error =	
+			nh.advertise<zeabus_library::Type2>("control/robot_error"		, 1 );
+	zeabus_library::Type2 message_robot_error;
+	zeabus_library::State message_robot_target;
+	zeabus_library::State message_robot_state;
 	geometry_msgs::Twist message_force;
 
 //----------------------------------> SET ABOUT STATE <------------------------------------------

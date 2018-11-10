@@ -4,7 +4,7 @@
 //	Purpose		: for sub service of control
 //
 //	Created by	: Supasan Komonlit
-//	Created on	: 2018, Oct 21
+//	Created on	: 2018, Nov 10
 //
 //	namespace	: zeabus_control
 //

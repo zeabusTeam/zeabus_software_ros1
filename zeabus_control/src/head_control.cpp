@@ -24,9 +24,9 @@
 // include message for use in main_control
 #include	<nav_msgs/Odometry.h>
 #include	<geometry_msgs/Twist.h>
-#include	<zeabus_control/Point3.h>
-#include	<zeabus_control/Type2.h>
-#include	<zeabus_control/State.h>
+#include	<zeabus_library/Point3.h>
+#include	<zeabus_library/Type2.h>
+#include	<zeabus_library/State.h>
 
 #include	<zeabus_library/zeabus_control/service_one_point.h>
 #include	<zeabus_library/zeabus_control/service_two_point.h>

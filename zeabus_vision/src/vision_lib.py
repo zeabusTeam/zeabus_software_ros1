@@ -115,3 +115,6 @@ def center_of_contour(cnt):
 
 def clear_screen():
     print("\033[H\033[J")
+
+def pre_process(bgr,mission):
+    return bgr

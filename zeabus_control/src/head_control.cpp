@@ -37,11 +37,11 @@
 			// Class object for listenning twist message
 #include	<zeabus_library/zeabus_control/listen_odometry.h> 
 			// Class object for listenning auv status
-#include	<zeabus_library/zeabus_control/find_error_state.h>
+#include	<zeabus_library/zeabus_control/find_error_state_double.h>
 			// function for find error in world state
-#include	<zeabus_library/zeabus_control/find_robot_error.h>
+#include	<zeabus_library/zeabus_control/find_robot_error_double.h>
 			// function for find error in frame of robot
-#include	<zeabus_library/zeabus_control/find_robot_force.h>
+#include	<zeabus_library/zeabus_control/find_robot_force_double.h>
 			// function consider about important force
 #include	<zeabus_library/zeabus_control/sum_pid_bound_id.h>
 			// two line below don't already to choose now

@@ -71,7 +71,8 @@ template<typename number_type , typename count_type> void print_all(
 				, number_type* bound_error		, number_type* pid_force 
 				, number_type* robot_force		, count_type* use_target_velocity		
 				, number_type* current_velocity , number_type* target_velocity
-				, number_type* offset_force = 0){
+				, count_type& mode_control		, number_type* offset_force = 0 ){
+	printf("Current Mode       :\t%d\n" , mode_control );
 	printf("Information        :%8s%8s%8s%8s%8s%8s\n\n","x","y","z","roll","pitch","yaw");
 	printf("current_state      :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				current_state[0] , current_state[1] , current_state[2]

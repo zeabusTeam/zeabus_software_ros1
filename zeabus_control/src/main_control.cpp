@@ -37,6 +37,7 @@ int main( int argv , char** argc){
 	geometry_msgs::Twist message_force;
 
 //----------------------------------> SET ABOUT STATE <------------------------------------------
+	int mode_control = 1; // mode_control 0 = Normal Mode, 1 = Not fix point x,y
 	double target_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double current_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double current_velocity[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
@@ -173,7 +174,14 @@ int main( int argv , char** argc){
 			}
 		}
 		// find error between current_state with target_state to world_error
-		zeabus_control::find_error_position( current_state , target_state , world_error);
+		if( mode_control == 0 ){
+			zeabus_control::find_error_position( current_state , target_state , world_error);
+		} 
+		else if( mode_control == 1){
+			zeabus_control::find_error_position_non_xy( current_state 
+														, target_state 
+														, world_error );
+		}
 
 		// give world_error to error in robot frame
 		zeabus_control::convert_world_to_robot_xy( world_error , robot_error , current_state );
@@ -184,16 +192,20 @@ int main( int argv , char** argc){
 
 		// use error of bound_error to calculate force by pid 
 		for( int run = 0 ; run < 6 ; run++){
-			if( use_target_velocity[run] > 0 ){ // use pid for velocity
-				// When have state about velocity
-//				pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
-//											, pid_force[run] );
-				// When don't have data to tell velocity of robot
-				pid_force[run] = target_velocity[run];
+			if( use_target_velocity[run] > 0 ){ // use error from velocity for calculate
+				if( mode_control == 0 ){
+					// When have state about velocity
+					pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
+												, pid_force[run] );
+				}
+				else if( mode_control == 1){
+					// When don't have data to tell velocity of robot
+					pid_force[run] = target_velocity[run];
+				}
 				pid_position[run].reset_value();
 				use_target_velocity[run]--;
 			}
-			else{ // use pid for position
+			else{ // use error from position for calculate
 				pid_position[run].get_result( bound_error[run] , pid_force[run]);
 				pid_velocity[run].reset_value();	
 			}
@@ -212,7 +224,7 @@ int main( int argv , char** argc){
 		tell_robot_error.publish( message_robot_error );
 		tell_state.publish( message_robot_state);
 
-		// publish force to node thruster
+	// publish force to node thruster
 		array_to_geometry_twist( robot_force , message_force );	
 		tell_force.publish( message_force );	
 
@@ -221,7 +233,8 @@ int main( int argv , char** argc){
 
 		print_all( current_state , target_state , world_error , robot_error , bound_error 
 				, pid_force , robot_force 
-				, use_target_velocity , current_velocity , target_velocity );
+				, use_target_velocity , current_velocity , target_velocity 
+				, mode_control );
 
 	}
 }

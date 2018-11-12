@@ -32,8 +32,19 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+add_library( zeabus_control STATIC src/other_function_double.cpp)
+
+add_dependencies( zeabus_control ${${PROJECT_NAME}_EXPORTED_TARGETS}
+								${catkin_EXPORTED_TARGETS}
+)
+
+target_link_libraries( zeabus_control ${catkin_LIBRARIES} )
+
 add_executable(control src/main_control.cpp)
 
-add_dependencies( control ${PROJECT_NAME}_gencfg )
+add_dependencies( control	${PROJECT_NAME}_gencfg 
+							${${PROJECT_NAME}_EXPORTED_TARGETS}
+							${catkin_EXPORTED_TARGETS}
+)
 
 target_link_libraries( control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )

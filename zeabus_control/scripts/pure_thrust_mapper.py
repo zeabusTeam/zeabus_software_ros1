@@ -122,7 +122,6 @@ class thrust_mapper:
 
 		print( "=============== last force ==============" )
 		print( t )
-		t[6] = t[6]*1.5
 		cmd = []
 		for i in range (0,4):
 			cmd.append(lup.lookup_pwm_02(t[i]))

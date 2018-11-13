@@ -41,9 +41,10 @@ namespace zeabus_control{
 
 		for( int run = 0 ; run < 6 ; run++) robot_force[run] = pid_force[run];
 
-		robot_force[2] += -0.98;
-		if( robot_force[2] < -1.25 ) robot_force[2] = -1.25;
-		else if( robot_force[2] > -0.6 ) robot_force[2] = -0.6;
+		robot_force[2] += -1;
+		if( robot_force[2] < -1.25 ) robot_force[2] = -1.5;
+		else if( robot_force[2] > -0.0 ) robot_force[2] = 0.0;
+		if( fabs(robot_force[5]) > 0.35 ) robot_force[5] = copysign( 0.35 , robot_force[5]); 
 	}	
 }
 

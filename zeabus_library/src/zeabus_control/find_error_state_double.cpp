@@ -57,8 +57,8 @@ namespace zeabus_control{
 
 	void find_error_position_non_xy(	double *point_1	, double *point_2 
 										, double *point_result ){
-		point_1[0] = point_2[0];
-		point_1[1] = point_2[1];
+		point_2[0] = point_1[0];
+		point_2[1] = point_1[1];
 		find_error_position( point_1 , point_2 , point_result );
 	}
 }

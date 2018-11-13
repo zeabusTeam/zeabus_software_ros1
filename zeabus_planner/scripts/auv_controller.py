@@ -70,7 +70,7 @@ class auv_controller:
 
 	def set_mode( self , mode ):
 		try:
-			result - self.request_mode_control( Int64( mode ) )
+			result = self.request_mode_control( Int64( mode ) ).ok
 		except rospy.ServiceException , error :
 			print("Service mode Failse error : " + error)
 

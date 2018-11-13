@@ -21,6 +21,7 @@ add_service_files(
 	one_point.srv
 	two_point.srv
 	get_target.srv
+	number_service.srv
 	check_position.srv
 )
 

@@ -3,12 +3,12 @@
 import rospy
 import math
 
-from zeabus_control.srv import check_position , get_target , one_point , two_point
+from zeabus_library.srv import *
 from zeabus_elec_ros_hardware_interface.srv import Torpedo
 
 from zeabus_control.msg import Point3 , State , Type2
 
-from std_msgs.msg import String
+from std_msgs.msg import String , Int64
 from geometry_msgs.msg import Twist
 
 class auv_controller:
@@ -37,6 +37,7 @@ class auv_controller:
 		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw' , one_point )
 		self.request_check_state	= rospy.ServiceProxy('/ok_position' , check_position )
 		self.request_know_target	= rospy.ServiceProxy('/know_target' , get_target )
+		self.request_mode_control	= rospy.ServiceProxy('/mode_control' , number_service )
 		self.release_ball			= rospy.ServiceProxy('/fire_torpedo' , Torpedo )
 		self.hold_ball				= rospy.ServiceProxy('/hold_torpedo' , Torpedo )
 
@@ -66,6 +67,12 @@ class auv_controller:
 		
 	def set_name( self , name ):
 		self.name.data = name
+
+	def set_mode( self , mode ):
+		try:
+			result - self.request_mode_control( Int64( mode ) )
+		except rospy.ServiceException , error :
+			print("Service mode Failse error : " + error)
 
 	def reset_velocity( self ):
 		self.velocity_data.linear.x = 0

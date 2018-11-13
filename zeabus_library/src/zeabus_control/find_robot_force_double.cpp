@@ -37,14 +37,16 @@ namespace zeabus_control{
 	}
 
 	// version 2 will add force for maintain depth of robot
-	void pid_to_robot_foce_v_2( double* pid_force ,  double* robot_force){
+	void pid_to_robot_foce_v_2( double* pid_force ,  double* robot_force , double* bound_force){
 
-		for( int run = 0 ; run < 6 ; run++) robot_force[run] = pid_force[run];
+		for( int run = 0 ; run < 6 ; run++){
+			if( fabs( pid_force[run] ) > bound_force[run] )
+				robot_force[run] = copysign( bound_force[run] , pid_force[run]);
+			else
+				robot_force[run] = pid_force[run];
+		}
 
 		robot_force[2] += -1;
-		if( robot_force[2] < -1.25 ) robot_force[2] = -1.5;
-		else if( robot_force[2] > -0.0 ) robot_force[2] = 0.0;
-		if( fabs(robot_force[5]) > 0.35 ) robot_force[5] = copysign( 0.35 , robot_force[5]); 
 	}	
 }
 

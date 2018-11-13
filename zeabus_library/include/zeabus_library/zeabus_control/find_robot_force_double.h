@@ -23,7 +23,7 @@ namespace zeabus_control{
 	void pid_to_robot_foce_v_1(	double* pid_force , double* robot_force);
 
 	// version 2 will add force for maintain depth of robot
-	void pid_to_robot_foce_v_2( double* pid_force , double* robot_force);
+	void pid_to_robot_foce_v_2( double* pid_force , double* robot_force , double* bound_force);
 }
 
 #endif

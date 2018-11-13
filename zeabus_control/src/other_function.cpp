@@ -69,7 +69,8 @@ template<typename number_type , typename count_type> void print_all(
 				  number_type* current_state	, number_type* target_state 
 				, number_type* world_error		, number_type* robot_error
 				, number_type* bound_error		, number_type* pid_force 
-				, number_type* robot_force		, count_type* use_target_velocity		
+				, number_type* bound_force		, number_type* robot_force		
+				, count_type* use_target_velocity
 				, number_type* current_velocity , number_type* target_velocity
 				, count_type& mode_control		, number_type* offset_force = 0 ){
 	printf("Current Mode       :\t%d\n" , mode_control );
@@ -97,6 +98,9 @@ template<typename number_type , typename count_type> void print_all(
 	printf("pid_force          :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				pid_force[0] , pid_force[1] , pid_force[2]
 			,	pid_force[3] , pid_force[4] , pid_force[5] );	
+	printf("bound_force		   :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
+				bound_force[0] , bound_force[1] , bound_force[2]
+			,	bound_force[3] , bound_force[4] , bound_force[5] );	
 	printf("robot_force        :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				robot_force[0] , robot_force[1] , robot_force[2]
 			,	robot_force[3] , robot_force[4] , robot_force[5] );	

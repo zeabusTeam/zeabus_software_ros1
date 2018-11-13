@@ -40,8 +40,7 @@ namespace zeabus_control{
 		this->result_p_term = this->list_error[1] * this->p_constant;
 		this->result_id_term += ( this->list_error[1] + this->list_error[0] ) / 2 
 									* this->i_constant * this->period_time 
-							+ ( this->list_error[1] - this->list_error[2] ) / this->period_time
-									* this->d_constant;
+							+ ( this->list_error[1] - this->list_error[0] ) * this->d_constant;
 		if( fabs( this->result_id_term ) > this->limit_value ){
 			this->result_id_term = copysign( this->limit_value , this->result_id_term  );
 		}

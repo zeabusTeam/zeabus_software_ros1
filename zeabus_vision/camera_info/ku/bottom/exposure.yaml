@@ -1,8 +1,8 @@
 percentile_nth_min: '5'
 
-percentile_nth_max: '80'
+percentile_nth_max: '65'
 
-percentile_lower: '25'
+percentile_lower: '15'
 
 percentile_upper: '127'
 

@@ -31,6 +31,8 @@ class auv_controller:
 		self.velocity_data = Twist()
 
 		self.velocity_publisher		= rospy.Publisher('/zeabus/cmd_vel', Twist , queue_size = 10)
+		self.request_absolute_xy	= rospy.ServiceProxy('/fix_abs_xy' , two_point )
+		self.request_relative_xy	= rospy.ServiceProxy('/fix_rel_xy' , two_point )
 		self.request_absolute_depth	= rospy.ServiceProxy('/fix_abs_depth' , one_point )
 		self.request_relative_depth = rospy.ServiceProxy('/fix_rel_depth' , one_point )
 		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw' , one_point )
@@ -40,6 +42,30 @@ class auv_controller:
 		self.request_mode_control	= rospy.ServiceProxy('/mode_control' , number_service )
 		self.release_ball			= rospy.ServiceProxy('/fire_torpedo' , Torpedo )
 		self.hold_ball				= rospy.ServiceProxy('/hold_torpedo' , Torpedo )
+
+	def absolute_xy( self , value_x , value_y ):
+		try:
+			result = self.request_absolute_xy( value_x , value_y , self.name )
+		except rospy.ServiceException , error :
+			print("Service XY Failse error : " + error)
+
+	def absolute_x( self , value ):
+		self.absolute_xy( value , 0 )
+
+	def absolute_y( self , value ):
+		self.absolute_xy( 0 , value )
+
+	def relative_xy( self , value_x , value_y ):
+		try:
+			result = self.request_relative_xy( value_x , value_y , self.name )
+		except rospy.ServiceException , error :
+			print("Service XY Failse error : " + error)
+
+	def relative_x( self , value ):
+		self.relative_xy( value , 0 )
+
+	def relative_y( self , value ):
+		self.relative_xy( 0 , value )
 
 	def absolute_z( self , value ):
 		try:
@@ -94,7 +120,7 @@ class auv_controller:
 			self.velocity_data.linear.y = value	
 		self.velocity_publisher.publish( self.velocity_data )
 
-	def ok_state( self , type_state , value):
+	def check_state( self , type_state , value):
 		return self.request_check_state( String( type_state ) , value , self.name ).ok
 
 	def fire_gripper( self ):

@@ -221,8 +221,9 @@ int main( int argv , char** argc){
 		}
 
 		// use pid_force convert to robot_force for send to thruster
+		//		And have to use limit force output from control but force output
+		//		Muce more limit value for ID term
 		//		this is filter and manage parity of control
-		//zeabus_control::pid_to_robot_foce_v_1( pid_force , robot_force );
 		zeabus_control::pid_to_robot_foce_v_2( pid_force , robot_force , bound_force );
 
 		// publish state for debug

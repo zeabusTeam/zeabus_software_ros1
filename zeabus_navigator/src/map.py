@@ -1,5 +1,6 @@
 #!/usr/bin/python2
 from nav_msgs.msg import Odometry
+from zeabus_navigator.msg import object_position
 import cv2 as cv
 import numpy as np
 import tf
@@ -8,18 +9,46 @@ import math
 
 class Map:
     def __init__(self, row_map, col_map, ratio):
-        self.map = np.zeros((row_map, col_map),np.uint8)
         self.row, self.col = row_map, col_map
         self.ratio = ratio
+        self.map_obj = np.zeros((row_map, col_map),np.uint8)
         self.map_auv = np.zeros((row_map, col_map),np.uint8)
         self.map_detail = np.zeros((row_map, col_map),np.uint8)
+        self.object_name = ['gate', 'flare', 'drum']
+        self.object_color = {'gate':10, 'flare':100, 'drum':200}
         self.object = {}
+        for name in self.object_name:
+            self.object[name]['x'] = 0
+            self.object[name]['y'] = 0
+            self.object[name]['z'] = 0
+            self.object[name]['yaw'] = 0
         self.auv = {'x':0,'y':0,'z':0,'radius':5}
         self.color = 0
         self.pixel = {}
         self.auv_state = {}
         self.create_map_detail()
         rospy.Subscriber('/auv/state', Odometry, self.get_auv_state)
+        rospy.Subscriber('/map/update_object', object_position, self.update_object_position)
+
+    def update_object_position(self,msg):
+        name = msg.object
+        x = msg.x
+        y = msg.y
+        z = msg.z
+
+        self.object[name]['x'] = x
+        self.object[name]['y'] = y
+        self.object[name]['z'] = z
+        self.draw_object()
+
+    def draw_object(self):
+        self.map_obj.fill(0)
+        for name in self.object_name:
+            x = self.object[name]['x'] 
+            y = self.object[name]['y'] 
+            x = (2000 - y*100) / self.ratio
+            y = (2000 - x*100) / self.ratio
+            cv.circle(self.map_obj, (x,y), 10, self.object_color[name])
 
     def create_map_detail(self):
         cv.line(self.map_detail, (self.col//2,0),(self.col//2,self.row), (200), 2)
@@ -27,10 +56,10 @@ class Map:
         for i in range(20):
             cv.circle(self.map_detail, (self.col//2, self.row//2), (100//ratio)*i, (200),2)
     
-    def insert_object(self, name, pt1, pt2):
-        self.object[name] = self.color
-        cv.rectangle(self.map, pt1, pt2, (self.color),-1)
-        self.update_color()
+    def insert_object(self, name, x, y):
+        self.object[name]['x'] = x
+        self.object[name]['y'] = y
+        self.draw_object()
 
     def update_color(self):
         self.color += 20
@@ -62,7 +91,7 @@ class Map:
 
     
         # map_display = cv.bitwise_or(self.map, self.map_auv)
-        map_display = cv.merge((self.map,self.map_auv,self.map_detail))
+        map_display = cv.merge((self.map_obj,self.map_auv,self.map_detail))
         # map_display = cv.merge((map_display,map_display,map_display))
         cv.imshow('map',map_display) 
         cv.waitKey(1)   

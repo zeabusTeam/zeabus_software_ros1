@@ -1,6 +1,6 @@
 ////////////////////////////////////// DETAIL ///////////////////////////////////////////////////
 //
-//	File		: service_number_service.h 
+//	File		: number_service.h 
 //	Purpose		: for main_service of control
 //
 //	Created by	: Supasan Komonlit

@@ -10,7 +10,7 @@ from zeabus_vision.msg import vision_drum
 from std_msgs.msg import String , Bool , Int8
 from zeabus_planner.srv import mission_result
 
-class mission_drum:
+class mission_gripper:
 
 	def __init__( self ):
 
@@ -50,24 +50,27 @@ class mission_drum:
 		self.go_depth = False
 		self.sucess_mission = False
 		print("SetMode Control")
-		self.auv.set_mode( 1 ) # 1 is not fix x and y and use velocity type open loop
-		self.auv.absolute_z( -1.3 )
+		self.auv.set_mode( 0 ) # 1 is not fix x and y and use velocity type open loop
+		self.auv.absolute_z( -0.5 )
 		print("Waiting Depth")
-		while( not rospy.is_shutdown() and not self.ok_state('z' , 0.1) ):
+		while( not rospy.is_shutdown() and not self.auv.ok_state("z" , 0.1) ):
 			self.rate.sleep()
 		self.prepare_pick()
 		self.count = 0
+		print("MISSION PICK" , "GO TO PICK")
 		if( self.go_depth ):
 			self.auv.absolute_z( -2 )
+			self.auv.set_mode( 1 )
 			while( not rospy.is_shutdown() and self.count < 120 ):
 				self.rate.sleep()
+			self.sucess_mission = True
 		return Bool( self.sucess_mission ) , Int8( 1 ) 
 		
 	def prepare_pick( self ):
 		print("<= MISSION PICK =>" , " PREPARE TO PICK " , "MOVE CENTER PICTURE X")
 		self.move_down = False
 		while( not rospy.is_shutdown() ):
-			self.analysis_all( 5 ):
+			self.analysis_all( 5 )
 			self.rate.sleep()
 			if( self.result_vision['n_obj'] == 0 ):
 				break
@@ -76,10 +79,10 @@ class mission_drum:
 				break
 			elif( self.result_vision > 0 ):
 				print("Move Right")
-				self.auv.velocity( "y" , -0.5 )
+				self.auv.velocity( "y" , -0.1 )
 			else:
 				print("Move Left")
-				self.auv.velocity( "y" , 0.5 )
+				self.auv.velocity( "y" , 0.1 )
 		print("<= MISSION PICK =>" , "PREPARE TO PICK" , "MOVE DOWN PICTUR Y")
 		self.move_disapper = False
 		while( not rospy.is_shutdown() and self.move_down ):
@@ -90,24 +93,22 @@ class mission_drum:
 			if( self.result_vision['cy'] > -0.8 and self.result_vision['cy'] < -0.5 ):
 				self.move_disapper = True
 				break
-			elif( self.result_vision['cy'] => -0.5 ):
+			elif( self.result_vision['cy'] >= -0.5 ):
 				print("Move Forware")
-				self.auv.velocity('x' , -0.3 )
+				self.auv.velocity('x' , -0.08 )
 			else:
 				print("Move Down")
-				self.auv.velocity('x' , 0.6 )
+				self.auv.velocity('x' , 0.1 )
 		self.go_depth = False
 		print("<= MISSION PICK =>" , "PREPARE TO PICK" , "MOVE DOWN DiSAPPER")
 		while( not rospy.is_shutdown() and self.mode_disapper ):
 			self.rate.sleep()
-			self.auv.velocity('y' , 0.4 )
+			self.auv.velocity('y' , 0.1 )
 			self.analysis_all( 5 )
 			if( self.result_vision['n_obj'] == 0):
 				self.go_depth = True
 				break
 		print("OK Let GO") 
-			
-			
 
 	def analysis_all( self , amont ):
 		self.reset_vision_data()
@@ -151,5 +152,5 @@ class mission_drum:
 								,	"right" : False , "forward" : False , "backward" : False 
 								,	"area" : 0 }
 if __name__=="__main__":
-	mission_03 = mission_drum()
+	mission_04 = mission_gripper()
 	rospy.spin()

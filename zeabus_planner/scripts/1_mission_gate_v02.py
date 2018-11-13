@@ -50,9 +50,18 @@ class mission_gate:
 		self.play_forward()	
 		if( self.can_play_backward ):
 			self.play_backward()
+#			self.play_time()
 
 		return Bool( self.sucess_mission ) , Int8( 1 ) 
 
+	def play_time( self ):
+		count_time = 0
+		print("Play Time")
+		while( not rospy.is_shutdown() and count_time < 60 ):
+			self.rate.sleep()
+			self.auv.velocity('x' , 0.4 )
+		self.sucess_mission = True
+		 
 	def play_forward( self ):
 		print( "<--- MISSION GATE ---> PLAY FORWARD MODE ")
 		count_unfound = 0
@@ -64,7 +73,7 @@ class mission_gate:
 				count_unfound += 1
 				continue
 			if( self.result_vision['pos'] == 0 ):
-				if( abs(self.find_center('x')) < 0.03 ):
+				if( abs(self.find_center('x')) < 0.01 ):
 					self.auv.velocity( 'x' , 0.3 )
 					print( "------> POS : 0 -----> FORWARD")
 					self.can_play_backward = True
@@ -83,29 +92,25 @@ class mission_gate:
 			
 	def play_backward( self ):
 		print( "<--- MISSION GATE ---> PLAY BACKWORD MODE " )
+		count_spin = 0
 		self.auv.relative_yaw( 3.14 )
-		count = 0;
-		while( not rospy.is_shutdown() ):
-			self.rate.sleep()
-			if( self.auv.ok_state( 'yaw' , 0.05 ) ):
-				count += 1
+		while( not rospy.is_shutdown() and count_spin < 5 ):
+			if( self.auv.ok_state( 'yaw' , 5 )):
+				count_spin += 1
 			else:
-				count = 0
-			print("<- BACKWARD -> Waitting yaw " + str( count ))
-			if(  count > 10 ):
-				break
+				count_spin = 0
 		print("<--- MISSION GATE ---> Move BACKWARD")	
+		count_found = 0
 		while( not rospy.is_shutdown() ):
 			self.rate.sleep()
 			self.auv.velocity( 'x' , -0.5)
 			self.analysis_data( 5 )
-			count = 0
 			if( self.result_vision['n_obj'] > 0 ):
-				count += 1
-				print("<- BACKWARD -> Found " + str( count ))
+				count_found += 1
+				print("<- BACKWARD -> Found " + str( count_found ))
 			else:
-				count = 0
-			if( count > 2 ):
+				count_found = 0
+			if( count_found > 2 ):
 				self.sucess_mission = True
 				break
 
@@ -114,9 +119,11 @@ class mission_gate:
 			
 	def find_center( self , type_center ):
 		if( type_center == 'x'):
-			return ( self.result_vision['cx_1'] + self.result_vision['cx_2'] )/2
+#			return ( self.result_vision['cx_1'] + self.result_vision['cx_2'] )/2
+			return ( self.result_vision['cx_1'])
 		elif( type_center == 'y'):
-			return ( self.result_vision['cy_1'] + self.result_vision['cy_2'] )/2
+#			return ( self.result_vision['cy_1'] + self.result_vision['cy_2'] )/2
+			return ( self.result_vision['cy_1'])
 		else:
 			print("<---------- WARNING GATE ----------> Don't found this type")
 			return -5

@@ -4,9 +4,9 @@ dictitems:
   d_pitch_velocity: 0.0
   d_roll_position: 0.0
   d_roll_velocity: 0.0
-  d_x_position: 0.0
+  d_x_position: 0.0001
   d_x_velocity: 0.0
-  d_y_position: 0.0
+  d_y_position: 1.0e-05
   d_y_velocity: 0.0
   d_yaw_position: 0.0
   d_yaw_velocity: 0.0
@@ -18,9 +18,9 @@ dictitems:
       d_pitch_velocity: 0.0
       d_roll_position: 0.0
       d_roll_velocity: 0.0
-      d_x_position: 0.0
+      d_x_position: 0.0001
       d_x_velocity: 0.0
-      d_y_position: 0.0
+      d_y_position: 1.0e-05
       d_y_velocity: 0.0
       d_yaw_position: 0.0
       d_yaw_velocity: 0.0
@@ -32,13 +32,13 @@ dictitems:
       i_pitch_velocity: 0.0
       i_roll_position: 0.0
       i_roll_velocity: 0.0
-      i_x_position: 0.01
+      i_x_position: 0.05
       i_x_velocity: 0.5
-      i_y_position: 0.02
+      i_y_position: 0.1
       i_y_velocity: 0.5
-      i_yaw_position: 0.01
+      i_yaw_position: 0.05
       i_yaw_velocity: 0.0
-      i_z_position: 0.0002
+      i_z_position: 0.08
       i_z_velocity: 0.0
       id: 0
       name: Default
@@ -48,11 +48,11 @@ dictitems:
       p_roll_velocity: 0.0
       p_x_position: 1.2
       p_x_velocity: 5.0
-      p_y_position: 1.5
+      p_y_position: 1.6
       p_y_velocity: 6.0
-      p_yaw_position: 0.75
+      p_yaw_position: 0.5
       p_yaw_velocity: 1.0
-      p_z_position: 1.5
+      p_z_position: 1.0
       p_z_velocity: 0.0
       parameters: !!python/object/new:dynamic_reconfigure.encoding.Config
         state: []
@@ -64,13 +64,13 @@ dictitems:
   i_pitch_velocity: 0.0
   i_roll_position: 0.0
   i_roll_velocity: 0.0
-  i_x_position: 0.01
+  i_x_position: 0.05
   i_x_velocity: 0.5
-  i_y_position: 0.02
+  i_y_position: 0.1
   i_y_velocity: 0.5
-  i_yaw_position: 0.01
+  i_yaw_position: 0.05
   i_yaw_velocity: 0.0
-  i_z_position: 0.0002
+  i_z_position: 0.08
   i_z_velocity: 0.0
   p_pitch_position: 0.0
   p_pitch_velocity: 0.0
@@ -78,10 +78,10 @@ dictitems:
   p_roll_velocity: 0.0
   p_x_position: 1.2
   p_x_velocity: 5.0
-  p_y_position: 1.5
+  p_y_position: 1.6
   p_y_velocity: 6.0
-  p_yaw_position: 0.75
+  p_yaw_position: 0.5
   p_yaw_velocity: 1.0
-  p_z_position: 1.5
+  p_z_position: 1.0
   p_z_velocity: 0.0
 state: []

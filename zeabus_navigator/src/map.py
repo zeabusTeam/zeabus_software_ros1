@@ -1,4 +1,5 @@
 #!/usr/bin/python2
+
 from nav_msgs.msg import Odometry
 from zeabus_navigator.msg import object_position
 import cv2 as cv
@@ -18,10 +19,10 @@ class Map:
         self.object_color = {'gate':10, 'flare':100, 'drum':200}
         self.object = {}
         for name in self.object_name:
-            self.object[name]['x'] = 0
-            self.object[name]['y'] = 0
-            self.object[name]['z'] = 0
-            self.object[name]['yaw'] = 0
+            self.object[name] = {'x': 0}
+            self.object[name] = {'y': 0}
+            self.object[name] = {'z': 0}
+            self.object[name] = {'yaw': 0}
         self.auv = {'x':0,'y':0,'z':0,'radius':5}
         self.color = 0
         self.pixel = {}

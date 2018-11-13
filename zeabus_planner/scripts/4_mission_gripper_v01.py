@@ -47,25 +47,67 @@ class mission_drum:
 
 	def main_play( self , request ):
 		self.current_depth = self.auv.receive_target('z')[0]
+		self.go_depth = False
 		self.sucess_mission = False
-		count_down = 0
+		print("SetMode Control")
+		self.auv.set_mode( 1 ) # 1 is not fix x and y and use velocity type open loop
+		self.auv.absolute_z( -1.3 )
+		print("Waiting Depth")
+		while( not rospy.is_shutdown() and not self.ok_state('z' , 0.1) ):
+			self.rate.sleep()
+		self.prepare_pick()
+		self.count = 0
+		if( self.go_depth ):
+			self.auv.absolute_z( -2 )
+			while( not rospy.is_shutdown() and self.count < 120 ):
+				self.rate.sleep()
 		return Bool( self.sucess_mission ) , Int8( 1 ) 
 		
-	# type 1 False only Right 2 True only Top and Bottom and Right
-	def check_type_vision( self ):
-		if( self.result_vision['forward']	and self.result_vision['backward'] ):
-			if( self.result_vision['right'] ):
-				return 2
+	def prepare_pick( self ):
+		print("<= MISSION PICK =>" , " PREPARE TO PICK " , "MOVE CENTER PICTURE X")
+		self.move_down = False
+		while( not rospy.is_shutdown() ):
+			self.analysis_all( 5 ):
+			self.rate.sleep()
+			if( self.result_vision['n_obj'] == 0 ):
+				break
+			if( abs( self.result_vision['cx'] ) < 0.05 ):
+				self.move_down = True
+				break
+			elif( self.result_vision > 0 ):
+				print("Move Right")
+				self.auv.velocity( "y" , -0.5 )
 			else:
-				return 1
-		elif( self.result_vision['forward']):
-			return 3
-		elif( self.result_vision['backward']):
-			return 4
-		elif( self.result_vision['right']):
-			return 5
-		else:
-			return 6
+				print("Move Left")
+				self.auv.velocity( "y" , 0.5 )
+		print("<= MISSION PICK =>" , "PREPARE TO PICK" , "MOVE DOWN PICTUR Y")
+		self.move_disapper = False
+		while( not rospy.is_shutdown() and self.move_down ):
+			self.analysis_all( 5)
+			self.rate.sleep()
+			if( self.result_vision['n_obj'] == 0):
+				break
+			if( self.result_vision['cy'] > -0.8 and self.result_vision['cy'] < -0.5 ):
+				self.move_disapper = True
+				break
+			elif( self.result_vision['cy'] => -0.5 ):
+				print("Move Forware")
+				self.auv.velocity('x' , -0.3 )
+			else:
+				print("Move Down")
+				self.auv.velocity('x' , 0.6 )
+		self.go_depth = False
+		print("<= MISSION PICK =>" , "PREPARE TO PICK" , "MOVE DOWN DiSAPPER")
+		while( not rospy.is_shutdown() and self.mode_disapper ):
+			self.rate.sleep()
+			self.auv.velocity('y' , 0.4 )
+			self.analysis_all( 5 )
+			if( self.result_vision['n_obj'] == 0):
+				self.go_depth = True
+				break
+		print("OK Let GO") 
+			
+			
 
 	def analysis_all( self , amont ):
 		self.reset_vision_data()
@@ -88,6 +130,7 @@ class mission_drum:
 			self.result_vision["backward"] = self.collect_vision["backward"]
 		else:
 			self.result_vision["n_obj"] = 0
+		print( "Result Vision " , self.result_vision )
 			
 	def individual_analysis( self ):
 		temporary = self.request_data( String("drum") , String("pick")).data

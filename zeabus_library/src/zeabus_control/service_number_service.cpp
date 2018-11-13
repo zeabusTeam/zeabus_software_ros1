@@ -16,7 +16,7 @@ bool zeabus_control::number_service::call_set_mode_control(
 		zeabus_library::number_service::Request &req
 		, zeabus_library::number_service::Response &res
 		){
-	this->mode_control = req.number.data;
+	*mode_control = req.number.data;
 	res.ok = true;
 	return true;
 }

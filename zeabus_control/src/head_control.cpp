@@ -32,6 +32,7 @@
 #include	<zeabus_library/zeabus_control/service_two_point.h>
 #include	<zeabus_library/zeabus_control/service_check_state.h>
 #include	<zeabus_library/zeabus_control/service_get_target.h>
+#include	<zeabus_library/zeabus_control/service_number_service.h>
 
 #include	<zeabus_library/zeabus_control/listen_twist.h> 
 			// Class object for listenning twist message

@@ -112,6 +112,15 @@ int main( int argv , char** argc){
 								, &service_target_state
 							);
 
+	zeabus_control::number_service service_main_control( current_state	,	target_state
+														,	robot_error		,	ok_error 
+														,	&mode_control );
+	ros::ServiceServer sevice_get_mode =
+		nh.advertiseService(	"/mode_control"
+								, &zeabus_control::number_service::call_set_mode_control
+								, &service_main_control
+							);
+
 //------------------------------> SET UP DYNAMIC RECONFIGURE <-----------------------------------
 	// for 3 constant
 	#ifdef _BOUND_ID_PID__ 

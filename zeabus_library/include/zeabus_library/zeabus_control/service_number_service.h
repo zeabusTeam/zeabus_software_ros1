@@ -24,7 +24,7 @@ namespace zeabus_control{
 		public:
 			number_service(	double* current_state , double* target_state 
 							, double* robot_error , double * ok_error 
-							, int& mode_control ) :
+							, int* mode_control ) :
 								main_service( current_state , target_state 
 											, robot_error , ok_error ){
 				this->mode_control = mode_control;
@@ -33,7 +33,7 @@ namespace zeabus_control{
 										, zeabus_library::number_service::Response &res );
 
 		private:
-			int mode_control;
+			int* mode_control;
 	};
 
 }	

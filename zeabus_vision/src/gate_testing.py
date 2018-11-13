@@ -10,7 +10,7 @@
 import cv2 as cv
 import color_text as ct
 from vision_lib import *
-import constants as CONST
+import constant as CONST
 import matplotlib.pyplot as plt
 from statistics import Statistics
 from zeabus_vision.msg import vision_gate
@@ -123,7 +123,7 @@ def find_pipe(binary, number_of_object, align):
             continue
 
         box = cv.boxPoints(rect)
-        box = np.int0(box)
+        box = np.int64(box)
         if align == 'v':
             cv.drawContours(pipe, [box], 0, (0, 255, 255), 2)
             result.append([int(x), int(y), int(h), int(w), angle])
@@ -211,7 +211,7 @@ def find_gate():
                          (int(x + w / 2.), int(y + h / 2.)), (255, 255, 255), -1)
 
         points = cv.findNonZero(gate)
-        x, y, w, h = np.int0(cv.boundingRect(points))
+        x, y, w, h = np.int64(cv.boundingRect(points))
 
         object_box = (x, y, w, h)
 

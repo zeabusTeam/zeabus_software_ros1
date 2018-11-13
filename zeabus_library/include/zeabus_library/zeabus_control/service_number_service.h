@@ -34,7 +34,7 @@ namespace zeabus_control{
 
 		private:
 			int mode_control;
-	}
+	};
 
 }	
 

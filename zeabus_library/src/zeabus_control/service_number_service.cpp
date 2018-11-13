@@ -12,7 +12,7 @@
 
 #include	<zeabus_library/zeabus_control/service_number_service.h>
 
-zeabus_control::zeabus_library::number_service::call_set_mode_control(
+bool zeabus_control::number_service::call_set_mode_control(
 		zeabus_library::number_service::Request &req
 		, zeabus_library::number_service::Response &res
 		){

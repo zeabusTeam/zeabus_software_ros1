@@ -114,12 +114,16 @@ class auv_controller:
 		result = self.request_know_target( String( type_state ))
 		return [ result.target_01 , result.target_02 ]
 
-	def velocity( self , type_velocity , value ):
+	def velocity( self , type_velocity_1 , value_1 , type_velocity_2 = "a", value_2 = 0):
 		self.reset_velocity()
-		if( type_velocity == "x"):
-			self.velocity_data.linear.x = value
-		elif( type_velocity == "y"):
-			self.velocity_data.linear.y = value	
+		if( type_velocity_1 == "x" ):
+			self.velocity_data.linear.x = value_1
+		elif( type_velocity_1 == "y"):
+			self.velocity_data.linear.y = value_1	
+		if( type_velocity_2 == "x" ):
+			self.velocity_data.linear.x = value_2
+		elif( type_velocity_2 == "y"):
+			self.velocity_data.linear.y = value_2	
 		self.velocity_publisher.publish( self.velocity_data )
 
 	def check_state( self , type_state , value):

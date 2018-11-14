@@ -33,8 +33,8 @@ class mission_gripper:
 		# third step is quickly Go Dowm and make ball always disappear
 		self.step = 1 # have 3 step to play
 		
-		self.start_depth = -0.8 # this variable is important that have affect on step_03
-		self.auv.absolute_z( -0.8 )
+		self.start_depth = -0.5 # this variable is important that have affect on step_03
+		self.auv.absolute_z( self.start_depth )
 		
 		self.step_01() 
 
@@ -53,11 +53,11 @@ class mission_gripper:
 	def collect_action( self , direction , value ):
 		print( "<=== MISSION GRIPPER ===> Collect action " + direction + " : " + str( value ) )
 		self.past_action['direction'] = direction
-		self.past_action['value'] = value
+		self.past_action['value'] = value * -1
 
 	def check_picture_y( self , center_y ):
-		max_point = -0.2
-		min_point = -0.7
+		max_point = -0.0
+		min_point = -0.3
 		if( min_point < center_y and center_y > max_point ):
 			return True
 		else:
@@ -68,24 +68,30 @@ class mission_gripper:
 		self.rate.sleep()
 
 	def step_01( self ):
-		print("<=== MISSION GRIPPER ===> step_01 move forward or backward")
-		limit_abort_mission = 5
+		print("<=== MISSION GRIPPER =========================> step_01 move forward or backward")
+		limit_abort_mission = 2
 		count_abort_mission = 0
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.2 )
-			self.vision.action_analysis( 5 , "drum" , "pick" )
+			self.vision.action_analysis( "drum" , "pick" , 5)
 			self.vision.echo_data()
-			if( self.have_object ):	
+			if( self.vision.have_object() ):	
 				count_abort_mission = 0
 				if( self.check_picture_y( self.vision.center_y() ) ):
 					self.step += 1
 					break
+				elif( self.vision.center_x()  < -0.2 ):
+					self.auv.velocity('y' , -0.15 )
+					self.collect_action( 'y' , -0.15 )
+				elif( self.vision.center_x() > 0.2 ):
+					self.auv.velocity('y' , 0.15 )
+					self.collect_action( 'y' , 0.15 )
 				elif( self.vision.center_y() < -0.7 ):
-					self.auv.velocity( 'x' , 0.4 )
-					self.collect_action( "x" , 0.4 )
+					self.auv.velocity( 'x' , 0.2 )
+					self.collect_action( "x" , 0.2 )
 				else:
-					self.auv.velocity( 'x' , -0.3 )
-					self.collect_action( "x" , -0.3 )
+					self.auv.velocity( 'x' , -0.08 )
+					self.collect_action( "x" , -0.08 )
 			else:
 				count_abort_mission = 0
 				if( count_abort_mission > limit_abort_mission ):
@@ -94,45 +100,52 @@ class mission_gripper:
 					self.auv.velocity( self.past_action['direction'] , self.past_action['value'])
 
 	def step_02( self ):
-		print("<=== MISSION GRIPPER ===> step_02 move right or left")
-		limit_next_step = 5
+		print("<=== MISSION GRIPPER ===============================> step_02 move right or left")
+		limit_next_step = 2
 		count_next_step = 0
+		self.auv.absolute_z( self.start_depth -0.3 )
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.2 )
-			self.vision.action_analysis( 5 ,  "drum" , "pick" )
+			self.vision.action_analysis( "drum" , "pick" , 5)
 			self.vision.echo_data()
-			if( self.have_object ):
-				if( self.vision.center_y() > 0 ):
-					self.auv.velocity( 'x' , -0.4 ) 
-					self.collect_action( "x" , -0.4 )
-				else:
-					self.auv.velocity( "y" , 0.5 )
-					self.collect_action( "y" )
-			else:
+			if( self.vision.have_object() ):
 				count_next_step = 0
-				if( count_next_step > limit_next_step ):
-					self.step += 1
-					break
+				if( self.vision.center_y() > 0 ):
+					self.auv.velocity( 'x' , 0.1 ) 
+					self.collect_action( "x" , 0.1 )
+				elif( self.vision.center_y() < -0.5 ):
+					self.auv.velocity( 'x' , -0.2)
+				else:
+					self.auv.velocity( "y" , -0.15 )
+					self.collect_action( "y" , -0.15)
+			else:
+				self.step += 1
+				break
 
 	def step_03( self ):
 		print("<=== MISSION GRIPPER ===> step_03 last step " )
-		limit_time = 30
+		limit_time = 10
 		self.start_time = time.time()
 		self.auv.absolute_z( self.start_depth - 1.2 )
 		while( not rospy.is_shutdown() ):
 			diff_time = time.time() - self.start_time
 			print( "Time to run this mission " + str( diff_time ))
 			self.rate.sleep()
-			self.vision.action_analysis( 5 , "drum" , "pick" )
+			self.vision.action_analysis( "drum" , "pick" , 5 )
 			self.vision.echo_data()
-			if( self.have_object ):
+			if( self.vision.have_object() ):
 				if( self.vision.center_x() > -0.1 ):
-					self.auv.velocity( 'y' , 0.5 )
+					self.auv.velocity( 'y' , -0.2 )
+					self.collect_action( "y" , -0.2)
 				else:
-					self.auv.velocity( 'x' , -0.4 )
+					self.auv.velocity( 'x' , -0.2 )
+			else:
+				self.auv.velocity('y' ,  0.12 , "x" , -0.05)
+				self.collect_action( "y" , 0.1)
 			if( diff_time > limit_time ):
 				self.sucess_mission = True
 				break
+		self.auv.absolute_z( -0.5 )
 	
 			
 if __name__=="__main__":

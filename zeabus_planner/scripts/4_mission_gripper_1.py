@@ -62,7 +62,7 @@ class mission_gripper:
 		limit_abort_mission = 5
 		count_abort_mission = 0
 		while( not rospy.is_shutdown() ):
-			self.sleep( 0.4 )
+			self.sleep( 0.2 )
 			self.vision.action_analysis( "drum" , "pick" )
 			self.vision.echo_data()
 			if( self.have_object ):	
@@ -85,18 +85,22 @@ class mission_gripper:
 
 	def step_02( self ):
 		print("<=== MISSION GRIPPER ===> step_02 move right or left")
-		limit_abort_mission = 5
-		count_abort_mission = 0
+		limit_next_step = 5
+		count_next_step = 0
 		while( not rospy.is_shutdown() ):
-			self.sleep( 0.4 )
+			self.sleep( 0.2 )
 			self.vision.action_analysis( "drum" , "pick" )
 			self.vision.echo_data()
 			if( self.have_object ):
-
-			else:
-				count_abort_mission = 0
-				if( count_abort_mission > limit_abort_mission ):
-					break
+				if( self.vision.center_y() > 0 ):
+					self.auv.velocity( 'x' , -0.4 ) 
+					self.collect_action( "x" , -0.4 )
 				else:
-					self.auv.velocity( self.past_action['direction'] , self.past_action['value'])
+					self.auv.velocity( "y" , 0.5 )
+					self.collect_action( "y" )
+			else:
+				count_next_step = 0
+				if( count_next_step > limit_next_step ):
+					self.step += 1
+					break
 					

@@ -1,10 +1,11 @@
 #!/usr/bin/python2
 #################################################################################################
-##
-##		FILE	: auv_controller.py
-##		Author	: Supasan Komonlit
-##
-##
+####
+####	FILE		: auv_controller.py
+####	Author		: Supasan Komonlit
+####	Create on	: 2018 , Nov 14
+####	Purpose		: For connection of Mission Planner with Control	
+####
 #################################################################################################
 from __future__ import print_function
 

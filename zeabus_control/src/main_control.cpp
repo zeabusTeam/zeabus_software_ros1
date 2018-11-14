@@ -209,7 +209,7 @@ int main( int argv , char** argc){
 				}
 				else if( mode_control == 1){
 					// When don't have data to tell velocity of robot
-					pid_force[run] = target_velocity[run] * 2;
+					pid_force[run] = target_velocity[run] ;
 				}
 				pid_position[run].reset_value();
 				use_target_velocity[run]--;

@@ -1,10 +1,11 @@
 #!/usr/bin/python2
-
 #################################################################################################
+####
 ####	FILE		: vision_collector.py
 ####	Maintain	: Supasan Komonlit
 ####	Create on	: 2019 , Nov 14
 ####	Purpose		: For manage about analysis vision data
+####
 #################################################################################################
 
 import rospy
@@ -16,16 +17,22 @@ from zeabus_vision.msg import *
 
 from std_msgs.msg import String
 
-class vision_collector:
+class VisionCollector:
 
 	def __init__( self , mission_vision ):
 
+		# this require
 		if( mission_vision == 'gate'):
 			self.gate_set_up()
 		elif( mission_vision == 'flare' ):
 			self.flare_set_up()	
 		elif( mission_vision == 'drum' ):
 			self.drum_set_up()
+		else:
+			print( "<=== VisionCollecotr ===> ERROR PLEASE Look condition on line 32")
+			exit( 0 )
+		
+		# set variable for make to collect and use in data vision
 		self.result			= {	'n_obj'		: 0		, 'area'		: 0
 								, 'cx'		: 0		, 'cy'			: 0
 								, 'cx_1'	: 0		, 'cx_2'		: 0
@@ -91,6 +98,8 @@ class vision_collector:
 ####	THIS SECTION IS INDIVIDUAL FOR EACH SERVICE OF ZEABUS TEAM VISION PART
 ####		AVAILABLE FOR USE
 ####
+####	Note :	We use variable to declare function which want to use that make me have 
+####			pattern to calculate vision data
 #################################################################################################
 	
 ##=================================> SERVICE VISION DRUM <=======================================

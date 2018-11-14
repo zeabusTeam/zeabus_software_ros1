@@ -35,7 +35,7 @@ namespace zeabus_control{
 		this->velocity = velocity;
 		this->set_use_velocity = set_use_velocity;
 		this->use_velocity = true;
-		this->set_value = 20;
+		this->set_value = 25;
 		#ifdef _CHECK_ERROR_
 			std::cout	<< "listen velocity pointer class : local --->" << this->velocity 
 						<< " : " << velocity << "\n";

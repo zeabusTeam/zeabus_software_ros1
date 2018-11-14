@@ -57,7 +57,7 @@ class VisionCollector:
 								, 'forward'	: False	, 'backward'	: False
 								, 'pos'		: 0 }
 
-	def action_analysis( self , task , request , amont ):
+	def analysis_all( self , task , request , amont ):
 		count_found = 0
 		count_unfound = 0 
 		self.reset_collect()

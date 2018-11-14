@@ -53,7 +53,7 @@ class vision_collector:
 	def action_analysis( self , task , request , amont ):
 		count_found = 0
 		count_unfound = 0 
-		self.collect()
+		self.reset_collect()
 		while( count_found < amont and count_unfound < amont ):
 			self.individual_data( task , request )
 			if( self.data['n_obj'] >= 1 ):
@@ -71,7 +71,7 @@ class vision_collector:
 		else:
 			self.result['n_obj'] = 0	
 		
-	def collect( self ):		
+	def reset_collect( self ):		
 		for run in self.collect.keys():
 			self.collect[ run ] = 0
 

@@ -24,7 +24,7 @@ class vision_collector:
 			self.gate_set_up()
 		elif( mission_vision == 'flare' ):
 			self.flare_set_up()	
-		else( mission_vision == 'drum' ):
+		elif( mission_vision == 'drum' ):
 			self.drum_set_up()
 		self.result			= {	'n_obj'		: 0		, 'area'		: 0
 								, 'cx'		: 0		, 'cy'			: 0

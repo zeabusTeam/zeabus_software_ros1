@@ -1,10 +1,9 @@
 #!/usr/bin/python2
+from __future__ import print_function
 
 import rospy
 import time
 import math
-
-from __future__ import print_function
 
 from zeabus_library.srv import *
 from zeabus_elec_ros_hardware_interface.srv import Torpedo
@@ -137,5 +136,5 @@ class auv_controller:
 	def wait_time( self , second ):
 		print( " Now sleep for " + str( second ) , end = '-------> ')
 		time.sleep( second )
-		print( " Wake Up ")
+		print( "Wake Up")
 		

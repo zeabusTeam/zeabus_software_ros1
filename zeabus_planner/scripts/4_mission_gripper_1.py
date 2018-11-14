@@ -2,12 +2,13 @@
 
 import rospy
 import math
+import time
 
 from auv_controller		import auv_controller
 from vision_collector	import vision_collector
 from zeabus_planner.srv	import mission_result
 
-from std_msgs			import Bool , Int8
+from std_msgs.msg			import Bool , Int8
 
 class mission_gripper:
 
@@ -27,16 +28,25 @@ class mission_gripper:
 
 	def main_play( self , request ):
 		self.sucess_mission = False
+		# first step is move in x axis of robot for move center y axis of picture
 		# second step is move in y axis of robot to disappear of ball
 		# third step is quickly Go Dowm and make ball always disappear
 		self.step = 1 # have 3 step to play
 		
-		self.step_01() # first step is move in x axis of robot for move center y axis of picture
+		self.start_depth = -0.8 # this variable is important that have affect on step_03
+		self.auv.absolute_z( -0.8 )
+		
+		self.step_01() 
+
 		if( self.step == 2 ):
 			self.step_02()
 		else:
 			print("<=== MISSION GRIPPER ===> MISSION GRIPPER ABORTED!!!")
-		
+
+		if( self.step== 3 ):
+			self.step_03()
+		else:
+			print("<=== MISSION GRIPPER ===> MISSION GRIPPER ABORTED!!!")
 
 		return Bool( self.sucess_mission ) , Int8( self.step )
 
@@ -63,7 +73,7 @@ class mission_gripper:
 		count_abort_mission = 0
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.2 )
-			self.vision.action_analysis( "drum" , "pick" )
+			self.vision.action_analysis( 5 , "drum" , "pick" )
 			self.vision.echo_data()
 			if( self.have_object ):	
 				count_abort_mission = 0
@@ -89,7 +99,7 @@ class mission_gripper:
 		count_next_step = 0
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.2 )
-			self.vision.action_analysis( "drum" , "pick" )
+			self.vision.action_analysis( 5 ,  "drum" , "pick" )
 			self.vision.echo_data()
 			if( self.have_object ):
 				if( self.vision.center_y() > 0 ):
@@ -103,4 +113,28 @@ class mission_gripper:
 				if( count_next_step > limit_next_step ):
 					self.step += 1
 					break
-					
+
+	def step_03( self ):
+		print("<=== MISSION GRIPPER ===> step_03 last step " )
+		limit_time = 30
+		self.start_time = time.time()
+		self.auv.absolute_z( self.start_depth - 1.2 )
+		while( not rospy.is_shutdown() ):
+			diff_time = time.time() - self.start_time
+			print( "Time to run this mission " + str( diff_time ))
+			self.rate.sleep()
+			self.vision.action_analysis( 5 , "drum" , "pick" )
+			self.vision.echo_data()
+			if( self.have_object ):
+				if( self.vision.center_x() > -0.1 ):
+					self.auv.velocity( 'y' , 0.5 )
+				else:
+					self.auv.velocity( 'x' , -0.4 )
+			if( diff_time > limit_time ):
+				self.sucess_mission = True
+				break
+	
+			
+if __name__=="__main__":
+	mission_04 = mission_gripper()	
+	rospy.spin()

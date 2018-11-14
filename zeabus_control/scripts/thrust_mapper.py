@@ -77,10 +77,10 @@ class ThrustMapper:
         pwm_command = Pwm()
         pwm_command.pwm = [1500] * 8
 
-        F = np.array([message.linear.x, message.linear.y, message.linear.z,
+        force = np.array([message.linear.x, message.linear.y, message.linear.z,
                       message.angular.x, message.angular.y, message.angular.z])
 
-        torque = np.matmul(F, self.direction_inverse.T)
+        torque = np.matmul(force, self.direction_inverse.T)
 
         for run in range(0, 8):
             if(torque[run] < 0):
@@ -105,7 +105,7 @@ class ThrustMapper:
             if(torque[i] == 0):
                 cmd[i] = 1500
 
-		for i in range(8):
+        for i in range(0, 8):
 			pwm_command.pwm[i] = cmd[i]  # thrust i
         
 

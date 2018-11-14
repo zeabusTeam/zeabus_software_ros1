@@ -1,7 +1,10 @@
 #!/usr/bin/python2
 
 import rospy
+import time
 import math
+
+from __future__ import print_function
 
 from zeabus_library.srv import *
 from zeabus_elec_ros_hardware_interface.srv import Torpedo
@@ -130,3 +133,9 @@ class auv_controller:
 	def pull_gripper( self ):
 		result = self.hold_ball( 0 )
 		return result
+
+	def wait_time( self , second ):
+		print( " Now sleep for " + str( second ) , end = '-------> ')
+		time.sleep( second )
+		print( " Wake Up ")
+		

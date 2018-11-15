@@ -124,7 +124,11 @@ class MissionGate:
 				count_ok += 1
 			else:
 				count_ok = 0
-			if( count_ok == 5 )	 
+			if( count_ok == 5 ): 
 				break
 		self.echo("Yaw now is ok start to check now play step 1 again ")	
 		self.step_01()
+
+if __name__=="__main__":
+	mission_gate = MissionGate()
+	rospy.spin()

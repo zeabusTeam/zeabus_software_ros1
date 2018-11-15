@@ -54,6 +54,12 @@ class MissionGate:
 		if( self.current_step == 1 ):
 			self.step_01()
 
+		if( self.current_step == 2 ):
+			self.step_02()
+
+		if( self.current_step == 3 ):
+			self.step_03()
+
 		return Bool( self.sucess_mission ) , Int8( self.current_step )
 
 	def step_01( self ):
@@ -102,4 +108,8 @@ class MissionGate:
 			if( diff_time > limit_time ):
 				self.current_step += 1
 				break
-			self.echo("Move forward now diff_time is " + str( diff_time ) )	
+			self.echo("Move forward now diff_time is " + str( diff_time ) )
+
+	def step_03( self ): # spind and check have gate or not
+		self.echo( "<========== MISSION GATE ==========> MISSION GATE THIRD STEP")
+			

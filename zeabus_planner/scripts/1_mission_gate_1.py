@@ -60,6 +60,9 @@ class MissionGate:
 		if( self.current_step == 3 ):
 			self.step_03()
 
+		if( self.current_step == 4 ):
+			self.sucess_mission = True
+
 		return Bool( self.sucess_mission ) , Int8( self.current_step )
 
 	def step_01( self ):
@@ -110,6 +113,18 @@ class MissionGate:
 				break
 			self.echo("Move forward now diff_time is " + str( diff_time ) )
 
-	def step_03( self ): # spind and check have gate or not
+	def step_03( self ): # spin and check have gate or not
 		self.echo( "<========== MISSION GATE ==========> MISSION GATE THIRD STEP")
-			
+		self.auv.relative_yaw( 3.14 )
+		count_ok = 0
+		self.echo("Waitting yaw are ok")
+		while( not rospy.is_shutdown() ):
+			self.sleep( 0.1)
+			if( self.auv.check_state("yaw" , 0.1 ) ):
+				count_ok += 1
+			else:
+				count_ok = 0
+			if( count_ok == 5 )	 
+				break
+		self.echo("Yaw now is ok start to check now play step 1 again ")	
+		self.step_01()

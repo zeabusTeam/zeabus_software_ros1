@@ -139,9 +139,9 @@ class AutoExposure:
             print(current_p_lower, current_p_upper, ev)
 
             if current_p_lower < th_p_lower:
-                self.set_param(ev + 0.1)
+                self.set_param(ev + 0.04)
             if current_p_upper > th_p_upper:
-                self.set_param(ev - 0.1)
+                self.set_param(ev - 0.04)
 
             previous_ev = current_ev
 

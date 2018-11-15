@@ -1,6 +1,7 @@
 #!/usr/bin/python2
 
 from sensor_msgs.msg import Imu
+from nav_msgs.msg import Odometry
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 import rospy
@@ -50,6 +51,7 @@ class ControllerImu:
         self.time_previous = 0
         self.is_init = False
         rospy.Subscriber("/imu/data", Imu, self.imu_callback)
+        rospy.Subscriber("/barometer/data", Odometry, self.pressure_callback)
 
         self.pub_force = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
 
@@ -97,7 +99,7 @@ class ControllerImu:
     def vel_to_distance(self):
         delta_t = self.time_current - self.time_previous
         delta_t *= 1e-9
-        for i in range(3):            
+        for i in range(2):            
             if abs(self.vel_current[i] - self.vel_previous[i]) > 0.05: 
                 self.distance[i] += self.integration(self.vel_previous[i],self.vel_current[i],delta_t)
             
@@ -120,20 +122,27 @@ class ControllerImu:
             self.acc_to_vel()      
             self.vel_to_distance()  
             for i in range(3):
-                self.calulate(i)
+                self.calculate(i)
             self.control_force2thruster()
             # self.publish_data()
 
         self.collect_previous_state()
         self.is_init = True
 
-    def calulate(self, axis):
+    def pressure_callback(self, msg):
+        self.distance[2] = msg.pose.pose.position.z
+
+    def calculate(self, axis):
         """
             Discrete model
                             e-2 e-1 e0
             self.error =    0   1   2
         """
-        current_error = self.vel_current[axis]
+        if axis < 2:
+            current_error = self.vel_current[axis]
+        else:
+            current_error = self.distance[axis]
+
         self.error[axis][0] = self.error[axis][1]
         self.error[axis][1] = self.error[axis][2]
         self.error[axis][2] = current_error

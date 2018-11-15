@@ -1,7 +1,7 @@
 import cv2 as cv
 import rospy
 import numpy as np
-from cv_bridge import CvBridge 
+from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 import color_text as ct
 
@@ -47,6 +47,16 @@ def range_str2array(string):
     return np.array([int(string[0]), int(string[1]), int(string[2])], dtype=np.uint8)
 
 
+def get_kernel(shape='rect', ksize=(5, 5)):
+    if shape == 'rect':
+        return cv.getStructuringElement(cv.MORPH_RECT, ksize)
+    elif shape == 'ellipse':
+        return cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize)
+    elif shape == 'plus':
+        return cv.getStructuringElement(cv.MORPH_CROSS, ksize)
+    else:
+        return None
+
 # def get_color_range(color, camera_position, number, mission):
 #     lower = None
 #     upper = None
@@ -65,6 +75,20 @@ def range_str2array(string):
 #     return lower, upper
 
 
+def bg_subtraction(gray):
+    min_gray = 20
+    max_gray = 250
+    bg = cv.medianBlur(gray, 61)
+    fg = cv.medianBlur(gray, 7)
+    sub = np.uint8(abs(fg - bg))
+    obj1 = np.zeros(gray.shape, np.uint8)
+    obj2 = np.zeros(gray.shape, np.uint8)
+    obj1[sub > min_gray] = 255
+    obj2[sub < max_gray] = 255
+    obj = cv.bitwise_and(obj1, obj2)
+    return obj
+
+
 def Aconvert(inp, full):
     inp = float(inp)
     full = float(full)
@@ -76,32 +100,41 @@ def equalize(mono):
     mono = cv.equalizeHist(mono)
     return mono
 
+
 def equalize_hsv(hsv):
-    h,s,v = cv.split(hsv)
+    h, s, v = cv.split(hsv)
     s = equalize(s)
     v = equalize(v)
-    hsv = cv.merge((h,s,v))
+    hsv = cv.merge((h, s, v))
     return hsv
 
+
 def equalize_bgr(bgr):
-    b,g,r = cv.split(bgr)
+    b, g, r = cv.split(bgr)
     b = equalize(b)
     g = equalize(g)
     r = equalize(r)
-    bgr = cv.merge((b,g,r))
+    bgr = cv.merge((b, g, r))
     return bgr
 
+
 def debug_head():
-    print ct.WHITE_HL+ct.BLACK+'<{:-^80}>'.format(' Debug ')
+    print ct.WHITE_HL + ct.BLACK + '<{:-^80}>'.format(' Debug ')
+
 
 def debug_end():
-    print '<{:-^80}>'.format(' End Debug ')+ct.DEFAULT
+    print '<{:-^80}>'.format(' End Debug ') + ct.DEFAULT
+
 
 def center_of_contour(cnt):
     M = cv.moments(cnt)
     cx = int(M["m10"] / M["m00"])
     cy = int(M["m01"] / M["m00"])
-    return (cx,cy)
+    return (cx, cy)
+
 
 def clear_screen():
     print("\033[H\033[J")
+
+# def pre_process(bgr,mission):
+#     return bgr

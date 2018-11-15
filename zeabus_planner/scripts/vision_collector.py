@@ -1,10 +1,11 @@
 #!/usr/bin/python2
-
 #################################################################################################
+####
 ####	FILE		: vision_collector.py
 ####	Maintain	: Supasan Komonlit
 ####	Create on	: 2019 , Nov 14
 ####	Purpose		: For manage about analysis vision data
+####
 #################################################################################################
 
 import rospy
@@ -16,16 +17,22 @@ from zeabus_vision.msg import *
 
 from std_msgs.msg import String
 
-class vision_collector:
+class VisionCollector:
 
 	def __init__( self , mission_vision ):
 
+		# this require
 		if( mission_vision == 'gate'):
 			self.gate_set_up()
 		elif( mission_vision == 'flare' ):
 			self.flare_set_up()	
 		elif( mission_vision == 'drum' ):
 			self.drum_set_up()
+		else:
+			print( "<=== VisionCollecotr ===> ERROR PLEASE Look condition on line 32")
+			exit( 0 )
+		
+		# set variable for make to collect and use in data vision
 		self.result			= {	'n_obj'		: 0		, 'area'		: 0
 								, 'cx'		: 0		, 'cy'			: 0
 								, 'cx_1'	: 0		, 'cx_2'		: 0
@@ -50,10 +57,10 @@ class vision_collector:
 								, 'forward'	: False	, 'backward'	: False
 								, 'pos'		: 0 }
 
-	def action_analysis( self , task , request , amont ):
+	def analysis_all( self , task , request , amont ):
 		count_found = 0
 		count_unfound = 0 
-		self.collect()
+		self.reset_collect()
 		while( count_found < amont and count_unfound < amont ):
 			self.individual_data( task , request )
 			if( self.data['n_obj'] >= 1 ):
@@ -71,7 +78,7 @@ class vision_collector:
 		else:
 			self.result['n_obj'] = 0	
 		
-	def collect( self ):		
+	def reset_collect( self ):		
 		for run in self.collect.keys():
 			self.collect[ run ] = 0
 
@@ -81,8 +88,11 @@ class vision_collector:
 		else:
 			return False
 
+	def area( self ):
+		return self.result['area']
+
 	def echo_data( self ):
-		print( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj '] )
+		print( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj'] )
 			+ " center_x : center_y " + str( self.center_x() ) + " : " + str( self.center_y() )
 		)
 			
@@ -91,6 +101,8 @@ class vision_collector:
 ####	THIS SECTION IS INDIVIDUAL FOR EACH SERVICE OF ZEABUS TEAM VISION PART
 ####		AVAILABLE FOR USE
 ####
+####	Note :	We use variable to declare function which want to use that make me have 
+####			pattern to calculate vision data
 #################################################################################################
 	
 ##=================================> SERVICE VISION DRUM <=======================================

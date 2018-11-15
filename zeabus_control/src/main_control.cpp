@@ -187,10 +187,15 @@ int main( int argv , char** argc){
 		if( mode_control == 0 ){
 			zeabus_control::find_error_position( current_state , target_state , world_error);
 		} 
-		else if( mode_control == 1){
+		else if( mode_control == 1 ){
 			zeabus_control::find_error_position_non_xy( current_state 
 														, target_state 
 														, world_error );
+		}
+		else if( mode_control == 2 ){
+			zebuas_control::find_error_position_inverse_y( current_state 
+														,	target_state
+														,	world_error );
 		}
 
 		// give world_error to error in robot frame
@@ -209,7 +214,7 @@ int main( int argv , char** argc){
 				}
 				else if( mode_control == 1){
 					// When don't have data to tell velocity of robot
-					pid_force[run] = target_velocity[run] * 2;
+					pid_force[run] = target_velocity[run] ;
 				}
 				pid_position[run].reset_value();
 				use_target_velocity[run]--;

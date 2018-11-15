@@ -9,7 +9,11 @@ from colorama import *
 import numpy as np
 
 DEBUG = True
-
+def print_float(input):
+    string = ""
+    for i in range(3):
+        string += "{:<10.3f}".format(input[i])
+    print_debug(string, "GREEN")
 
 def print_debug(text, mode="DEBUG"):
     color_mode = {
@@ -26,17 +30,26 @@ def print_debug(text, mode="DEBUG"):
 class ControllerImu:
     def __init__(self):
         rospy.init_node("ControllerByImu")
-        self.velocity = [0] * 3
         self.KP = [0] * 3
         self.KI = [0] * 3
         self.KD = [0] * 3
         self.error = [[0, 0, 0]] * 3
         self.ctrl_signal = [0] * 3
         self.prev_ctrl_signal = [0] * 3
+        # 4220 65901
         self.tunning = np.zeros((400, 800), np.uint8)
-        self.acc = None
-
-        rospy.Subscriber("/gx4_45_imu/data", Imu, self.imu_callback)
+        self.vel_current = [0] * 3
+        self.vel_previous = [0] * 3
+        self.acc_current = [0] * 3
+        self.acc_previous = [0] * 3
+        self.distance = [0]*3
+        self.force = Twist()
+        # self.time_previous = self.time_previous.nsecs
+        # print(self.time_previous)
+        self.time_current = 0
+        self.time_previous = 0
+        self.is_init = False
+        rospy.Subscriber("/imu/data", Imu, self.imu_callback)
 
         self.pub_force = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
 
@@ -63,16 +76,56 @@ class ControllerImu:
     def nothing(self):
         pass
 
+    # def offset_acceleration(self):
+    #     for i in range(3):
+    #         self.acc_current[i] = int(self.acc_current[i]*100) + self.acc_offset[1] 
+
+
+    def integration(self,f1,f2,delta_t):
+        # trapeze
+        return ((f1 + f2)/2.)*delta_t
+
+    def acc_to_vel(self):
+        delta_t = self.time_current - self.time_previous
+        delta_t *= 1e-9
+        for i in range(3):
+            if abs(self.acc_current[i] - self.acc_previous[i]) > 0.1: 
+                self.vel_current[i] = self.integration(self.acc_previous[i],self.acc_current[i],delta_t)
+            else:
+                self.vel_current[i] = self.integration(self.acc_previous[i],self.acc_current[i],0)
+
+    def vel_to_distance(self):
+        delta_t = self.time_current - self.time_previous
+        delta_t *= 1e-9
+        for i in range(3):            
+            if abs(self.vel_current[i] - self.vel_previous[i]) > 0.05: 
+                self.distance[i] += self.integration(self.vel_previous[i],self.vel_current[i],delta_t)
+            
+    def collect_previous_state(self):
+        for i in range(3):
+            self.acc_previous[i] = self.acc_current[i]
+            self.vel_previous[i] = self.vel_current[i]
+        # self.time_previous = self.time_current
+        self.time_previous = rospy.get_rostime().nsecs
+        # print(self.time_previous)
+
     def imu_callback(self, msg):
-        self.acc = msg.linear_acceleration
-        i = 0
-        for a in [self.acc.x, self.acc.y, self.acc.z]:
-            if abs(a) > 1.01:
-                if a < 0:
-                    self.velocity[i] -= a
-                elif a>0:
-                    self.velocity[i] -= a
-            i += 1
+        self.time_current = rospy.get_rostime().nsecs
+        # print(self.time_current)
+        self.acc_current[0] = msg.linear_acceleration.y
+        self.acc_current[1] = msg.linear_acceleration.x
+        self.acc_current[2] = msg.linear_acceleration.z
+
+        if self.is_init:
+            self.acc_to_vel()      
+            self.vel_to_distance()  
+            for i in range(3):
+                self.calulate(i)
+            self.control_force2thruster()
+            # self.publish_data()
+
+        self.collect_previous_state()
+        self.is_init = True
 
     def calulate(self, axis):
         """
@@ -80,7 +133,7 @@ class ControllerImu:
                             e-2 e-1 e0
             self.error =    0   1   2
         """
-        current_error = self.velocity[axis]
+        current_error = self.vel_current[axis]
         self.error[axis][0] = self.error[axis][1]
         self.error[axis][1] = self.error[axis][2]
         self.error[axis][2] = current_error
@@ -94,39 +147,46 @@ class ControllerImu:
         )
 
     def control_force2thruster(self):
-        force = Twist()
-        force.linear.x = self.ctrl_signal[0]
-        force.linear.y = self.ctrl_signal[1]
-        force.linear.z = self.ctrl_signal[2]
-        force.angular.x = 0
-        force.angular.y = 0
-        force.angular.z = 0
-        print_debug("FORCE", "RED")
-        print_debug(str(force), "GREEN")
-        self.pub_force.publish(force)
+        self.force.linear.x = self.ctrl_signal[0]
+        self.force.linear.y = self.ctrl_signal[1]
+        self.force.linear.z = self.ctrl_signal[2]
+        self.force.angular.x = 0
+        self.force.angular.y = 0
+        self.force.angular.z = 0
+        # print_debug("FORCE", "RED")
+        # print_debug(str(force), "GREEN")
+        self.pub_force.publish(self.force)
+
+    
 
     def publish_data(self):
         print_debug("ACCELERATION", "RED")
-        print_debug(str(self.acc), "GREEN")
+        print_float(self.acc_current)
         print_debug("VELOCITY", "RED")
-        print_debug(str(self.velocity), "GREEN")
+        print_float(self.vel_current)
+        print_debug("DISTANCE", "RED")
+        print_float(self.distance)
         print_debug("ERROR", "RED")
-        print_debug(str(self.error[0]), "GREEN")
-        print_debug(str(self.error[1]), "GREEN")
-        print_debug(str(self.error[2]), "GREEN")
-        print_debug("PID", "RED")
-        print_debug(str(self.KP), "GREEN")
-        print_debug(str(self.KI), "GREEN")
-        print_debug(str(self.KD), "GREEN")
-        self.pub_x.publish(Float32(self.velocity[0]))
-        self.pub_y.publish(Float32(self.velocity[1]))
-        self.pub_z.publish(Float32(self.velocity[2]))
+        print_float([self.error[0][2], self.error[1][2], self.error[2][2]])
+        # print_debug(str(self.error[0]), "GREEN")
+        # print_debug(str(self.error[1]), "GREEN")
+        # print_debug(str(self.error[2]), "GREEN")
+        print_debug("FORCE", "RED")
+        print_float([self.force.linear.x,self.force.linear.y,self.force.linear.z])
+        print_debug("X          Y          z", "RED")
+        print_float(self.KP)
+        print_float(self.KI)
+        print_float(self.KD)
+        self.pub_x.publish(Float32(self.vel_current[0]))
+        self.pub_y.publish(Float32(self.vel_current[1]))
+        self.pub_z.publish(Float32(self.vel_current[2]))
 
         self.pub_error_x.publish(Float32(self.error[0][0]))
         self.pub_error_y.publish(Float32(self.error[1][0]))
         self.pub_error_z.publish(Float32(self.error[2][0]))
 
     def run(self):
+        cv.imshow('Tunning', self.tunning)
         while not rospy.is_shutdown():
             for i in range(3):
                 self.KP[i] = cv.getTrackbarPos(
@@ -135,15 +195,10 @@ class ControllerImu:
                     'KI_' + str(i), 'Tunning') / 100.
                 self.KD[i] = cv.getTrackbarPos(
                     'KD_' + str(i), 'Tunning') / 100.
-
-            for i in range(3):
-                self.calulate(i)
-
-            self.control_force2thruster()
             self.publish_data()
-            cv.imshow('Tunning', self.tunning)
+
+            rospy.sleep(1/50.)
             cv.waitKey(1)
-            rospy.sleep(0.1)
 
 if __name__ == '__main__':
     ctrl = ControllerImu()

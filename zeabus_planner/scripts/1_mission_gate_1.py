@@ -4,7 +4,7 @@
 ####	FILE		: 1_mission_gate_1.py
 ####	Author		: Supasan Komonlit
 ####	Create on	: 2018 , Nov 15
-####	Purpose		: For connection of Mission Planner with Control	
+####	Purpose		: For make mission gate	
 ####
 #################################################################################################
 
@@ -31,7 +31,7 @@ class MissionGate:
 		self.vision	= VisionCollector( "gate" )
 
 		self.rate	= rospy.Rate( 30 )
-		self.mission_planner = rospy.Service('mission/planner' , mission_result , self.main_play)
+		self.mission_planner = rospy.Service('mission/gate' , mission_result , self.main_play)
 		self.data_pub = rospy.Publisher('mission/echo_planner' , String , queue_size = 1 )
 
 	def sleep( self , second):

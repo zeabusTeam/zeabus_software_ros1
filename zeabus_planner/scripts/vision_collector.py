@@ -88,6 +88,9 @@ class VisionCollector:
 		else:
 			return False
 
+	def area( self ):
+		return self.result['area']
+
 	def echo_data( self ):
 		print( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj'] )
 			+ " center_x : center_y " + str( self.center_x() ) + " : " + str( self.center_y() )

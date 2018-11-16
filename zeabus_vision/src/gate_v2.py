@@ -54,9 +54,9 @@ def image_callback(msg):
     image_input = bgr.copy()
 
 
-def message(n_obj=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
+def message(state=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
     msg = vision_gate()
-    msg.n_obj = n_obj
+    msg.state = state
     msg.pos = pos
     msg.cx1 = cx1
     msg.cy1 = cy1
@@ -64,7 +64,7 @@ def message(n_obj=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
     msg.cy2 = cy2
     msg.area = area
     if debug:
-        print n_obj
+        print state
     print msg
     return msg
 
@@ -143,7 +143,7 @@ def find_gate():
     global image_input, stat, previous_bg, first_object, tracker, tracker_status, object_box, untrack_frame
     if image_input is None:
         img_is_none()
-        return message(n_obj=-1)
+        return message(state=-1)
     gray = cv.cvtColor(image_input.copy(), cv.COLOR_BGR2GRAY)
 
     obj = bg_subtraction(gray)
@@ -163,12 +163,15 @@ def find_gate():
     horizontal = cv.erode(horizontal.copy(), kernel_erode)
 
     vertical_pipe, no_pipe_v = find_pipe(vertical, 'v')
-    horizontal_pipe, no_pipe_h = find_pipe(horizontal, 'h')
+    # horizontal_pipe, no_pipe_h = find_pipe(horizontal, 'h')
+    horizontal_pipe, no_pipe_h = [],0
 
     display = image_input.copy()
     
     horizontal_cx = []
+    horizontal_cy = []
     vertical_cx = []
+    vertical_cy = []
 
     for res in horizontal_pipe:
         # green
@@ -177,6 +180,7 @@ def find_gate():
         cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
                      (int(x + w / 2.), int(y + h / 2.)), (0, 255, 0), 2)
         horizontal_cx.append(x)
+        horizontal_cy.append(y)
     print(image_input.shape)
     for res in vertical_pipe:
         # pink
@@ -185,6 +189,7 @@ def find_gate():
         cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
                      (int(x + w / 2.), int(y + h / 2.)), (108, 105, 255), 2)
         vertical_cx.append(x)
+        vertical_cy.append(y - h / 2.)
     print(vertical_cx)
     print(horizontal_cx)
 
@@ -194,6 +199,8 @@ def find_gate():
             mode = 1
         elif no_pipe_v == 1:
             mode = 2
+    elif no_pipe_h == 0 and no_pipe_v == 2:
+        mode = 1
     else:
         mode = 0
     print("no_pipe_v", no_pipe_v)
@@ -209,63 +216,34 @@ def find_gate():
         himg, wimg = obj.shape[:2]
         print_result("FOUND GATE", ct.GREEN)
         cx = (4.0 * horizontal_cx[0] + sum(vertical_cx)) / \
-            (4*no_pipe_h+no_pipe_v)  # weight 4 time of vertical
-        cv.line(display, (int(cx), 0), (int(cx), himg), (255, 0, 0), 5)
+            (4*no_pipe_h+no_pipe_v) if no_pipe_h != 0 else sum(vertical_cx)/2  # weight 4 time of vertical
+        print(cx)
+        cy = sum(vertical_cy)/2 if no_pipe_h == 0 else horizontal_cy[0]
+        cv.line(display, (int(cx), 0), (int(cx), himg-1), (255, 0, 0), 5)
+        cv.line(display, (0, int(cy)), (wimg, int(cy)), (255, 255, 255), 5)
         publish_result(display, 'bgr', public_topic + 'image_result')
         publish_result(vertical, 'gray', public_topic + 'mask/vertical')
         publish_result(horizontal, 'gray', public_topic + 'mask/horizontal')
         publish_result(obj, 'gray', public_topic + 'mask')
         cx = Aconvert(cx, wimg)
-        return message(n_obj=2, cx1=cx)
+        return message(state=2, cx1=cx, cy1=cy)
     elif mode == 2:
         himg, wimg = obj.shape[:2]
         print_result("FOUND BUT HAVE SOME NOISE OR NOT FULL GATE", ct.YELLOW)
         cx = horizontal_cx[0]
-        # cv.circle(display,(int(vertical_pipe[0][1]),0),(255,255,255),-1)
         cv.line(display, (int(cx), 0), (int(cx), himg), (255, 0, 0), 5)
         publish_result(display, 'bgr', public_topic + 'image_result')
         publish_result(vertical, 'gray', public_topic + 'mask/vertical')
         publish_result(horizontal, 'gray', public_topic + 'mask/horizontal')
         publish_result(obj, 'gray', public_topic + 'mask')
         cx = Aconvert(cx, wimg)
-        return message(n_obj=2, cx1=cx)
-    # elif mode == 3:
-    #     print_result("FOUND BUT HAVE SOME NOISE (3)", ct.YELLOW)
-    #     publish_result(display, 'bgr', public_topic + 'image_result')
-    #     publish_result(vertical, 'gray', public_topic + 'mask/vertical')
-    #     publish_result(horizontal, 'gray', public_topic + 'mask/horizontal')
-    #     publish_result(obj, 'gray', public_topic + 'mask')
-    # elif mode == 4:
-    #     print_result("FOUND BUT HAVE SOME NOISE (4)", ct.YELLOW)
-    #     publish_result(display, 'bgr', public_topic + 'image_result')
-    #     publish_result(vertical, 'gray', public_topic + 'mask/vertical')
-    #     publish_result(horizontal, 'gray', public_topic + 'mask/horizontal')
-    #     publish_result(obj, 'gray', public_topic + 'mask')
-    # elif mode == 5:
-    #     print_result("FOUND BUT HAVE SOME NOISE (5)", ct.YELLOW)
-    #     publish_result(display, 'bgr', public_topic + 'image_result')
-    #     publish_result(vertical, 'gray', public_topic + 'mask/vertical')
-    #     publish_result(horizontal, 'gray', public_topic + 'mask/horizontal')
-    #     publish_result(obj, 'gray', public_topic + 'mask')
-
-    # cv.imshow('display', display)
-    # cv.imshow('obj', obj)
-    # cv.imshow('vertical', vertical)
-    # cv.imshow('horizoncal', horizontal)
+        return message(state=2, cx1=cx)
 
 
 if __name__ == '__main__':
     rospy.init_node('vision_gate', anonymous=False)
     image_topic = get_topic("front")
     rospy.Subscriber(image_topic, CompressedImage, image_callback)
-    # while not rospy.is_shutdown():
-    #     if image_input is None:
-    #         continue
-    #     find_gate()
-    #     k = cv.waitKey(1) & 0xff
-    #     if k == ord('q'):
-    #         break
-    # cv.destroyAllWindows()
     rospy.Service('vision_gate', vision_srv_gate(),
                   mission_callback)
     print_result("INIT NODE GATE", ct.GREEN)

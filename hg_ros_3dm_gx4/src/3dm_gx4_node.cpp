@@ -38,9 +38,9 @@ void publishIMUData(const hg_3dm_gx4::IMUData& data)
   g_imu.orientation.z = q.z();
 
 
-  g_imu.linear_acceleration.x = data.scaled_accelerometer[0];
-  g_imu.linear_acceleration.y = -data.scaled_accelerometer[2];
-  g_imu.linear_acceleration.z = -data.scaled_accelerometer[1];
+  g_imu.linear_acceleration.x = data.scaled_accelerometer[1];
+  g_imu.linear_acceleration.y = -data.scaled_accelerometer[0];
+  g_imu.linear_acceleration.z = -data.scaled_accelerometer[2];
   g_imu.angular_velocity.x = data.scaled_gyro[0];
   g_imu.angular_velocity.y = -data.scaled_gyro[2];
   g_imu.angular_velocity.z = -data.scaled_gyro[1];

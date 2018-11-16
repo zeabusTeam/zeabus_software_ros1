@@ -98,7 +98,7 @@ template<typename number_type , typename count_type> void print_all(
 	printf("pid_force          :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				pid_force[0] , pid_force[1] , pid_force[2]
 			,	pid_force[3] , pid_force[4] , pid_force[5] );	
-	printf("bound_force		   :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
+	printf("bound_force        :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				bound_force[0] , bound_force[1] , bound_force[2]
 			,	bound_force[3] , bound_force[4] , bound_force[5] );	
 	printf("robot_force        :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,

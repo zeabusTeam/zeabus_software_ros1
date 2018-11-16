@@ -34,7 +34,7 @@ class ControllerImu:
         self.KP = [0] * 3
         self.KI = [0] * 3
         self.KD = [0] * 3
-        self.error = [[0, 0, 0]] * 3
+        self.error = [[0, 0, 0],[0, 0, 0],[0, 0, 0]]
         self.ctrl_signal = [0] * 3
         self.prev_ctrl_signal = [0] * 3
         # 4220 65901
@@ -50,10 +50,10 @@ class ControllerImu:
         self.time_current = 0
         self.time_previous = 0
         self.is_init = False
-        rospy.Subscriber("/imu/data", Imu, self.imu_callback)
+        rospy.Subscriber("/gx4_45_imu/data", Imu, self.imu_callback)
         rospy.Subscriber("/barometer/data", Odometry, self.pressure_callback)
-
-        self.pub_force = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
+        rospy.sleep(1)
+        self.pub_force = rospy.Publisher("/cmd_vel1", Twist, queue_size=1)
 
         self.pub_x = rospy.Publisher("/ctrl_imu_x", Float32, queue_size=1)
         self.pub_y = rospy.Publisher("/ctrl_imu_y", Float32, queue_size=1)
@@ -91,7 +91,7 @@ class ControllerImu:
         delta_t = self.time_current - self.time_previous
         delta_t *= 1e-9
         for i in range(3):
-            if abs(self.acc_current[i] - self.acc_previous[i]) > 0.1: 
+            if abs(self.acc_current[i] - self.acc_previous[i]) > 0.02: 
                 self.vel_current[i] = self.integration(self.acc_previous[i],self.acc_current[i],delta_t)
             else:
                 self.vel_current[i] = self.integration(self.acc_previous[i],self.acc_current[i],0)
@@ -100,8 +100,8 @@ class ControllerImu:
         delta_t = self.time_current - self.time_previous
         delta_t *= 1e-9
         for i in range(2):            
-            if abs(self.vel_current[i] - self.vel_previous[i]) > 0.05: 
-                self.distance[i] += self.integration(self.vel_previous[i],self.vel_current[i],delta_t)
+            # if abs(self.vel_current[i] - self.vel_previous[i]) > 0.05: 
+            self.distance[i] += self.integration(self.vel_previous[i],self.vel_current[i],delta_t)
             
     def collect_previous_state(self):
         self.acc_previous = self.acc_current
@@ -114,8 +114,8 @@ class ControllerImu:
     def imu_callback(self, msg):
         self.time_current = rospy.get_rostime().nsecs
         # print(self.time_current)
-        self.acc_current[0] = msg.linear_acceleration.y
-        self.acc_current[1] = msg.linear_acceleration.x
+        self.acc_current[0] = msg.linear_acceleration.x
+        self.acc_current[1] = msg.linear_acceleration.y
         self.acc_current[2] = msg.linear_acceleration.z
 
         if self.is_init:
@@ -141,7 +141,7 @@ class ControllerImu:
         if axis < 2:
             current_error = self.vel_current[axis]
         else:
-            current_error = self.distance[axis]
+            current_error = -1 - self.distance[axis]
 
         self.error[axis][0] = self.error[axis][1]
         self.error[axis][1] = self.error[axis][2]
@@ -177,7 +177,9 @@ class ControllerImu:
         print_debug("DISTANCE", "RED")
         print_float(self.distance)
         print_debug("ERROR", "RED")
-        print_float([self.error[0][2], self.error[1][2], self.error[2][2]])
+        print_float([self.error[0][0], self.error[0][1], self.error[0][2]])
+        print_float([self.error[1][0], self.error[1][1], self.error[1][2]])
+        print_float([self.error[2][0], self.error[2][1], self.error[2][2]])
         # print_debug(str(self.error[0]), "GREEN")
         # print_debug(str(self.error[1]), "GREEN")
         # print_debug(str(self.error[2]), "GREEN")

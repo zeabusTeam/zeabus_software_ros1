@@ -104,9 +104,9 @@ class ControllerImu:
                 self.distance[i] += self.integration(self.vel_previous[i],self.vel_current[i],delta_t)
             
     def collect_previous_state(self):
-        for i in range(3):
-            self.acc_previous[i] = self.acc_current[i]
-            self.vel_previous[i] = self.vel_current[i]
+        self.acc_previous = self.acc_current
+        self.vel_previous = self.vel_current
+        self.prev_ctrl_signal = self.ctrl_signal
         # self.time_previous = self.time_current
         self.time_previous = rospy.get_rostime().nsecs
         # print(self.time_previous)
@@ -154,7 +154,8 @@ class ControllerImu:
             self.KD[axis] * (self.error[axis][2] - 2 *
                              self.error[axis][1] + self.error[axis][0])
         )
-
+        
+        
     def control_force2thruster(self):
         self.force.linear.x = self.ctrl_signal[0]
         self.force.linear.y = self.ctrl_signal[1]

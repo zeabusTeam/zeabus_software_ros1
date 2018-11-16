@@ -54,10 +54,8 @@ class mission_gripper:
 		else:
 			print("<=== MISSION GRIPPER ===> MISSION GRIPPER ABORTED!!!")
 
-		if( self.current_step== 3 ):
+		if( self.current_step == 3 ):
 			self.step_03()
-		else:
-			print("<=== MISSION GRIPPER ===> MISSION GRIPPER ABORTED!!!")
 
 		return Bool( self.sucess_mission ) , Int8( self.current_step )
 
@@ -82,6 +80,7 @@ class mission_gripper:
 
 	def step_01( self ):
 		self.echo("<=== MISSION GRIPPER ===> STEP01 MISSION GRIPPER START MOVE BALL CENTER")
+		self.reset_request()
 		count_unfound = 0
 		while( not rospy.is_shutdown() and not self.check_depth( -0.75 ) ):
 			self.echo( "current_depth " + str( self.auv.receive_target('z')[0] ) )
@@ -99,7 +98,44 @@ class mission_gripper:
 				self.echo("<=== MISSION GRIPPER ===> WARNNING DO NOT FIND OBJECT")
 				if( count_unfound == 3 ):
 					break
-			
+		if( count_unfound == 0 ):
+			self.current_step += 1
+
+	def step_02( self ):
+		self.echo("<=== MISSION GRiPPER ===> STEP02 PICK BALL UP")
+		start_time = time.time()
+		diff_time = time.time() - start_time
+		self.reset_request()
+		while( not rospy.is_shutdown() and diff_time < 10 ):
+			self.echo( "Time capture is " + str( diff_time ))
+			self.sleep( 0.2 )
+			self.vision.analysis_all( 'drum' , "pick" , 5 )
+			if( self.vision.have_object() ):
+				self.check_range( "x" , self.vision.center_y() , -0.5 , 0.0 , 0.20 )
+				self.check_range( "y" , self.vision.center_x() , -0.7 , -0.2 , -0.20 )
+				self.echo( self.print_request() )
+			else:
+				self.request_velocity['x'] = -0.15
+				self.request_velocity['y'] = 0.15 
+				self.echo( self.print_request() )
+			self.auv.velocity( self.request_velocity )
+			diff_time = time.time() - start_time
+		self.reset_request()
+		self.echo( "<=== MISSION GRIPPER ===> Time out go up")
+		while( not rospy.is_shutdown() and not self.check_depth( -0.6 ) ):
+			self.sleep( 0.2 )
+			self.request_velocity['z'] = -0.8
+			self.auv.velocity( self.request_velocity )			 
+		self.current_step += 1	
+
+	def step_03( self ):
+		self.echo( "<=== MISSION GRIPPER ===> STEP THIRD CHECK BALL")
+		# Check Have Ball All not
+		
+		# FInish Check
+		self.current_step += 1
+		self.sucess_mission = True
+		
 
 if __name__=="__main__":
 	mission_04 = mission_gripper()	

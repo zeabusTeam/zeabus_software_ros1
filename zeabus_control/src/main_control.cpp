@@ -193,7 +193,7 @@ int main( int argv , char** argc){
 														, world_error );
 		}
 		else if( mode_control == 2 ){
-			zebuas_control::find_error_position_inverse_y( current_state 
+			zeabus_control::find_error_position_inverse_y( current_state 
 														,	target_state
 														,	world_error );
 		}

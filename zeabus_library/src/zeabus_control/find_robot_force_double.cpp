@@ -36,7 +36,7 @@ namespace zeabus_control{
 		
 	}
 
-	// version 2 will add force for maintain depth of robot
+	// version 2 will add force for maintain depth of robot and filter force for roll pitch out
 	void pid_to_robot_foce_v_2( double* pid_force ,  double* robot_force , double* bound_force){
 
 		for( int run = 0 ; run < 6 ; run++){
@@ -48,5 +48,18 @@ namespace zeabus_control{
 
 		robot_force[2] += -1;
 	}	
+
+	// version 3 will add force for maintain depth of robot and filter force only pitch out
+	void pid_to_robot_force_v_3( double* pid_force , double* robot_force , double* bound_force){
+		for( int run = 0 ; run < 6 ; run++ ){
+			if( fabs( pid_force[run] ) > bound_force[run] )
+				robot_force[run] = copysign( bound_force[run] , pid_force[run] );
+			else
+				robot_force[run] = pid_force[run];
+		}
+
+		robot_force[2] += -1;
+		robot_force[2] *= -1;
+	}
 }
 

@@ -193,7 +193,7 @@ int main( int argv , char** argc){
 														, world_error );
 		}
 		else if( mode_control == 2 ){
-			zebuas_control::find_error_position_inverse_y( current_state 
+			zeabus_control::find_error_position_inverse_y( current_state 
 														,	target_state
 														,	world_error );
 		}
@@ -229,7 +229,12 @@ int main( int argv , char** argc){
 		//		And have to use limit force output from control but force output
 		//		Muce more limit value for ID term
 		//		this is filter and manage parity of control
-		zeabus_control::pid_to_robot_foce_v_2( pid_force , robot_force , bound_force );
+		if( mode_control == 2 ){
+			zeabus_control::pid_to_robot_force_v_3( pid_force , robot_force , bound_error );
+		}
+		else{
+			zeabus_control::pid_to_robot_force_v_2( pid_force , robot_force , bound_force );
+		}
 
 		// publish state for debug
 		array_to_state_msg( target_state , target_velocity , message_robot_target );

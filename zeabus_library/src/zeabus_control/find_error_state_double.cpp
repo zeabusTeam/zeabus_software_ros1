@@ -61,5 +61,12 @@ namespace zeabus_control{
 		point_2[1] = point_1[1];
 		find_error_position( point_1 , point_2 , point_result );
 	}
+
+	void find_error_position_inverse_y(	double *point_1
+										, double *point_2
+										, double *point_result ){
+		find_error_position_non_xy( point_1 , point_2 , point_result );
+		point_result[5] *= -1;
+	}
 }
 

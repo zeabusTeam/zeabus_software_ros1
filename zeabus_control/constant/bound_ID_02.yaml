@@ -8,9 +8,9 @@ dictitems:
   d_x_velocity: 0.0
   d_y_position: 1.0e-05
   d_y_velocity: 0.0
-  d_yaw_position: 0.01
+  d_yaw_position: 0.0
   d_yaw_velocity: 0.0
-  d_z_position: 0.001
+  d_z_position: 0.0
   d_z_velocity: 0.0
   groups: !!python/object/new:dynamic_reconfigure.encoding.Config
     dictitems:
@@ -22,9 +22,9 @@ dictitems:
       d_x_velocity: 0.0
       d_y_position: 1.0e-05
       d_y_velocity: 0.0
-      d_yaw_position: 0.01
+      d_yaw_position: 0.0
       d_yaw_velocity: 0.0
-      d_z_position: 0.001
+      d_z_position: 0.0
       d_z_velocity: 0.0
       groups: !!python/object/new:dynamic_reconfigure.encoding.Config
         state: []
@@ -36,13 +36,13 @@ dictitems:
       i_x_velocity: 0.5
       i_y_position: 0.1
       i_y_velocity: 0.5
-      i_yaw_position: 0.08
+      i_yaw_position: 0.05
       i_yaw_velocity: 0.0
-      i_z_position: 0.005
+      i_z_position: 0.08
       i_z_velocity: 0.0
       id: 0
       name: Default
-      p_pitch_position: 1.0
+      p_pitch_position: 0.0
       p_pitch_velocity: 0.0
       p_roll_position: 0.0
       p_roll_velocity: 0.0
@@ -68,11 +68,11 @@ dictitems:
   i_x_velocity: 0.5
   i_y_position: 0.1
   i_y_velocity: 0.5
-  i_yaw_position: 0.08
+  i_yaw_position: 0.05
   i_yaw_velocity: 0.0
-  i_z_position: 0.005
+  i_z_position: 0.08
   i_z_velocity: 0.0
-  p_pitch_position: 1.0
+  p_pitch_position: 0.0
   p_pitch_velocity: 0.0
   p_roll_position: 0.0
   p_roll_velocity: 0.0

@@ -23,9 +23,11 @@ namespace zeabus_control{
 	template<typename number_type> void pid_to_robot_foce_v_1( number_type* pid_force 
 															,  number_type* robot_force);
 
-	// version 2 will add force for maintain depth of robot
+	// version 2 will add force for maintain depth of robot and filter force for roll pitch out
 	template<typename number_type> void pid_to_robot_foce_v_2( number_type* pid_force 
 															,  number_type* robot_force);
+
+	// version 3 will add force for maintain depth of robot and filter force only pitch out
 }
 
 #include	"./../../../src/zeabus_control/find_robot_force.cpp"

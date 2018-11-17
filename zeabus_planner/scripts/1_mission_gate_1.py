@@ -77,36 +77,36 @@ class MissionGate:
 				if( self.vision.result['pos'] == 0 ):
 					if( abs( self.vision.center_x() ) < 0.1 ):
 						self.echo("Found Pos : 0 and Move Forward")
-						self.auv.velocity( { 'x' : 0.4 } )
+						self.auv.velocity( { 'x' : 0.3 } )
 					elif( self.vision.center_x() < 0 ):
 						self.echo("Found Pos ; 0 and Move Left")
-						self.auv.velocity( { 'y' : 0.2 } )
+						self.auv.velocity( { 'y' : 0.4 } )
 					elif( self.vision.center_x() > 0 ):
 						self.echo("Found Pos ; 0 and Move right")
-						self.auv.velocity( { 'y' : -0.2 } )
+						self.auv.velocity( { 'y' : -0.3 } )
 				elif( self.vision.result['pos'] == -1 ):
 					self.echo("Found Pos : -1 and Move Left")
-					self.auv.velocity( {'y' : 0.2 } )
+					self.auv.velocity( {'y' : 0.4 } )
 				elif( self.vision.result['pos'] == 1 ):
 					self.echo("Found Pos : 1 and Move Right")
-					self.auv.velocity( {'y' : 0.2 } )
+					self.auv.velocity( {'y' : -0.3 } )
 				else: 
 					self.echo("Warinig Don't have this condition")
 			else:
 				count_unfound += 1
+				self.echo("UNFOUND ROUND " + str( count_unfound ))
 				if( count_unfound > 5 ):
-					self.echo("UNFOUND ROUND " + str( count_unfound ))
 					self.current_step += 1
 					self.echo("UnFound Where is gate go to dircetion")
-				break
+					break
 
 	def step_02( self ): # move to pass gat use time to estimate distance
 		self.echo( "<========== MISSION GATE ==========> MISSION GATE SECOND STEP")
-		limit_time = 4
+		limit_time = 30
 		start_time = time.time()
-		while( not rospy_is_shutdown() ):
+		while( not rospy.is_shutdown() ):
 			self.auv.velocity( {'x' : 1.5 } )
-			self.sleep( 0.2 )
+			self.sleep( 0.1 )
 			diff_time = time.time() - start_time
 			if( diff_time > limit_time ):
 				self.current_step += 1

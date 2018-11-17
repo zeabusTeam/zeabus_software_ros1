@@ -16,7 +16,7 @@ import math
 from zeabus_library.srv import *
 from zeabus_elec_ros_hardware_interface.srv import Torpedo
 
-from zeabus_control.msg import Point3 , State , Type2
+from zeabus_library.msg import Point3 , State , Type2
 
 from std_msgs.msg import String , Int64
 from geometry_msgs.msg import Twist

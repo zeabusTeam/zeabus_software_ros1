@@ -117,10 +117,10 @@ class VisionCollector:
 	def drum_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
 		self.data['n_obj']		= temporary.state
-		self.data['cx_1']		= temporary.cx_1
-		self.data['cx_2']		= temporary.cx_2
-		self.data['cy_1']		= temporary.cy_1
-		self.data['cy_2']		= temporary.cy_2
+		self.data['cx_1']		= temporary.cx1
+		self.data['cx_2']		= temporary.cx2
+		self.data['cy_1']		= temporary.cy1
+		self.data['cy_2']		= temporary.cy2
 		self.data['area']		= temporary.area
 		self.data['left']		= temporary.left
 		self.data['right']		= temporary.right
@@ -167,7 +167,7 @@ class VisionCollector:
 		self.not_sum = []
 		self.request_data = rospy.ServiceProxy( "/vision_flare" , vision_srv_flare )
 
-	def individual_data( self , task , request ):
+	def flare_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
 		self.data['n_obj']		= temporary.state
 		self.data['cx']			= temporary.cx

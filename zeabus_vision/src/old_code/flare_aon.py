@@ -35,14 +35,13 @@ def image_callback(msg):
     image_result = bgr.copy()
 
 
-def message(n_obj=0, cx=0.0, cy=0.0, area=0.0):
+def message(state=0, cx=0.0, cy=0.0, area=0.0):
     msg = vision_flare()
-    msg.n_obj = n_obj
+    msg.state = state
     msg.cx = cx
     msg.cy = cy
     msg.area = area
     print msg
-    
     return msg
 
 
@@ -116,7 +115,7 @@ def find_flare(req):
     global bgr
     if bgr is None:
         img_is_none()
-        return message(n_obj=-1)
+        return message(state=-1)
     
     mask = get_mask(bgr)
     ROI = get_ROI(mask, case=req)
@@ -138,7 +137,7 @@ def find_flare(req):
         publish_result(image_result, 'bgr', public_topic +
                        req + '/image_result')
         publish_result(mask, 'gray', public_topic + 'mask')
-        return message(cx=cx, cy=cy, area=area, n_obj=len(ROI))
+        return message(cx=cx, cy=cy, area=area, state=len(ROI))
 
 
 if __name__ == '__main__':

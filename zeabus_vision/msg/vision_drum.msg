@@ -1,10 +1,12 @@
-# n_obj = -2 is bug plz wait
-# n_obj = -1 is wait
-# n_obj = 0 is not found
-# n_obj = 1 is found
-int8 n_obj
-float64 cx
-float64 cy
+# state = -2 is bug plz wait
+# state = -1 is wait
+# state = 0 is not found
+# state = 1 is found
+int8 state
+float64 cx1
+float64 cy1
+float64 cx2
+float64 cy2
 bool left
 bool right
 bool forward

@@ -71,19 +71,21 @@ class MissionFlare:
 		self.echo( "<=== MISSION FLARE ===> PLAY STEP ONE TO FIND DATA")
 		count_unfound = 0
 		while( not rospy.is_shutdown() ):
-			self.sleep( 0.2 )
+			self.sleep( 0.1 )
+			print("Before")
 			self.vision.analysis_all( "flare" , "far" , 5 )
+			print("After")
 			self.echo( self.vision.echo_data() )
 			if( self.vision.have_object() ):
 				count_unfound = 0
 				if( abs(self.vision.center_x()) < 0.05 ):
-					self.auv.velocity( { 'x' : 0.2 })
+					self.auv.velocity( { 'x' : 0.3 })
 					self.echo( "STEP ONE Move Forward" )
 				elif( self.vision.center_x() < 0 ):
-					self.auv.velocity( { 'y' : 0.15} )
+					self.auv.velocity( { 'y' : 0.35} )
 					self.echo( "STEP ONE Move left" )
 				elif( self.vision.center_x() > 0):
-					self.auv.velocity( {'y' : -0.15 } )
+					self.auv.velocity( {'y' : -0.35 } )
 					self.echo( "STEP ONE Move righht")
 				else:
 					self.echo( " ERROR IN LINE 82 =========================================")
@@ -91,7 +93,7 @@ class MissionFlare:
 				count_unfound += 1
 				if( count_unfound == 5 ):
 					break
-				self.echo("<=== MISSION FLARE ===> Warning Unfound " + str( count_found ) )
+				self.echo("<=== MISSION FLARE ===> Warning Unfound " + str( count_unfound ) )
 			# this line will try to find in near mode
 			self.vision.analysis_all( "flare" , "near" , 5 )
 			if( self.vision.have_object() ):
@@ -101,21 +103,22 @@ class MissionFlare:
 
 	def step_02( self ):
 		self.echo( "<=== MISSION FLARE ===> PLAY STEP TWO MOVE BY NEAR MODE")
+		count_unfound = 0
 		while( not rospy.is_shutdown() ):
-			count_unfound = 0
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "flare" , "near" , 5 )
 			self.echo( self.vision.echo_data() )
 			if( self.vision.have_object() ):
+				count_unfound = 0
 				if( abs( self.vision.center_x() ) < 0.1 ):
 					self.echo( "STEP TWO MOVE FORWARD")
-					self.auv.velocity( { 'x' : 0.15 } )
+					self.auv.velocity( { 'x' : 0.25 } )
 				elif( self.vision.center_x() < 0 ):
 					self.echo( "STEP TWO MOVE LEFT")
-					self.auv.velocity( { 'y' : 0.15 } )
+					self.auv.velocity( { 'y' : 0.35 } )
 				elif( self.vision.center_x() > 0 ):
 					self.echo( "STEP TWO MOVE RIGHT")
-					self.auv.velocity( { 'y' : -0.15 } )
+					self.auv.velocity( { 'y' : -0.35 } )
 				else:
 					self.echo( "ERROR IN LINE 109 ===========================================")
 			else:
@@ -128,7 +131,7 @@ class MissionFlare:
 	def step_03( self ):
 		self.echo( "<=== MISSION FLARE ===> PLAY STEP THREE MAKE SURE FLARE IS DESTROYED")
 		start_time = time.time()
-		limit_time = 2
+		limit_time = 5
 		while( not rospy.is_shutdown() ):
 			self.auv.velocity( { 'x' : 1.5 } )
 			self.sleep( 0.2 )

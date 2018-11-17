@@ -39,11 +39,13 @@ def image_callback(msg):
     image_result = bgr.copy()
 
 
-def message(n_obj=0, cx=0, cy=0, forward=False, backward=False, left=False, right=False, area=0):
+def message(state=0, cx1=0, cy1=0, cx2=0, cy2=0, forward=False, backward=False, left=False, right=False, area=0):
     msg = vision_drum()
-    msg.n_obj = n_obj
-    msg.cx = cx
-    msg.cy = cy
+    msg.state = state
+    msg.cx1 = cx1
+    msg.cy1 = cy1
+    msg.cx2 = cx2
+    msg.cy2 = cy2
     msg.forward = forward
     msg.backward = backward
     msg.left = left
@@ -91,7 +93,7 @@ def get_ROI(mask, obj='drop'):
         check_area = 1000
         if obj == 'pick':
             check_area = 200
-        if area < check_area:    
+        if area < check_area:
             continue
         ROI.append(cnt)
     return ROI
@@ -112,12 +114,15 @@ def get_excess(cnt):
 def get_cx(cnt):
     global image_result
     himg, wimg = image_result.shape[:2]
+    area = cv.contourArea(cnt)/(himg*wimg)
     (cx, cy) = center_of_contour(cnt)
     cv.circle(image_result, (cx, cy), 5, (0, 0, 255), -1)
-    cx = Aconvert(cx, wimg)
-    cy = -1.0*Aconvert(cy, himg)
-    area = cv.contourArea(cnt)/(himg*wimg)
-    return cx, cy, area
+    x, y, w, h = cv.boundingRect(cnt)
+    cx1 = Aconvert(x, wimg)
+    cy1 = -1.0*Aconvert(y, himg)
+    cx2 = Aconvert(x+w, wimg)
+    cy2 = -1.0*Aconvert(y+h, himg)
+    return cx1, cy1, cx2, cy2, area
 
 
 def find_mat():
@@ -140,18 +145,19 @@ def find_drum(objective):
     global bgr
     if bgr is None:
         img_is_none()
-        return message(n_obj=-1)
+        return message(state=-1)
     himg, wimg = bgr.shape[:2]
     if himg > 1000 or wimg > 1000:
         print_result("size bug plz wait", color=ct.RED)
-        return message(n_obj=-2)
+        return message(state=-2)
     drum_mask = get_mask(bgr, "blue")
     ROI = get_ROI(drum_mask, objective)
     if ROI is None:
         print_result("size bug plz wait", color=ct.RED)
-        return message(n_obj=-2)
+        return message(state=-2)
     mode = len(ROI)
     if mode == 0:
+        print_result("CANNOT FOUND DRUM", ct.RED)
         publish_result(drum_mask, 'gray', public_topic+'mask/drum')
         publish_result(image_result, 'bgr', public_topic+'image_result')
         return message()
@@ -162,11 +168,11 @@ def find_drum(objective):
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         cnt = max(ROI, key=cv.contourArea)
-        cx, cy, area = get_cx(cnt)
+        cx1, cy1, cx2, cy2, area = get_cx(cnt)
         forward, backward, left, right = get_excess(cnt)
         publish_result(drum_mask, 'gray', public_topic+'mask/drum')
         publish_result(image_result, 'bgr', public_topic+'image_result')
-        return message(n_obj=mode, cx=cx, cy=cy, forward=forward,
+        return message(state=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,
                        backward=backward, left=left, right=right, area=area)
 
 
@@ -174,18 +180,19 @@ def find_golf(objective):
     global bgr
     if bgr is None:
         img_is_none()
-        return message(n_obj=-1)
+        return message(state=-1)
     himg, wimg = bgr.shape[:2]
     if himg > 1000 or wimg > 1000:
         print_result("size bug plz wait", color=ct.RED)
-        return message(n_obj=-2)
+        return message(state=-2)
     golf_mask = get_mask(bgr, "yellow")
     ROI = get_ROI(golf_mask, objective)
     if ROI is None:
         print_result("size bug plz wait", color=ct.RED)
-        return message(n_obj=-2)
+        return message(state=-2)
     mode = len(ROI)
     if mode == 0:
+        print_result("CANNOT FOUND GOLF", ct.RED)
         publish_result(golf_mask, 'gray', public_topic+'mask/golf')
         publish_result(image_result, 'bgr', public_topic+'image_result')
         return message()
@@ -196,11 +203,11 @@ def find_golf(objective):
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         cnt = max(ROI, key=cv.contourArea)
-        cx, cy, area = get_cx(cnt)
+        cx1, cy1, cx2, cy2, area = get_cx(cnt)
         forward, backward, left, right = get_excess(cnt)
         publish_result(golf_mask, 'gray', public_topic+'mask/golf')
         publish_result(image_result, 'bgr', public_topic+'image_result')
-        return message(n_obj=mode, cx=cx, cy=cy, forward=forward,
+        return message(state=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,
                        backward=backward, left=left, right=right, area=area)
 
 

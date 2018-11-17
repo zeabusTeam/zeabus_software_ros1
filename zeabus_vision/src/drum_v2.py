@@ -111,20 +111,17 @@ def get_excess(cnt):
     return top_excess, bottom_excess, left_excess, right_excess
 
 
-def get_cx(cnt, obj):
+def get_cx(cnt):
     global image_result
     himg, wimg = image_result.shape[:2]
     area = cv.contourArea(cnt)/(himg*wimg)
     (cx, cy) = center_of_contour(cnt)
     cv.circle(image_result, (cx, cy), 5, (0, 0, 255), -1)
-    if obj == "golf":
-        return cx, cy, area
     x, y, w, h = cv.boundingRect(cnt)
     cx1 = Aconvert(x, wimg)
     cy1 = -1.0*Aconvert(y, himg)
     cx2 = Aconvert(x+w, wimg)
     cy2 = -1.0*Aconvert(y+h, himg)
-
     return cx1, cy1, cx2, cy2, area
 
 
@@ -171,7 +168,7 @@ def find_drum(objective):
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         cnt = max(ROI, key=cv.contourArea)
-        cx1, cy1, cx2, cy2, area = get_cx(cnt,"drum")
+        cx1, cy1, cx2, cy2, area = get_cx(cnt)
         forward, backward, left, right = get_excess(cnt)
         publish_result(drum_mask, 'gray', public_topic+'mask/drum')
         publish_result(image_result, 'bgr', public_topic+'image_result')
@@ -206,7 +203,7 @@ def find_golf(objective):
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         cnt = max(ROI, key=cv.contourArea)
-        cx1, cy1, cx2, cy2, area = get_cx(cnt,"golf")
+        cx1, cy1, cx2, cy2, area = get_cx(cnt)
         forward, backward, left, right = get_excess(cnt)
         publish_result(golf_mask, 'gray', public_topic+'mask/golf')
         publish_result(image_result, 'bgr', public_topic+'image_result')

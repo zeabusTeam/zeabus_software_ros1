@@ -35,9 +35,9 @@ def image_callback(msg):
     image_result = bgr.copy()
 
 
-def message(n_obj=0, cx=0.0, cy=0.0, area=0.0):
+def message(state=0, cx=0.0, cy=0.0, area=0.0):
     msg = vision_flare()
-    msg.n_obj = n_obj
+    msg.state = state
     msg.cx = cx
     msg.cy = cy
     msg.area = area
@@ -69,7 +69,7 @@ def get_ROI(mask, case):
         angle = rect[2]
         print angle
         box = cv.boxPoints(rect)
-        box = np.int0(box)
+        box = np.int64(box)
         BR = box[0]
         BL = box[1]
         TL = box[2]
@@ -98,7 +98,7 @@ def get_cx(cnt):
     himg, wimg = image_result.shape[:2]
     rect = cv.minAreaRect(cnt)
     box = cv.boxPoints(rect)
-    box = np.int0(box)
+    box = np.int64(box)
     BR = box[0]
     BL = box[1]
     TL = box[2]
@@ -117,7 +117,7 @@ def find_flare(req):
     global bgr
     if bgr is None:
         img_is_none()
-        return message(n_obj=-1)
+        return message(state=-1)
     rospy.sleep(0.25)
     mask = get_mask(bgr)
     ROI = get_ROI(mask, case=req)
@@ -136,7 +136,7 @@ def find_flare(req):
         cx, cy, area = get_cx(cnt=max(ROI, key=cv.contourArea))
         publish_result(image_result, 'bgr', public_topic + 'image_result')
         publish_result(mask, 'gray', public_topic + 'mask')
-        return message(cx=cx, cy=cy, area=area, n_obj=len(ROI))
+        return message(cx=cx, cy=cy, area=area, state=len(ROI))
 
 if __name__ == '__main__':
     rospy.init_node('vision_flare', anonymous=False)

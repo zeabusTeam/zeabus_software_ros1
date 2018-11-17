@@ -1,2 +1,0 @@
-zeabus_control/Point3 linear
-zeabus_control/Point3 angular

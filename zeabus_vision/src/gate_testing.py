@@ -54,9 +54,9 @@ def image_callback(msg):
     image_input = bgr.copy()
 
 
-def message(n_obj=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
+def message(state=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
     msg = vision_gate()
-    msg.n_obj = n_obj
+    msg.state = state
     msg.pos = pos
     msg.cx1 = cx1
     msg.cy1 = cy1
@@ -64,7 +64,7 @@ def message(n_obj=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
     msg.cy2 = cy2
     msg.area = area
     if debug:
-        print n_obj
+        print state
     print msg
     return msg
 

@@ -94,7 +94,7 @@ def is_pipe(cnt, percent):
     # print('area', area_cnt)
     # print('areab', area_box)
     # print('w', w, 'h', h)
-    if (area_box == 0) or area_cnt <= 1000:
+    if (area_box == 0) or area_cnt <= 500:
         return False
 
     area_ratio = area_cnt / area_box
@@ -135,7 +135,9 @@ def find_pipe(binary, align):
             result.append([int(x), int(y), int(w), int(h), angle])
     # cv.imshow('pipe',pipe)
     if align == 'v':
-        publish_result(pipe, 'bgr', public_topic + 'mask/pipe')
+        publish_result(pipe, 'bgr', public_topic + 'mask/vpipe')
+    if align == 'h':
+        publish_result(pipe, 'bgr', public_topic+'mask/hpipe')
     if align == 'v':
         result = sorted(result, key=itemgetter(3), reverse=True)
     else:
@@ -179,7 +181,8 @@ def find_gate():
     horizontal_cx = []
     horizontal_cy = []
     vertical_cx = []
-    vertical_cy = []
+    vertical_cy1 = []
+    vertical_cy2 = []
 
     for res in horizontal_pipe:
         # green
@@ -197,7 +200,8 @@ def find_gate():
         cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
                      (int(x + w / 2.), int(y + h / 2.)), (108, 105, 255), 2)
         vertical_cx.append(x)
-        vertical_cy.append(y - h / 2.)
+        vertical_cy1.append((y - h / 2.))
+        vertical_cy2.append((y + h / 2.))
     # print(vertical_cx)
     # print(horizontal_cx)
     himg, wimg = obj.shape[:2]
@@ -224,35 +228,47 @@ def find_gate():
         return message()
     elif mode == 1:
         print_result("FOUND GATE", ct.GREEN)
-        cx1 = (horizontal_cx[0][0] + min(vertical_cx))/ 2.
-        cx2 = (horizontal_cx[0][1] + max(vertical_cx))/ 2.
-        cy = horizontal_cy[0]
+        cx1 = (horizontal_cx[0][0] + min(vertical_cx)) / 2.
+        cx2 = (horizontal_cx[0][1] + max(vertical_cx)) / 2.
+        cy1 = horizontal_cy[0]
     elif mode == 2:
         print_result("FOUND ONE V AND ONE H", ct.YELLOW)
         cx1 = horizontal_cx[0][0]
         cx2 = horizontal_cx[0][1]
-        cy = horizontal_cy[0]
+        cy1 = horizontal_cy[0]
     elif mode == 3:
         print_result("FOUND ONE H", ct.YELLOW)
         cx1 = horizontal_cx[0][0]
         cx2 = horizontal_cx[0][1]
-        cy = horizontal_cy[0]
+        cy1 = horizontal_cy[0]
     elif mode == 4:
         print_result("FOUND TWO V", ct.YELLOW)
         cx1 = min(vertical_cx)
         cx2 = max(vertical_cx)
-        cy = sum(vertical_cy)+max(vertical_cy)/3
-    cv.line(display, (0, int(cy)), (wimg, int(cy)), (255, 255, 255), 5)
-    cv.line(display, (int(cx1), 0), (int(cx1), himg), (255, 0, 0), 5)
-    cv.line(display, (int(cx2), 0), (int(cx2), himg), (0, 255, 0), 5)
+        cy1 = (sum(vertical_cy1)+min(vertical_cy1))/3
+    cy2 = (sum(vertical_cy2)+max(vertical_cy2))/3 if no_pipe_v != 0 else horizontal_cy[0] + cx2-cx1
+    right_excess = (cx2 > 0.95*wimg)
+    left_excess = (cx1 < (0.05*wimg))
+    if (right_excess and not left_excess):
+        pos = 1
+    elif (not right_excess and left_excess):
+        pos = -1
+    else:
+        pos = 0
+    # cv.line(display, (0, int(cy1)), (wimg, int(cy1)), (255, 255, 255), 5)
+    # cv.line(display, (int(cx1), 0), (int(cx1), himg), (255, 0, 0), 5)
+    # cv.line(display, (int(cx2), 0), (int(cx2), himg), (0, 255, 0), 5)
+    cv.rectangle(display, (int(cx1), int(cy1)), (int(cx2), int(cy2)), (0, 255, 0), 3)
+    area = Aconvert((cx2-cx1)*(cy2-cy1), himg*wimg)
     publish_result(display, 'bgr', public_topic + 'image_result')
     publish_result(vertical, 'gray', public_topic + 'mask/vertical')
     publish_result(horizontal, 'gray', public_topic + 'mask/horizontal')
     publish_result(obj, 'gray', public_topic + 'mask')
     cx1 = Aconvert(cx1, wimg)
     cx2 = Aconvert(cx2, wimg)
-    cy = -1.0*Aconvert(cy, himg)
-    return message(state=mode, cx1=cx1, cx2=cx2, cy1=cy)
+    cy1 = -1.0*Aconvert(cy1, himg)
+    cy2 = -1.0*Aconvert(cy2, himg)
+    return message(state=mode, cx1=cx1, cx2=cx2, cy1=cy1, cy2=cy2, pos=pos, area=area)
 
 
 if __name__ == '__main__':

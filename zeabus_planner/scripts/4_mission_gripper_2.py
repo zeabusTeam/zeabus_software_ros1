@@ -86,7 +86,8 @@ class mission_gripper:
 			self.echo( "current_depth " + str( self.auv.receive_target('z')[0] ) )
 			self.sleep( 0.15 )
 			self.request_velocity['z'] = -1.1
-			self.vision.analysis_all( 'drum' , "pick" , 5 )
+			self.vision.analysis_all( "drum" , "pick" , 5 )
+			self.echo( self.vision.echo_data() )
 			if( self.vision.have_object() ):
 				count_unfound = 0
 				self.check_range( "x" , self.vision.center_y() , 0.0 , 0.2 , 0.2 )

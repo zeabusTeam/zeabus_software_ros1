@@ -111,17 +111,20 @@ def get_excess(cnt):
     return top_excess, bottom_excess, left_excess, right_excess
 
 
-def get_cx(cnt):
+def get_cx(cnt, obj):
     global image_result
     himg, wimg = image_result.shape[:2]
+    area = cv.contourArea(cnt)/(himg*wimg)
     (cx, cy) = center_of_contour(cnt)
-    x, y, w, h = cv.boundingRect(cnt)
     cv.circle(image_result, (cx, cy), 5, (0, 0, 255), -1)
+    if obj == "golf":
+        return cx, cy, area
+    x, y, w, h = cv.boundingRect(cnt)
     cx1 = Aconvert(x, wimg)
     cy1 = -1.0*Aconvert(y, himg)
     cx2 = Aconvert(x+w, wimg)
     cy2 = -1.0*Aconvert(y+h, himg)
-    area = cv.contourArea(cnt)/(himg*wimg)
+
     return cx1, cy1, cx2, cy2, area
 
 
@@ -157,6 +160,7 @@ def find_drum(objective):
         return message(state=-2)
     mode = len(ROI)
     if mode == 0:
+        print_result("CANNOT FOUND DRUM", ct.RED)
         publish_result(drum_mask, 'gray', public_topic+'mask/drum')
         publish_result(image_result, 'bgr', public_topic+'image_result')
         return message()
@@ -167,7 +171,7 @@ def find_drum(objective):
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         cnt = max(ROI, key=cv.contourArea)
-        cx1, cy1, cx2, cy2, area = get_cx(cnt)
+        cx1, cy1, cx2, cy2, area = get_cx(cnt,"drum")
         forward, backward, left, right = get_excess(cnt)
         publish_result(drum_mask, 'gray', public_topic+'mask/drum')
         publish_result(image_result, 'bgr', public_topic+'image_result')
@@ -191,6 +195,7 @@ def find_golf(objective):
         return message(state=-2)
     mode = len(ROI)
     if mode == 0:
+        print_result("CANNOT FOUND GOLF", ct.RED)
         publish_result(golf_mask, 'gray', public_topic+'mask/golf')
         publish_result(image_result, 'bgr', public_topic+'image_result')
         return message()
@@ -201,7 +206,7 @@ def find_golf(objective):
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         cnt = max(ROI, key=cv.contourArea)
-        cx1, cy1, cx2, cy2, area = get_cx(cnt)
+        cx1, cy1, cx2, cy2, area = get_cx(cnt,"golf")
         forward, backward, left, right = get_excess(cnt)
         publish_result(golf_mask, 'gray', public_topic+'mask/golf')
         publish_result(image_result, 'bgr', public_topic+'image_result')

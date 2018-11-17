@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 #################################################################################################
 ####
-####	FILE		: 4_mission_gripper_2.py
+####	FILE		: 4_mission_gripper_3.py
 ####	Author		: Supasan Komonlit
 ####	Create on	: 2018 , Nov 15
 ####	Purpose		: For make mission pickball this will control robot z by code
@@ -19,7 +19,7 @@ from zeabus_planner.srv	import mission_result
 
 from std_msgs.msg		import Bool , Int8 , String
 
-class mission_gripper:
+class MissionGripper:
 
 	def __init__( self ):
 
@@ -50,9 +50,6 @@ class mission_gripper:
 		
 		self.step_01() 
 
-		if( self.current_step == 3 ):
-			self.step_03()
-
 		return Bool( self.sucess_mission ) , Int8( self.current_step )
 
 	def reset_request( self ):
@@ -75,8 +72,16 @@ class mission_gripper:
 			self.request_velocity[ axis ] = velocity
 
 	def step_01( self ):
-		None
+		self.echo( "<=== MISSION GRIPPER ===> STEP 01 MISSION GRIPPER START MOVE BALL CENTER")
+		self.reset_request()
+		count_unfound = 0
+		while( not rospy.is_shutdown() and not self.check_depth( -0.75) ):
+			self.echo( "current_depth" + str( self.auv.receive_target('z')[0] ) )
+			self.sleep( 0.15 )
+			self.request_velocity['z'] = -1.1
+			self.vision.analysis_all( 'drum' , 'pick' , 5 )
+		
 
 if __name__=="__main__":
-	mission_04 = mission_gripper()	
+	mission_04 = MissionGripper()	
 	rospy.spin()

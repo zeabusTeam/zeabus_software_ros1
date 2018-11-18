@@ -27,10 +27,14 @@ namespace zeabus_control{
 		if( req.axis.data == "x"){
 			this->fix_force_bool[ 0 ] = true;
 			this->fix_force_value[ 0 ] = req.max_force; 
+			this->target_state[0] += req.distance * cos( target_state[5]);
+			this->target_state[1] += req.distance * sin( target_state[5]);
 		}
 		else if( req.axis.data == "y"){
 			this->fix_force_bool[ 1 ] = true;
 			this->fix_force_value[ 1 ] = req.max_force; 
+			this->target_state[0] += req.distance * cos( target_state[5] + PI/2);
+			this->target_state[1] += req.distance * sin( target_state[5] + PI/2);
 		}
 	}
 	

@@ -36,10 +36,6 @@ std::string zeabus_extension::convert::to_string( int data , bool assign_positio
 	temporary << data;
 	if( ! assign_position ) return temporary.str();
 	else{
-		#ifdef convert_test
-			std::cout << "before test in convert\n";
-		#endif
-
 		int count = 0;
 		std::string problem = temporary.str();
 		std::string answer = "";

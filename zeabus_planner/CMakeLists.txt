@@ -8,11 +8,6 @@ project(zeabus_planner)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED rospy geometry_msgs std_msgs message_generation)
-add_service_files(
-	DIRECTORY srv
-	FILES
-	mission_result.srv
-)
 
 generate_messages( DEPENDENCIES std_msgs )
 

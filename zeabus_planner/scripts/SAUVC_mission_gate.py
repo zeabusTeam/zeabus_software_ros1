@@ -14,25 +14,28 @@ import time
 
 from auv_controller		import AUVController
 from vision_collector	import VisionCollector
-from zeabus_planner.srv	import mission_result
+from zeabus_library.srv	import MissionResult
 
 from std_msgs.msg		import Bool , Int8 , String
 
 class MissionGate:
 	
 	def __init__( self ):
-		
+
 		self.auv	= AUVController( "mission_gate" , True )
+		
+		self.rate	= rospy.Rate( 30 )
+		self.data_pub = rospy.Publisher('mission/echo_planner' , String , queue_size = 1 )
 
 		print( "<=== MISSION GATE ===> Waitting Service of Gate" )
 		rospy.wait_for_service( 'vision_gate' )
 		print( "<=== MISSION GATE ===> Have Service of Gate OK ")
 
+		self.mission_planner = rospy.Service('mission/gate' , MissionResult , self.main_play)
+
 		self.vision	= VisionCollector( "gate" )
 
-		self.rate	= rospy.Rate( 30 )
-		self.mission_planner = rospy.Service('mission/gate' , mission_result , self.main_play)
-		self.data_pub = rospy.Publisher('mission/echo_planner' , String , queue_size = 1 )
+		print( "<========== FINISH SETUP MISSION GATE ==========>")
 
 	def sleep( self , second):
 		self.rate.sleep()

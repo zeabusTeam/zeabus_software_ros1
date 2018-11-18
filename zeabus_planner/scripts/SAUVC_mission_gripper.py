@@ -1,9 +1,9 @@
 #!/usr/bin/python2
 #################################################################################################
 ####
-####	FILE		: 4_mission_gripper_2.py
+####	FILE		: SAUVC_mission_gripper.py
 ####	Author		: Supasan Komonlit
-####	Create on	: 2018 , Nov 15
+####	Create on	: 2018 , Nov 18
 ####	Purpose		: For make mission pickball this will control robot z by code	
 ####
 #################################################################################################
@@ -14,26 +14,27 @@ import time
 
 from auv_controller		import AUVController
 from vision_collector	import VisionCollector
-from zeabus_planner.srv	import mission_result
+from zeabus_library.srv	import MissionResult
 
 from std_msgs.msg		import Bool , Int8 , String
 
-class mission_gripper:
+class MissionGripper:
 
 	def __init__( self ):
 
-		self.auv	= AUVController( "mission_gripper" , True )
-	
-		print("<=== MISSION GRIPPER ===> Checking service of DRUM ")
-		rospy.wait_for_service('vision_drum')
-		print("<=== MISSION GRIPPER ===> Have Service OK")
-		
-		self.vision	= VisionCollector( "drum" )
-		self.past_action = { 'direction' : None , 'value' : None }
+		self.auv	= AUVController( "mission_gripper" , True )	
 
 		self.rate = rospy.Rate( 30 )
-		self.mission_planner = rospy.Service('mission/gripper' , mission_result , self.main_play)
 		self.data_pub = rospy.Publisher('mission/echo_planner' , String , queue_size = 1 )
+
+		print("<=== MISSION GRIPPER ===> Waitting service of DRUM ")
+		rospy.wait_for_service('vision_drum')
+		print("<=== MISSION GRIPPER ===> Have Service OK")
+
+		self.mission_planner = rospy.Service('mission/gripper' , MissionResult , self.main_play)
+
+		self.vision	= VisionCollector( "drum" )	
+		print( "<========== FINISH SETUP MISSION GRIPPER ==========>")
 
 	def sleep( self , second):
 		self.rate.sleep()
@@ -142,5 +143,5 @@ class mission_gripper:
 		
 
 if __name__=="__main__":
-	mission_04 = mission_gripper()	
+	mission_04 = MissionGripper()	
 	rospy.spin()

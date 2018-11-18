@@ -23,18 +23,21 @@ from std_msgs.msg		import Bool , Int8 , String
 class MissionFlare:
 	
 	def __init__( self):
-		 
+
 		self.auv	= AUVController( "mission_flare" , True )
+		 
+		self.rate	= rospy.Rate( 30 )
+		self.data_pub = rospy.Publisher('mission/echo_planner' , String , queue_size = 1 )
 
 		print( "<=== MISSION GATE ===> Waitting Service of flare" )
 		rospy.wait_for_service( 'vision_flare' )
 		print( "<=== MISSION GATE ===> Have Service of flare OK ")
 
+		self.mission_planner = rospy.Service('mission/flare' , MissionResult , self.main_play)
+
 		self.vision	= VisionCollector( "flare" )
 
-		self.rate	= rospy.Rate( 30 )
-		self.mission_planner = rospy.Service('mission/flare' , MissionResult , self.main_play)
-		self.data_pub = rospy.Publisher('mission/echo_planner' , String , queue_size = 1 )
+		print( "<========== FINISH SETUP MISSION FLARE ==========>")
 
 	def sleep( self , second):
 		self.rate.sleep()

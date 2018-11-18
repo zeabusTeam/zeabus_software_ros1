@@ -126,6 +126,15 @@ int main( int argv , char** argc){
 								, &service_main_control
 							);
 
+	zeabus_control::survey_service service_survey(	current_state		, target_state
+													, robot_error		, ok_error
+													, fix_force_bool	, fix_force_value );
+	ros::ServiceServer service_request_survey = 
+		nh.advertiseService(	"/request_survey"
+								, &zeabus_control::survey_service::call_survey_request
+								, &service_survey
+							);
+
 //------------------------------> SET UP DYNAMIC RECONFIGURE <-----------------------------------
 	// for 3 constant
 	#ifdef _BOUND_ID_PID__ 

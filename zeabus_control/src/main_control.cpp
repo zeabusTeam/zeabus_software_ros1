@@ -37,7 +37,7 @@ int main( int argv , char** argc){
 	geometry_msgs::Twist message_force;
 
 //----------------------------------> SET ABOUT STATE <------------------------------------------
-	int mode_control = 1; // mode_control 0 = Normal Mode, 1 = Not fix point x,y
+	int mode_control = 0; // mode_control 0 = Normal Mode, 1 = Not fix point x,y
 	double target_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double current_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double current_velocity[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
@@ -209,8 +209,8 @@ int main( int argv , char** argc){
 		// give world_error to error in robot frame
 		zeabus_control::convert_world_to_robot_xy( world_error , robot_error , current_state );
 
-		// fine bound_error by use robot_error and ok_error
-		zeabus_control::convert_robot_to_bound_error( robot_error, bound_error, ok_error); 
+		// find bound_error by use robot_error and ok_error
+		zeabus_control::convert_robot_to_bound_error( robot_error, bound_error, ok_error);
 
 		// use error of bound_error to calculate force by pid 
 		for( int run = 0 ; run < 6 ; run++){
@@ -230,6 +230,10 @@ int main( int argv , char** argc){
 			else{ // use error from position for calculate
 				pid_position[run].get_result( bound_error[run] , pid_force[run]);
 				pid_velocity[run].reset_value();	
+			}
+			if( fix_force_bool[ run ] and fabs( bound_error[run] ) < 0.001 ){
+				reset_fix_survey( fix_force_bool , fix_force_value , run );
+				pid_position[run].reset_value();	
 			}
 		}
 

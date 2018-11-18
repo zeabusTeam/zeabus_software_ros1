@@ -24,6 +24,7 @@ namespace zeabus_control{
 
 	bool survey_service::call_survey_request(	zeabus_library::SurveyRequest::Request& req
 												, zeabus_library::SurveyRequest::Response& res ){
+		std::cout << "Request data " << req.axis.data << " : " << req.max_force << " \n ";
 		if( req.axis.data == "x"){
 			this->fix_force_bool[ 0 ] = true;
 			this->fix_force_value[ 0 ] = req.max_force; 
@@ -36,6 +37,8 @@ namespace zeabus_control{
 			this->target_state[0] += req.distance * cos( target_state[5] + PI/2);
 			this->target_state[1] += req.distance * sin( target_state[5] + PI/2);
 		}
+		res.success = true;
+		return true;
 	}
 	
 }

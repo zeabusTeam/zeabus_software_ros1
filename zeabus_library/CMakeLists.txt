@@ -53,6 +53,7 @@ set( zeabus_control_sources
 	src/zeabus_control/service_one_point.cpp
 	src/zeabus_control/service_two_point.cpp
 	src/zeabus_control/service_number_service.cpp
+	src/zeabus_control/service_survey_request.cpp
 	src/zeabus_control/listen_odometry.cpp
 	src/zeabus_control/listen_twist.cpp
 	src/zeabus_control/find_error_state_double.cpp

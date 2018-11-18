@@ -29,8 +29,8 @@ namespace zeabus_control{
 									,	zeabus_library::SurveyRequest::Response &res );
 
 		private:
-			bool fix_force_bool[6];
-			double fix_force_value[6];	
+			bool* fix_force_bool;
+			double* fix_force_value;	
 		
 	};
 }

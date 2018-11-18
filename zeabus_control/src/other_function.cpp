@@ -12,6 +12,11 @@
 
 //#define _CHECK_ERROR_
 
+void reset_fix_survey( bool* fix_force_bool , double* fix_force_value , int number){
+	fix_force_bool[number] = false;
+	fix_force_value[number] = 0;
+}
+
 template<typename pid_type>void reset_constant( pid_type* pid_position , pid_type* pid_velocity){
 	for( int run = 0 ; run < 6 ; run++){
 		pid_position[run].set_constant(	constant_position[0][run] 

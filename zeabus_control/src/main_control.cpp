@@ -62,6 +62,8 @@ int main( int argv , char** argc){
 	double bound_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double pid_force[6]			=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double bound_force[6]		=	{ 2.5 , 2.5 , 1.6 , 1 , 1 , 0.6 };
+	double bound_max_force[6]	=	{ 2.5 , 2.5 , -0.6 , 1 , 1 , 0.6 };
+	double bound_min_force[6]	=	{ -2.5 , -2.5 , -1.2 , -1 , -1 , -0.6};
 	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 }; 
 	
 	double frequency = 50;
@@ -134,7 +136,7 @@ int main( int argv , char** argc){
 	#endif
 //--------------------------------> SET UP PID FUNCTION <----------------------------------------
 	#ifdef _BOUND_ID_PID__ // for using sum_pid_bound_id
-		double bound_sum_value_position[6]	=	{ 1.2	, 1.2	, 0.5	, 1		, 1		, 0.3};
+		double bound_sum_value_position[6]	=	{ 1.2	, 1.2	, 0.2	, 1		, 1		, 0.3};
 		double bound_sum_value_velocity[6]	=	{ 2.2	, 2.2	, 1.6	, 1		, 1		, 1};
 		zeabus_control::sum_pid_bound_id pid_position[6];
 		zeabus_control::sum_pid_bound_id pid_velocity[6];
@@ -192,11 +194,6 @@ int main( int argv , char** argc){
 														, target_state 
 														, world_error );
 		}
-		else if( mode_control == 2 ){
-			zeabus_control::find_error_position_inverse_y( current_state 
-														,	target_state
-														,	world_error );
-		}
 
 		// give world_error to error in robot frame
 		zeabus_control::convert_world_to_robot_xy( world_error , robot_error , current_state );
@@ -230,7 +227,7 @@ int main( int argv , char** argc){
 		//		Muce more limit value for ID term
 		//		this is filter and manage parity of control
 		if( mode_control == 2 ){
-			zeabus_control::pid_to_robot_force_v_3( pid_force , robot_force , bound_error );
+			zeabus_control::pid_to_robot_force_v_3( pid_force , robot_force , bound_force );
 		}
 		else{
 			zeabus_control::pid_to_robot_force_v_2( pid_force , robot_force , bound_force );

@@ -23,6 +23,7 @@ add_service_files(
 	GetTarget.srv
 	NumberService.srv
 	CheckPosition.srv
+	SurveyRequest.srv
 )
 
 add_service_files(
@@ -60,10 +61,9 @@ set( zeabus_control_sources
 	src/zeabus_control/sum_pid_bound_id.cpp
 )
 
-add_library( zeabus_library	STATIC ${zeabus_control_sources}
-)
+add_library( zeabus_library	STATIC ${zeabus_control_sources} )
 
 add_dependencies( zeabus_library	${${PROJECT_NAME}_EXPORTED_TARGETS}
-									${catkin_EXPORTED_TARGETS})
+									${catkin_EXPORTED_TARGETS} )
 
 target_link_libraries( zeabus_library	${catkin_LIBRARIES} )

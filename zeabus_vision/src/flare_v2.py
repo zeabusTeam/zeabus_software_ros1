@@ -8,7 +8,7 @@ from zeabus_vision.srv import vision_srv_flare
 from vision_lib import *
 import color_text as ct
 import os
-import pyqtgraph as pyplt
+#import pyqtgraph as pyplt
 
 bgr = None
 image_result = None
@@ -118,7 +118,6 @@ def find_flare(req):
     if bgr is None:
         img_is_none()
         return message(state=-1)
-    rospy.sleep(0.25)
     mask = get_mask(bgr)
     ROI = get_ROI(mask, case=req)
     mode = len(ROI)

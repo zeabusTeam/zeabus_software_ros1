@@ -50,9 +50,10 @@ class AUVController:
 		self.request_relative_depth = rospy.ServiceProxy('/fix_rel_depth'	, OnePoint )
 		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw'		, OnePoint )
 		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw'		, OnePoint )
-		self.request_check_state	= rospy.ServiceProxy('/ok_position'		, CheckPosition )
 		self.request_know_target	= rospy.ServiceProxy('/know_target'		, GetTarget )
+		self.request_check_state	= rospy.ServiceProxy('/ok_position'		, CheckPosition )
 		self.request_mode_control	= rospy.ServiceProxy('/mode_control'	, NumberService )
+		self.request_survey			= rospy.ServiceProxy('/request_survey'	, SurveyRequest )
 		self.release_ball			= rospy.ServiceProxy('/fire_torpedo'	, Torpedo )
 		self.hold_ball				= rospy.ServiceProxy('/hold_torpedo'	, Torpedo )
 
@@ -106,6 +107,12 @@ class AUVController:
 			result = self.request_relative_yaw( value , self.name )
 		except rospy.ServiceException , error :
 			print("Service yaw Failse error : " + error )
+
+	def survey( self , axis , distance , force ):
+		try:
+			result = self.request_survey( distance , force , String( axis ) , self.name )
+		except rospy.ServiceException , error :
+			print("Service request Failse error : " + error)
 		
 	def set_name( self , name ):
 		self.name.data = name

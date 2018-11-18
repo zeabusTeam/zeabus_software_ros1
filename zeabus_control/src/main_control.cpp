@@ -37,7 +37,7 @@ int main( int argv , char** argc){
 	geometry_msgs::Twist message_force;
 
 //----------------------------------> SET ABOUT STATE <------------------------------------------
-	int mode_control = 1; // mode_control 0 = Normal Mode, 1 = Not fix point x,y
+	int mode_control = 0; // mode_control 0 = Normal Mode, 1 = Not fix point x,y
 	double target_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double current_state[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double current_velocity[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
@@ -62,7 +62,11 @@ int main( int argv , char** argc){
 	double bound_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double pid_force[6]			=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double bound_force[6]		=	{ 2.5 , 2.5 , 1.6 , 1 , 1 , 0.6 };
-	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 }; 
+	double bound_max_force[6]	=	{ 2.5 , 2.5 , -0.6 , 1 , 1 , 0.6 };
+	double bound_min_force[6]	=	{ -2.5 , -2.5 , -1.2 , -1 , -1 , -0.6};
+	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	bool   fix_force_bool[6]	=	{ false , false , false , false , false , false}; 
+	double fix_force_value[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	
 	double frequency = 50;
 
@@ -122,6 +126,15 @@ int main( int argv , char** argc){
 								, &service_main_control
 							);
 
+	zeabus_control::survey_service service_survey(	current_state		, target_state
+													, robot_error		, ok_error
+													, fix_force_bool	, fix_force_value );
+	ros::ServiceServer service_request_survey = 
+		nh.advertiseService(	"/request_survey"
+								, &zeabus_control::survey_service::call_survey_request
+								, &service_survey
+							);
+
 //------------------------------> SET UP DYNAMIC RECONFIGURE <-----------------------------------
 	// for 3 constant
 	#ifdef _BOUND_ID_PID__ 
@@ -134,7 +147,7 @@ int main( int argv , char** argc){
 	#endif
 //--------------------------------> SET UP PID FUNCTION <----------------------------------------
 	#ifdef _BOUND_ID_PID__ // for using sum_pid_bound_id
-		double bound_sum_value_position[6]	=	{ 1.2	, 1.2	, 0.5	, 1		, 1		, 0.3};
+		double bound_sum_value_position[6]	=	{ 1.2	, 1.2	, 0.2	, 1		, 1		, 0.3};
 		double bound_sum_value_velocity[6]	=	{ 2.2	, 2.2	, 1.6	, 1		, 1		, 1};
 		zeabus_control::sum_pid_bound_id pid_position[6];
 		zeabus_control::sum_pid_bound_id pid_velocity[6];
@@ -192,17 +205,12 @@ int main( int argv , char** argc){
 														, target_state 
 														, world_error );
 		}
-		else if( mode_control == 2 ){
-			zeabus_control::find_error_position_inverse_y( current_state 
-														,	target_state
-														,	world_error );
-		}
 
 		// give world_error to error in robot frame
 		zeabus_control::convert_world_to_robot_xy( world_error , robot_error , current_state );
 
-		// fine bound_error by use robot_error and ok_error
-		zeabus_control::convert_robot_to_bound_error( robot_error, bound_error, ok_error); 
+		// find bound_error by use robot_error and ok_error
+		zeabus_control::convert_robot_to_bound_error( robot_error, bound_error, ok_error);
 
 		// use error of bound_error to calculate force by pid 
 		for( int run = 0 ; run < 6 ; run++){
@@ -223,18 +231,19 @@ int main( int argv , char** argc){
 				pid_position[run].get_result( bound_error[run] , pid_force[run]);
 				pid_velocity[run].reset_value();	
 			}
+			if( fix_force_bool[ run ] and fabs( bound_error[run] ) < 0.001 ){
+				reset_fix_survey( fix_force_bool , fix_force_value , run );
+				pid_position[run].reset_value();	
+			}
 		}
 
 		// use pid_force convert to robot_force for send to thruster
 		//		And have to use limit force output from control but force output
 		//		Muce more limit value for ID term
 		//		this is filter and manage parity of control
-		if( mode_control == 2 ){
-			zeabus_control::pid_to_robot_force_v_3( pid_force , robot_force , bound_error );
-		}
-		else{
-			zeabus_control::pid_to_robot_force_v_2( pid_force , robot_force , bound_force );
-		}
+		zeabus_control::convert_pid_to_robot_force( pid_force			, robot_force 
+													, bound_min_force	, bound_max_force
+													, fix_force_bool	, fix_force_value );
 
 		// publish state for debug
 		array_to_state_msg( target_state , target_velocity , message_robot_target );

@@ -11,7 +11,7 @@
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
 #include	<iostream>
-#include	<zeabus_library/two_point.h>
+#include	<zeabus_library/TwoPoint.h>
 #include	<zeabus_library/zeabus_control/service_control.h>
 
 #ifndef _ZEABUS_LIBRARY_CONTROL_SERVICE_TWO_POINT_H__
@@ -25,10 +25,10 @@ namespace zeabus_control{
 						, double* robot_error , double * ok_error ) :
 							main_service( current_state , target_state 
 											, robot_error , ok_error ){}
-			bool call_relative_xy( zeabus_library::two_point::Request &req ,
-								 zeabus_library::two_point::Response &res );
-			bool call_absolute_xy( zeabus_library::two_point::Request &req ,
-								 zeabus_library::two_point::Response &res );
+			bool call_relative_xy( zeabus_library::TwoPoint::Request &req ,
+								 zeabus_library::TwoPoint::Response &res );
+			bool call_absolute_xy( zeabus_library::TwoPoint::Request &req ,
+								 zeabus_library::TwoPoint::Response &res );
 	
 	};
 

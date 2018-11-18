@@ -15,26 +15,26 @@
 
 namespace zeabus_control{
 
-	bool one_point_service::call_absolute_depth( zeabus_library::one_point::Request &req ,
-								 zeabus_library::one_point::Response &res ){
+	bool one_point_service::call_absolute_depth( zeabus_library::OnePoint::Request &req ,
+								 zeabus_library::OnePoint::Response &res ){
 		this->target_state[2] = req.point_1;
 		res.success = true;
 		return true;
 	}
-	bool one_point_service::call_relative_depth( zeabus_library::one_point::Request &req ,
-								zeabus_library::one_point::Response &res){
+	bool one_point_service::call_relative_depth( zeabus_library::OnePoint::Request &req ,
+								zeabus_library::OnePoint::Response &res){
 		this->target_state[2] += req.point_1;
 		res.success = true;
 		return true;
 	}
-	bool one_point_service::call_absolute_yaw(	zeabus_library::one_point::Request &req ,
-								zeabus_library::one_point::Response &res){
+	bool one_point_service::call_absolute_yaw(	zeabus_library::OnePoint::Request &req ,
+								zeabus_library::OnePoint::Response &res){
 		this->target_state[5] = req.point_1;
 		res.success = true;
 		return true;
 	}
-	bool one_point_service::call_relative_yaw(	zeabus_library::one_point::Request &req ,
-								zeabus_library::one_point::Response &res){
+	bool one_point_service::call_relative_yaw(	zeabus_library::OnePoint::Request &req ,
+								zeabus_library::OnePoint::Response &res){
 		this->target_state[5] += req.point_1;
 		res.success = true;
 		return true;

@@ -28,6 +28,10 @@ namespace zeabus_control{
 	// version 3 will add force for maintain depth of robot and filter force only pitch out
 	void pid_to_robot_force_v_3( double* pid_force , double* robot_force , double* bound_force);
 
+	void convert_pid_to_robot_force(	double* pid_force			, double* robot_force
+										, double* bound_min_force	, double* bound_max_force
+										, bool* fix_force_bool		, double* fix_force_value );
+
 }
 
 #endif

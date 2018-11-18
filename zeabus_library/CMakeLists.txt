@@ -16,13 +16,20 @@ add_message_files(
 )
 
 add_service_files(
-	DIRECTORY srv
+	DIRECTORY srv/zeabus_control
 	FILES
-	one_point.srv
-	two_point.srv
-	get_target.srv
-	number_service.srv
-	check_position.srv
+	OnePoint.srv
+	TwoPoint.srv
+	GetTarget.srv
+	NumberService.srv
+	CheckPosition.srv
+	SurveyRequest.srv
+)
+
+add_service_files(
+	DIRECTORY srv/zeabus_planner
+	FILES
+	MissionResult.srv
 )
 
 generate_messages( DEPENDENCIES std_msgs )
@@ -46,6 +53,7 @@ set( zeabus_control_sources
 	src/zeabus_control/service_one_point.cpp
 	src/zeabus_control/service_two_point.cpp
 	src/zeabus_control/service_number_service.cpp
+	src/zeabus_control/service_survey_request.cpp
 	src/zeabus_control/listen_odometry.cpp
 	src/zeabus_control/listen_twist.cpp
 	src/zeabus_control/find_error_state_double.cpp
@@ -54,10 +62,9 @@ set( zeabus_control_sources
 	src/zeabus_control/sum_pid_bound_id.cpp
 )
 
-add_library( zeabus_library	STATIC ${zeabus_control_sources}
-)
+add_library( zeabus_library	STATIC ${zeabus_control_sources} )
 
 add_dependencies( zeabus_library	${${PROJECT_NAME}_EXPORTED_TARGETS}
-									${catkin_EXPORTED_TARGETS})
+									${catkin_EXPORTED_TARGETS} )
 
 target_link_libraries( zeabus_library	${catkin_LIBRARIES} )

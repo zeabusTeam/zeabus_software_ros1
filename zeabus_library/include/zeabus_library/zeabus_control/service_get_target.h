@@ -11,7 +11,7 @@
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
 #include	<iostream>
-#include	<zeabus_library/get_target.h>
+#include	<zeabus_library/GetTarget.h>
 #include	<zeabus_library/zeabus_control/service_control.h>
 
 #ifndef _ZEABUS_LIBRARY_CONTROL_SERVICE_GET_TARGET_H__
@@ -26,8 +26,8 @@ namespace zeabus_control{
 						, double* robot_error , double * ok_error ) :
 							main_service( current_state , target_state 
 											, robot_error , ok_error ){}
-			bool call_get_target( zeabus_library::get_target::Request &req ,
-								  zeabus_library::get_target::Response &res );
+			bool call_get_target( zeabus_library::GetTarget::Request &req ,
+								  zeabus_library::GetTarget::Response &res );
 	};
 
 }

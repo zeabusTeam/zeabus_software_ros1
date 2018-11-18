@@ -64,7 +64,9 @@ int main( int argv , char** argc){
 	double bound_force[6]		=	{ 2.5 , 2.5 , 1.6 , 1 , 1 , 0.6 };
 	double bound_max_force[6]	=	{ 2.5 , 2.5 , -0.6 , 1 , 1 , 0.6 };
 	double bound_min_force[6]	=	{ -2.5 , -2.5 , -1.2 , -1 , -1 , -0.6};
-	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 }; 
+	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
+	bool   fix_force_bool[6]	=	{ false , false , false , false , false , false}; 
+	double fix_force_value[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	
 	double frequency = 50;
 
@@ -226,12 +228,9 @@ int main( int argv , char** argc){
 		//		And have to use limit force output from control but force output
 		//		Muce more limit value for ID term
 		//		this is filter and manage parity of control
-		if( mode_control == 2 ){
-			zeabus_control::pid_to_robot_force_v_3( pid_force , robot_force , bound_force );
-		}
-		else{
-			zeabus_control::pid_to_robot_force_v_2( pid_force , robot_force , bound_force );
-		}
+		zeabus_control::convert_pid_to_robot_force( pid_force			, robot_force 
+													, bound_min_force	, bound_max_force
+													, fix_force_bool	, fix_force_value );
 
 		// publish state for debug
 		array_to_state_msg( target_state , target_velocity , message_robot_target );

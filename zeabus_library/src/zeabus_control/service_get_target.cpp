@@ -14,8 +14,8 @@
 
 namespace zeabus_control{
 
-	bool get_target_service::call_get_target(	zeabus_library::get_target::Request &req ,
-												zeabus_library::get_target::Response &res){
+	bool get_target_service::call_get_target(	zeabus_library::GetTarget::Request &req ,
+												zeabus_library::GetTarget::Response &res){
 		if( req.type.data == "xy"){
 			res.target_01 = target_state[0];
 			res.target_02 = target_state[1];

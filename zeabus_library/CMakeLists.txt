@@ -16,13 +16,19 @@ add_message_files(
 )
 
 add_service_files(
-	DIRECTORY srv
+	DIRECTORY srv/zeabus_control
 	FILES
-	one_point.srv
-	two_point.srv
-	get_target.srv
-	number_service.srv
-	check_position.srv
+	OnePoint.srv
+	TwoPoint.srv
+	GetTarget.srv
+	NumberService.srv
+	CheckPosition.srv
+)
+
+add_service_files(
+	DIRECTORY srv/zeabus_planner
+	FILES
+	MissionResult.srv
 )
 
 generate_messages( DEPENDENCIES std_msgs )

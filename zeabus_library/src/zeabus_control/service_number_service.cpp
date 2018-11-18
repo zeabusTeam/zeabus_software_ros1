@@ -13,8 +13,8 @@
 #include	<zeabus_library/zeabus_control/service_number_service.h>
 
 bool zeabus_control::number_service::call_set_mode_control(
-		zeabus_library::number_service::Request &req
-		, zeabus_library::number_service::Response &res
+		zeabus_library::NumberService::Request &req
+		, zeabus_library::NumberService::Response &res
 		){
 	*mode_control = req.number.data;
 	if( *mode_control == 2 ){

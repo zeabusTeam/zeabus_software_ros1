@@ -14,7 +14,7 @@ import time
 
 from auv_controller		import AUVController
 from vision_collector	import VisionCollector
-from zeabus_planner.srv	import MissionResult
+from zeabus_library.srv	import MissionResult
 
 from std_msgs.msg		import Bool , Int8 , String
 
@@ -72,9 +72,7 @@ class MissionFlare:
 		count_unfound = 0
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1 )
-			print("Before")
 			self.vision.analysis_all( "flare" , "far" , 5 )
-			print("After")
 			self.echo( self.vision.echo_data() )
 			if( self.vision.have_object() ):
 				count_unfound = 0
@@ -104,7 +102,9 @@ class MissionFlare:
 	def step_02( self ):
 		self.echo( "<=== MISSION FLARE ===> PLAY STEP TWO MOVE BY NEAR MODE")
 		count_unfound = 0
-		while( not rospy.is_shutdown() ):
+		start_time = time.time()
+		limit_time = 5
+		while( not rospy.is_shutdown() and ( time.time() - start_time ) < limit_time):
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "flare" , "near" , 5 )
 			self.echo( self.vision.echo_data() )

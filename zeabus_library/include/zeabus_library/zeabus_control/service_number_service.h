@@ -11,7 +11,7 @@
 ///////////////////////////////////// END PART//////////////////////////////////////////////////
 
 #include	<iostream>
-#include	<zeabus_library/number_service.h>
+#include	<zeabus_library/NumberService.h>
 #include	<zeabus_library/zeabus_control/service_control.h>	
 
 #ifndef _ZEABUS_LIBRARY_ZEABUS_CONTROL_SERVICE_NUMBER_SERVICE_H__
@@ -29,8 +29,8 @@ namespace zeabus_control{
 											, robot_error , ok_error ){
 				this->mode_control = mode_control;
 			}
-			bool call_set_mode_control( zeabus_library::number_service::Request &req
-										, zeabus_library::number_service::Response &res );
+			bool call_set_mode_control( zeabus_library::NumberService::Request &req
+										, zeabus_library::NumberService::Response &res );
 
 		private:
 			int* mode_control;

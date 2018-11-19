@@ -92,15 +92,11 @@ class VisionCollector:
 		return self.result['area']
 
 	def echo_data( self ):
-		print( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj'] )
-			+ " center_x : center_y " + str( self.center_x() ) + " : " + str( self.center_y() )
-		)
-
-	def echo( self ):
 		if( not self.have_object() ):
-			return str ( "<=== VISION COLLECTOR ===> DON\'T HAVE OBJECT")
+			return str ( "<=== VISION COLLECTOR  DON\'T HAVE OBJECT")
 		return str ( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj'] )
 			+ " center_x : center_y " + str( self.center_x() ) + " : " + str( self.center_y() )
+			+ " and area is " + str( self.result['area'])
 		)
 			
 #################################################################################################

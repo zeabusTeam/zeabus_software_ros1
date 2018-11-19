@@ -93,6 +93,7 @@ class SAUVC2019:
 		while( not rospy.is_shutdown() and not sucess):
 			sucess = self.mission_gate( Bool( True ) )
 			if( not sucess ):
+				self.auv.set_mode( 0 )
 				self.echo("<===== ALL MISSION =====> GATE IS FAIL SURVEY MODE")
 				self.survey_mode( self.vision_gate , "gate" , "sevinar" , 0.5 , 1.5 , 1 , 3)
 		self.echo("<===== ALL MISSION =====> GATE SUCCESS")

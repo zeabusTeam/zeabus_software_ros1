@@ -41,6 +41,13 @@ class MissionGate:
 		self.rate.sleep()
 		self.auv.wait_time( second )
 
+	def check_area( self , new ):
+		if( self.past_area / 1.5 > new ):
+			return True
+		else:
+			self.past_area = new
+			return False
+
 	def echo( self , message):
 		self.data_pub.publish( String( message ) )
 
@@ -48,9 +55,12 @@ class MissionGate:
 		self.sucess_mission = False
 		# Mission Gate Will run start when have gate on image only situatuin
 		self.vision.analysis_all( "gate" , "sevinar" , 5 )
+		self.auv.set_mode( 1 )
+		self.auv.absolute_z( -3.8 )
 		self.current_step = 0
 		if( self.vision.have_object() ):
 			self.current_step = 1
+			self.past_area = self.vision.area()
 		else:
 			print("<=== MISSION GATE ===> Don't found picture")
 		
@@ -60,8 +70,10 @@ class MissionGate:
 		if( self.current_step == 2 ):
 			self.step_02()
 
+		# skip step check
 		if( self.current_step == 3 ):
-			self.step_03()
+			#self.step_03()
+			self.sucess_mission = True
 
 		if( self.current_step == 4 ):
 			self.sucess_mission = True
@@ -95,6 +107,9 @@ class MissionGate:
 					self.auv.velocity( {'y' : -0.3 } )
 				else: 
 					self.echo("Warinig Don't have this condition")
+				if( self.check_area( self.vision.area() ) ):
+					self.echo("BREAK BECAUSE AREA DECREASS")
+					break
 			else:
 				count_unfound += 1
 				self.echo("UNFOUND ROUND " + str( count_unfound ))
@@ -105,14 +120,14 @@ class MissionGate:
 
 	def step_02( self ): # move to pass gat use time to estimate distance
 		self.echo( "<========== MISSION GATE ==========> MISSION GATE SECOND STEP")
-		count_ok_yaw = 0
-		while( not rospy.is_shutdown() and count_ok_yaw < 5 ):
-			self.sleep( 0.15 )
-			if( self.auv.check_state( 'yaw' , 0.1 ) ):
-				count_ok_yaw += 1
-			else:
-				count_ok_yaw = 0
-			self.echo("Waiting yaw are ok and count_ok_yaw is " + str( count_ok_yaw ) )
+		self.echo( "Move left 6 sedcond")
+		start_time = time.time()
+		diff_time = time.time() - start_time 
+		while( not rospy.is_shutdown() and diff_time < 6 ):
+			diff_time = time.time() - start_time 
+			self.echo("Left diff time " + str( diff_time ) )
+			self.auv.velocity( { "y" : 0.2 } )
+			self.sleep( 0.1 )
 		limit_time = 30
 		start_time = time.time()
 		while( not rospy.is_shutdown() ):
@@ -123,9 +138,12 @@ class MissionGate:
 				self.current_step += 1
 				break
 			self.echo("Move forward now diff_time is " + str( diff_time ) )
+		self.auv.absolute_z( -3.5 )
+		self.auv.set_mode(0)
 
 	def step_03( self ): # spin and check have gate or not
 		self.echo( "<========== MISSION GATE ==========> MISSION GATE THIRD STEP")
+		self.auv.set_mode( 0 )
 		self.auv.relative_yaw( 3.14 )
 		count_ok = 0
 		self.echo("Waitting yaw are ok")

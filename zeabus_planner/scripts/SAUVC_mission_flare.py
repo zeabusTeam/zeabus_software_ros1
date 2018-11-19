@@ -79,7 +79,7 @@ class MissionFlare:
 			self.echo( self.vision.echo_data() )
 			if( self.vision.have_object() ):
 				count_unfound = 0
-				if( abs(self.vision.center_x()) < 0.05 ):
+				if( abs(self.vision.center_x()) < 0.08 ):
 					self.auv.velocity( { 'x' : 0.3 })
 					self.echo( "STEP ONE Move Forward" )
 				elif( self.vision.center_x() < 0 ):

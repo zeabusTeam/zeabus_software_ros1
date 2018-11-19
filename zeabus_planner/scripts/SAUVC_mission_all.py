@@ -127,9 +127,33 @@ class SAUVC2019:
 		self.third_mission()
 
 	def third_mission( self ):
+		self.echo( "<===== ALL MISSION =====> Start to do mission drop")
+		self.auv.set_mode( 0 )
+		self.auv.absolute_z( -3.3 )
+		self.auv.absolute_yaw( self.start_yaw )
+		count_ok = 0
+		self.echo( "Waiting OK YAW")
+		while( not rospy.is_shutdown() ):
+			self.sleep( 0.1 )
+			if( self.auv.check_state( "yaw" , 0.05 ) ) 
+				count_ok += 1
+			else:
+				count_ok = 0
+			if( count_ok == 7 ):
+				break
+		self.echo("Now OK YAW Survey to find drum")
+		self.survey_mode( self.vision_drum , "drum" , "drum" , 5 , 8 , 1 ,3.5)
+		sucess = self.mission_drum( Bool( True) )
+		if( sucess ):
+			self.echo("<===== ALL MISSION =====> DROP BALL SUCCESS")
+			self.forth_mission()
+		else:
+			self.echo("<===== ALL MISSION =====> ABORTED MISSION TO DO")
+			self.auv.absolute_z( 0 )
+
+	def forth_mission( self ):
 		None
 				
-
 	def survey_mode(	self			, vision		, task		, request	, 
 						first_forward	, first_survey	, forward	, survey	):
 		find_object = False

@@ -63,7 +63,7 @@ int main( int argv , char** argc){
 	double pid_force[6]			=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double bound_force[6]		=	{ 2.5 , 2.5 , 1.6 , 1 , 1 , 0.6 };
 	double bound_max_force[6]	=	{ 2.5 , 2.5 , -0.6 , 1 , 1 , 0.6 };
-	double bound_min_force[6]	=	{ -2.5 , -2.5 , -1.2 , -1 , -1 , -0.6};
+	double bound_min_force[6]	=	{ -2.5 , -2.5 , -1.5 , -1 , -1 , -0.6};
 	double robot_force[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	bool   fix_force_bool[6]	=	{ false , false , false , false , false , false}; 
 	double fix_force_value[6]	=	{ 0 , 0 , 0 , 0 , 0 , 0 };
@@ -147,7 +147,7 @@ int main( int argv , char** argc){
 	#endif
 //--------------------------------> SET UP PID FUNCTION <----------------------------------------
 	#ifdef _BOUND_ID_PID__ // for using sum_pid_bound_id
-		double bound_sum_value_position[6]	=	{ 1.2	, 1.2	, 0.2	, 1		, 1		, 0.3};
+		double bound_sum_value_position[6]	=	{ 1.2	, 1.2	, 1.0	, 1		, 1		, 0.3};
 		double bound_sum_value_velocity[6]	=	{ 2.2	, 2.2	, 1.6	, 1		, 1		, 1};
 		zeabus_control::sum_pid_bound_id pid_position[6];
 		zeabus_control::sum_pid_bound_id pid_velocity[6];

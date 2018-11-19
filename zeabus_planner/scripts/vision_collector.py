@@ -95,6 +95,11 @@ class VisionCollector:
 		print( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj'] )
 			+ " center_x : center_y " + str( self.center_x() ) + " : " + str( self.center_y() )
 		)
+
+	def echo( self ):
+		return str ( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj'] )
+			+ " center_x : center_y " + str( self.center_x() ) + " : " + str( self.center_y() )
+		)
 			
 #################################################################################################
 ####

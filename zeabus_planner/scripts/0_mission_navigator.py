@@ -14,7 +14,7 @@ import time
 
 from auv_controller		import AUVController
 from vision_collector	import VisionCollector
-from zeabus_planner.srv	import MissionResult
+from zeabus_library.srv	import MissionResult
 
 from std_msgs.msg		import Bool , String , Int8
 
@@ -34,10 +34,10 @@ class MissionNavigator:
 		self.rate = rospy.Rate(30)
 
 	def play_all( self ):
-		self.start_yaw = self.auv.receive_target( 'yaw' )
+#		self.start_yaw = self.auv.receive_target( 'yaw' )
 		self.auv.set_mode( 0 )
 
-		self.auv.absolute_z( -0.5 )
+		self.auv.absolute_z( -0.8 )
 		count_ok = 0 
 		print("Waiting OK Z")
 		while( not rospy.is_shutdown() ):
@@ -49,7 +49,7 @@ class MissionNavigator:
 				break
 		print("Finish Wait go forward")
 			
-		self.auv.survey( "x" , 4 , 0.4 )
+		self.auv.survey( "x" , 4 , 0.5 )
 		print("Search drum")
 		while( not rospy.is_shutdown() ):
 			self.rate.sleep()
@@ -65,13 +65,15 @@ class MissionNavigator:
 				print("Found Ball")
 				break
 			else:
-				self.vision_drum.analysis_all("drum" , "drum" , 5)
+				self.vision_drum.analysis_all("drum" , "drop" , 5)
 				if ( not self.vision_drum.result['forward'] ):
 					self.auv.velocity( { 'x' : 0.3})
 				elif ( self.vision_drum.result['right'] ):
 					self.auv.velocity( { 'y' : 0.3})
 		print("found Ball")
-		self.mission_gripper( Bool( True ) )	
+		self.mission_gripper( Bool( True ) )
+		self.auv.set_mode( 0 )
+		self.auv.absolute_z( -0.5 )	
 		
 
 if __name__=="__main__":

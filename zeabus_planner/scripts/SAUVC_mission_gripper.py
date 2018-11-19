@@ -110,19 +110,22 @@ class MissionGripper:
 		start_time = time.time()
 		diff_time = time.time() - start_time
 		self.reset_request()
-		self.request_velocity['z'] = -1.05
-		while( not rospy.is_shutdown() and diff_time < 20 ):
+		while( not rospy.is_shutdown() and diff_time < 15 ):
 			self.echo( "Time capture is " + str( diff_time ))
 			self.sleep( 0.08 )
 			self.vision.analysis_all( 'drum' , "pick" , 5 )
 			if( self.vision.have_object() ):
-				self.check_range( "x" , self.vision.center_y() , -0.5 , 0.0 , 0.20 )
-				self.check_range( "y" , self.vision.center_x() , -0.7 , -0.2 , -0.20 )
-				self.echo( self.print_request() )
+				start_time = time.time()
+				self.echo( self.vision.echo() )
+				self.request_velocity['z'] = -1.0
+				self.check_range( "x" , self.vision.center_y() , -0.4 , 0.1 , 0.15 )
+				self.check_range( "y" , self.vision.center_x() , -0.5 , -0.2 , -0.18 )
+				self.echo( "FOUND OBJECT " + self.print_request() )
 			else:
-				self.request_velocity['x'] = -0.15
-				self.request_velocity['y'] = 0.3
-				self.echo( self.print_request() )
+				self.request_velocity['z'] = -1.4
+				self.request_velocity['x'] = -0.13
+				self.request_velocity['y'] = 0.21
+				self.echo( "NO" + self.print_request() )
 			self.auv.velocity( self.request_velocity )
 			diff_time = time.time() - start_time
 		self.reset_request()
@@ -131,7 +134,7 @@ class MissionGripper:
 			self.sleep( 0.2 )
 			self.request_velocity['z'] = -0.8
 			self.auv.velocity( self.request_velocity )			 
-		self.current_step += 1	
+		self.current_step += 2	
 
 	def step_03( self ):
 		self.echo( "<=== MISSION GRIPPER ===> STEP THIRD CHECK BALL")

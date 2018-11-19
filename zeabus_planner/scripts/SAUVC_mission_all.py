@@ -64,7 +64,7 @@ class SAUVC2019:
 	def first_mission( self ) :
 		self.echo( "<===== ALL MISSSION =====> Start to Do mission Gate")
 		self.auv.set_mode( 0 )
-		self.auv.absolute_z( -3.2 )
+		self.auv.absolute_z( -3.3 )
 		self.start_yaw = self.auv.receive_target('yaw')[0] 
 
 		count_ok = 0
@@ -100,6 +100,33 @@ class SAUVC2019:
 		self.second_mission()
 
 	def second_mission( self ):
+		self.echo( "<===== ALL MISSION =====> Start to do mission Flare")
+		self.auv.set_mode( 0 )
+		self.auv.absolute_z( -3.3 )
+		self.auv.absolute_yaw( self.start_yaw - 1.57 )
+		count_ok = 0
+		self.echo( "Waititng OK YAW")
+		while( not rospy.is_shutdown() ):
+			self.sleep( 0.1)
+			if( self.auv.check_state( "yaw" , 0.05))
+				count_ok += 1
+			else:
+				count_ok = 0
+			if( count_ok == 7 ):
+				break
+		self.echo("now OK YAW Survey to find flare")
+		self.survey_mode( self.vision_flare , "flare" , "far" , 3 , 6 , 1 , 3.5 )
+		sucess = False
+		while( not rospy.is_shutdown() and not sucess ):
+			sucess = self.mission_flare( Bool( True ) )
+			if( not sucess ):
+				self.auv.set_mode( 0 )
+				self.echo( "<===== ALL MISSION =====> FLARE IS FAIL")
+				self.survet_mode( self.vision_flare , "flare" , "far" , 0.5 , 1.5 , 1 , 3 )
+		self.echo("<===== ALL MISSION =====> FLARE SUCCESS")
+		self.third_mission()
+
+	def third_mission( self ):
 		None
 				
 

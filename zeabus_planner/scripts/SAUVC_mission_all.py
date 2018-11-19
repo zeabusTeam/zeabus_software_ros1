@@ -79,7 +79,28 @@ class SAUVC2019:
 				break
 		self.echo("Now OK DEPTH Survey to find GATE")
 		self.echo( "Waiting Yaw are OK")
+		count_ok = 0
+		while( not rospy.is_shutdown() ):
+			self.sleep( 0.1 )
+			if( self.auv.check_state( "yaw" , 0.05 ) ):
+				count_ok += 1
+			else:
+				count_ok = 0
+			if( count_ok == 5 ):
+				break
 		self.survey_mode( self.vision_gate , "gate" , "sevinar" , 5 , 5 , 1 , 3)
+		sucess = False
+		while( not rospy.is_shutdown() and not sucess):
+			sucess = self.mission_gate( Bool( True ) )
+			if( not sucess ):
+				self.echo("<===== ALL MISSION =====> GATE IS FAIL SURVEY MODE")
+				self.survey_mode( self.vision_gate , "gate" , "sevinar" , 0.5 , 1.5 , 1 , 3)
+		self.echo("<===== ALL MISSION =====> GATE SUCCESS")
+		self.second_mission()
+
+	def second_mission( self ):
+		None
+				
 
 	def survey_mode(	self			, vision		, task		, request	, 
 						first_forward	, first_survey	, forward	, survey	):

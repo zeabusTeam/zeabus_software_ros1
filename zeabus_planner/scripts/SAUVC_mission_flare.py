@@ -89,7 +89,7 @@ class MissionFlare:
 					self.auv.velocity( {'y' : -0.35 } )
 					self.echo( "STEP ONE Move righht")
 				else:
-					self.echo( " ERROR IN LINE 82 =========================================")
+					self.echo( " ERROR IN LINE 92 =========================================")
 			else:
 				count_unfound += 1
 				if( count_unfound == 5 ):
@@ -106,7 +106,7 @@ class MissionFlare:
 		self.echo( "<=== MISSION FLARE ===> PLAY STEP TWO MOVE BY NEAR MODE")
 		count_unfound = 0
 		start_time = time.time()
-		limit_time = 5
+		limit_time = 8
 		while( not rospy.is_shutdown() and ( time.time() - start_time ) < limit_time):
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "flare" , "near" , 5 )
@@ -123,7 +123,7 @@ class MissionFlare:
 					self.echo( "STEP TWO MOVE RIGHT")
 					self.auv.velocity( { 'y' : -0.35 } )
 				else:
-					self.echo( "ERROR IN LINE 109 ===========================================")
+					self.echo( "ERROR IN LINE 126 ===========================================")
 			else:
 				count_unfound += 1
 				if( count_unfound == 3 ):
@@ -133,16 +133,18 @@ class MissionFlare:
 
 	def step_03( self ):
 		self.echo( "<=== MISSION FLARE ===> PLAY STEP THREE MAKE SURE FLARE IS DESTROYED")
-		start_time = time.time()
-		limit_time = 5
-		while( not rospy.is_shutdown() ):
-			self.auv.velocity( { 'x' : 1.5 } )
-			self.sleep( 0.2 )
-			diff_time = time.time() - start_time 
-			if( diff_time > limit_time ):
-				break
-			self.echo( "NOW GO GO TIME : " + str( diff_time ))
+#		start_time = time.time()
+#		limit_time = 5
+#		while( not rospy.is_shutdown() ):
+#			self.auv.velocity( { 'x' : 1.5 } )
+#			self.sleep( 0.2 )
+#			diff_time = time.time() - start_time 
+#			if( diff_time > limit_time ):
+#				break
+#			self.echo( "NOW GO GO TIME : " + str( diff_time ))
 		self.sleep( 1 )
+		self.auv.absolute_z( -3.4 )
+		self.auv.set_mode( 0 )
 		self.auv.relative_yaw( 3.14 )
 		while( not rospy.is_shutdown() and not self.auv.check_state('yaw' , 0.1 )):
 			self.sleep( 0.3 )

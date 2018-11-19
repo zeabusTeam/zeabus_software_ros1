@@ -224,7 +224,9 @@ int main( int argv , char** argc){
 					// When don't have data to tell velocity of robot
 					pid_force[run] = target_velocity[run] ;
 				}
-				pid_position[run].reset_value();
+				if( run != 2){
+					pid_position[run].reset_value();
+				}
 				use_target_velocity[run]--;
 			}
 			else{ // use error from position for calculate

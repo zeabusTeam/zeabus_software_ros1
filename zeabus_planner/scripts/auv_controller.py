@@ -166,7 +166,29 @@ class AUVController:
 		return result
 
 	def wait_time( self , second ):
-		print( " Now sleep for " + str( second ) , end = '-------> ')
+#		print( " Now sleep for " + str( second ) , end = '-------> ')
 		time.sleep( second )
-		print( "Wake Up")
-		
+#		print( "Wake Up")
+	
+if __name__=="__main__":
+	print( "Welcome to testing control handle")
+	tester = AUVController( "tester" , True)
+	tester.wait_time( 1 )
+	print( "sending absolute_xy")	
+	tester.absolute_xy( 4 , 5 )
+	tester.wait_time( 1 )
+	print( "sending relative_xy")
+	tester.relative_xy( 4 , 5 )
+	tester.wait_time( 1 )
+	print( "sending survey x distance 3 and force 0.5")
+	tester.survey( 'x' , 3 , 0.5)
+	tester.wait_time( 10 )
+	print( "receive target of x result is " + str( tester.receive_target('xy')[0] ) )
+	tester.wait_time( 1 )
+	print( "Now sending velocity x = 1 ")
+	start = time.time()
+	while( not rospy.is_shutdown() and time.time() - start < 10 ):
+		tester.velocity( { 'x' : 1 } )
+		tester.wait_time( 0.1 )
+	print( "receive target of yaw result is " + str( tester.receive_target('yaw')[0] ) )
+	print( "check state of yaw " + str( tester.check_state('yaw' , 0.1) ) )

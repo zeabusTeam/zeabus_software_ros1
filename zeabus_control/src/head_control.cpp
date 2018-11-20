@@ -24,24 +24,31 @@
 // include message for use in main_control
 #include	<nav_msgs/Odometry.h>
 #include	<geometry_msgs/Twist.h>
-#include	<zeabus_control/Point3.h>
-#include	<zeabus_control/Type2.h>
-#include	<zeabus_control/State.h>
+#include	<zeabus_library/Point3.h>
+#include	<zeabus_library/Type2.h>
+#include	<zeabus_library/State.h>
 
-#include	"service_one_point.cpp" // this service for two_point srv
-#include	"service_check_state.cpp" // this service for check_position.srv
-#include	"service_get_target.cpp" // this service for get_target.srv
+#include	<zeabus_library/zeabus_control/service_one_point.h>
+#include	<zeabus_library/zeabus_control/service_two_point.h>
+#include	<zeabus_library/zeabus_control/service_check_state.h>
+#include	<zeabus_library/zeabus_control/service_get_target.h>
+#include	<zeabus_library/zeabus_control/service_number_service.h>
+#include	<zeabus_library/zeabus_control/service_survey_request.h>
 
-#include	"listen_twist.cpp" // Class object for listenning twist message
-#include	"listen_odometry.cpp" // Class object for listenning auv status
-#include	"find_error_state.cpp" // function for find error in world state
-#include	"find_robot_error.cpp" // function for find error in frame of robot
-#include	"find_robot_force.cpp" // function consider about important force
-#include	"normal_pid_bound_i.cpp" // for include pid
-#include	"discrete_pid.cpp" // for include pid type discrete
-#include	"sum_pid_bound_id.cpp"
-//#include	"offset_pid.cpp" // for include pid type offset
-#include	"service_two_point.cpp" //  this service for one_point srv
+#include	<zeabus_library/zeabus_control/listen_twist.h> 
+			// Class object for listenning twist message
+#include	<zeabus_library/zeabus_control/listen_odometry.h> 
+			// Class object for listenning auv status
+#include	<zeabus_library/zeabus_control/find_error_state_double.h>
+			// function for find error in world state
+#include	<zeabus_library/zeabus_control/find_robot_error_double.h>
+			// function for find error in frame of robot
+#include	<zeabus_library/zeabus_control/find_robot_force_double.h>
+			// function consider about important force
+#include	<zeabus_library/zeabus_control/sum_pid_bound_id.h>
+			// two line below don't already to choose now
+//#include	<zeabus_library/zeabus_control/normal_pid_bound_i.h> // for include pid
+//#include	<zeabus_library/zeabus_control/discrete_pid.h> // for include pid type discrete
 
 
 //------------------> Dynamic Reconfigure We will use in Global variable <-----------------------

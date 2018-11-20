@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="zeabus_vision" name="vision_gate" type="gate_v2.py" output="screen" />
+    <node pkg="zeabus_vision" name="vision_flare" type="flare_v2.py" output="screen" />
+    <node pkg="zeabus_vision" name="vision_drum" type="drum_v2.py" output="screen" />
+</launch>

@@ -12,7 +12,7 @@ import rospy
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
-from statistic import Statistics
+from statistics import Statistics
 from sensor_msgs.msg import CompressedImage
 from dynamic_reconfigure.client import Client as Client
 

@@ -12,6 +12,11 @@
 
 //#define _CHECK_ERROR_
 
+void reset_fix_survey( bool* fix_force_bool , double* fix_force_value , int number){
+	fix_force_bool[number] = false;
+	fix_force_value[number] = 0;
+}
+
 template<typename pid_type>void reset_constant( pid_type* pid_position , pid_type* pid_velocity){
 	for( int run = 0 ; run < 6 ; run++){
 		pid_position[run].set_constant(	constant_position[0][run] 
@@ -41,14 +46,14 @@ template<typename number_type> void array_to_geometry_twist( number_type* array_
 }
 
 template<typename number_type> void array_to_point3_msg( number_type* array_set
-										, zeabus_control::Point3& data){
+										, zeabus_library::Point3& data){
 	data.x = array_set[0];
 	data.y = array_set[1];
 	data.z = array_set[2];
 }
 
 template<typename number_type> void array_to_type2_msg( number_type* array_set
-										, zeabus_control::Type2& data){
+										, zeabus_library::Type2& data){
 	double linear_set[3]=  { array_set[0] , array_set[1] , array_set[2]};
 	array_to_point3_msg( linear_set , data.linear );
 	double angular_set[3] = { array_set[3] , array_set[4] , array_set[5]};
@@ -57,7 +62,7 @@ template<typename number_type> void array_to_type2_msg( number_type* array_set
 
 template<typename number_type> void array_to_state_msg( number_type* state_set
 										, number_type* velocity_set
-										, zeabus_control::State& data){
+										, zeabus_library::State& data){
 	data.header.stamp = ros::Time::now();
 	array_to_type2_msg( state_set , data.position );
 	array_to_type2_msg( velocity_set , data.velocity );
@@ -69,9 +74,11 @@ template<typename number_type , typename count_type> void print_all(
 				  number_type* current_state	, number_type* target_state 
 				, number_type* world_error		, number_type* robot_error
 				, number_type* bound_error		, number_type* pid_force 
-				, number_type* robot_force		, count_type* use_target_velocity		
+				, number_type* bound_force		, number_type* robot_force		
+				, count_type* use_target_velocity
 				, number_type* current_velocity , number_type* target_velocity
-				, number_type* offset_force = 0){
+				, count_type& mode_control		, number_type* offset_force = 0 ){
+	printf("Current Mode       :\t%d\n" , mode_control );
 	printf("Information        :%8s%8s%8s%8s%8s%8s\n\n","x","y","z","roll","pitch","yaw");
 	printf("current_state      :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				current_state[0] , current_state[1] , current_state[2]
@@ -96,6 +103,9 @@ template<typename number_type , typename count_type> void print_all(
 	printf("pid_force          :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				pid_force[0] , pid_force[1] , pid_force[2]
 			,	pid_force[3] , pid_force[4] , pid_force[5] );	
+	printf("bound_force        :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
+				bound_force[0] , bound_force[1] , bound_force[2]
+			,	bound_force[3] , bound_force[4] , bound_force[5] );	
 	printf("robot_force        :%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf%8.3lf\n\n" ,
 				robot_force[0] , robot_force[1] , robot_force[2]
 			,	robot_force[3] , robot_force[4] , robot_force[5] );	

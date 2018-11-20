@@ -3,6 +3,7 @@
 	<p>This control is use pid in time-error to control robot</p>
 
 <h2>02. All File</h2>
+	<p>some file on list have move to zeabus_library package for make shared library</p>
 	<ul>
 		<li>main_control.cpp</li>
 		<p>this file have main thread to run program</p>

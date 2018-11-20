@@ -42,7 +42,8 @@ class MissionGate:
 		self.auv.wait_time( second )
 
 	def check_area( self , new ):
-		if( self.past_area / 1.5 > new ):
+		self.echo( "Compare Area " + str( self.past_area ) + " : new is " + str( new ))
+		if( self.past_area / 2 > new ):
 			return True
 		else:
 			self.past_area = new
@@ -106,9 +107,10 @@ class MissionGate:
 					self.echo("Found Pos : 1 and Move Right")
 					self.auv.velocity( {'y' : -0.3 } )
 				else: 
-					self.echo("Warinig Don't have this condition")
+					self.echo("Warning Don't have this condition")
 				if( self.check_area( self.vision.area() ) ):
 					self.echo("BREAK BECAUSE AREA DECREASS")
+					self.current_step += 1
 					break
 			else:
 				count_unfound += 1
@@ -120,15 +122,15 @@ class MissionGate:
 
 	def step_02( self ): # move to pass gat use time to estimate distance
 		self.echo( "<========== MISSION GATE ==========> MISSION GATE SECOND STEP")
-		self.echo( "Move left 6 sedcond")
+		self.echo( "Move left 4 second")
 		start_time = time.time()
 		diff_time = time.time() - start_time 
-		while( not rospy.is_shutdown() and diff_time < 6 ):
+		while( not rospy.is_shutdown() and diff_time < 4 ):
 			diff_time = time.time() - start_time 
 			self.echo("Left diff time " + str( diff_time ) )
 			self.auv.velocity( { "y" : 0.2 } )
 			self.sleep( 0.1 )
-		limit_time = 30
+		limit_time = 10
 		start_time = time.time()
 		while( not rospy.is_shutdown() ):
 			self.auv.velocity( {'x' : 2 } )

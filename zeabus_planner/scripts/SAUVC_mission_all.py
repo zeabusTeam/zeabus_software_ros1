@@ -1,4 +1,4 @@
-#/usr/bin/python2
+#!/usr/bin/python2
 #################################################################################################
 ####
 ####	FILE		: SAUVC_all_mission.py
@@ -7,8 +7,7 @@
 ####	Purpose		: Last Code for do all mission in SAUVC 2019
 ####
 #################################################################################################
-
-from __future__			import print_function
+from __future__ import print_function
 
 import rospy
 import math
@@ -39,19 +38,19 @@ class SAUVC2019:
 		print( "ALREADY")
 		self.mission_flare	= rospy.ServiceProxy('/mission/flare'	, MissionResult )
 
-		print( "Waiting Service Mission DRUM" , end = " =============> ")
-		rospy.wait_for_service( 'mission/drum')
-		print( "ALREADY")
-		self.mission_drum	= rospy.ServiceProxy('/mission/drum'	, MissionResult )
+#		print( "Waiting Service Mission DRUM" , end = " =============> ")
+#		rospy.wait_for_service( 'mission/drum')
+#		print( "ALREADY")
+#		self.mission_drum	= rospy.ServiceProxy('/mission/drum'	, MissionResult )
 
-		print( "Wainting Service Mission GRIPPER" , end = "============> ")
-		rospy.wait_for_service( 'mission/gripper')
-		print( "ALREADY")
-		self.mission_gripper= rospy.ServiceProxy('/mission/gripper'	, MissionResult )
+#		print( "Wainting Service Mission GRIPPER" , end = "============> ")
+#		rospy.wait_for_service( 'mission/gripper')
+#		print( "ALREADY")
+#		self.mission_gripper= rospy.ServiceProxy('/mission/gripper'	, MissionResult )
 
 		self.vision_gate = VisionCollector( "gate" )
 		self.vision_flare = VisionCollector( "flare" )
-		self.vision_drum = VisionCollector( "drum" )
+#		self.vision_drum = VisionCollector( "drum" )
 		
 	def sleep( self , second ):
 		self.rate.sleep()
@@ -88,7 +87,7 @@ class SAUVC2019:
 				count_ok = 0
 			if( count_ok == 5 ):
 				break
-		self.survey_mode( self.vision_gate , "gate" , "sevinar" , 5 , 5 , 1 , 3)
+		self.survey_mode( self.vision_gate , "gate" , "sevinar" , 3 , 5 , 1 , 3)
 		sucess = False
 		while( not rospy.is_shutdown() and not sucess):
 			sucess = self.mission_gate( Bool( True ) )
@@ -108,7 +107,7 @@ class SAUVC2019:
 		self.echo( "Waititng OK YAW")
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1)
-			if( self.auv.check_state( "yaw" , 0.05))
+			if( self.auv.check_state( "yaw" , 0.05)):
 				count_ok += 1
 			else:
 				count_ok = 0
@@ -135,7 +134,7 @@ class SAUVC2019:
 		self.echo( "Waiting OK YAW")
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1 )
-			if( self.auv.check_state( "yaw" , 0.05 ) ) 
+			if( self.auv.check_state( "yaw" , 0.05 ) ): 
 				count_ok += 1
 			else:
 				count_ok = 0
@@ -160,7 +159,7 @@ class SAUVC2019:
 		self.echo( "Waiting OK YAW")
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1 )
-			if( self.auv.check_state( "yaw" , 0.05) )
+			if( self.auv.check_state( "yaw" , 0.05) ):
 				count_ok += 1
 			else:
 				count_ok = 0
@@ -172,7 +171,7 @@ class SAUVC2019:
 		count_ok = 0
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1 )
-			if( self.auv.check_state( "xy" , 0.1 ) ) 
+			if( self.auv.check_state( "xy" , 0.1 ) ): 
 				count_ok += 1
 			else:
 				count_ok = 0
@@ -257,7 +256,7 @@ class SAUVC2019:
 				time_first_forward = False
 			else:
 				distance = forward
-			self.echo( "We will move forward and search distance is " + str( distace ) )
+			self.echo( "We will move forward and search distance is " + str( distance ) )
 			self.auv.survey( 'x' , distance , 0.5 )
 			count_ok = 0 
 			while( not rospy.is_shutdown() and not find_object ):
@@ -323,3 +322,7 @@ class SAUVC2019:
 				vision.analysis_all( task , request , 5 )
 				self.echo( vision.echo_data() )
 				find_object = vision.have_object()
+
+if __name__=="__main__":
+	SAUVC = SAUVC2019()
+	SAUVC.first_mission()	

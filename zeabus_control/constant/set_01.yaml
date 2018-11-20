@@ -8,7 +8,7 @@ dictitems:
   d_x_velocity: 0.0
   d_y_position: 1.0e-05
   d_y_velocity: 0.0
-  d_yaw_position: 0.01
+  d_yaw_position: 0.0
   d_yaw_velocity: 0.0
   d_z_position: 0.0
   d_z_velocity: 0.0
@@ -22,7 +22,7 @@ dictitems:
       d_x_velocity: 0.0
       d_y_position: 1.0e-05
       d_y_velocity: 0.0
-      d_yaw_position: 0.01
+      d_yaw_position: 0.0
       d_yaw_velocity: 0.0
       d_z_position: 0.0
       d_z_velocity: 0.0
@@ -36,7 +36,7 @@ dictitems:
       i_x_velocity: 0.5
       i_y_position: 0.1
       i_y_velocity: 0.5
-      i_yaw_position: 0.08
+      i_yaw_position: 0.05
       i_yaw_velocity: 0.0
       i_z_position: 0.1
       i_z_velocity: 0.0
@@ -68,7 +68,7 @@ dictitems:
   i_x_velocity: 0.5
   i_y_position: 0.1
   i_y_velocity: 0.5
-  i_yaw_position: 0.08
+  i_yaw_position: 0.05
   i_yaw_velocity: 0.0
   i_z_position: 0.1
   i_z_velocity: 0.0

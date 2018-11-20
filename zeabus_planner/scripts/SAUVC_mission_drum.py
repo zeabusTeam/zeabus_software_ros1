@@ -13,7 +13,7 @@ import math
 import time
 
 from auv_controller		import AUVController
-from vision_collector	import VisionCollecotr
+from vision_collector	import VisionCollector
 from zeabus_library.srv	import MissionResult
 
 from std_msgs.msg		import Bool , Int8 , String
@@ -32,7 +32,7 @@ class MissionDrop:
 
 		self.mission_planner = rospy.Service('mission/gripper' , MissionResult , self.main_play)
 
-		self.vision = VisionCollecotr( "drum" )
+		self.vision = VisionCollector( "drum" )
 		print("<========== FINISH SETUP MISSION DRUM ==========>")
 		self.reset_request()
 
@@ -82,7 +82,7 @@ class MissionDrop:
 					self.request_velocity['x'] = 0
 				elif( self.vision.result['forward'] ) :
 					self.request_velocity['x'] = -0.2
-				elif( self.vision.result['backward'] )
+				elif( self.vision.result['backward'] ):
 					self.request_velocity['x'] = 0.2
 				else:
 					self.request_velocity['x'] = 0
@@ -123,7 +123,6 @@ class MissionDrop:
 			self.echo("DROP BALL TIME OUT")
 			self.sucess_mission = True
 			
-
 if __name__=="__main__":
 	mission_03 = MissionDrop()
 	rospy.spin

@@ -170,7 +170,7 @@ class MissionGripper:
 				same_direction = False
 			if( abs(self.vision.center_y() ) < 0.3 ):
 				self.request_velocity['x'] = 0
-			elif( self.vision.center_y() < 0 )
+			elif( self.vision.center_y() < 0 ):
 				self.request_velocity['x'] = -0.2
 			else:
 				self.request_velocity['x'] = 0.2
@@ -209,7 +209,7 @@ class MissionGripper:
 			else:
 				self.request_velocity['x'] = 0
 				same_direction = False
-			if( abs(self.vision.center_x() < 0.3 ) )
+			if( abs(self.vision.center_x() < 0.3 ) ):
 				self.request_velocity['y'] = 0
 			elif( self.vision.center_x() < 0 ):
 				self.request_velocity['y'] = 0.22
@@ -250,7 +250,7 @@ class MissionGripper:
 			else:
 				self.request_velocity['y'] = 0
 				same_direction = False
-			if( abs(self.vision.center_y() < 0.3 ) )
+			if( abs(self.vision.center_y() < 0.3 ) ):
 				self.request_velocity['x'] = 0
 			elif( self.vision.center_x() < 0 ):
 				self.request_velocity['x'] = 0.22
@@ -291,7 +291,7 @@ class MissionGripper:
 			else:
 				self.request_velocity['x'] = 0
 				same_direction = False
-			if( abs(self.vision.center_x() < 0.3 ) )
+			if( abs(self.vision.center_x() < 0.3 ) ):
 				self.request_velocity['y'] = 0
 			elif( self.vision.center_x() < 0 ):
 				self.request_velocity['y'] = 0.22

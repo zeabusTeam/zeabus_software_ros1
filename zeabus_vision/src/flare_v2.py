@@ -142,7 +142,7 @@ if __name__ == '__main__':
 
     image_topic = get_topic("front")
     rospy.Subscriber(image_topic, CompressedImage, image_callback)
-    rospy.Service('vision_flare', vision_srv_flare(),
+    rospy.Service('vision/flare', vision_srv_flare(),
                   mission_callback)
     print_result("INIT NODE FLARE", ct.GREEN)
 

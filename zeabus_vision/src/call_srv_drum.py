@@ -6,7 +6,7 @@ from std_msgs.msg import String
 
 if __name__ == "__main__":
     rospy.init_node('call_service')
-    service_name = 'vision_drum'
+    service_name = 'vision/drum'
     print('wait service')
     rospy.wait_for_service(service_name)
     print('service start')

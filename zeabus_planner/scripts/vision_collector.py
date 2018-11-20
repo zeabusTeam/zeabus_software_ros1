@@ -98,6 +98,15 @@ class VisionCollector:
 			+ " center_x : center_y " + str( self.center_x() ) + " : " + str( self.center_y() )
 			+ " and area is " + str( self.result['area'])
 		)
+
+	def echo_specific( self ):
+		if( not self.have_object() ):
+			return str ( "<=== VISION COLLECTOR  DON\'T HAVE OBJECT")
+		return str ( "<=== VISION COLLECTOR ===> cx_1 : cx_2 , cy_1 : cy_2 " 
+			+ str( self.result["cx_1"] ) + " : " + str( self.result['cx_2'] ) + " ===,=== "
+			+ str( self.result["cy_1"] ) + " : " + str( self.result['cy_2'] )
+		)
+	
 			
 #################################################################################################
 ####

@@ -79,36 +79,13 @@ class MissionGripper:
 		else:
 			self.request_velocity[ axis ] = velocity
 
-	def step_01( self ):
-		self.echo("<=== MISSION GRIPPER ===> STEP01 MISSION GRIPPER START MOVE BALL CENTER")
-		self.reset_request()
-		count_unfound = 0
-		while( not rospy.is_shutdown() ): # and not self.check_depth( -0.8 ) ):
-			self.echo( "current_depth " + str( self.auv.receive_target('z')[0] ) )
-			self.sleep( 0.15 )
-			self.request_velocity['z'] = -1.2
-			self.vision.analysis_all( "drum" , "pick" , 5 )
-			self.echo( self.vision.echo_data() )
-			if( self.vision.have_object() ):
-				count_unfound = 0
-				self.check_range( "x" , self.vision.center_y() , 0.0 , 0.2 , 0.2 )
-				self.check_range( "y" , self.vision.center_x() , 0.1 , 0.3 , -0.2 )
-				if( self.request_velocity['x'] == 0 and self.request_velocity['y'] == 0):
-					break
-				self.echo( self.print_request() )
-				self.auv.velocity( self.request_velocity)
-			else:
-				count_unfound += 1
-				self.echo("<=== MISSION GRIPPER ===> WARNNING DO NOT FIND OBJECT")
-				if( count_unfound == 3 ):
-					break
-		if( count_unfound == 0 ):
-			self.current_step += 1
-
 	def step_02( self ):
 		self.echo("<=== MISSION GRiPPER ===> STEP02 PICK BALL UP")
 		start_time = time.time()
 		diff_time = time.time() - start_time
+		diff_up_time = 0
+		start_up_time = 0
+		ever_unfound = False
 		self.reset_request()
 		while( not rospy.is_shutdown() and diff_time < 15 ):
 			self.echo( "Time capture is " + str( diff_time ))
@@ -117,17 +94,26 @@ class MissionGripper:
 			if( self.vision.have_object() ):
 				start_time = time.time()
 				self.echo( self.vision.echo() )
-				self.request_velocity['z'] = -1.0
-				self.check_range( "x" , self.vision.center_y() , -0.4 , 0.1 , 0.15 )
-				self.check_range( "y" , self.vision.center_x() , -0.5 , -0.2 , -0.18 )
+				if( ever_unfound ):
+					self.echo( "Ever_unfound Mode")
+					start_up_time = time.time()
+					diff_up_time = time.time() -start_up_time 
+					while( not rospy.is_shutdown() and diff_up_time < 4 ):
+						self.auv.velocity( { 'z' : -0.8})
+						diff_up_time = time.time() - start_up_time
+				self.request_velocity['z'] = -1.2
+				self.check_range( "x" , self.vision.center_y() , -0.32 , 0.16 , 0.15 )
+				self.check_range( "y" , self.vision.center_x() , -0.68 , -0.42 , -0.18 )
 				self.echo( "FOUND OBJECT " + self.print_request() )
 			else:
-				self.request_velocity['z'] = -1.4
+				self.request_velocity['z'] = -1.6
 				self.request_velocity['x'] = -0.13
-				self.request_velocity['y'] = 0.21
+				self.request_velocity['y'] = 0.22
 				self.echo( "NO" + self.print_request() )
 			self.auv.velocity( self.request_velocity )
 			diff_time = time.time() - start_time
+			if( diff_time > 7 ):
+				self.ever_unfound = True	
 		self.reset_request()
 		self.echo( "<=== MISSION GRIPPER ===> Time out go up")
 		while( not rospy.is_shutdown() and not self.check_depth( -0.6 ) ):

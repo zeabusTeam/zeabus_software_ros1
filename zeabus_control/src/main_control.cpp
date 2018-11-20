@@ -58,7 +58,7 @@ int main( int argv , char** argc){
 
 	double world_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double robot_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
-	double ok_error[6]			=	{ 0.01 , 0.01 , 0.06 , 0.01 , 0.01 , 0.01 };
+	double ok_error[6]			=	{ 0.05 , 0.05 , 0.06 , 0.01 , 0.01 , 0.01 };
 	double bound_error[6]		=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double pid_force[6]			=	{ 0 , 0 , 0 , 0 , 0 , 0 };
 	double bound_force[6]		=	{ 2.5 , 2.5 , 1.6 , 1 , 1 , 0.6 };

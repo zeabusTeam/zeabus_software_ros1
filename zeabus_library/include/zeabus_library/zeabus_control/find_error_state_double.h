@@ -37,6 +37,10 @@ namespace zeabus_control{
 										, double *point_2
 										, double *point_result );
 
+	void find_error_position_non_yaw(	double *point_1
+										, double *point_2 
+										, double *point_result );
+
 	void find_error_position_inverse_y(	double *point_1 
 										, double *point_2
 										, double *point_result );

@@ -205,6 +205,11 @@ int main( int argv , char** argc){
 														, target_state 
 														, world_error );
 		}
+		else if( mode_control == 2 ){
+			zeabus_control::find_error_position_non_yaw( current_state 
+														, target_state
+														, world_error );
+		}
 
 		// give world_error to error in robot frame
 		zeabus_control::convert_world_to_robot_xy( world_error , robot_error , current_state );

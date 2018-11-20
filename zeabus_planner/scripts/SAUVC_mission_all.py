@@ -142,7 +142,7 @@ class SAUVC2019:
 			if( count_ok == 7 ):
 				break
 		self.echo("Now OK YAW Survey to find drum")
-		self.survey_mode( self.vision_drum , "drum" , "drum" , 5 , 8 , 1 ,3.5)
+		self.survey_mode( self.vision_drum , "drum" , "drop" , 5 , 8 , 1 ,3.5)
 		sucess = self.mission_drum( Bool( True) )
 		if( sucess ):
 			self.echo("<===== ALL MISSION =====> DROP BALL SUCCESS")

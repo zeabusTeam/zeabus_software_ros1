@@ -83,16 +83,22 @@ class MissionFlare:
 					self.auv.velocity( { 'x' : 0.3 })
 					self.echo( "STEP ONE Move Forward" )
 				elif( self.vision.center_x() < 0 ):
-					self.auv.velocity( { 'y' : 0.35} )
+					self.auv.velocity( { 'y' : 0.15} )
 					self.echo( "STEP ONE Move left" )
 				elif( self.vision.center_x() > 0):
-					self.auv.velocity( {'y' : -0.35 } )
+					self.auv.velocity( {'y' : -0.12 } )
 					self.echo( "STEP ONE Move righht")
 				else:
 					self.echo( " ERROR IN LINE 92 =========================================")
 			else:
 				count_unfound += 1
 				if( count_unfound == 5 ):
+					start_time = time.time()
+					diff_time = time.time() - start_time
+					while( not rospy.is_shutdown() and diff_time < 4):
+						self.sleep( 0.1 )
+						self.auv.velocity( { 'x' : 0.35 } )
+						diff_time = time.time() - start_time
 					break
 				self.echo("<=== MISSION FLARE ===> Warning Unfound " + str( count_unfound ) )
 			# this line will try to find in near mode
@@ -133,24 +139,24 @@ class MissionFlare:
 
 	def step_03( self ):
 		self.echo( "<=== MISSION FLARE ===> PLAY STEP THREE MAKE SURE FLARE IS DESTROYED")
-#		start_time = time.time()
-#		limit_time = 5
-#		while( not rospy.is_shutdown() ):
-#			self.auv.velocity( { 'x' : 1.5 } )
-#			self.sleep( 0.2 )
-#			diff_time = time.time() - start_time 
-#			if( diff_time > limit_time ):
-#				break
-#			self.echo( "NOW GO GO TIME : " + str( diff_time ))
+		start_time = time.time()
+		limit_time = 5
+		while( not rospy.is_shutdown() ):
+			self.auv.velocity( { 'x' : 1.5 } )
+			self.sleep( 0.2 )
+			diff_time = time.time() - start_time 
+			if( diff_time > limit_time ):
+				break
+			self.echo( "NOW GO GO TIME : " + str( diff_time ))
 		self.sleep( 1 )
 		self.auv.absolute_z( -3.4 )
 		self.auv.set_mode( 0 )
 		self.auv.relative_yaw( 3.14 )
-		while( not rospy.is_shutdown() and not self.auv.check_state('yaw' , 0.1 )):
-			self.sleep( 0.3 )
-		self.auv.relative_yaw( 3.14 )
-		while( not rospy.is_shutdown() and not self.auv.check_state('yaw' , 0.1 )):
-			self.sleep( 0.3 )
+#		while( not rospy.is_shutdown() and not self.auv.check_state('yaw' , 0.1 )):
+#			self.sleep( 0.3 )
+#		self.auv.relative_yaw( 3.14 )
+#		while( not rospy.is_shutdown() and not self.auv.check_state('yaw' , 0.1 )):
+#			self.sleep( 0.3 )
 		self.sucess_mission = True
 
 if __name__=="__main__":

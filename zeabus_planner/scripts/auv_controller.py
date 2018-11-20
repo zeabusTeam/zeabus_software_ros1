@@ -85,6 +85,7 @@ class AUVController:
 	# Control Point Z Group this use name of function to descripe you want relative or absolute
 	def absolute_z( self , value ):
 		try:
+			print( "Sending Absolute of depth is " + str( value ))
 			result = self.request_absolute_depth( value , self.name )
 		except rospy.ServiceException , error :
 			print("Service Depth Failse error : " + error )

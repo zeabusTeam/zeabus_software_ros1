@@ -24,7 +24,7 @@ class MissionDrop:
 		self.auv		= AUVController( "mission_drum" , True )
 		
 		self.rate		= rospy.Rate( 30 )
-		self.data_pub	= rospy.Publisher('missin/echo_planner' , String , queue_size = 1)
+		self.data_pub	= rospy.Publisher('mission/echo_planner' , String , queue_size = 1)
 
 		print("<=== MISSION DRUM ===> Waitting service of DRUM")
 		rospy.wait_for_service('vision_drum')
@@ -53,12 +53,16 @@ class MissionDrop:
 		)
 
 	def main_play( self , request ):
+		self.echo( "<===== MISSION DRUM =====> START MISSION DRUM BY SUB PART")
 		self.sucess_mission = False
 		self.current_step = 0
 
 		self.vision.analysis_all( "drum" , "drop" , 5 )
 		if( self.vision.have_object() ):
+			self.echo("Check have drum is ok")
 			self.current_step += 1
+		else:
+			self.echo("Check Don't Have Drum is BAD")
 		
 		if( self.current_step == 1 ):
 			self.step_01() # go down to drum
@@ -69,56 +73,50 @@ class MissionDrop:
 		return Bool( self.sucess_mission ) , Int8( self.current_step )
 
 	def step_01( self ):
+		self.echo( "<===== MISSION DRUM =====> Welcome to step_01 for move to center")
 		self.auv.set_mode( 1 )
 		start_time = time.time()
 		diff_time = time.time() - start_time
 		self.reset_request()
+		result = True
 		while( not rospy.is_shutdown() and diff_time < 20 ):
 			self.request_velocity['z'] = -1.25
 			diff_time = time.time() - start_time
 			self.vision.analysis_all( "drum" , "drop" , 5)
+			self.echo( self.vision.echo_specific() )
 			if( self.vision.have_object() ):
 				if( self.vision.result[ 'forward' ] and self.vision.result['backward']):
 					self.request_velocity['x'] = 0
-				elif( self.vision.result['forward'] ) :
+				elif( not self.vision.result['forward'] ) :
 					self.request_velocity['x'] = -0.2
-				elif( self.vision.result['backward'] ):
-					self.request_velocity['x'] = 0.2
+				elif( not self.vision.result['backward'] ):
+					self.request_velocity['x'] = 0.25
 				else:
 					self.request_velocity['x'] = 0
-				if( self.vision.result['cx_2'] > 0.9 ):
-					self.request_velocity['y'] = 0.2
-				elif( self.vision.result['cx_2'] < 0.3 ):
+				if( self.vision.result['cx_2'] > 0.8 ):
 					self.request_velocity['y'] = -0.2
+				elif( self.vision.result['cx_2'] < 0.6 ):
+					self.request_velocity['y'] = 0.3
 				else:
 					self.request_velocity['y'] = 0
-				self.echo( self.print_request() )	
+				self.echo( self.print_request() + " AND Diff time is " + str( diff_time ))
+				self.auv.velocity( self.request_velocity )	
 			else:
+				result = False	
 				break
-		self.vision.analysis_all( "drum" , "drop" , 5 )
-		if( self.vision.have_object() ):
+		if( result ):
 			self.current_step += 1
 
 	def step_02( self ):
-		self.auv.set_mode( 2 )
+		self.echo( "<===== MISSION DRUM =====> Welcome to step_02 for move to center")
 		start_time = time.time()
 		diff_time = time.time() - start_time 
-		while( not rospy.is_shutdown() and diff_time < 30):
-			self.request_velocity['z'] = -1.3
+		while( not rospy.is_shutdown() and diff_time < 5):
 			diff_time = time.time() - start_time
-			self.vision.analysis_all( "drum" , "drop" , 5 )
-			if( self.vision.have_object() ):	
-				if( self.vision.result['cx_2'] > 0.8 ):
-					self.request_velocity['y'] = -0.4
-				elif( self.vision.result['cx_2'] < 0.5 ):
-					self.request_velocity['y'] = 0.4
-				else:
-					self.echo("DROP BALL PLEASE")
-					self.sucess_mission = True
-					break
-				self.echo( self.print_request() )
-			else:
-				self.echo( "<====================== DON\'T FOUND DRUM =======================>")
+			self.auv.velocity( { 'x' : -0.2 , 'y' : 0.35 , 'z' : -1.3 })
+			self.sleep( 0.1 )
+			self.echo( "move x : -0.2 , y : 0.35 , z : -1.3 time is " + str( diff_time) )
+		self.reset_request()
 		if( not self.sucess_mission ):
 			self.echo("DROP BALL TIME OUT")
 			self.sucess_mission = True

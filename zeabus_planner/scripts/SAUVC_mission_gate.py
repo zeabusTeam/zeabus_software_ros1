@@ -46,11 +46,11 @@ class MissionGate:
 #		self.echo( "Compare Area " + str( self.past_area ) + " : new is " + str( new ))
 		output = "Compare Area " + str( self.past_area ) + " : new is " + str( new )
 		if( self.past_area / 2 > new ):
-			output += "True"
+			output += " ========> BREAKING"
 			self.echo( output )
 			return True
 		else:
-			output += "False"
+			output += " ========> CONTINUE"
 			self.echo( output )
 			self.past_area = new
 			return False

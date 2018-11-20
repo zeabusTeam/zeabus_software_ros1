@@ -225,7 +225,8 @@ int main( int argv , char** argc){
 					pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
 												, pid_force[run] );
 				}
-				else if( mode_control == 1){
+//				else if( mode_control == 1){
+				else{
 					// When don't have data to tell velocity of robot
 					pid_force[run] = target_velocity[run] ;
 				}

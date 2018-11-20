@@ -46,7 +46,9 @@ class MissionGripper:
 	def main_play( self , request ):
 		self.sucess_mission = False
 		self.current_step = 1 # have 3 step to play
-		self.request_velocity = { 'x' : 0 , 'y' : 0 , 'z':0}
+		self.force_depth = -1.25
+		self.force_y = 0.3
+		self.request_velocity = { 'x' : 0 , 'y' : 0 , 'z' : 0}
 		
 		if( self.current_step == 1 ):
 			self.step_01()
@@ -102,7 +104,7 @@ class MissionGripper:
 			self.vision.analysis_all( 'drum' , "pick" , 5 )
 			if( self.vision.have_object() ):
 				start_time = time.time()
-				self.echo( self.vision.echo() )
+				self.echo( self.vision.echo_data() )
 				if( ever_unfound ):
 					self.echo( "Ever_unfound Mode")
 					start_up_time = time.time()
@@ -115,13 +117,13 @@ class MissionGripper:
 				self.check_range( "y" , self.vision.center_x() , -0.68 , -0.42 , -0.18 )
 				self.echo( "FOUND OBJECT " + self.print_request() )
 			else:
-				self.request_velocity['z'] = -1.6
-				self.request_velocity['x'] = -0.13
-				self.request_velocity['y'] = 0.22
-				self.echo( "NO" + self.print_request() )
+				self.request_velocity['z'] = self.force_depth
+				self.request_velocity['x'] = -0.25
+				self.request_velocity['y'] = self.force_y
+				self.echo( "NO " + self.print_request() )
 			self.auv.velocity( self.request_velocity )
 			diff_time = time.time() - start_time
-			if( diff_time > 7 ):
+			if( diff_time > 2 ):
 				self.ever_unfound = True	
 		self.reset_request()
 		self.echo( "<=== MISSION GRIPPER ===> Time out go up")
@@ -133,11 +135,18 @@ class MissionGripper:
 
 	def step_03( self ):
 		self.echo( "<=== MISSION GRIPPER ===> STEP THIRD CHECK BALL")
+		self.force_depth = -1.4
+		self.force_y = 0.25
 		# Check Have Ball All not
 		result = True
-		while( not rospy.is_shutdown() and result ):
-			result = self.find_ball()	
-		self.echo( "Finish Wd don't found ball")
+		while( not rospy.is_shutdown() ):
+			result = self.find_ball()
+			if( result ):
+				self.echo("PLAYING AGAIN")
+				self.step_02()
+			else:
+				break
+		self.echo( "Finish We don't found ball")
 		# FInish Check
 		self.current_step += 1
 		self.sucess_mission = True
@@ -145,7 +154,7 @@ class MissionGripper:
 	def find_ball( self ):
 		start_time = time.time()
 		diff_time = time.time() - start_time
-		limit_time = 20
+		limit_time = 5
 		self.echo( "<=== MISSION GRIPPER ===> MODE FIND BALL")
 		# split to 4 step to find around drum
 		self.auv.set_mode( 1 )	
@@ -154,13 +163,14 @@ class MissionGripper:
 		same_direction = True
 		#####################################################################################
 		start_time = time.time()
+		self.reset_request()
 		while( not rospy.is_shutdown() and same_direction and diff_time < limit_time):
 			self.sleep( 0.08 )
 			self.vision.analysis_all( "drum" , "drop" , 5)
 			if( not self.vision.have_object() ):
 				self.echo( "Warning vision don't found object")
 				return False 
-			self.echo( self.vision.echo_specific() )
+			self.echo( "<===== MODE FIND BALL =====> cx_1 " + str( self.vision.result['cx_1'] ) )
 			if( self.vision.result['cx_1'] < 0 ):
 				self.request_velocity['y'] = 0.3
 			elif( self.vision.result['cx_1'] > 0):
@@ -168,13 +178,9 @@ class MissionGripper:
 			else:
 				self.request_velocity['y'] = 0
 				same_direction = False
-			if( abs(self.vision.center_y() ) < 0.3 ):
-				self.request_velocity['x'] = 0
-			elif( self.vision.center_y() < 0 ):
-				self.request_velocity['x'] = -0.2
-			else:
-				self.request_velocity['x'] = 0.2
-			self.vision.analysis_all( "drum" , "pick")
+			self.echo( self.print_request() )
+			self.auv.velocity( self.request_velocity )
+			self.vision.analysis_all( "drum" , "pick" , 5)
 			if( self.vision.have_object() ):
 				self.echo( "GRIPPER FOUND BALL")
 				return True
@@ -185,7 +191,8 @@ class MissionGripper:
 		self.echo( "We wil survey down")
 		start_time = time.time()
 		diff_time = time.time() - start_time
-		while( not rospy.is_shutdown() and diff_time < 4 ):
+		while( not rospy.is_shutdown() and diff_time < 1.2 ):
+			diff_time = time.time() - start_time
 			self.auv.velocity( { 'y' : -0.17 } )
 			self.vision.analysis_all( 'drum' , 'pick' , 5 )
 			if( self.vision.have_object() ):
@@ -195,13 +202,14 @@ class MissionGripper:
 		same_direction = True
 		#####################################################################################
 		start_time = time.time()
+		self.reset_request()
 		while( not rospy.is_shutdown() and same_direction and diff_time < limit_time):
 			self.sleep( 0.08 )
 			self.vision.analysis_all( "drum" , "drop" , 5 )
 			if( not self.vision.have_object() ):
 				self.echo( "Warinig vision don't found object")
 				return False
-			self.echo( self.vision.echo_specific() )
+			self.echo( "<===== MODE FIND BALL =====> cy_1 " + str( self.vision.result['cy_1'] ) )
 			if( self.vision.result['cy_1'] < -0.7 ):
 				self.request_velocity['x'] = -0.2 
 			elif( self.vision.result['cy_1'] > -0.3 ):
@@ -209,12 +217,8 @@ class MissionGripper:
 			else:
 				self.request_velocity['x'] = 0
 				same_direction = False
-			if( abs(self.vision.center_x() < 0.3 ) ):
-				self.request_velocity['y'] = 0
-			elif( self.vision.center_x() < 0 ):
-				self.request_velocity['y'] = 0.22
-			else:
-				self.request_velocity['y'] = -0.22
+			self.echo( self.print_request() )
+			self.auv.velocity( self.request_velocity )
 			self.vision.analysis_all( "drum" , "pick" , 5 )
 			if( self.vision.have_object() ):
 				self.echo( "GRIPPER FOUND BALL")
@@ -226,7 +230,8 @@ class MissionGripper:
 		self.echo( "We will survey right")
 		start_time = time.time()
 		diff_time = time.time() - start_time
-		while( not rospy.is_shutdown() and diff_time < 4 ):
+		while( not rospy.is_shutdown() and diff_time < 1.2 ):
+			diff_time = time.time() - start_time
 			self.auv.velocity( { 'x' : 0.2 } )
 			self.vision.analysis_all( 'drum' , 'pick' , 5 )
 			if( self.vision.have_object() ):
@@ -236,13 +241,14 @@ class MissionGripper:
 		same_direction = True
 		#####################################################################################
 		start_time = time.time()
+		self.reset_request()
 		while( not rospy.is_shutdown() and same_direction and diff_time < limit_time):
 			self.sleep( 0.08 )
 			self.vision.analysis_all( "drum" , "drop" , 5 )
 			if( not self.vision.have_object() ):
 				self.echo( "Warinig vision don't found object")
 				return False
-			self.echo( self.vision.echo_specific() )
+			self.echo( "<===== MODE FIND BALL =====> cx_2 " + str( self.vision.result['cx_2'] ) )
 			if( self.vision.result['cx_2'] < 0.2 ):
 				self.request_velocity['y'] = 0.23 
 			elif( self.vision.result['cx_2'] > 0.7 ):
@@ -250,12 +256,8 @@ class MissionGripper:
 			else:
 				self.request_velocity['y'] = 0
 				same_direction = False
-			if( abs(self.vision.center_y() < 0.3 ) ):
-				self.request_velocity['x'] = 0
-			elif( self.vision.center_x() < 0 ):
-				self.request_velocity['x'] = 0.22
-			else:
-				self.request_velocity['x'] = -0.22
+			self.echo( self.print_request() )
+			self.auv.velocity( self.request_velocity )
 			self.vision.analysis_all( "drum" , "pick" , 5 )
 			if( self.vision.have_object() ):
 				self.echo( "GRIPPER FOUND BALL")
@@ -267,7 +269,8 @@ class MissionGripper:
 		self.echo( "We will survey up")
 		start_time = time.time()
 		diff_time = time.time() - start_time
-		while( not rospy.is_shutdown() and diff_time < 7 ):
+		while( not rospy.is_shutdown() and diff_time < 1.2 ):
+			diff_time = time.time() - start_time
 			self.auv.velocity( { 'y' : 0.2 } )
 			self.vision.analysis_all( 'drum' , 'pick' , 5 )
 			if( self.vision.have_object() ):
@@ -277,13 +280,14 @@ class MissionGripper:
 		same_direction = True
 		#####################################################################################
 		start_time = time.time()
+		self.reset_request()
 		while( not rospy.is_shutdown() and same_direction and diff_time < limit_time):
 			self.sleep( 0.08 )
 			self.vision.analysis_all( "drum" , "drop" , 5 )
 			if( not self.vision.have_object() ):
 				self.echo( "Warinig vision don't found object")
 				return False
-			self.echo( self.vision.echo_specific() )
+			self.echo( "<===== MODE FIND BALL =====> cy_2 " + str( self.vision.result['cy_2'] ) )
 			if( self.vision.result['cy_2'] < 0.4 ):
 				self.request_velocity['x'] = -0.22 
 			elif( self.vision.result['cy_2'] > 0.7 ):
@@ -291,12 +295,8 @@ class MissionGripper:
 			else:
 				self.request_velocity['x'] = 0
 				same_direction = False
-			if( abs(self.vision.center_x() < 0.3 ) ):
-				self.request_velocity['y'] = 0
-			elif( self.vision.center_x() < 0 ):
-				self.request_velocity['y'] = 0.22
-			else:
-				self.request_velocity['y'] = -0.22
+			self.echo( self.print_request() )
+			self.auv.velocity( self.request_velocity )
 			self.vision.analysis_all( "drum" , "pick" , 5 )
 			if( self.vision.have_object() ):
 				self.echo( "GRIPPER FOUND BALL")

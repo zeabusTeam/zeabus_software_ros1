@@ -275,7 +275,7 @@ if __name__ == '__main__':
     rospy.init_node('vision_gate', anonymous=False)
     image_topic = get_topic("front")
     rospy.Subscriber(image_topic, CompressedImage, image_callback)
-    rospy.Service('vision_gate', vision_srv_gate(),
+    rospy.Service('vision/gate', vision_srv_gate(),
                   mission_callback)
     print_result("INIT NODE GATE", ct.GREEN)
     rospy.spin()

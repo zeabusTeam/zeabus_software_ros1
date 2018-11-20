@@ -66,8 +66,8 @@ def get_mask(img, color):
         upper = np.array([120, 255, 255], dtype=np.uint8)
         lower = np.array([90, 160, 0], dtype=np.uint8)
     if color == "yellow":
-        upper = np.array([60, 255, 255], dtype=np.uint8)
-        lower = np.array([27, 160, 97], dtype=np.uint8)
+        upper = np.array([47, 255, 255], dtype=np.uint8)
+        lower = np.array([20, 17, 228], dtype=np.uint8)
     if color == "green":
         upper = np.array([90, 255, 255], dtype=np.uint8)
         lower = np.array([60, 160, 0], dtype=np.uint8)

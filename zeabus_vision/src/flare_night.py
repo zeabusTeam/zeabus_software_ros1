@@ -46,17 +46,17 @@ def message(state=0, cx=0.0, cy=0.0, area=0.0):
 
 
 def get_mask(img):
-	hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
+    blur = cv.medianBlur(img,5)
+    hsv = cv.cvtColor(blur, cv.COLOR_BGR2HSV)
     # upper, lower = get_color_range('yellow', 'front', '1', 'flare')
-	h,s,v = cv.split(hsv)
-	s = cv.equalizeHist(s)
-	v = cv.equalizeHist(v)
-	hsv = cv.merge((h,s,v))
-	upper = np.array([43, 255, 255], dtype=np.uint8)
-	lower = np.array([9, 0, 0], dtype=np.uint8)
-
-	mask = cv.inRange(hsv, lower, upper)
-	return mask
+    h,s,v = cv.split(hsv)
+    s = cv.equalizeHist(s)
+    v = cv.equalizeHist(v)
+    hsv = cv.merge((h,s,v))
+    upper = np.array([43, 255, 255], dtype=np.uint8)
+    lower = np.array([9, 0, 0], dtype=np.uint8)
+    mask = cv.inRange(hsv, lower, upper)
+    return mask
 
 
 def get_ROI(mask, case):
@@ -123,7 +123,6 @@ def find_flare(req):
     if bgr is None:
         img_is_none()
         return message(state=-1)
-    rospy.sleep(0.25)
     mask = get_mask(bgr)
     ROI = get_ROI(mask, case=req)
     mode = len(ROI)
@@ -141,6 +140,8 @@ def find_flare(req):
         cx, cy, area = get_cx(cnt=max(ROI, key=cv.contourArea))
         publish_result(image_result, 'bgr', public_topic + 'image_result')
         publish_result(mask, 'gray', public_topic + 'mask')
+        if cx < -1 and cx > 1 and cy > 1 and cx < 1 : 
+            return message()
         return message(cx=cx, cy=cy, area=area, state=len(ROI))
 
 # def find_far_flare():

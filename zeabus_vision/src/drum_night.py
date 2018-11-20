@@ -63,15 +63,16 @@ def get_mask(img, color):
         s, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
     foregroud = cv.bitwise_and(hsv, hsv, mask=foregroud_mask)
     if color == "blue":
-        upper = np.array([152, 255, 255], dtype=np.uint8)
-        lower = np.array([33, 0, 0], dtype=np.uint8)
+        upper = np.array([150, 255, 255], dtype=np.uint8)
+        lower = np.array([85, 0, 0], dtype=np.uint8)
     if color == "yellow":
-        upper = np.array([52, 255, 255], dtype=np.uint8)
-        lower = np.array([31, 0, 97], dtype=np.uint8)
+        upper = np.array([66, 255, 255], dtype=np.uint8)
+        lower = np.array([0, 221, 85], dtype=np.uint8)
     if color == "green":
         upper = np.array([90, 255, 255], dtype=np.uint8)
         lower = np.array([60, 160, 0], dtype=np.uint8)
     mask = cv.inRange(hsv, lower, upper)
+    cv.circle(mask,(119,270),106,(0),-1)
     return mask
 
 
@@ -81,6 +82,14 @@ def get_ROI(mask, obj='drop'):
         if mat_mask.shape != mask.shape:
             return None
         publish_result(mat_mask, 'gray', public_topic+'mask/mat/processed')
+        intersect = cv.bitwise_and(mat_mask, mask)
+        contours = cv.findContours(
+            intersect, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
+    if obj == 'pick':
+        mat_mask = temp_drum()
+        if mat_mask.shape != mask.shape:
+            return None
+        publish_result(mat_mask, 'gray', public_topic+'mask/drum/processed')
         intersect = cv.bitwise_and(mat_mask, mask)
         contours = cv.findContours(
             intersect, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
@@ -140,6 +149,23 @@ def find_mat():
     cv.drawContours(mat_mask, [box], 0, (255), -1)
     return mat_mask
 
+def temp_drum():
+    global bgr
+    mat = get_mask(bgr, "blue")
+    publish_result(mat, 'gray', public_topic+'mask/drum/unprocessed')
+    contours = cv.findContours(
+        mat, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
+    himg, wimg = mat.shape[:2]
+    mat_mask = np.zeros((himg, wimg), np.uint8)
+    if len(contours) == 0:
+		return mat_mask
+    max_cnt = max(contours, key=cv.contourArea)
+    (x,y),radius = cv.minEnclosingCircle(max_cnt)
+    center = (int(x),int(y))
+    radius = int(radius)
+    print(center,radius)
+    cv.circle(mat_mask,center,radius,(255),-1)
+    return mat_mask
 
 def find_drum(objective):
     global bgr

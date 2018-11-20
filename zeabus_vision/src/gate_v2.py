@@ -246,7 +246,8 @@ def find_gate():
         cx1 = min(vertical_cx)
         cx2 = max(vertical_cx)
         cy1 = (sum(vertical_cy1)+min(vertical_cy1))/len(vertical_cy1)
-    cy2 = (sum(vertical_cy2)+max(vertical_cy2))/len(vertical_cy2) if no_pipe_v != 0 else horizontal_cy[0] + cx2-cx1
+    cy2 = (sum(vertical_cy2)+max(vertical_cy2))/(len(vertical_cy2)+1) if no_pipe_v != 0 else himg
+# horizontal_cy[0] + cx2-cx1
     right_excess = (cx2 > 0.95*wimg)
     left_excess = (cx1 < (0.05*wimg))
     if (right_excess and not left_excess):
@@ -259,7 +260,7 @@ def find_gate():
     # cv.line(display, (int(cx1), 0), (int(cx1), himg), (255, 0, 0), 5)
     # cv.line(display, (int(cx2), 0), (int(cx2), himg), (0, 255, 0), 5)
     cv.rectangle(display, (int(cx1), int(cy1)), (int(cx2), int(cy2)), (0, 255, 0), 3)
-    area = Aconvert((cx2-cx1)*(cy2-cy1), himg*wimg)
+    area = 1.0*abs(cx2-cx1)*abs(cy1-cy2)/(himg*wimg)
     publish_result(display, 'bgr', public_topic + 'image_result')
     publish_result(vertical, 'gray', public_topic + 'mask/vertical')
     publish_result(horizontal, 'gray', public_topic + 'mask/horizontal')

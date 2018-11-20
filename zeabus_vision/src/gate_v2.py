@@ -245,8 +245,8 @@ def find_gate():
         print_result("FOUND TWO V", ct.YELLOW)
         cx1 = min(vertical_cx)
         cx2 = max(vertical_cx)
-        cy1 = (sum(vertical_cy1)+min(vertical_cy1))/3
-    cy2 = (sum(vertical_cy2)+max(vertical_cy2))/3 if no_pipe_v != 0 else horizontal_cy[0] + cx2-cx1
+        cy1 = (sum(vertical_cy1)+min(vertical_cy1))/len(vertical_cy1)
+    cy2 = (sum(vertical_cy2)+max(vertical_cy2))/len(vertical_cy2) if no_pipe_v != 0 else horizontal_cy[0] + cx2-cx1
     right_excess = (cx2 > 0.95*wimg)
     left_excess = (cx1 < (0.05*wimg))
     if (right_excess and not left_excess):

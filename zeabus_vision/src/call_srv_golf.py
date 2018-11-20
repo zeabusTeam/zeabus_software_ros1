@@ -15,7 +15,7 @@ if __name__ == "__main__":
         try:
             # res = call(String('drum'), String('pick'))
             # print ('pick',res)
-            res = call(String('drum'),String('drop'))
+            res = call(String('drum'),String('pick'))
             # print ('release',res)
             # res = call(String('drum'), String('pick'))
             #print ('test',res)

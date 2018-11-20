@@ -7,6 +7,7 @@
 ####	Purpose		: Last Code for doing mission gate in SAUVC2019
 ####
 #################################################################################################
+from __future__ import print_function
 
 import rospy
 import math
@@ -42,10 +43,15 @@ class MissionGate:
 		self.auv.wait_time( second )
 
 	def check_area( self , new ):
-		self.echo( "Compare Area " + str( self.past_area ) + " : new is " + str( new ))
+#		self.echo( "Compare Area " + str( self.past_area ) + " : new is " + str( new ))
+		output = "Compare Area " + str( self.past_area ) + " : new is " + str( new )
 		if( self.past_area / 2 > new ):
+			output += "True"
+			self.echo( output )
 			return True
 		else:
+			output += "False"
+			self.echo( output )
 			self.past_area = new
 			return False
 

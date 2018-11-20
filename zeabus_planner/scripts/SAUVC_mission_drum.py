@@ -30,7 +30,7 @@ class MissionDrop:
 		rospy.wait_for_service('vision_drum')
 		print("<=== MISSION DRUM ====> HAVE SERVICE OK")
 
-		self.mission_planner = rospy.Service('mission/gripper' , MissionResult , self.main_play)
+		self.mission_planner = rospy.Service('mission/drum' , MissionResult , self.main_play)
 
 		self.vision = VisionCollector( "drum" )
 		print("<========== FINISH SETUP MISSION DRUM ==========>")
@@ -125,4 +125,4 @@ class MissionDrop:
 			
 if __name__=="__main__":
 	mission_03 = MissionDrop()
-	rospy.spin
+	rospy.spin()

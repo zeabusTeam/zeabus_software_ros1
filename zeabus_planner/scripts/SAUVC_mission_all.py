@@ -38,19 +38,19 @@ class SAUVC2019:
 		print( "ALREADY")
 		self.mission_flare	= rospy.ServiceProxy('/mission/flare'	, MissionResult )
 
-#		print( "Waiting Service Mission DRUM" , end = " =============> ")
-#		rospy.wait_for_service( 'mission/drum')
-#		print( "ALREADY")
-#		self.mission_drum	= rospy.ServiceProxy('/mission/drum'	, MissionResult )
+		print( "Waiting Service Mission DRUM" , end = " =============> ")
+		rospy.wait_for_service( 'mission/drum')
+		print( "ALREADY")
+		self.mission_drum	= rospy.ServiceProxy('/mission/drum'	, MissionResult )
 
-#		print( "Wainting Service Mission GRIPPER" , end = "============> ")
-#		rospy.wait_for_service( 'mission/gripper')
-#		print( "ALREADY")
-#		self.mission_gripper= rospy.ServiceProxy('/mission/gripper'	, MissionResult )
+		print( "Wainting Service Mission GRIPPER" , end = "============> ")
+		rospy.wait_for_service( 'mission/gripper')
+		print( "ALREADY")
+		self.mission_gripper= rospy.ServiceProxy('/mission/gripper'	, MissionResult )
 
 		self.vision_gate = VisionCollector( "gate" )
 		self.vision_flare = VisionCollector( "flare" )
-#		self.vision_drum = VisionCollector( "drum" )
+		self.vision_drum = VisionCollector( "drum" )
 		
 	def sleep( self , second ):
 		self.rate.sleep()
@@ -90,7 +90,9 @@ class SAUVC2019:
 		self.survey_mode( self.vision_gate , "gate" , "sevinar" , 3 , 5 , 1 , 3)
 		sucess = False
 		while( not rospy.is_shutdown() and not sucess):
-			sucess = self.mission_gate( Bool( True ) )
+			self.echo( "<===== ALL MISSION =====> Send request do mission gate ")
+			sucess = self.mission_gate( Bool( True ) ).result
+			self.echo( "<===== ALL MISSION =====> Result " + str( sucess ) )
 			if( not sucess ):
 				self.auv.set_mode( 0 )
 				self.echo("<===== ALL MISSION =====> GATE IS FAIL SURVEY MODE")
@@ -117,7 +119,9 @@ class SAUVC2019:
 		self.survey_mode( self.vision_flare , "flare" , "far" , 3 , 6 , 1 , 3.5 )
 		sucess = False
 		while( not rospy.is_shutdown() and not sucess ):
-			sucess = self.mission_flare( Bool( True ) )
+			self.echo("<===== ALL MISSION =====> Send request to do mission flare")
+			sucess = self.mission_flare( Bool( True ) ).result
+			self.echo("<===== ALL MISSION =====> Result of flare mission " + str( sucess ) )
 			if( not sucess ):
 				self.auv.set_mode( 0 )
 				self.echo( "<===== ALL MISSION =====> FLARE IS FAIL")

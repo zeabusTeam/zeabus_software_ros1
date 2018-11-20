@@ -66,10 +66,6 @@ class MissionDrop:
 		if( self.current_step == 2 ):
 			self.step_02() # try to make a little center
 
-		if( self.current_step == 3 ):
-#			self.auv.fire_gripper() # release ball
-			self.sucess_mission = True
-
 		return Bool( self.sucess_mission ) , Int8( self.current_step )
 
 	def step_01( self ):
@@ -104,8 +100,28 @@ class MissionDrop:
 			self.current_step += 1
 
 	def step_02( self ):
-		self.auv.set_mode( 1 )
-		while( not rospy.is_shutdown() and diff_time < 20)
+		self.auv.set_mode( 2 )
+		start_time = time.time()
+		diff_time = time.time() - start_time 
+		while( not rospy.is_shutdown() and diff_time < 30):
+			self.request_velocity['z'] = -1.3
+			diff_time = time.time() - start_time
+			self.vision.analysis_all( "drum" , "drop" , 5 )
+			if( self.vision.have_object() ):	
+				if( self.vision.result['cx_2'] > 0.8 ):
+					self.request_velocity['y'] = -0.4
+				elif( self.vision.result['cx_2'] < 0.5 ):
+					self.request_velocity['y'] = 0.4
+				else:
+					self.echo("DROP BALL PLEASE")
+					self.sucess_mission = True
+					break
+				self.echo( self.print_request() )
+			else:
+				self.echo( "<====================== DON\'T FOUND DRUM =======================>")
+		if( not self.sucess_mission ):
+			self.echo("DROP BALL TIME OUT")
+			self.sucess_mission = True
 			
 
 if __name__=="__main__":

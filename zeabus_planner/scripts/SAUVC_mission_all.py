@@ -180,62 +180,63 @@ class SAUVC2019:
 				break
 		self.survey_mode( self.vision_drum , "drum" , "drop" , 1.5 , 1 , 1 , 2.5 )
 		self.echo( "<===== ALL MISSION =====> FOUND DRUM Next Search Ball")
-		self.auv.set_mode( 1 )
-		self.auv.absolute_z( -3.8 )
-		self.found_ball = False
-		while( not rospy.is_shutdown() and not self.found_ball ):
-			self.sleep( 0.1 )
-			self.vision_drum.analysis_all( "drum" , "drop" , 5 )
-			self.echo( self.vision_drum.echo_specific() )
-			if( self.have_object() )
-				if( self.vision_drum.result["cx_1"] < -0.3 )
-					if( self.vision_drum.result['cy_1'] < 0.8)
-						self.auv.velocity( { 'y' : 0.35 , 'x' : 0.3 } )
-					elif( self.vision_drum.result['cy_2'] > -0.8 )
-						self.auv.velocity( { 'y' : 0.35 , 'x' : -0.3 } )	
-				elif( self.vision_drum.result["cx_1"] > 0.1 )
-					if( self.vision_drum.result['cy_1'] < 0.8)
-						self.auv.velocity( { 'y' : -0.2 , 'x' : 0.3 } )
-					elif( self.vision_drum.result['cy_2'] > -0.8 )
-						self.auv.velocity( { 'y' : -0.2 , 'x' : -0.3 } )
-				else:
-					break	
-			else:
-				break
-			self.vision_drum.analysis_all( "drum" , "pick" , 5 )
-			if( self.have_object() )
-				self.echo( "Found Ball")	
-				self.found_ball = True
-			else:
-				self.echo( "Don't Found Ball")
-		while( not rospy.is_shutdown() and not self.found_ball ):
-			self.sleep( 0.1 )
-			self.vision_drum.analysis_all( "drum" , "drop" , 5 )
-			self.echo( self.vision_drum.echo_specific() )
-			if( self.have_object() )
-				if( self.vision_drum.result["cx_2"] < -0.3 )
-					if( self.vision_drum.result['cy_1'] < 0.8)
-						self.auv.velocity( { 'y' : 0.35 , 'x' : 0.3 } )
-					elif( self.vision_drum.result['cy_2'] > -0.8 )
-						self.auv.velocity( { 'y' : 0.35 , 'x' : -0.3 } )	
-				elif( self.vision_drum.result["cx_2"] > 0.1 )
-					if( self.vision_drum.result['cy_1'] < 0.8)
-						self.auv.velocity( { 'y' : -0.2 , 'x' : 0.3 } )
-					elif( self.vision_drum.result['cy_2'] > -0.8 )
-						self.auv.velocity( { 'y' : -0.2 , 'x' : -0.3 } )
-				else:
-					break	
-			else:
-				break
-			self.vision_drum.analysis_all( "drum" , "pick" , 5 )
-			if( self.have_object() )
-				self.echo( "Found Ball")	
-				self.found_ball = True
-			else:
-				self.echo( "Don't Found Ball")
-		if( self.found_ball ):
-			self.echo( "Send Mission")
-			self.mission_gripper( Bool( True ) )
+		self.mission_gripper( Bool( True ) )
+#		self.auv.set_mode( 1 )
+#		self.auv.absolute_z( -3.8 )
+#		self.found_ball = False
+#		while( not rospy.is_shutdown() and not self.found_ball ):
+#			self.sleep( 0.1 )
+#			self.vision_drum.analysis_all( "drum" , "drop" , 5 )
+#			self.echo( self.vision_drum.echo_specific() )
+#			if( self.have_object() )
+#				if( self.vision_drum.result["cx_1"] < -0.3 )
+#					if( self.vision_drum.result['cy_1'] < 0.8)
+#						self.auv.velocity( { 'y' : 0.35 , 'x' : 0.3 } )
+#					elif( self.vision_drum.result['cy_2'] > -0.8 )
+#						self.auv.velocity( { 'y' : 0.35 , 'x' : -0.3 } )	
+#				elif( self.vision_drum.result["cx_1"] > 0.1 )
+#					if( self.vision_drum.result['cy_1'] < 0.8)
+#						self.auv.velocity( { 'y' : -0.2 , 'x' : 0.3 } )
+#					elif( self.vision_drum.result['cy_2'] > -0.8 )
+#						self.auv.velocity( { 'y' : -0.2 , 'x' : -0.3 } )
+#				else:
+#					break	
+#			else:
+#				break
+#			self.vision_drum.analysis_all( "drum" , "pick" , 5 )
+#			if( self.have_object() )
+#				self.echo( "Found Ball")	
+#				self.found_ball = True
+#			else:
+#				self.echo( "Don't Found Ball")
+#		while( not rospy.is_shutdown() and not self.found_ball ):
+#			self.sleep( 0.1 )
+#			self.vision_drum.analysis_all( "drum" , "drop" , 5 )
+#			self.echo( self.vision_drum.echo_specific() )
+#			if( self.have_object() )
+#				if( self.vision_drum.result["cx_2"] < -0.3 )
+#					if( self.vision_drum.result['cy_1'] < 0.8)
+#						self.auv.velocity( { 'y' : 0.35 , 'x' : 0.3 } )
+#					elif( self.vision_drum.result['cy_2'] > -0.8 )
+#						self.auv.velocity( { 'y' : 0.35 , 'x' : -0.3 } )	
+#				elif( self.vision_drum.result["cx_2"] > 0.1 )
+#					if( self.vision_drum.result['cy_1'] < 0.8)
+#						self.auv.velocity( { 'y' : -0.2 , 'x' : 0.3 } )
+#					elif( self.vision_drum.result['cy_2'] > -0.8 )
+#						self.auv.velocity( { 'y' : -0.2 , 'x' : -0.3 } )
+#				else:
+#					break	
+#			else:
+#				break
+#			self.vision_drum.analysis_all( "drum" , "pick" , 5 )
+#			if( self.have_object() )
+#				self.echo( "Found Ball")	
+#				self.found_ball = True
+#			else:
+#				self.echo( "Don't Found Ball")
+#		if( self.found_ball ):
+#			self.echo( "Send Mission")
+#			self.mission_gripper( Bool( True ) )
 		self.auv.set_mode( 0 )
 		self.auv.absolute_z( 0 )
 		self.echo( "<===== MISSION ALL =====> FINISH DO TASK")	

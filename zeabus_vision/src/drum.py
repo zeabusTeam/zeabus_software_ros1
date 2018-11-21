@@ -216,7 +216,7 @@ if __name__ == '__main__':
 
     image_topic = get_topic("bottom")
     rospy.Subscriber(image_topic, CompressedImage, image_callback)
-    rospy.Service('vision_drum', vision_srv_drum(),
+    rospy.Service('vision/drum', vision_srv_drum(),
                   mission_callback)
     print_result("INIT NODE DRUM", ct.GREEN)
 

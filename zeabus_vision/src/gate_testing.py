@@ -249,7 +249,7 @@ if __name__ == '__main__':
         if k == ord('q'):
             break
     cv.destroyAllWindows()
-    # rospy.Service('vision_gate', vision_srv_gate(),
+    # rospy.Service('vision/gate', vision_srv_gate(),
     #               mission_callback)
     # print_result("INIT NODE GATE", ct.GREEN)
     # rospy.spin()

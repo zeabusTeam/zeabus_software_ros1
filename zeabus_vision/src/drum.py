@@ -1,4 +1,10 @@
 #!/usr/bin/python2.7
+"""
+    File name: drum.py
+    Author: AyumiizZ
+    Python Version: 2.7
+    About: code for finding drum
+"""
 import rospy
 import numpy as np
 import cv2 as cv

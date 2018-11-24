@@ -1,4 +1,10 @@
 #!/usr/bin/python2.7
+"""
+    File name: flare.py
+    Author: kam7411
+    Python Version: 2.7
+    About: code for finding flare
+"""
 import rospy
 import cv2 as cv
 import numpy as np

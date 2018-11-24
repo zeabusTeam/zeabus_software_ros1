@@ -11,14 +11,13 @@ if __name__ == "__main__":
     rospy.wait_for_service(service_name)
     print('service start')
     call = rospy.ServiceProxy(service_name, vision_srv_drum)
+    i = 0
     while not rospy.is_shutdown():
         try:
-            # res = call(String('drum'), String('pick'))
-            # print ('pick',res)
             res = call(String('drum'),String('drop'))
-            # print ('release',res)
-            # res = call(String('drum'), String('pick'))
-            #print ('test',res)
+            i += 1
+            print('Calling {} times'.format(i))
         except:
             print('Error')
-        rospy.sleep(0.1)
+            i = 0
+        rospy.sleep(0.05)

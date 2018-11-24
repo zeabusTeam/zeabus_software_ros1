@@ -11,13 +11,15 @@ if __name__ == "__main__":
     rospy.wait_for_service(service_name)
     print('service start')
     call = rospy.ServiceProxy(service_name, vision_srv_flare)
+    i = 0
     while not rospy.is_shutdown():
         try:
             res = call(String('flare'), String('near'))
-            print ('near',res)
-            rospy.sleep(0.1)
+            rospy.sleep(0.05)
             res = call(String('flare'),String('far'))
-            print ('far',res)
+            i += 1
+            print('Calling {} times'.format(i))
         except:
             print('Error')
-        rospy.sleep(0.1)
+            i = 0
+        rospy.sleep(0.05)

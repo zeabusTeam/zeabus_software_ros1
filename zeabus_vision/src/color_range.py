@@ -293,6 +293,8 @@ def select_color():
 
 
 if __name__ == '__main__':
+    rospy.sleep(1)
+    
     rospy.init_node('color_range_main', anonymous=True)
     namespace = sys.argv[1]
     #############################################################################################
@@ -301,7 +303,7 @@ if __name__ == '__main__':
     mission = rospy.get_param(namespace+'/mission', 'null')
     number = rospy.get_param(namespace+'/number', 'null')
     #############################################################################################
-
+    clear_screen()
     print_result('TOPIC: ' + str(camera_topic))
     print_result('CAMERA: ' + str(camera_position))
     print_result('MISSION: ' + str(mission))

@@ -1,4 +1,11 @@
 #!/usr/bin/python2.7
+"""
+    File name: flare_night.py
+    Author: AyumiizZ
+    Python Version: 2.7
+    About: code for finding flare at night time
+"""
+
 import rospy
 import cv2 as cv
 import numpy as np

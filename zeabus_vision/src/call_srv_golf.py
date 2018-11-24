@@ -1,4 +1,11 @@
 #!/usr/bin/python2.7
+"""
+    File name: call_srv_golf.py
+    Author: AyumiizZ
+    Python Version: 2.7
+    About: code for calling golf service (same message and service with drum)
+"""
+
 import rospy
 from zeabus_vision.msg import vision_drum
 from zeabus_vision.srv import vision_srv_drum

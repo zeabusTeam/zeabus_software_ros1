@@ -1,4 +1,11 @@
 #!/usr/bin/python2.7
+"""
+    File name: call_srv_drum.py
+    Author: AyumiizZ
+    Python Version: 2.7
+    About: code for calling drum service
+"""
+
 import rospy
 from zeabus_vision.msg import vision_drum
 from zeabus_vision.srv import vision_srv_drum

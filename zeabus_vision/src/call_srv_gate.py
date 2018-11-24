@@ -1,4 +1,11 @@
 #!/usr/bin/python2.7
+"""
+    File name: call_srv_gate.py
+    Author: AyumiizZ
+    Python Version: 2.7
+    About: code for calling gate service
+"""
+
 import rospy
 from zeabus_vision.msg import vision_gate
 from zeabus_vision.srv import vision_srv_gate

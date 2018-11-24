@@ -1,4 +1,11 @@
 #!/usr/bin/python2.7
+"""
+    File name: call_srv_flare.py
+    Author: AyumiizZ
+    Python Version: 2.7
+    About: code for calling flare service
+"""
+
 import rospy
 from zeabus_vision.msg import vision_flare
 from zeabus_vision.srv import vision_srv_flare

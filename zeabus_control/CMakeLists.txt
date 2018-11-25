@@ -9,7 +9,6 @@ find_package(catkin REQUIRED COMPONENTS
 	geometry_msgs
 	zeabus_library
 	zeabus_extension
-	message_generation
 	dynamic_reconfigure
 )
 

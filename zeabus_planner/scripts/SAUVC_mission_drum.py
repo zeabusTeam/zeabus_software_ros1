@@ -102,8 +102,10 @@ class MissionDrop:
 				self.echo( self.print_request() + " AND Diff time is " + str( diff_time ))
 				self.auv.velocity( self.request_velocity )	
 			else:
-				result = False	
-				break
+#				result = False
+#				break
+				self.auv.velocity( {'y' : 0.3 , 'x' : -0.1 })
+				self.echo("Assign force by my self")	
 		if( result ):
 			self.current_step += 1
 

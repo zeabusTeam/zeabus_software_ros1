@@ -64,6 +64,16 @@ class MissionGate:
 		self.vision.analysis_all( "gate" , "sevinar" , 5 )
 		self.auv.set_mode( 1 )
 		self.auv.absolute_z( -3.8 )
+		count_ok_depth = 0 
+		self.echo( "Waiting Depth are ok")
+		while( not rospy.is_shutdown() and count_ok_depth < 4 ):
+			self.sleep( 0.1 )
+			if( self.auv.check_state('z' , 0.05 ) ):
+				self.echo("Count ok depth is " + str(count_ok_depth) )
+				count_ok_depth += 1
+			else:
+				self.echo("reset count ok depth is " + str(count_ok_depth) )
+				count_ok_depth = 0
 		self.current_step = 0
 		if( self.vision.have_object() ):
 			self.current_step = 1

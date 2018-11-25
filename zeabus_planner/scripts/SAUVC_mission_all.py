@@ -87,7 +87,7 @@ class SAUVC2019:
 				count_ok = 0
 			if( count_ok == 5 ):
 				break
-		self.survey_mode( self.vision_gate , "gate" , "sevinar" , 1 , 5 , 1 , 3)
+		self.survey_mode( self.vision_gate , "gate" , "sevinar" , 0.2 , 5 , 1 , 3)
 		sucess = False
 		while( not rospy.is_shutdown() and not sucess):
 			self.echo( "<===== ALL MISSION =====> Send request do mission gate ")
@@ -133,7 +133,7 @@ class SAUVC2019:
 		self.echo( "<===== MISSION ALL =====> FINISH DO TASK")	
 
 	def third_mission( self ):
-		self.start_yaw = self.auv.receive_target('yaw')[0] 
+#		self.start_yaw = self.auv.receive_target('yaw')[0] 
 		self.echo( "<===== ALL MISSION =====> Start to do mission drop")
 		self.auv.set_mode( 0 )
 		self.auv.absolute_z( -3.3 )
@@ -149,7 +149,7 @@ class SAUVC2019:
 			if( count_ok == 7 ):
 				break
 		self.echo("Now OK YAW Survey to find drum")
-		self.survey_mode( self.vision_drum , "drum" , "drop" , 6 , 2 , 1 , 4)
+		self.survey_mode( self.vision_drum , "drum" , "drop" , 4.5 , 2 , 1 , 4)
 		sucess = self.mission_drum( Bool( True) ).result
 		if( sucess ):
 			self.echo("<===== ALL MISSION =====> DROP BALL SUCCESS")
@@ -185,6 +185,7 @@ class SAUVC2019:
 			if( count_ok == 7 ):
 				break
 		self.echo("Now OK YAW go to Backword")
+		self.sleep( 1 )
 		self.auv.relative_x( -1.5 )
 		self.echo( "Waiting OK XY")
 		count_ok = 0
@@ -289,5 +290,5 @@ class SAUVC2019:
 
 if __name__=="__main__":
 	SAUVC = SAUVC2019()
-#	SAUVC.first_mission()	
-	SAUVC.third_mission()
+	SAUVC.first_mission()	
+#	SAUVC.third_mission()

@@ -105,14 +105,14 @@ class MissionGripper:
 			if( self.vision.have_object() ):
 				start_time = time.time()
 				self.echo( self.vision.echo_data() )
-				if( ever_unfound ):
-					self.echo( "Ever_unfound Mode")
+				if( diff_time > 2 ):
+					diff_up_time = 0
 					start_up_time = time.time()
-					diff_up_time = time.time() -start_up_time 
-					while( not rospy.is_shutdown() and diff_up_time < 4 ):
-						self.auv.velocity( { 'z' : -0.8 , 'y' : -0.12 })
+					while( not rospy.is_shutdown() and diff_up_time < 2 ):
+						self.auv.velocity( { 'z' : -0.9 } )
+						self.sleep( 0.1 )
 						diff_up_time = time.time() - start_up_time
-				self.request_velocity['z'] = -1.2
+				self.request_velocity['z'] = -1.1
 				self.check_range( "x" , self.vision.center_y() , -0.32 , 0.16 , 0.15 )
 				self.check_range( "y" , self.vision.center_x() , -0.68 , -0.42 , -0.18 )
 				self.echo( "FOUND OBJECT " + self.print_request() )
@@ -123,8 +123,6 @@ class MissionGripper:
 				self.echo( "NO " + self.print_request() )
 			self.auv.velocity( self.request_velocity )
 			diff_time = time.time() - start_time
-			if( diff_time > 2 ):
-				self.ever_unfound = True	
 		self.reset_request()
 		self.echo( "<=== MISSION GRIPPER ===> Time out go up")
 		while( not rospy.is_shutdown() and not self.check_depth( -0.6 ) ):
@@ -152,6 +150,17 @@ class MissionGripper:
 		self.sucess_mission = True
 
 	def find_ball( self ):
+		self.sleep( 0.5 )
+		self.auv.absolute_z( -4 )
+		self.echo( "<=== MISSION GRIPPER ===> WAITNG DEPTH")
+		count_ok_depth = 0
+		while( not rospy.is_shutdown() ):
+			if( self.auv.check_state( 'z' , 0.05 ) ):
+				count_ok_depth += 1
+			else:
+				count_ok_depth = 0
+			if( count_ok_depth < 5 ):
+				break
 		start_time = time.time()
 		diff_time = time.time() - start_time
 		limit_time = 5

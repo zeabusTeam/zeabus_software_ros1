@@ -71,7 +71,6 @@ def message(state=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
 
 def what_align(cnt):
     x, y, w, h = cv.boundingRect(cnt)
-    # print(w > h)
     if w > h:
         return 'h'
     return 'v'
@@ -90,23 +89,15 @@ def is_pipe(cnt, percent):
     w, h = max(w, h), min(w, h)
     area_cnt = cv.contourArea(cnt)
     area_box = w * h
-    # print('percent', percent)
-    # print('area', area_cnt)
-    # print('areab', area_box)
-    # print('w', w, 'h', h)
     if (area_box == 0) or area_cnt <= 500:
         return False
 
     area_ratio = area_cnt / area_box
     wh_ratio = 1.0 * w / h
-    # print('angle', angle)
-    # print("area:", area_ratio, "wh", wh_ratio)
     if (not (area_ratio > area_ratio_expected
              and wh_ratio > wh_ratio_expected * percent
              and (angle >= -20 or angle <= -70))):
         return False
-
-    # print("area:", area_ratio, "wh", wh_ratio)
     return True
 
 
@@ -121,7 +112,6 @@ def find_pipe(binary, align):
     for cnt in contours:
         (x, y), (w, h), angle = rect = cv.minAreaRect(cnt)
         w, h = max(w, h), min(w, h)
-        # print('na', not what_align(cnt) == align, align)
         if not is_pipe(cnt, percent_pipe) or not what_align(cnt) == align:
             continue
 
@@ -133,7 +123,6 @@ def find_pipe(binary, align):
         else:
             cv.drawContours(pipe, [box], 0, (255, 0, 255), 2)
             result.append([int(x), int(y), int(w), int(h), angle])
-    # cv.imshow('pipe',pipe)
     if align == 'v':
         publish_result(pipe, 'bgr', public_topic + 'mask/vpipe')
     if align == 'h':
@@ -174,7 +163,6 @@ def find_gate():
 
     vertical_pipe, no_pipe_v = find_pipe(vertical, 'v')
     horizontal_pipe, no_pipe_h = find_pipe(horizontal, 'h')
-    # horizontal_pipe, no_pipe_h = [],0
 
     display = image_input.copy()
 
@@ -185,25 +173,18 @@ def find_gate():
     vertical_cy2 = []
 
     for res in horizontal_pipe:
-        # green
         x, y, w, h, angle = res
-        # print('hor', res)
         cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
                      (int(x + w / 2.), int(y + h / 2.)), (0, 255, 0), 2)
         horizontal_cx.append([(x - w / 2.), (x + w / 2.)])
         horizontal_cy.append(y)
-    # print(image_input.shape)
     for res in vertical_pipe:
-        # pink
         x, y, w, h, angle = res
-        # print('ver', res)
         cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
                      (int(x + w / 2.), int(y + h / 2.)), (108, 105, 255), 2)
         vertical_cx.append(x)
         vertical_cy1.append((y - h / 2.))
         vertical_cy2.append((y + h / 2.))
-    # print(vertical_cx)
-    # print(horizontal_cx)
     himg, wimg = obj.shape[:2]
     mode = 0
     if no_pipe_h == 1:
@@ -217,8 +198,6 @@ def find_gate():
         mode = 4
     else:
         mode = 0
-    # print("no_pipe_v", no_pipe_v)
-    # print("no_pipe_h", no_pipe_h)
     if mode == 0:
         print_result("NOT FOUND", ct.RED)
         publish_result(display, 'bgr', public_topic + 'image_result')
@@ -246,8 +225,8 @@ def find_gate():
         cx1 = min(vertical_cx)
         cx2 = max(vertical_cx)
         cy1 = (sum(vertical_cy1)+min(vertical_cy1))/len(vertical_cy1)
-    cy2 = (sum(vertical_cy2)+max(vertical_cy2))/(len(vertical_cy2)+1) if no_pipe_v != 0 else himg
-# horizontal_cy[0] + cx2-cx1
+    cy2 = (sum(vertical_cy2)+max(vertical_cy2)) / \
+        (len(vertical_cy2)+1) if no_pipe_v != 0 else himg
     right_excess = (cx2 > 0.95*wimg)
     left_excess = (cx1 < (0.05*wimg))
     if (right_excess and not left_excess):
@@ -256,10 +235,8 @@ def find_gate():
         pos = -1
     else:
         pos = 0
-    # cv.line(display, (0, int(cy1)), (wimg, int(cy1)), (255, 255, 255), 5)
-    # cv.line(display, (int(cx1), 0), (int(cx1), himg), (255, 0, 0), 5)
-    # cv.line(display, (int(cx2), 0), (int(cx2), himg), (0, 255, 0), 5)
-    cv.rectangle(display, (int(cx1), int(cy1)), (int(cx2), int(cy2)), (0, 255, 0), 3)
+    cv.rectangle(display, (int(cx1), int(cy1)),
+                 (int(cx2), int(cy2)), (0, 255, 0), 3)
     area = 1.0*abs(cx2-cx1)*abs(cy1-cy2)/(himg*wimg)
     publish_result(display, 'bgr', public_topic + 'image_result')
     publish_result(vertical, 'gray', public_topic + 'mask/vertical')

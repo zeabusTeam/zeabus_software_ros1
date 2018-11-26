@@ -42,12 +42,13 @@ catkin_package(
 	INCLUDE_DIRS include
 	LIBRARIES zeabus_library
 	CATKIN_DEPENDS roscpp message_runtime std_msgs
-#	DEPENDS system_lib
+	DEPENDS Boost
 )
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 set( zeabus_control_sources
@@ -75,4 +76,4 @@ add_library( zeabus_library	STATIC ${zeabus_control_sources} ${zeabus_sensor_sou
 add_dependencies( zeabus_library	${${PROJECT_NAME}_EXPORTED_TARGETS}
 									${catkin_EXPORTED_TARGETS} )
 
-target_link_libraries( zeabus_library	${catkin_LIBRARIES} )
+target_link_libraries( zeabus_library	${catkin_LIBRARIES} ${Boost_LIBRARIES})

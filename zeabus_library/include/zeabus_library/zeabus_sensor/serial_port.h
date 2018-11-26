@@ -35,6 +35,8 @@
 #ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_SERIAL_PORT_H__
 #define _ZEABUS_LIBRARY_ZEABUS_SENSOR_SERIAL_PORT_H__
 
+namespace errc = boost::system::errc;
+
 namespace zeabus_sensor{
 	class SerialPort : private boost::noncopyable{
 

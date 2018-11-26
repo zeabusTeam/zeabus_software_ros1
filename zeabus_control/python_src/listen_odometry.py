@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-	File name			: main_control.py
+	File name			: listen_odometry.py
 	Author				: Supasan Komonlit
 	Date created		: 2018 , NOV 26
 	Date last Modified	: 2018 , ??? ??
 	Python Version		: 2.7
-	Purpose				: This is main file of control to use in zeabus AUV
+	Purpose				: This is subfile of main_control for listen message nav_msgs/Odometry
 """
 
 from __future__ import print_function
@@ -21,14 +21,9 @@ __status__		= "Production"
 
 import rospy
 
-import numpy
-import time
+from nav_msgs.msg import Odometry
 
-class MainControl:
+class ListenOdometry:
 
 	def __init__( self ):
-		print( "Init Function of Class MainControl" )
-
-if __name__=="__main__":
-	print("Start Class MainControl")
-	rospy.init_node( "control_main" )
+		None	

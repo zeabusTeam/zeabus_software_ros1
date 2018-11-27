@@ -53,7 +53,7 @@ namespace zeabus_sensor{
 	}	
 			
 	void IMUPort::echo_detail_buffer(){
-		printf( "DETAILED MEMORY BUFFER : size -> %d --- capacity -> %d --- max_size -> %d \n" ,
+		printf( "DETAILED MEMORY BUFFER : size -> %ld --- capacity -> %ld --- max_size -> %ld\n",
 					this->buffer_packet.size() , this->buffer_packet.capacity() 
 					, this->buffer_packet.max_size() );
 	}
@@ -112,7 +112,7 @@ namespace zeabus_sensor{
 			if( 1 == this->read_data( this->buffer_receive_bytes , 1 ) ){
 				if( this->buffer_receive_bytes[0] != descriptor_set_byte ){
 					printf( "Wrong packet descriptor set byte \n");
-					continue
+					continue;
 				}
 				else{
 					this->add_data_to_packet( this->buffer_receive_bytes[0] );

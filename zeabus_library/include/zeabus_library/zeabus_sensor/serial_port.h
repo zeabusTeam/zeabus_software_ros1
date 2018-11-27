@@ -67,10 +67,8 @@ namespace zeabus_sensor{
 			boost::asio::io_service io_service;
 			boost::asio::serial_port io_port;
 			boost::system::error_code error_code;
-
-		private:
-			std::string name_port;
 			bool temp_boolean;
+			std::string name_port;
 				
 		
 	};

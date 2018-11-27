@@ -1,13 +1,13 @@
 /*
 	File name			:	imu_command.h		
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , NOV 26
+	Date created		:	2018 , NOV 27
 	Date last modified	:	2018 , ??? ??
 	Purpose				:	This is header of file about manage connect with IMU
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
+	version				:	0.0.5
 	status				:	Production
 
 	Namespace			:	zeabus_sensor

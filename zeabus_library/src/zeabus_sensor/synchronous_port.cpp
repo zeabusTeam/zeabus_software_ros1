@@ -26,6 +26,7 @@ namespace zeabus_sensor{
 		this->is_open( temp_boolean );
 		if( temp_boolean ){
 			this->close_port( temp_boolean );
+			printf("Port < %s > now close\n" , this->name_port.c_str() );
 		}
 		else{
 			printf("Port < %s > never open\n" , this->name_port.c_str() );

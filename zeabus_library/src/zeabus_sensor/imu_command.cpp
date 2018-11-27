@@ -1,13 +1,13 @@
 /*
 	File name			:	imu_command.cpp		
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , NOV 26
+	Date created		:	2018 , NOV 27
 	Date last modified	:	2018 , ??? ??
 	Purpose				:	This is source of file about connection with port imu
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
+	version				:	0.0.5
 	status				:	Production
 
 	Namespace			:	zeabus_sensor
@@ -20,6 +20,8 @@
 namespace zeabus_sensor{
 	
 	IMUPort::IMUPort( std::string name_port ) : SynchronousPort( name_port ){}
+
+	IMUPort::~IMUPort(){}
 
 	void IMUPort::command_idle( bool& result ){
 		this->init_header_packet();

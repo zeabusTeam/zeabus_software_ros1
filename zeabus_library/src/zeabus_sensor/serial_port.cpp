@@ -24,20 +24,17 @@ namespace zeabus_sensor{
 	SerialPort::~SerialPort(){
 		this->is_open( this->temp_boolean );
 		if( this->temp_boolean ){
-			printf( "<==== ZEABUS SENSOR ====> CLOSE PORT\n");
 			this->close_port( this->temp_boolean );
-		}
-		else{
-			printf( "<==== ZEABUS SENSOR ====> PORT DOESN\'T OPEN\n");
 		}
 	}
 
 	void SerialPort::open_port( bool& result ){
 		try{
 			this->io_port.open( this->name_port );
+			printf( "Port < %s > now open\n" , this->name_port.c_str() );
 		}
 		catch( const std::exception& error ){
-			printf( "<==== ZEABUS SENSOR ====> Error open port < %s > "
+			printf( "<==== ZEABUS SENSOR ====> Error open port < %s >\n"
 							, this->name_port.c_str());
 		}
 	}
@@ -51,7 +48,7 @@ namespace zeabus_sensor{
 		if( this->temp_boolean ){
 			this->io_port.close( this->error_code );
 			if( this->error_code != errc::success ){
-				printf("<==== ZEABUS SENSOR ====> Success close port %s\n"
+				printf("<==== ZEABUS SENSOR ====> Error close port < %s >\n"
 							, this->name_port.c_str() );
 			}	
 		}

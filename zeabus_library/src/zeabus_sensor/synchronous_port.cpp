@@ -32,7 +32,7 @@ namespace zeabus_sensor{
 		}
 	}
 
-	size_t SynchronousPort::read_data( std::vector<uint8_t>& buffer , size_t& size ){
+	size_t SynchronousPort::read_data( std::vector<uint8_t>& buffer , size_t size ){
 		size_t read_size = this->io_port.read_some( boost::asio::buffer( buffer , size ) 
 												, this->error_code );
 		if( this->error_code == errc::success ){
@@ -44,9 +44,13 @@ namespace zeabus_sensor{
 		return read_size; 
 	}
 
-	size_t SynchronousPort::write_data( std::vector<uint8_t>& buffer , size_t& size ){
-		size_t write_size = this->io_port.write_some( boost::asio::buffer( buffer , size )
+	size_t SynchronousPort::write_data( std::vector<uint8_t>& buffer , size_t size ){
+		size_t write_size = 0; 
+
+		while( write_size != size ){
+			write_size = this->io_port.write_some( boost::asio::buffer( buffer , size )
 												, this->error_code );
+		}
 		if( this->error_code == errc::success ){
 			#ifdef DEBUG_CODE
 				printf( "SUCCESS write data < %zd > size\n" , write_size );

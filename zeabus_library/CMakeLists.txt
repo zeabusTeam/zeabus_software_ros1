@@ -69,7 +69,8 @@ set( zeabus_control_sources
 
 set( zeabus_sensor_sources
 	src/zeabus_sensor/serial_port.cpp
-	src/zeabus_sensor/synchronous_port.cpp	
+	src/zeabus_sensor/synchronous_port.cpp
+	src/zeabus_sensor/imu_command.cpp	
 )
 
 add_library( zeabus_library	STATIC ${zeabus_control_sources} ${zeabus_sensor_sources})

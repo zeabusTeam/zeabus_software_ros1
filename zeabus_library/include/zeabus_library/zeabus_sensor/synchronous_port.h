@@ -31,8 +31,8 @@ namespace zeabus_sensor{
 			SynchronousPort( std::string name_port ); // this function will cal when init object
 			~SynchronousPort(); // this function will call when delete object
 
-			size_t read_data( std::vector<uint8_t>& buffer , size_t& size );
-			size_t write_data( std::vector<uint8_t>& buffer , size_t& size );
+			size_t read_data( std::vector<uint8_t>& buffer , size_t size );
+			size_t write_data( std::vector<uint8_t>& buffer , size_t size );
 
 	};
 }

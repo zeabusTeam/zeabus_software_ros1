@@ -13,6 +13,10 @@
 	Namespace			:	zeabus_sensor
 */
 
+
+#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_MIP_COMMUNICATION_H__
+#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_MIP_COMMUNICATION_H__
+
 namespace zeabus_sensor{
 
 namespace MIP_COMMUNICATION{
@@ -66,3 +70,5 @@ namespace MIP_COMMUNICATION{
 	}
 }
 }
+
+#endif

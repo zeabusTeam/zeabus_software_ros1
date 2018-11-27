@@ -19,7 +19,7 @@ bgr = None
 image_result = None
 public_topic = '/vision/mission/drum/'
 sub_sampling = 1
-history = []
+his = []
 last_time = 0
 start_shade = 0
 shade = ["dark","light"]
@@ -107,7 +107,7 @@ def get_ROI(mask, obj='drop'):
         area = cv.contourArea(cnt)
         check_area = 1000
         if obj == 'pick':
-            check_area = 200
+            check_area = 100
         if area < check_area:
             continue
         ROI.append(cnt)
@@ -191,27 +191,28 @@ def find_drum(objective):
                        backward=backward, left=left, right=right, area=area)
 
 def append_history(data):
-    global history
-    if len(history) == 10:
-        history = history[1:] + list(data)
+    global his
+    if len(his) == 5:
+        his = [data]
     else:
-        history = history.append(data)
+        his.append(data)
 
 def find_golf(objective):
-    global bgr, last_time, history, start_shade, shade
+    global bgr, last_time, his, start_shade, shade
     if bgr is None:
         img_is_none()
         return message(state=-1)
-    if(last_time == 0 or time()-last_time > 5):
-        history = []
+    if(last_time == 0 or time()-last_time > 5 or his is None):
+        his = []
     himg, wimg = bgr.shape[:2]
     if himg > 1000 or wimg > 1000:
         print_result("size bug plz wait", color=ct.RED)
         last_time = time()
         return message(state=-2)
-    if len(history) == 10 and sum(history)/len(history) < 0.2:
+    if len(his) == 5 and 1 not in his:
         start_shade += 1
         start_shade %= len(shade)
+    print(shade[start_shade],his)
     golf_mask = get_mask(bgr, "yellow",shade=shade[start_shade])
     ROI = get_ROI(golf_mask, objective)
     if ROI is None:

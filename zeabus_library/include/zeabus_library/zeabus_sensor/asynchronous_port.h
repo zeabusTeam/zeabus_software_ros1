@@ -43,11 +43,12 @@ namespace zeabus_sensor{
 
 			void time_handle( const boost::system::error_code& error_code);
 
-			size_t read_data( std::vector<uint8_t>& buffer , size_t& size );
-			size_t write_data( std::vector<uint8_t>& buffer , size_t& size );
+			size_t read_data( std::vector<uint8_t>& buffer , size_t& size , int time_out );
+			size_t write_data( std::vector<uint8_t>& buffer , size_t& size , int time_out );
 
 		private:
-			uint8_t io_state
+			uint8_t io_state;
+			boost::asio::deadline_timer timer;
 			size_t buffer_size;
 
 	};

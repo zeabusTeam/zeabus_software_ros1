@@ -24,6 +24,9 @@ namespace zeabus_sensor{
 	SynchroPort::~SynchroPort(){}
 
 	size_t SynchroPort::read_data( std::vector<uint8_t>& buffer , size_t& size ){
+		if( buffer.size() < size ){
+			buffer.resize( size ); // must ensure your buffer have size can collect data
+		}
 		#ifdef _DEBUG_CONNECTION_
 			printf( "want read size < %zd > ===" , size);
 		#endif

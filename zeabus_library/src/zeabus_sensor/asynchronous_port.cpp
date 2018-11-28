@@ -31,18 +31,31 @@ namespace zeabus_sensor{
 	Asynchronous::~AynchroPort(){};
 
 	void Asynchronous::read_handle( const boost::system::error_code& error_code
-							, const size_t bytes_transfereed );
-
-	void Asynchronous::write_handle( const boost::system::error_code& error_code
-							, const size_t bytes_transfereed );
-
-	void Asynchronous::time_handle( const boost::system::error_code& error_code);
-
-	size_t Asynchronous::read_data( std::vector<uint8_t>& buffer , size_t& size ){
+							, const size_t bytes_transfereed ){
 
 	}
 
-	size_t Asynchronous::write_data( std::vector<uint8_t>& buffer , size_t& size ){
+	void Asynchronous::write_handle( const boost::system::error_code& error_code
+							, const size_t bytes_transfereed ){
+
+	}
+
+	void Asynchronous::time_handle( const boost::system::error_code& error_code){
+		if( error_code != errc::success && ( this->io_state == IO_PROCESS ) ){
+			this->io_state = IO_TIME_OUT;
+		}
+	}
+
+	size_t Asynchronous::read_data( std::vector<uint8_t>& buffer , size_t& size , int time_out){
+
+		if( buffer.size() < size ){
+			buffer.resize( size ); // for make real buffer must ensure have size to collect data
+		}
+
+		
+	}
+
+	size_t Asynchronous::write_data( std::vector<uint8_t>& buffer , size_t& size , int time_out){
 
 	}
 

@@ -42,7 +42,8 @@ namespace zeabus_sensor{
 
 			// this part will use to check sum packet correct or not
 			void find_check_sum( bool& result );
-			void read_reply_packet( bool &result , uint8_t descriptor_set_byte);
+			void read_reply_packet( bool &result , uint8_t descriptor_set_byte
+									, int limit_round = 10);
 		
 		private:
 			uint8_t MSB;

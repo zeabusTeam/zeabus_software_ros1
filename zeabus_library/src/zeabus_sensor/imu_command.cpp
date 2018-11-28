@@ -27,6 +27,7 @@ namespace zeabus_sensor{
 		this->init_header_packet();
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR );
 		this->add_data_to_packet( 0x02 );
+		this->add_data_to_packet( 0x02);
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::IDLE );
 		this->adding_check_sum();
 		this->print_buffer( "After adding sum IDLE ");
@@ -64,7 +65,7 @@ namespace zeabus_sensor{
 	void IMUPort::print_buffer( std::string message ){
 		printf( "%sData packet is : " , message.c_str() );
 		for( int run  = 0 ; run < this->buffer_packet.size() ; run++ ){
-			printf( "%X " , this->buffer_packet[ run ] );
+			printf( "%2X " , this->buffer_packet[ run ] );
 		}
 		printf("\n");
 	}
@@ -90,13 +91,15 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( LSB );
 	}
 
-	void IMUPort::read_reply_packet( bool &result , uint8_t descriptor_set_byte){
+	void IMUPort::read_reply_packet( bool &result, uint8_t descriptor_set_byte, int limit_round){
 
 		result = false;
 
-		while( ! temp_boolean ){
+		int count = 0;
 
-			if( 1 == this->read_data( this->buffer_receive_bytes , 1 ) ){
+		while( ! temp_boolean && count < limit_round){
+			count ++ ;
+			if( this->read_data( this->buffer_receive_bytes , 1 ) ){
 				if( this->buffer_receive_bytes[0] != 'u' ) continue;
 			}
 			else{
@@ -143,7 +146,6 @@ namespace zeabus_sensor{
 			else continue;
 
 			this->find_check_sum( result );
-
 		}
 				
 	}

@@ -38,7 +38,7 @@ namespace zeabus_sensor{
 												, this->error_code );
 		if( this->error_code == errc::success ){
 			#ifdef DEBUG_CODE
-				printf( "SUCCESS read data < %zd > size\n" , read_size );
+				printf( "SUCCESS read data < %zd > size want < %zd >\n" , read_size , size );
 			#endif	
 			return read_size;	
 		}	

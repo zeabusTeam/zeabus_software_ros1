@@ -3,7 +3,7 @@
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 26
 	Date last modified	:	2018 , NOV 28
-	Purpose				:	This is header of file abount port style synchronous
+	Purpose				:	This is header of file abount port method in class
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
@@ -20,8 +20,8 @@
 #include	<stdio.h> // standard library of c language
 #include	<iostream> // standard library of cpp language
 
-#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_SYNCHRONOUS_PORT_H__
-#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_SYNCHRONOUS_PORT_H__
+#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_BASE_PORT_H__
+#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_BASE_PORT_H__
 
 namespace zeabus_sensor{
 	class BasePort : public SerialPort{

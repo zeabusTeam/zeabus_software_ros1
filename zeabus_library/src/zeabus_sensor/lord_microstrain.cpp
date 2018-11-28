@@ -19,7 +19,7 @@
 
 namespace zeabus_sensor{
 	
-	LordMicrostrain::LordMicrostrain( std::string name_port ) : BasePort( name_port ){}
+	LordMicrostrain::LordMicrostrain( std::string name_port ) : SynchroPort( name_port ){}
 
 	LordMicrostrain::~LordMicrostrain(){}
 
@@ -32,7 +32,8 @@ namespace zeabus_sensor{
 		this->adding_check_sum();
 		this->print_buffer( "After adding sum IDLE ");
 		this->echo_detail_buffer();
-		this->write_data( this->buffer_packet , size_t(this->buffer_packet.size()) );	
+		this->temp_size = (size_t) this->buffer_packet.size();
+		this->write_data( this->buffer_packet , this->temp_size );	
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR);
 		this->print_buffer( "Reply Packet after IDLE " );
@@ -52,7 +53,8 @@ namespace zeabus_sensor{
 		this->adding_check_sum();
 		this->print_buffer( "After adding sum PING ");
 		this->echo_detail_buffer();
-		this->write_data( this->buffer_packet , this->buffer_packet.size());	
+		this->temp_size = ( size_t ) this->buffer_packet.size(); 
+		this->write_data( this->buffer_packet , this->temp_size);	
 	}	
 			
 	void LordMicrostrain::echo_detail_buffer(){
@@ -99,7 +101,8 @@ namespace zeabus_sensor{
 
 		while( ! temp_boolean && count < limit_round){
 			count ++ ;
-			if( this->read_data( this->buffer_receive_bytes , 1 ) ){
+			this->temp_size = 1;
+			if( this->read_data( this->buffer_receive_bytes , this->temp_size ) ){
 				if( this->buffer_receive_bytes[0] != 'u' ) continue;
 			}
 			else{
@@ -107,14 +110,14 @@ namespace zeabus_sensor{
 				continue;
 			}
 			
-			if( 1 == this->read_data( this->buffer_receive_bytes , 1 ) ){
+			if( 1 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ){
 				if( this->buffer_receive_bytes[0] != 'e' ) continue;
 			}
 			else continue;
 		
 			this->init_header_packet();
 			
-			if( 1 == this->read_data( this->buffer_receive_bytes , 1 ) ){
+			if( 1 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ){
 				if( this->buffer_receive_bytes[0] != descriptor_set_byte ){
 					printf( "Wrong packet descriptor set byte \n");
 					continue;
@@ -125,7 +128,7 @@ namespace zeabus_sensor{
 			}
 			else continue;
 
-			if( 1 == this->read_data( this->buffer_receive_bytes , 1 ) ) {
+			if( 1 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ) {
 				this->buffer_size = this->buffer_receive_bytes[0];
 				this->add_data_to_packet( this->buffer_receive_bytes[0] );
 			}
@@ -139,7 +142,8 @@ namespace zeabus_sensor{
 			}
 			else continue;
 
-			if( 2 == this->read_data( this->buffer_receive_bytes , 2 ) ){
+			this->temp_size = 2;
+			if( 2 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ){
 				this->add_data_to_packet( this->buffer_receive_bytes[0] );
 				this->add_data_to_packet( this->buffer_receive_bytes[1] );
 			}

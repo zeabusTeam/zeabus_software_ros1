@@ -13,15 +13,15 @@
 	Namespace			:	zeabus_sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/base_port.h>
+#include	<zeabus_library/zeabus_sensor/synchronous_port.h>
 #include	<zeabus_library/zeabus_sensor/MIP_COMMUNICATION.h>
 
-#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_IMU_PORT__
-#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_IMU_PORT__
+#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_LORD_MICROSTRAIN_H__
+#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_LORD_MICROSTRAIN_H__
 
 namespace zeabus_sensor{
 
-	class LordMicrostrain : public BasePort {
+	class LordMicrostrain : public SynchroPort {
 
 		public:
 			LordMicrostrain( std::string name_port );
@@ -48,6 +48,7 @@ namespace zeabus_sensor{
 		private:
 			uint8_t MSB;
 			uint8_t LSB;
+			size_t temp_size;
 			size_t buffer_size;
 			std::vector< uint8_t > buffer_packet;
 			std::vector< uint8_t > buffer_receive_bytes;

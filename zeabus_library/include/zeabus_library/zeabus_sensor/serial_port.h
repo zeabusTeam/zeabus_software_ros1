@@ -2,7 +2,7 @@
 	File name			:	serial_port.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 26
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , NOV 28
 	Purpose				:	This is header of file about standard doing to do with port
 
 	Maintainer			:	Supasan Komonlit
@@ -38,6 +38,12 @@
 namespace errc = boost::system::errc;
 
 namespace zeabus_sensor{
+
+	const uint8_t IO_ERROR = 0;
+	const uint8_t IO_DONE = 1;
+	const uint8_t IO_PROCESS = 2;
+	const uint8_t IO_TIME_OUT = 3;
+
 	class SerialPort : private boost::noncopyable{
 
 		public:	

@@ -7,7 +7,7 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.0.1
 	status				:	Maintain
 
 	Namespace			:	zeabus_sensor
@@ -50,6 +50,9 @@ namespace zeabus_sensor{
 			if( this->error_code != errc::success ){
 				printf("<==== WARNING ====> Error close port < %s >\n"
 							, this->name_port.c_str() );
+			}
+			else{
+				printf("Port < %s > now close\n" , this->name_port.c_str() );
 			}	
 		}
 		else{

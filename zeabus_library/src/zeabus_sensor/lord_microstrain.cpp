@@ -1,5 +1,5 @@
 /*
-	File name			:	imu_command.cpp		
+	File name			:	lord_microstrain.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
 	Date last modified	:	2018 , ??? ??
@@ -7,23 +7,23 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.5
+	version				:	0.5.0
 	status				:	Production
 
 	Namespace			:	zeabus_sensor
 */
 
-#include <zeabus_library/zeabus_sensor/imu_command.h>
+#include <zeabus_library/zeabus_sensor/lord_microstrain.h>
 
 #define ACK_OR_NACK
 
 namespace zeabus_sensor{
 	
-	IMUPort::IMUPort( std::string name_port ) : SynchronousPort( name_port ){}
+	LordMicrostrain::LordMicrostrain( std::string name_port ) : BasePort( name_port ){}
 
-	IMUPort::~IMUPort(){}
+	LordMicrostrain::~LordMicrostrain(){}
 
-	void IMUPort::command_idle( bool& result ){
+	void LordMicrostrain::command_idle( bool& result ){
 		this->init_header_packet();
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR );
 		this->add_data_to_packet( 0x02 );
@@ -44,7 +44,7 @@ namespace zeabus_sensor{
 		}
 	}
 
-	void IMUPort::command_ping( bool& result ){
+	void LordMicrostrain::command_ping( bool& result ){
 		this->init_header_packet();
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR );
 		this->add_data_to_packet( 0x02 );
@@ -55,14 +55,14 @@ namespace zeabus_sensor{
 		this->write_data( this->buffer_packet , this->buffer_packet.size());	
 	}	
 			
-	void IMUPort::echo_detail_buffer(){
+	void LordMicrostrain::echo_detail_buffer(){
 		printf( "DETAILED MEMORY BUFFER : size -> %ld --- capacity -> %ld --- max_size -> %ld\n",
 					this->buffer_packet.size() , this->buffer_packet.capacity() 
 					, this->buffer_packet.max_size() );
 	}
 			
 
-	void IMUPort::print_buffer( std::string message ){
+	void LordMicrostrain::print_buffer( std::string message ){
 		printf( "%sData packet is : " , message.c_str() );
 		for( int run  = 0 ; run < this->buffer_packet.size() ; run++ ){
 			printf( "%2X " , this->buffer_packet[ run ] );
@@ -70,17 +70,17 @@ namespace zeabus_sensor{
 		printf("\n");
 	}
 
-	void IMUPort::init_header_packet(){
+	void LordMicrostrain::init_header_packet(){
 		this->buffer_packet.clear();
 		this->add_data_to_packet( 0x75 );
 		this->add_data_to_packet( 0x65 );
 	}
 
-	void IMUPort::add_data_to_packet( uint8_t data_byte ){
+	void LordMicrostrain::add_data_to_packet( uint8_t data_byte ){
 		this->buffer_packet.push_back( data_byte );
 	}
 
-	void IMUPort::adding_check_sum(){
+	void LordMicrostrain::adding_check_sum(){
 		MSB = 0;
 		LSB = 0;
 		for( int run = 0 ; run < this->buffer_packet.size() ; run++ ){
@@ -91,7 +91,7 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( LSB );
 	}
 
-	void IMUPort::read_reply_packet( bool &result, uint8_t descriptor_set_byte, int limit_round){
+	void LordMicrostrain::read_reply_packet( bool &result, uint8_t descriptor_set_byte, int limit_round){
 
 		result = false;
 
@@ -150,7 +150,7 @@ namespace zeabus_sensor{
 				
 	}
 
-	void IMUPort::find_check_sum( bool& result){
+	void LordMicrostrain::find_check_sum( bool& result){
 		MSB = 0;
 		LSB = 0;
 		for( int run = 0 ; run < this->buffer_packet.size() ; run++ ){

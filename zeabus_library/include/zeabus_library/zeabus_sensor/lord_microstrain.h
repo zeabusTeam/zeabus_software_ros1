@@ -1,5 +1,5 @@
 /*
-	File name			:	imu_command.h		
+	File name			:	lord_microstrain.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
 	Date last modified	:	2018 , ??? ??
@@ -7,13 +7,13 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.5
+	version				:	0.5.0
 	status				:	Production
 
 	Namespace			:	zeabus_sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/synchronous_port.h>
+#include	<zeabus_library/zeabus_sensor/base_port.h>
 #include	<zeabus_library/zeabus_sensor/MIP_COMMUNICATION.h>
 
 #ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_IMU_PORT__
@@ -21,11 +21,11 @@
 
 namespace zeabus_sensor{
 
-	class IMUPort : public SynchronousPort {
+	class LordMicrostrain : public BasePort {
 
 		public:
-			IMUPort( std::string name_port );
-			~IMUPort();
+			LordMicrostrain( std::string name_port );
+			~LordMicrostrain();
 
 			void command_idle( bool& result );
 			void command_ping( bool& result );	

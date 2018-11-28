@@ -1,28 +1,28 @@
 /*
-	File name			:	synchronous_port.cpp		
+	File name			:	base_port.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 26
-	Date last modified	:	2018 , ??? ??
-	Purpose				:	This is source of file abount port style synchronous
+	Date last modified	:	2018 , NOV 28
+	Purpose				:	This is source of file abount using method in class
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
-	status				:	Production
+	version				:	0.5.0
+	status				:	Stop Maintain
 
 	Namespace			:	zeabus_sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/synchronous_port.h>
+#include	<zeabus_library/zeabus_sensor/base_port.h>
 
 #define DEBUG_CODE
 
 namespace zeabus_sensor{
 
-	SynchronousPort::SynchronousPort( std::string name_port ):
+	BasePort::BasePort( std::string name_port ):
 		SerialPort( name_port ){}
 
-	SynchronousPort::~SynchronousPort(){
+	BasePort::~BasePort(){
 		this->is_open( temp_boolean );
 		if( temp_boolean ){
 			this->close_port( temp_boolean );
@@ -33,7 +33,7 @@ namespace zeabus_sensor{
 		}
 	}
 
-	size_t SynchronousPort::read_data( std::vector<uint8_t>& buffer , size_t size ){
+	size_t BasePort::read_data( std::vector<uint8_t>& buffer , size_t size ){
 		size_t read_size = this->io_port.read_some( boost::asio::buffer( buffer , size ) 
 												, this->error_code );
 		if( this->error_code == errc::success ){
@@ -45,7 +45,7 @@ namespace zeabus_sensor{
 		return read_size; 
 	}
 
-	size_t SynchronousPort::write_data( std::vector<uint8_t>& buffer , size_t size ){
+	size_t BasePort::write_data( std::vector<uint8_t>& buffer , size_t size ){
 		size_t write_size = 0; 
 
 		while( write_size != size ){

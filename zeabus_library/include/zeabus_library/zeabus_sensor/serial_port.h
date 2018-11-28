@@ -40,9 +40,7 @@ namespace errc = boost::system::errc;
 namespace zeabus_sensor{
 	class SerialPort : private boost::noncopyable{
 
-		public:
-		
-			SerialPort( std::string name_port ); // this function will cal when init object
+		public:	
 			~SerialPort(); // this function will call when delete object
 
 			void open_port( bool& result );
@@ -64,6 +62,7 @@ namespace zeabus_sensor{
 			void get_option_port( boost::asio::serial_port_base::character_size& character_size);
 		
 		protected:
+			SerialPort( std::string name_port ); // this function will cal when init object
 			boost::asio::io_service io_service;
 			boost::asio::serial_port io_port;
 			boost::system::error_code error_code;

@@ -15,7 +15,7 @@
 
 #include	<ros/ros.h>
 
-#include	<zeabus_library/zeabus_sensor/imu_command.h>
+#include	<zeabus_library/zeabus_sensor/lord_microstrain.h>
 
 namespace Asio = boost::asio;
 
@@ -27,7 +27,7 @@ int main( int argv , char** argc ){
 
 	std::string port_name = "/dev/microstrain/3dm_gx5_45_0000__6251.65901";
 
-	zeabus_sensor::IMUPort imu( port_name );
+	zeabus_sensor::LordMicrostrain imu( port_name );
 
 	ros::Rate rate( 20 );
 

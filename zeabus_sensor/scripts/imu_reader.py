@@ -1,4 +1,3 @@
-
 #!/usr/bin/python2.7
 """
     File name: imu_reader.py
@@ -13,13 +12,15 @@ import os
 PATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(PATH + '/python2-mscl')
 import mscl
-import matplotlib.pyplot as plt
-import tf
-import time
+import rospy
+from sensor_msgs.msg import Imu
 
 
 class Imu:
     def __init__(self):
+        rospy.init_node('IMU-Python-Reader')
+        self.pub_imu = rospy.Publisher("/imu/data", Imu, queue_size=1)
+
         # create the connection
         connection = mscl.Connection.Serial("/dev/ttyACM0", 115200)
         sample_rate = 500
@@ -64,6 +65,7 @@ class Imu:
         self.linear_accel = [[0], [0], [0]]
         self.angular_accel = [[0], [0], [0]]
         self.magnitude = [[0], [0], [0]]
+        self.imu = Imu()
 
         while True:
             packets = self.node.getDataPackets(500)
@@ -88,13 +90,28 @@ class Imu:
                 self.linear_accel[1].append(self.data['stabilizedAccelY'])
                 self.linear_accel[2].append(self.data['stabilizedAccelZ'])
 
+                self.imu.linear_acceleration.x = self.data['stabilizedAccelX']
+                self.imu.linear_acceleration.y = self.data['stabilizedAccelY']
+                self.imu.linear_acceleration.z = self.data['stabilizedAccelZ']
+
                 self.angular_accel[0].append(self.data['scaledGyroX'])
                 self.angular_accel[1].append(self.data['scaledGyroY'])
                 self.angular_accel[2].append(self.data['scaledGyroZ'])
 
+                self.imu.angular_velocity.x = self.data['scaledGyroX']
+                self.imu.angular_velocity.y = self.data['scaledGyroY']
+                self.imu.angular_velocity.z = self.data['scaledGyroZ']
+
                 self.magnitude[0].append(self.data['stabilizedMagX'])
                 self.magnitude[1].append(self.data['stabilizedMagY'])
                 self.magnitude[2].append(self.data['stabilizedMagZ'])
+
+                # cheat not use orientation but use euler
+                self.imu.orientation.x = self.data['stabilizedMagX']
+                self.imu.orientation.y = self.data['stabilizedMagY']
+                self.imu.orientation.z = self.data['stabilizedMagZ']
+
+                self.pub_imu.publish(self.imu)
 
                 print("\n================== ACCEL ===================")
 

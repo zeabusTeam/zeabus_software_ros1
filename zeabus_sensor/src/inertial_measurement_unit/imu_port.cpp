@@ -60,11 +60,17 @@ int main( int argv , char** argc ){
 
 	printf("IMU_base_rate is %d\n" , IMU_base_rate );
 
+	imu.set_IMU_rate( IMU_base_rate / 100 );
+
 	do{
 		imu.sensor_init_setup_IMU_format( 3 );
+		printf("Line65 ");
 		imu.sensor_add_message_type( DataIMU::SCALED_ACCELEROMETER_VECTOR );
+		printf("Line67 ");
 		imu.sensor_add_message_type( DataIMU::SCALED_GYRO_VECTOR );
+		printf("Line69 ");
 		imu.sensor_add_message_type( DataIMU::CF_QUATERNION );
+		printf("Line71\n");
 		imu.sensor_setup_IMU_format( result );
 	}while( ( ! result ) && ph.ok() );
 }

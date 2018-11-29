@@ -143,7 +143,8 @@ int main( int argc , char **argv){
 				if(data[run] == 
 					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::SCALED_GYRO_VECTOR){
 					// finish read data descriptor field
-					run++;
+					run++_
+			icket.clearnt16_t
 					temporary = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
 								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
 					memcpy( &message , &temporary , 4);

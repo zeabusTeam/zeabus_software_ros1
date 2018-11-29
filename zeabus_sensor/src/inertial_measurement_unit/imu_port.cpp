@@ -18,6 +18,7 @@
 #include	<zeabus_library/zeabus_sensor/lord_microstrain.h>
 
 namespace Asio = boost::asio;
+namespace DataIMU = zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET ;
 
 int main( int argv , char** argc ){
 	
@@ -59,4 +60,11 @@ int main( int argv , char** argc ){
 
 	printf("IMU_base_rate is %d\n" , IMU_base_rate );
 
+	do{
+		imu.sensor_init_setup_IMU_format( 3 );
+		imu.sensor_add_message_type( DataIMU::SCALED_ACCELEROMETER_VECTOR );
+		imu.sensor_add_message_type( DataIMU::SCALED_GYRO_VECTOR );
+		imu.sensor_add_message_type( DataIMU::CF_QUATERNION );
+		imu.sensor_setup_IMU_format( result );
+	}while( ( ! result ) && ph.ok() );
 }

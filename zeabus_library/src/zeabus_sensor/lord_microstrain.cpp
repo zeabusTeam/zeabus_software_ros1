@@ -64,10 +64,49 @@ namespace zeabus_sensor{
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
 		this->print_buffer( "Reply Packet of cammnad get data base rate " );
-		if( this->buffer_packet[ this->buffer_packet.size() - 7 ] == 0x00 ){
+		if( *( this->buffer_packet_last - 7 ) == 0x00 ){
 			base_rate = int ( 
 						(uint16_t)(  *(this->buffer_packet_last - 4) << 8 )
 						+ (uint16_t)( *(this->buffer_packet_last - 3 ) ) );
+			result = true;
+		}
+		else{
+			result = false;
+		}
+	}
+
+	void LordMicrostrain::set_IMU_rate( int IMU_rate ){
+		if( this->IMU_rate_packet.size() < 2 ){
+			this->IMU_rate_packet.resize( 2 );
+		}	
+		this->IMU_rate_packet[ 0 ] = uint8_t(uint16_t( IMU_rate >> 8 & 0xff ) );
+		this->IMU_rate_packet[ 1 ] = uint8_t(uint16_t( IMU_rate & 0xff ) );
+	}
+
+	void LordMicrostrain::sensor_init_setup_IMU_format( int type_message ){
+		this->init_header_packet();
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
+		this->add_data_to_packet( uint8_t(4 + ( 3 * type_message ) ) );
+		this->add_data_to_packet( uint8_t(4 + ( 3 * type_message ) ) );
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::IMU_MESSAGE_FORMAT );
+		this->add_data_to_packet( 0x01 );
+		this->add_data_to_packet( uint8_t( type_message ) );
+	}
+
+	void LordMicrostrain::sensor_add_message_type( uint8_t descriptor ){
+		this->add_data_to_packet( descriptor );
+		this->add_data_to_packet( this->IMU_rate_packet[0] );
+		this->add_data_to_packet( this->IMU_rate_packet[1] );
+	}
+
+	void LordMicrostrain::sensor_setup_IMU_format( bool& result){
+		this->adding_check_sum();
+		this->get_size_packet();
+		this->write_data( this->buffer_packet , this->temp_size );
+		this->read_reply_packet( this->temp_boolean 
+								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
+		this->print_buffer( "Reply packet for set IMU message ");
+		if( *( this->buffer_packet_last - 3 ) == 0x00 ){
 			result = true;
 		}
 		else{
@@ -138,6 +177,11 @@ namespace zeabus_sensor{
 		}
 		this->add_data_to_packet( MSB );
 		this->add_data_to_packet( LSB );
+	}
+
+	void LordMicrostrain::get_size_packet(){
+		this->temp_size = size_t( this->buffer_packet_last - this->buffer_packet_begin );
+		printf( "size of packet is %zd" , this->temp_size );;
 	}
 
 	void LordMicrostrain::read_reply_packet( bool &result, uint8_t descriptor_set_byte

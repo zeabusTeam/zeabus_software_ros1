@@ -13,7 +13,7 @@
 
 #include	<iostream>
 #include	<math.h>
-#include	<zeabus_library/check_position.h>
+#include	<zeabus_library/CheckPosition.h>
 #include	<zeabus_library/zeabus_control/service_control.h>
 
 #ifndef _ZEABUS_LIBRARY_CONTROL_ZEABUS_CHECK_STATE_H__
@@ -26,8 +26,8 @@ namespace zeabus_control{
 					, double* robot_error , double * ok_error ) :
 						main_service(	current_state		,	target_state 
 									,	robot_error			,	ok_error ){}
-			bool call_check_state(	zeabus_library::check_position::Request &req
-							,	zeabus_library::check_position::Response &res
+			bool call_check_state(	zeabus_library::CheckPosition::Request &req
+							,	zeabus_library::CheckPosition::Response &res
 							);
 	};
 

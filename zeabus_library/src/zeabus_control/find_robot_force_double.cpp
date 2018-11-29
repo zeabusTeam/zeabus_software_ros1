@@ -62,5 +62,26 @@ namespace zeabus_control{
 		robot_force[2] += -1;
 		robot_force[4] *= -1;
 	}
+
+	void convert_pid_to_robot_force(	double* pid_force		, double* robot_force
+									,	double* bound_min_force , double* bound_max_force
+									,	bool* fix_force_bool	, double* fix_force_value ){
+		for( int run = 0 ; run < 6 ; run++ ){
+			if( fix_force_bool[ run ] ){
+				if( fabs( pid_force[run]) >= fix_force_value[ run ] ){
+					robot_force[ run ] = copysign( fix_force_value[run] , pid_force[run] );
+				}
+			}
+			else{
+				if( pid_force[run] < bound_min_force[run] ) 
+					robot_force[ run ] = bound_min_force[ run ];
+				else if( pid_force[run] > bound_max_force[run] )
+					robot_force[ run ] = bound_max_force[ run ];
+				else
+					robot_force[ run ] = pid_force[ run ];
+					
+			}
+		}
+	}
 }
 

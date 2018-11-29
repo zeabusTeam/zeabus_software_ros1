@@ -1,0 +1,16 @@
+<launch>
+
+	<node	name="mission_gate"					pkg="zeabus_planner" 
+			type="SAUVC_mission_gate.py"		output="screen"/>
+
+	<node	name="mission_flare"				pkg="zeabus_planner" 
+			type="SAUVC_mission_flare.py"		output="screen"/>
+
+	<node	name="mission_drum"					pkg="zeabus_planner"
+			type="SAUVC_mission_drum.py"		output="screen"/>
+
+	<node	name="mission_gripper"				pkg="zeabus_planner" 
+			type="SAUVC_mission_gripper.py"		output="screen"/>
+
+
+</launch>

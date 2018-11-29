@@ -14,8 +14,8 @@
 
 namespace zeabus_control{
 
-	bool two_point_service::call_relative_xy( zeabus_library::two_point::Request &req ,
-								 zeabus_library::two_point::Response &res ){
+	bool two_point_service::call_relative_xy( zeabus_library::TwoPoint::Request &req ,
+								 zeabus_library::TwoPoint::Response &res ){
 			this->target_state[0] += req.point_1 * cos( target_state[5]);
 			this->target_state[1] += req.point_1 * sin( target_state[5]);
 			this->target_state[0] += req.point_2 * cos( target_state[5] + PI/2);
@@ -24,8 +24,8 @@ namespace zeabus_control{
 			return true;
 	}
 
-	bool two_point_service::call_absolute_xy( zeabus_library::two_point::Request &req ,
-								zeabus_library::two_point::Response &res ){
+	bool two_point_service::call_absolute_xy( zeabus_library::TwoPoint::Request &req ,
+								zeabus_library::TwoPoint::Response &res ){
 			this->target_state[0] = req.point_1;
 			this->target_state[1] = req.point_2;
 			res.success = true;

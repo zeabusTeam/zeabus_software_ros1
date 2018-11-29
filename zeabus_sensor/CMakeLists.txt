@@ -3,11 +3,9 @@ project(zeabus_sensor)
 
 find_package(catkin REQUIRED COMPONENTS
 	roscpp
-	zeabus_extension
 	std_msgs
 	geometry_msgs
 	message_generation
-	
 )
 
 find_package(Boost REQUIRED COMPONENTS system chrono)

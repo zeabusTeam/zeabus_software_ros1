@@ -38,8 +38,4 @@
   <build_depend>dynamic_reconfigure</build_depend>
   <exec_depend>dynamic_reconfigure</exec_depend>
 
-  <build_depend>message_generation</build_depend>
-  <exec_depend>message_runtime</exec_depend>
-
-
 </package>

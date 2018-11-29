@@ -16,7 +16,7 @@ import math
 from zeabus_library.srv import *
 from zeabus_elec_ros_hardware_interface.srv import Torpedo
 
-from zeabus_control.msg import Point3 , State , Type2
+from zeabus_library.msg import Point3 , State , Type2
 
 from std_msgs.msg import String , Int64
 from geometry_msgs.msg import Twist
@@ -44,15 +44,16 @@ class AUVController:
 		self.velocity_publisher		= rospy.Publisher('/zeabus/cmd_vel', Twist , queue_size = 10)
 
 		# Request group for send request to control
-		self.request_absolute_xy	= rospy.ServiceProxy('/fix_abs_xy'		, two_point )
-		self.request_relative_xy	= rospy.ServiceProxy('/fix_rel_xy'		, two_point )
-		self.request_absolute_depth	= rospy.ServiceProxy('/fix_abs_depth'	, one_point )
-		self.request_relative_depth = rospy.ServiceProxy('/fix_rel_depth'	, one_point )
-		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw'		, one_point )
-		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw'		, one_point )
-		self.request_check_state	= rospy.ServiceProxy('/ok_position'		, check_position )
-		self.request_know_target	= rospy.ServiceProxy('/know_target'		, get_target )
-		self.request_mode_control	= rospy.ServiceProxy('/mode_control'	, number_service )
+		self.request_absolute_xy	= rospy.ServiceProxy('/fix_abs_xy'		, TwoPoint )
+		self.request_relative_xy	= rospy.ServiceProxy('/fix_rel_xy'		, TwoPoint )
+		self.request_absolute_depth	= rospy.ServiceProxy('/fix_abs_depth'	, OnePoint )
+		self.request_relative_depth = rospy.ServiceProxy('/fix_rel_depth'	, OnePoint )
+		self.request_absolute_yaw	= rospy.ServiceProxy('/fix_abs_yaw'		, OnePoint )
+		self.request_relative_yaw	= rospy.ServiceProxy('/fix_rel_yaw'		, OnePoint )
+		self.request_know_target	= rospy.ServiceProxy('/know_target'		, GetTarget )
+		self.request_check_state	= rospy.ServiceProxy('/ok_position'		, CheckPosition )
+		self.request_mode_control	= rospy.ServiceProxy('/mode_control'	, NumberService )
+		self.request_survey			= rospy.ServiceProxy('/request_survey'	, SurveyRequest )
 		self.release_ball			= rospy.ServiceProxy('/fire_torpedo'	, Torpedo )
 		self.hold_ball				= rospy.ServiceProxy('/hold_torpedo'	, Torpedo )
 
@@ -84,6 +85,7 @@ class AUVController:
 	# Control Point Z Group this use name of function to descripe you want relative or absolute
 	def absolute_z( self , value ):
 		try:
+			print( "Sending Absolute of depth is " + str( value ))
 			result = self.request_absolute_depth( value , self.name )
 		except rospy.ServiceException , error :
 			print("Service Depth Failse error : " + error )
@@ -106,6 +108,12 @@ class AUVController:
 			result = self.request_relative_yaw( value , self.name )
 		except rospy.ServiceException , error :
 			print("Service yaw Failse error : " + error )
+
+	def survey( self , axis , distance , force ):
+		try:
+			result = self.request_survey( distance , force , String( axis ) , self.name )
+		except rospy.ServiceException , error :
+			print("Service request Failse error : " + error)
 		
 	def set_name( self , name ):
 		self.name.data = name
@@ -159,7 +167,29 @@ class AUVController:
 		return result
 
 	def wait_time( self , second ):
-		print( " Now sleep for " + str( second ) , end = '-------> ')
+#		print( " Now sleep for " + str( second ) , end = '-------> ')
 		time.sleep( second )
-		print( "Wake Up")
-		
+#		print( "Wake Up")
+	
+if __name__=="__main__":
+	print( "Welcome to testing control handle")
+	tester = AUVController( "tester" , True)
+	tester.wait_time( 1 )
+	print( "sending absolute_xy")	
+	tester.absolute_xy( 4 , 5 )
+	tester.wait_time( 1 )
+	print( "sending relative_xy")
+	tester.relative_xy( 4 , 5 )
+	tester.wait_time( 1 )
+	print( "sending survey x distance 3 and force 0.5")
+	tester.survey( 'x' , 3 , 0.5)
+	tester.wait_time( 10 )
+	print( "receive target of x result is " + str( tester.receive_target('xy')[0] ) )
+	tester.wait_time( 1 )
+	print( "Now sending velocity x = 1 ")
+	start = time.time()
+	while( not rospy.is_shutdown() and time.time() - start < 10 ):
+		tester.velocity( { 'x' : 1 } )
+		tester.wait_time( 0.1 )
+	print( "receive target of yaw result is " + str( tester.receive_target('yaw')[0] ) )
+	print( "check state of yaw " + str( tester.check_state('yaw' , 0.1) ) )

@@ -52,8 +52,8 @@ class ControllerImu:
         self.is_init = False
         rospy.Subscriber("/gx4_45_imu/data", Imu, self.imu_callback)
         rospy.Subscriber("/barometer/data", Odometry, self.pressure_callback)
-        rospy.sleep(1)
-        self.pub_force = rospy.Publisher("/cmd_vel1", Twist, queue_size=1)
+        # rospy.sleep(1)
+        self.pub_force = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
 
         self.pub_x = rospy.Publisher("/ctrl_imu_x", Float32, queue_size=1)
         self.pub_y = rospy.Publisher("/ctrl_imu_y", Float32, queue_size=1)
@@ -91,7 +91,7 @@ class ControllerImu:
         delta_t = self.time_current - self.time_previous
         delta_t *= 1e-9
         for i in range(3):
-            if abs(self.acc_current[i] - self.acc_previous[i]) > 0.02: 
+            if abs(self.acc_current[i] - self.acc_previous[i]) > 0.01: 
                 self.vel_current[i] = self.integration(self.acc_previous[i],self.acc_current[i],delta_t)
             else:
                 self.vel_current[i] = self.integration(self.acc_previous[i],self.acc_current[i],0)
@@ -104,6 +104,7 @@ class ControllerImu:
             self.distance[i] += self.integration(self.vel_previous[i],self.vel_current[i],delta_t)
             
     def collect_previous_state(self):
+        # print(self.)
         self.acc_previous = self.acc_current
         self.vel_previous = self.vel_current
         self.prev_ctrl_signal = self.ctrl_signal
@@ -170,9 +171,13 @@ class ControllerImu:
     
 
     def publish_data(self):
-        print_debug("ACCELERATION", "RED")
+        print_debug("ACCELERATION PREVIOUS", "RED")
+        print_float(self.acc_previous)
+        print_debug("ACCELERATION CURRENT", "RED")
         print_float(self.acc_current)
-        print_debug("VELOCITY", "RED")
+        print_debug("VELOCITY PREVIOUS", "RED")
+        print_float(self.vel_previous)
+        print_debug("VELOCITY CURRENT", "RED")
         print_float(self.vel_current)
         print_debug("DISTANCE", "RED")
         print_float(self.distance)

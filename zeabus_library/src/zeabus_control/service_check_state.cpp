@@ -15,8 +15,8 @@
 
 namespace zeabus_control{
 
-	bool check_state_service::call_check_state(	zeabus_library::check_position::Request &request
-										,	zeabus_library::check_position::Response &response ){
+	bool check_state_service::call_check_state(	zeabus_library::CheckPosition::Request &request
+										,	zeabus_library::CheckPosition::Response &response ){
 		response.ok = false;
 		if(request.type.data == "xy"){
 			if( fabs(robot_error[0]) < ok_error[0] + request.adding 

@@ -45,12 +45,18 @@ int main( int argv , char** argc ){
 	imu.set_option_port( Asio::serial_port_base::character_size( (size_t) 8 ) );
 
 	result = false;
+	int IMU_base_rate = 0;
 
-	while( ! result and ph.ok() ){
-		printf( "Command set idle ==========> ");
+	do{
 		imu.command_idle( result );
-		printf( "%d\n" , result ); 
 		rate.sleep();
-	}
+	}while( ( ! result ) && ph.ok() );
+
+	do{
+		imu.sensor_get_IMU_base_rate( result , IMU_base_rate );
+		rate.sleep();
+	}while( ( ! result ) && ph.ok() );
+
+	printf("IMU_base_rate is %d\n" , IMU_base_rate );
 
 }

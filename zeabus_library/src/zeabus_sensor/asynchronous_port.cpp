@@ -8,7 +8,7 @@
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
 	version				:	0.0.1
-	status				:	Prouction
+	status				:	STOP
 							
 	Namespace			:	zeabus_sensor
 */

@@ -19,7 +19,12 @@
 
 namespace zeabus_sensor{
 	
-	LordMicrostrain::LordMicrostrain( std::string name_port ) : SynchroPort( name_port ){}
+	LordMicrostrain::LordMicrostrain( std::string name_port ) : SynchroPort( name_port ){
+		this->buffer_packet.resize( 100 );
+		this->buffer_packet.reserve( 100 );
+		this->buffer_packet_begin = this->buffer_packet.begin();
+		this->buffer_packet_end = this->buffer_packet.end(); 
+	}
 
 	LordMicrostrain::~LordMicrostrain(){}
 
@@ -45,6 +50,31 @@ namespace zeabus_sensor{
 		}
 	}
 
+	void LordMicrostrain::sensor_get_IMU_base_rate( bool &result , int& base_rate ){
+		this->init_header_packet();
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
+		this->add_data_to_packet( 0x02 );
+		this->add_data_to_packet( 0x02 );
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::GET_IMU_DATA_BASE_RATE );
+		this->adding_check_sum();
+		this->print_buffer( "After adding sum get data base rate ");
+		this->echo_detail_buffer();
+		this->temp_size = ( size_t ) this->buffer_packet.size();
+		this->write_data( this->buffer_packet , this->temp_size );
+		this->read_reply_packet( this->temp_boolean 
+								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
+		this->print_buffer( "Reply Packet of cammnad get data base rate " );
+		if( this->buffer_packet[ this->buffer_packet.size() - 7 ] == 0x00 ){
+			base_rate = int ( 
+						(uint16_t)(  *(this->buffer_packet_last - 4) << 8 )
+						+ (uint16_t)( *(this->buffer_packet_last - 3 ) ) );
+			result = true;
+		}
+		else{
+			result = false;
+		}
+	}
+
 	void LordMicrostrain::command_ping( bool& result ){
 		this->init_header_packet();
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR );
@@ -58,43 +88,60 @@ namespace zeabus_sensor{
 	}	
 			
 	void LordMicrostrain::echo_detail_buffer(){
-		printf( "DETAILED MEMORY BUFFER : size -> %ld --- capacity -> %ld --- max_size -> %ld\n",
+		printf( "DETAILED MEMORY BUFFER : size -> %zd --- capacity -> %zd --- max_size -> %zd\n",
+					this->buffer_packet.size() , this->buffer_packet.capacity() 
+					, this->buffer_packet.max_size() );
+		printf( "DETAILED MEMORY TEMP : size -> %zd --- capacity -> %zd --- max_size -> %zd\n",
 					this->buffer_packet.size() , this->buffer_packet.capacity() 
 					, this->buffer_packet.max_size() );
 	}
 			
 
 	void LordMicrostrain::print_buffer( std::string message ){
-		printf( "%sData packet is : " , message.c_str() );
-		for( int run  = 0 ; run < this->buffer_packet.size() ; run++ ){
-			printf( "%2X " , this->buffer_packet[ run ] );
+		printf( "%s Data packet is : " , message.c_str() );
+		for( this->buffer_packet_current = this->buffer_packet_begin 
+				; this->buffer_packet_current < this->buffer_packet_last 
+				; this->buffer_packet_current++ ){
+			printf( "%2X " , *( this->buffer_packet_current) );
 		}
 		printf("\n");
 	}
 
 	void LordMicrostrain::init_header_packet(){
-		this->buffer_packet.clear();
+		this->buffer_packet_current = this->buffer_packet_begin;
 		this->add_data_to_packet( 0x75 );
 		this->add_data_to_packet( 0x65 );
 	}
 
 	void LordMicrostrain::add_data_to_packet( uint8_t data_byte ){
-		this->buffer_packet.push_back( data_byte );
+		if( this->buffer_packet_current == this->buffer_packet_end ){
+			printf("Warning < %s > require data size of packer\n" , this->name_port.c_str());
+			this->buffer_packet.push_back( data_byte );
+			this->buffer_packet_end = this->buffer_packet.end();
+			this->buffer_packet_current += 1;
+		}
+		else{
+			*(this->buffer_packet_current) = data_byte;
+			this->buffer_packet_current += 1;
+		}
+		this->buffer_packet_last = this->buffer_packet_current;
 	}
 
 	void LordMicrostrain::adding_check_sum(){
 		MSB = 0;
 		LSB = 0;
-		for( int run = 0 ; run < this->buffer_packet.size() ; run++ ){
-			MSB += this->buffer_packet[ run ];
+		for( this->buffer_packet_current = this->buffer_packet_begin 
+				; this->buffer_packet_current != this->buffer_packet_last 
+				; this->buffer_packet_current++ ){
+			MSB += *( this->buffer_packet_current ) ;
 			LSB += MSB;
 		}
 		this->add_data_to_packet( MSB );
 		this->add_data_to_packet( LSB );
 	}
 
-	void LordMicrostrain::read_reply_packet( bool &result, uint8_t descriptor_set_byte, int limit_round){
-
+	void LordMicrostrain::read_reply_packet( bool &result, uint8_t descriptor_set_byte
+											, int limit_round){
 		result = false;
 
 		int count = 0;
@@ -102,13 +149,10 @@ namespace zeabus_sensor{
 		while( ! temp_boolean && count < limit_round){
 			count ++ ;
 			this->temp_size = 1;
-			if( this->read_data( this->buffer_receive_bytes , this->temp_size ) ){
+			if( 1 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ) {
 				if( this->buffer_receive_bytes[0] != 'u' ) continue;
 			}
-			else{
-				printf("Can't read message function read_reply_packet\n");
-				continue;
-			}
+			else continue;
 			
 			if( 1 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ){
 				if( this->buffer_receive_bytes[0] != 'e' ) continue;
@@ -157,12 +201,16 @@ namespace zeabus_sensor{
 	void LordMicrostrain::find_check_sum( bool& result){
 		MSB = 0;
 		LSB = 0;
-		for( int run = 0 ; run < this->buffer_packet.size() ; run++ ){
-			MSB += this->buffer_packet[ run ];
+		this->print_buffer( "Reply buffer want to check");
+		for( this->buffer_packet_current = this->buffer_packet_begin 
+				; this->buffer_packet_current < this->buffer_packet_last - 2  
+				; this->buffer_packet_current++ ){
+			MSB += *( this->buffer_packet_current );
 			LSB += MSB;
 		}
-		if( MSB == this->buffer_packet[ this->buffer_packet.size() - 2 ] &&
-			LSB == this->buffer_packet[ this->buffer_packet.size() - 1 ] ){
+		printf( "MSB :: LSB is %2X :: %2X\n", MSB , LSB );
+		if( MSB == *(this->buffer_packet_last - 2 )  &&
+			LSB == *(this->buffer_packet_last - 1 ) ){
 			result = true;
 			printf("<------ GOOD_REPLY ------>\n");
 		}

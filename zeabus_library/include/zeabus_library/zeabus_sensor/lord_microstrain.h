@@ -28,7 +28,8 @@ namespace zeabus_sensor{
 			~LordMicrostrain();
 
 			void command_idle( bool& result );
-			void command_ping( bool& result );	
+			void command_ping( bool& result );
+			void sensor_get_IMU_base_rate( bool& result , int& base_rate );	
 
 			// this part is function to check about buffer ( data and memory used)
 			void echo_detail_buffer();
@@ -52,6 +53,10 @@ namespace zeabus_sensor{
 			size_t buffer_size;
 			std::vector< uint8_t > buffer_packet;
 			std::vector< uint8_t > buffer_receive_bytes;
+			std::vector< uint8_t >::iterator buffer_packet_begin;
+			std::vector< uint8_t >::iterator buffer_packet_end;
+			std::vector< uint8_t >::iterator buffer_packet_current;
+			std::vector< uint8_t >::iterator buffer_packet_last;
 	};
 }
 

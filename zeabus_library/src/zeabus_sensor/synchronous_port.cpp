@@ -40,10 +40,11 @@ namespace zeabus_sensor{
 				printf( "<=== ERROR CODE ===> SynchroPort::read_data < %zd >\n" 
 						, this->error_code);
 			}
+		return this->buffer_size;
 	}
 
 
-	size_t SynchroPort::write_data( std::vector<uint8_t>& buffer , size_t& size ){
+	size_t SynchroPort::write_data( std::vector< uint8_t >& buffer , size_t& size ){
 		#ifdef _DEBUG_CONNECTION_
 			printf( "want write size < %zd > ===" , size );
 		#endif
@@ -58,6 +59,5 @@ namespace zeabus_sensor{
 						, this->error_code);
 			}
 	}
-
 
 }

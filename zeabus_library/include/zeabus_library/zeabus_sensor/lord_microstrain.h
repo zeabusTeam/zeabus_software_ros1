@@ -29,11 +29,14 @@ namespace zeabus_sensor{
 
 			void command_idle( bool& result );
 			void command_ping( bool& result );
+			void command_resume( bool& result );
 			void sensor_get_IMU_base_rate( bool& result , int& base_rate );
 			void set_IMU_rate( int IMU_rate );
 			void sensor_init_setup_IMU_format( int type_message );
 			void sensor_add_message_type( uint8_t descriptor );	
 			void sensor_setup_IMU_format( bool& result );
+			void sensor_save_message_format( bool& result );
+			void sensor_enable_data_stream( bool use_IMU , bool use_estimation , bool& result );
 
 			// this part is function to check about buffer ( data and memory used)
 			void echo_detail_buffer();

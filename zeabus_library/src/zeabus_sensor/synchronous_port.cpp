@@ -15,7 +15,7 @@
 
 #include	<zeabus_library/zeabus_sensor/synchronous_port.h>
 
-#define		_DEBUG_CONNECTION_
+//#define		_DEBUG_CONNECTION_
 
 namespace zeabus_sensor{
 
@@ -27,19 +27,29 @@ namespace zeabus_sensor{
 		if( buffer.size() < size ){
 			buffer.resize( size ); // must ensure your buffer have size can collect data
 		}
-		#ifdef _DEBUG_CONNECTION_
-			printf( "want read size < %zd > ===" , size);
-		#endif
-			this->buffer_size = boost::asio::read(	this->io_port 
+		do{
+			#ifdef _DEBUG_CONNECTION_
+				printf( "want read size < %zd > ===" , size);
+			#endif
+				this->buffer_size = boost::asio::read(	this->io_port 
 													, boost::asio::buffer( buffer , size ) 
 													, this->error_code );
-		#ifdef _DEBUG_CONNECTION_
-			printf( "--- < %zd >\n" , this->buffer_size);
-		#endif
-			if( this->error_code != errc::success ){
-				printf( "<=== ERROR CODE ===> SynchroPort::read_data < %zd >\n" 
-						, this->error_code);
+			#ifdef _DEBUG_CONNECTION_
+				printf( "--- < %zd >\n" , this->buffer_size );
+			#endif
+			if( error_code == errc::resource_unavailable_try_again ||
+				error_code == errc::interrupted ){
+				// nothing try again
 			}
+			else if( error_code == errc::success ){
+				break;
+			}
+			else{
+				printf( "<=== ERROR CODE ===> SynchroPort::read_data < %d >\n" 	
+						, this->error_code );
+				break;
+			}
+		}while( true );
 		return this->buffer_size;
 	}
 
@@ -55,8 +65,8 @@ namespace zeabus_sensor{
 			printf( "--- < %zd >\n" , this->buffer_size);
 		#endif
 			if( this->error_code != errc::success ){
-				printf( "<=== ERROR CODE ===> SynchroPort::write_data < %zd >\n" 
-						, this->error_code);
+				printf( "<=== ERROR CODE ===> SynchroPort::write_data < %d >\n" 
+						, this->error_code );
 			}
 	}
 

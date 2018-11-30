@@ -15,7 +15,8 @@
 
 #include <zeabus_library/zeabus_sensor/lord_microstrain.h>
 
-#define ACK_OR_NACK
+//#define _ACK_OR_NACK_
+//#define _DEBUG_SIZE_PACKET_
 
 namespace zeabus_sensor{
 	
@@ -35,19 +36,38 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( 0x02);
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::IDLE );
 		this->adding_check_sum();
-		this->print_buffer( "After adding sum IDLE ");
-		this->echo_detail_buffer();
-		this->temp_size = (size_t) this->buffer_packet.size();
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer( "After adding sum IDLE ");
+		#endif
+		this->get_size_packet();
 		this->write_data( this->buffer_packet , this->temp_size );	
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR);
-		this->print_buffer( "Reply Packet after IDLE " );
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer( "Reply Packet after IDLE " );
+		#endif
 		if( this->buffer_packet[ this->buffer_packet.size() - 3 ] == 0x00 ){
 			result = true;
 		}
 		else{
 			result = false;
 		}
+	}
+
+	void LordMicrostrain::command_resume( bool& result ){
+		this->init_header_packet();
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR );
+		this->add_data_to_packet( 0x02 );
+		this->add_data_to_packet( 0x02 );
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::RESUME );
+		this->adding_check_sum();
+		this->get_size_packet();
+		this->write_data( this->buffer_packet , this->temp_size );
+		this->read_reply_packet( this->temp_boolean 
+								, MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR );
+		if( ! this->temp_boolean ) result = false ; return;
+		if( *(this->buffer_packet_last - 3 ) == 0x00 ) result = true;
+		else result = false;
 	}
 
 	void LordMicrostrain::sensor_get_IMU_base_rate( bool &result , int& base_rate ){
@@ -57,13 +77,16 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( 0x02 );
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::GET_IMU_DATA_BASE_RATE );
 		this->adding_check_sum();
-		this->print_buffer( "After adding sum get data base rate ");
-		this->echo_detail_buffer();
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer( "After adding sum get data base rate ");
+		#endif
 		this->temp_size = ( size_t ) this->buffer_packet.size();
 		this->write_data( this->buffer_packet , this->temp_size );
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
-		this->print_buffer( "Reply Packet of cammnad get data base rate " );
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer( "Reply Packet of cammnad get data base rate " );
+		#endif
 		if( *( this->buffer_packet_last - 7 ) == 0x00 ){
 			base_rate = int ( 
 						(uint16_t)(  *(this->buffer_packet_last - 4) << 8 )
@@ -105,7 +128,9 @@ namespace zeabus_sensor{
 		this->write_data( this->buffer_packet , this->temp_size );
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
-		this->print_buffer( "Reply packet for set IMU message ");
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer( "Reply packet for set IMU message ");
+		#endif
 		if( *( this->buffer_packet_last - 3 ) == 0x00 ){
 			result = true;
 		}
@@ -120,10 +145,71 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( 0x02 );
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::PING );
 		this->adding_check_sum();
-		this->print_buffer( "After adding sum PING ");
-		this->echo_detail_buffer();
-		this->temp_size = ( size_t ) this->buffer_packet.size(); 
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer( "After adding sum PING ");
+		#endif
+		this->get_size_packet();
 		this->write_data( this->buffer_packet , this->temp_size);	
+	}
+
+	void LordMicrostrain::sensor_save_message_format( bool& result ){
+		this->init_header_packet();
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
+		this->add_data_to_packet( 0x08 );
+		this->add_data_to_packet( 0x04 );
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::IMU_MESSAGE_FORMAT );
+		this->add_data_to_packet( 0x03 );
+		this->add_data_to_packet( 0x00 );
+		this->add_data_to_packet( 0x04 );
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::ESTIMATION_FILTER_MESSAGE_FORMAT );
+		this->add_data_to_packet( 0x03 );
+		this->add_data_to_packet( 0x00 );
+		this->adding_check_sum();
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer( "After save setting message type ");
+		#endif
+		this->get_size_packet();
+		this->write_data( this->buffer_packet , this->temp_size );
+		this->read_reply_packet( this->temp_boolean 
+								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer(" Reply packet for save setting IMU message ");
+		#endif
+		if( this->temp_boolean == false ) result = false ; return;
+		if( *(this->buffer_packet_last - 3 ) == 0x00 && 
+			*(this->buffer_packet_last - 7 ) == 0x00 ) result = true;
+		else result = false;
+	}
+
+	void LordMicrostrain::sensor_enable_data_stream( bool use_IMU , bool use_estimation 
+													, bool& result ){
+		this->init_header_packet();
+		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
+		this->add_data_to_packet( 0x0A );
+		this->add_data_to_packet( 0x05 );
+		this->add_data_to_packet( 0x11 );
+		this->add_data_to_packet( 0x01 );
+		this->add_data_to_packet( 0x01 );
+		if( use_IMU ) this->add_data_to_packet( 0x01 );
+		else this->add_data_to_packet( 0x00 );
+		this->add_data_to_packet( 0x05 );
+		this->add_data_to_packet( 0x11 );
+		this->add_data_to_packet( 0x01 );
+		this->add_data_to_packet( 0x01 );
+		if( use_estimation ) this->add_data_to_packet( 0x01 );
+		else this->add_data_to_packet( 0x00 );
+		this->adding_check_sum();
+		this->get_size_packet();
+		this->write_data( this->buffer_packet , this->temp_size );
+		this->read_reply_packet( this->temp_boolean 
+								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer(" Reply packet for save setting IMU message ");
+		#endif
+		if( this->temp_boolean == false ) result = false ; return;
+		if( *(this->buffer_packet_last - 3 ) == 0x00 && 
+			*(this->buffer_packet_last - 7 ) == 0x00 ) result = true;
+		else result = false;	
 	}	
 			
 	void LordMicrostrain::echo_detail_buffer(){
@@ -154,7 +240,7 @@ namespace zeabus_sensor{
 
 	void LordMicrostrain::add_data_to_packet( uint8_t data_byte ){
 		if( this->buffer_packet_current == this->buffer_packet_end ){
-			printf("Warning < %s > require data size of packer\n" , this->name_port.c_str());
+			printf("Warning < %s > require data size of packet\n" , this->name_port.c_str());
 			this->buffer_packet.push_back( data_byte );
 			this->buffer_packet_end = this->buffer_packet.end();
 			this->buffer_packet_current += 1;
@@ -181,7 +267,9 @@ namespace zeabus_sensor{
 
 	void LordMicrostrain::get_size_packet(){
 		this->temp_size = size_t( this->buffer_packet_last - this->buffer_packet_begin );
-		printf( "size of packet is %zd" , this->temp_size );;
+		#ifdef _DEBUG_SIZE_PACKET_
+			printf( "size of packet is %zd \n" , this->temp_size );
+		#endif
 	}
 
 	void LordMicrostrain::read_reply_packet( bool &result, uint8_t descriptor_set_byte
@@ -207,7 +295,6 @@ namespace zeabus_sensor{
 			
 			if( 1 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ){
 				if( this->buffer_receive_bytes[0] != descriptor_set_byte ){
-					printf( "Wrong packet descriptor set byte \n");
 					continue;
 				}
 				else{
@@ -245,22 +332,26 @@ namespace zeabus_sensor{
 	void LordMicrostrain::find_check_sum( bool& result){
 		MSB = 0;
 		LSB = 0;
-		this->print_buffer( "Reply buffer want to check");
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer( "Reply buffer want to check");
+		#endif
 		for( this->buffer_packet_current = this->buffer_packet_begin 
 				; this->buffer_packet_current < this->buffer_packet_last - 2  
 				; this->buffer_packet_current++ ){
 			MSB += *( this->buffer_packet_current );
 			LSB += MSB;
 		}
-		printf( "MSB :: LSB is %2X :: %2X\n", MSB , LSB );
+		#ifdef _ACK_OR_NACK_
+			printf( "MSB :: LSB is %2X :: %2X\n", MSB , LSB );
+		#endif
 		if( MSB == *(this->buffer_packet_last - 2 )  &&
 			LSB == *(this->buffer_packet_last - 1 ) ){
 			result = true;
-			printf("<------ GOOD_REPLY ------>\n");
+			printf("<------ GOOD_DATA ------>\n");
 		}
 		else{
 			result = false;
-			printf("<------ BAD_REPLY ------>\n");
+			printf("<------ BAD_DATA ------>\n");
 		}
 
 	}

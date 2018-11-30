@@ -36,7 +36,6 @@ int main( int argv , char** argc ){
 
 	imu.open_port( result );
 
-	imu.set_option_port( Asio::serial_port_base::baud_rate( (unsigned int) 11522 ) );
 	imu.set_option_port( Asio::serial_port_base::flow_control( 
 							Asio::serial_port_base::flow_control::none ) );
 	imu.set_option_port( Asio::serial_port_base::parity( 
@@ -49,28 +48,37 @@ int main( int argv , char** argc ){
 	int IMU_base_rate = 0;
 
 	do{
+		printf( "IMU set to ide ");
 		imu.command_idle( result );
 		rate.sleep();
 	}while( ( ! result ) && ph.ok() );
 
 	do{
+		printf( "IMU get base rate ");
 		imu.sensor_get_IMU_base_rate( result , IMU_base_rate );
 		rate.sleep();
 	}while( ( ! result ) && ph.ok() );
 
-	printf("IMU_base_rate is %d\n" , IMU_base_rate );
-
-	imu.set_IMU_rate( IMU_base_rate / 100 );
+	imu.set_IMU_rate( IMU_base_rate / 500 );
 
 	do{
+		printf( "Set type message ");
 		imu.sensor_init_setup_IMU_format( 3 );
-		printf("Line65 ");
 		imu.sensor_add_message_type( DataIMU::SCALED_ACCELEROMETER_VECTOR );
-		printf("Line67 ");
 		imu.sensor_add_message_type( DataIMU::SCALED_GYRO_VECTOR );
-		printf("Line69 ");
-		imu.sensor_add_message_type( DataIMU::CF_QUATERNION );
-		printf("Line71\n");
+		imu.sensor_add_message_type( DataIMU::CF_EULER_ANGLES );
 		imu.sensor_setup_IMU_format( result );
+	}while( ( ! result ) && ph.ok() );
+
+	imu.sensor_save_message_format( result );
+
+	do{
+		printf( "Set enable stream ");
+		imu.sensor_enable_data_stream( true , false , result );
+	}while( ( ! result && ph.ok() ) );
+
+	do{
+		printf( "Set resume for data stream ");
+		imu.command_resume( result );	
 	}while( ( ! result ) && ph.ok() );
 }

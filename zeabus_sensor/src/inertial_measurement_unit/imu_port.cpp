@@ -70,7 +70,10 @@ int main( int argv , char** argc ){
 		imu.sensor_setup_IMU_format( result );
 	}while( ( ! result ) && ph.ok() );
 
-	imu.sensor_save_message_format( result );
+	do{
+		printf( "Set setting format ");
+		imu.sensor_save_message_format( result );
+	}while( ( ! result ) && ph.ok() );
 
 	do{
 		printf( "Set enable stream ");

@@ -17,6 +17,7 @@
 
 //#define _ACK_OR_NACK_
 //#define _DEBUG_SIZE_PACKET_
+#define _DEBUG_DATA_STREAM_
 
 namespace zeabus_sensor{
 	
@@ -272,6 +273,33 @@ namespace zeabus_sensor{
 		#endif
 	}
 
+	void LordMicrostrain::read_data_stream( std::vector< uint8_t > buffer_data_stream 
+											, bool &result ){
+		this->read_reply_packet( result , MIP_COMMUNICATION::DATA::IMU_DATA_SET::DESCRIPTOR );
+		#ifdef _DEBUG_DATA_STREAM_
+			printf( 
+				"DETAILED output BUFFER : size -> %zd --- capacity -> %zd --- max_size -> %zd\n"
+				, buffer_data_stream.size() 
+				, buffer_data_stream.capacity() 
+				, buffer_data_stream.max_size() );
+		#endif
+		if( ! result ) return;
+		this->get_size_packet();
+		if( buffer_data_stream.size() < this->temp_size ){
+			buffer_data_stream.resize( this->temp_size );
+		}
+		int run = 0;
+		for( this->buffer_packet_current = this->buffer_packet_begin 
+			; this->buffer_packet_current < this->buffer_packet_last 
+			; this->buffer_packet_current++ , run++ ){
+			buffer_data_stream[run] = *( this->buffer_packet_current );
+			#ifdef _DEBUG_DATA_STREAM_
+				printf( "%2x " , buffer_data_stream[run]);
+			#endif
+		}
+		
+	}
+
 	void LordMicrostrain::read_reply_packet( bool &result, uint8_t descriptor_set_byte
 											, int limit_round){
 		result = false;
@@ -329,7 +357,7 @@ namespace zeabus_sensor{
 				
 	}
 
-	void LordMicrostrain::find_check_sum( bool& result){
+	void LordMicrostrain::find_check_sum( bool& result ){
 		MSB = 0;
 		LSB = 0;
 		#ifdef _ACK_OR_NACK_
@@ -347,11 +375,11 @@ namespace zeabus_sensor{
 		if( MSB == *(this->buffer_packet_last - 2 )  &&
 			LSB == *(this->buffer_packet_last - 1 ) ){
 			result = true;
-			printf("<------ GOOD_DATA ------>\n");
+			printf("<------ IMU GOOD PACKET ------>\n");
 		}
 		else{
 			result = false;
-			printf("<------ BAD_DATA ------>\n");
+			printf("<------ IMU BAD PACKET ------>\n");
 		}
 
 	}

@@ -56,15 +56,16 @@ class ThrustMapper:
         ])
 
         self.direction_angular = np.array([
-            np.cross(self.distance[0], self.direction_linear[0]),
-            np.cross(self.distance[1], self.direction_linear[1]),
-            np.cross(self.distance[2], self.direction_linear[2]),
-            np.cross(self.distance[3], self.direction_linear[3]),
-            np.cross(self.distance[4], self.direction_linear[4]),
-            np.cross(self.distance[5], self.direction_linear[5]),
-            np.cross(self.distance[6], self.direction_linear[6]),
-            np.cross(self.distance[7], self.direction_linear[7]),
+            np.multiply(self.distance[0], self.direction_linear[0]),
+            np.multiply(self.distance[1], self.direction_linear[1]),
+            np.multiply(self.distance[2], self.direction_linear[2]),
+            np.multiply(self.distance[3], self.direction_linear[3]),
+            np.multiply(self.distance[4], self.direction_linear[4]),
+            np.multiply(self.distance[5], self.direction_linear[5]),
+            np.multiply(self.distance[6], self.direction_linear[6]),
+            np.multiply(self.distance[7], self.direction_linear[7]),
         ])
+        
 
         self.direction = np.concatenate((
             self.direction_linear,
@@ -81,6 +82,7 @@ class ThrustMapper:
                       message.angular.x, message.angular.y, message.angular.z])
 
         torque = np.matmul(self.direction_inverse.T,force.T)
+       
         # torque = torque.T
 
         for run in range(0, 8):

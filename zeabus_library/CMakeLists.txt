@@ -17,6 +17,7 @@ add_message_files(
 	Type2.msg
 	Point3.msg
 	ArrayFloat.msg
+	IMUData.msg
 )
 
 add_service_files(

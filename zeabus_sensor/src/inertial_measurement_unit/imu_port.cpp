@@ -15,6 +15,8 @@
 
 #include	<ros/ros.h>
 
+#include	<zeabus_library/IMUData.h>
+
 #include	<zeabus_library/zeabus_sensor/lord_microstrain.h>
 
 namespace Asio = boost::asio;
@@ -84,4 +86,5 @@ int main( int argv , char** argc ){
 		printf( "Set resume for data stream ");
 		imu.command_resume( result );	
 	}while( ( ! result ) && ph.ok() );
+
 }

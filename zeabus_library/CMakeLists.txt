@@ -52,6 +52,10 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
 )
 
+set( zeabus_library_sources
+	src/convert_bytes.cpp
+)
+
 set( zeabus_control_sources
 	src/zeabus_control/service_control.cpp
 	src/zeabus_control/service_check_state.cpp
@@ -76,7 +80,9 @@ set( zeabus_sensor_sources
 #	src/zeabus_sensor/asynchronous_port.cpp
 )
 
-add_library( zeabus_library	STATIC ${zeabus_control_sources} ${zeabus_sensor_sources})
+add_library( zeabus_library	STATIC	${zeabus_control_sources} 
+									${zeabus_sensor_sources}
+									${zeabus_library_sources})
 
 add_dependencies( zeabus_library	${${PROJECT_NAME}_EXPORTED_TARGETS}
 									${catkin_EXPORTED_TARGETS} )

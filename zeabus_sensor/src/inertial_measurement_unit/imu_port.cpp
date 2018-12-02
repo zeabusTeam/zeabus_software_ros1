@@ -32,7 +32,7 @@ int main( int argv , char** argc ){
 
 	zeabus_sensor::LordMicrostrain imu( port_name );
 
-	ros::Rate rate( 20 );
+	ros::Rate rate( 500 );
 
 	bool result ;
 
@@ -80,11 +80,17 @@ int main( int argv , char** argc ){
 	do{
 		printf( "Set enable stream ");
 		imu.sensor_enable_data_stream( true , false , result );
-	}while( ( ! result && ph.ok() ) );
+	}while( ( ! result ) && ph.ok() );
 
 	do{
 		printf( "Set resume for data stream ");
 		imu.command_resume( result );	
 	}while( ( ! result ) && ph.ok() );
 
+	std::vector< uint8_t > data_stream;
+	while( ph.ok() ){
+		printf( "Read data stream ");
+		rate.sleep();
+		imu.read_data_stream( data_stream , result );
+	}	
 }

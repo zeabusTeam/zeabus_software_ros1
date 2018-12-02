@@ -15,9 +15,9 @@
 
 #include <zeabus_library/zeabus_sensor/lord_microstrain.h>
 
-//#define _ACK_OR_NACK_
+#define _ACK_OR_NACK_
 //#define _DEBUG_SIZE_PACKET_
-#define _DEBUG_DATA_STREAM_
+//#define _DEBUG_DATA_STREAM_
 
 namespace zeabus_sensor{
 	
@@ -38,14 +38,14 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::IDLE );
 		this->adding_check_sum();
 		#ifdef _ACK_OR_NACK_
-			this->print_buffer( "After adding sum IDLE ");
+			this->print_buffer( "Send command_idle");
 		#endif
 		this->get_size_packet();
 		this->write_data( this->buffer_packet , this->temp_size );	
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR);
 		#ifdef _ACK_OR_NACK_
-			this->print_buffer( "Reply Packet after IDLE " );
+			this->print_buffer( "Read command_idle" );
 		#endif
 		if( this->buffer_packet[ this->buffer_packet.size() - 3 ] == 0x00 ){
 			result = true;
@@ -63,10 +63,19 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::BASE::RESUME );
 		this->adding_check_sum();
 		this->get_size_packet();
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer("Send command_result ");
+		#endif
 		this->write_data( this->buffer_packet , this->temp_size );
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::BASE::DESCRIPTOR );
-		if( ! this->temp_boolean ) result = false ; return;
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer("read command_result ");
+		#endif
+		if( ! this->temp_boolean ){
+			result = false ; 
+			return;
+		}
 		if( *(this->buffer_packet_last - 3 ) == 0x00 ) result = true;
 		else result = false;
 	}
@@ -79,14 +88,14 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( MIP_COMMUNICATION::COMMAND::SENSOR::GET_IMU_DATA_BASE_RATE );
 		this->adding_check_sum();
 		#ifdef _ACK_OR_NACK_
-			this->print_buffer( "After adding sum get data base rate ");
+			this->print_buffer( "send request_IMU_base_rate ");
 		#endif
 		this->temp_size = ( size_t ) this->buffer_packet.size();
 		this->write_data( this->buffer_packet , this->temp_size );
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
 		#ifdef _ACK_OR_NACK_
-			this->print_buffer( "Reply Packet of cammnad get data base rate " );
+			this->print_buffer( "Read request_IMU_base_rate " );
 		#endif
 		if( *( this->buffer_packet_last - 7 ) == 0x00 ){
 			base_rate = int ( 
@@ -127,10 +136,13 @@ namespace zeabus_sensor{
 		this->adding_check_sum();
 		this->get_size_packet();
 		this->write_data( this->buffer_packet , this->temp_size );
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer( "Send setup_IMU_format ");
+		#endif
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
 		#ifdef _ACK_OR_NACK_
-			this->print_buffer( "Reply packet for set IMU message ");
+			this->print_buffer( "Read setup_IMU_format ");
 		#endif
 		if( *( this->buffer_packet_last - 3 ) == 0x00 ){
 			result = true;
@@ -167,18 +179,23 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( 0x00 );
 		this->adding_check_sum();
 		#ifdef _ACK_OR_NACK_
-			this->print_buffer( "After save setting message type ");
+			this->print_buffer( "Send save_message_format command ");
 		#endif
 		this->get_size_packet();
 		this->write_data( this->buffer_packet , this->temp_size );
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
 		#ifdef _ACK_OR_NACK_
-			this->print_buffer(" Reply packet for save setting IMU message ");
+			this->print_buffer("Read save_message_format ");
 		#endif
-		if( this->temp_boolean == false ) result = false ; return;
+		if( ! this->temp_boolean  ){
+			result = false ; 
+			return;
+		}
 		if( *(this->buffer_packet_last - 3 ) == 0x00 && 
-			*(this->buffer_packet_last - 7 ) == 0x00 ) result = true;
+			*(this->buffer_packet_last - 7 ) == 0x00 ){
+			result = true;
+		}
 		else result = false;
 	}
 
@@ -196,16 +213,19 @@ namespace zeabus_sensor{
 		this->add_data_to_packet( 0x05 );
 		this->add_data_to_packet( 0x11 );
 		this->add_data_to_packet( 0x01 );
-		this->add_data_to_packet( 0x01 );
+		this->add_data_to_packet( 0x03 );
 		if( use_estimation ) this->add_data_to_packet( 0x01 );
 		else this->add_data_to_packet( 0x00 );
 		this->adding_check_sum();
 		this->get_size_packet();
 		this->write_data( this->buffer_packet , this->temp_size );
+		#ifdef _ACK_OR_NACK_
+			this->print_buffer("Send save setting IMU message ");
+		#endif
 		this->read_reply_packet( this->temp_boolean 
 								, MIP_COMMUNICATION::COMMAND::SENSOR::DESCRIPTOR );
 		#ifdef _ACK_OR_NACK_
-			this->print_buffer(" Reply packet for save setting IMU message ");
+			this->print_buffer(" Read save setting IMU message ");
 		#endif
 		if( this->temp_boolean == false ) result = false ; return;
 		if( *(this->buffer_packet_last - 3 ) == 0x00 && 
@@ -224,11 +244,11 @@ namespace zeabus_sensor{
 			
 
 	void LordMicrostrain::print_buffer( std::string message ){
-		printf( "%s Data packet is : " , message.c_str() );
+		printf( "%s data is : " , message.c_str() );
 		for( this->buffer_packet_current = this->buffer_packet_begin 
 				; this->buffer_packet_current < this->buffer_packet_last 
 				; this->buffer_packet_current++ ){
-			printf( "%2X " , *( this->buffer_packet_current) );
+			printf( "%02X " , *( this->buffer_packet_current) );
 		}
 		printf("\n");
 	}
@@ -275,8 +295,9 @@ namespace zeabus_sensor{
 
 	void LordMicrostrain::read_data_stream( std::vector< uint8_t > buffer_data_stream 
 											, bool &result ){
-		this->read_reply_packet( result , MIP_COMMUNICATION::DATA::IMU_DATA_SET::DESCRIPTOR );
+		this->read_reply_packet( result , 0xff );
 		#ifdef _DEBUG_DATA_STREAM_
+			this->print_buffer( "Packet stream : " );
 			printf( 
 				"DETAILED output BUFFER : size -> %zd --- capacity -> %zd --- max_size -> %zd\n"
 				, buffer_data_stream.size() 
@@ -306,14 +327,16 @@ namespace zeabus_sensor{
 
 		int count = 0;
 
-		while( ! temp_boolean && count < limit_round){
+		while( ! result && count < limit_round){
 			count ++ ;
 			this->temp_size = 1;
 			if( 1 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ) {
 				if( this->buffer_receive_bytes[0] != 'u' ) continue;
 			}
-			else continue;
-			
+			else{ 
+				printf("Test\n");
+				continue;
+			}
 			if( 1 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ){
 				if( this->buffer_receive_bytes[0] != 'e' ) continue;
 			}
@@ -322,9 +345,10 @@ namespace zeabus_sensor{
 			this->init_header_packet();
 			
 			if( 1 == this->read_data( this->buffer_receive_bytes , this->temp_size ) ){
-				if( this->buffer_receive_bytes[0] != descriptor_set_byte ){
+				if( this->buffer_receive_bytes[0] != descriptor_set_byte && descriptor_set_byte != 0xff ){
+					printf("Wrong descriptor\n");
 					continue;
-				}
+				} 
 				else{
 					this->add_data_to_packet( this->buffer_receive_bytes[0] );
 				}
@@ -354,6 +378,7 @@ namespace zeabus_sensor{
 
 			this->find_check_sum( result );
 		}
+		printf("\n");
 				
 	}
 
@@ -361,7 +386,7 @@ namespace zeabus_sensor{
 		MSB = 0;
 		LSB = 0;
 		#ifdef _ACK_OR_NACK_
-			this->print_buffer( "Reply buffer want to check");
+			this->print_buffer( "Buffer want to check ");
 		#endif
 		for( this->buffer_packet_current = this->buffer_packet_begin 
 				; this->buffer_packet_current < this->buffer_packet_last - 2  

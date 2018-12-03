@@ -18,6 +18,8 @@
 #include	<zeabus_library/IMUData.h>
 
 #include	<zeabus_library/zeabus_sensor/lord_microstrain.h>
+#include	<zeabus_library/convert_bytes.h>
+#include	"./../../../zeabus_library/src/convert_bytes.cpp"
 
 namespace Asio = boost::asio;
 namespace DataIMU = zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET ;
@@ -33,6 +35,11 @@ int main( int argv , char** argc ){
 	zeabus_sensor::LordMicrostrain imu( port_name );
 
 	ros::Rate rate( 500 );
+
+	ros::Publisher tell_data = 
+			ph.advertise< zeabus_library::IMUData >("/sensor/imu/port" , 1 );
+
+	zeabus_library::IMUData message;
 
 	bool result ;
 
@@ -89,8 +96,31 @@ int main( int argv , char** argc ){
 
 	std::vector< uint8_t > data_stream;
 	while( ph.ok() ){
-		printf( "Read data stream ");
 		rate.sleep();
 		imu.read_data_stream( data_stream , result );
+		if( result ){
+			for( int run = 4 ; run < data_stream.size() ; ){
+				if( data_stream[ run ] == DataIMU::SCALED_ACCELEROMETER_VECTOR ){
+					run += 1;
+					uint8_t_to_Point3( message.linear_acceleration , data_stream , run );
+					run += 12 ;
+				}
+				else if( data_stream[run] == DataIMU::SCALED_GYRO_VECTOR ){
+					run += 1;
+					uint8_t_to_Point3( message.angular_velocity , data_stream , run );
+					run += 12 ;
+				}
+				else if( data_stream[ run ] == DataIMU::CF_EULER_ANGLES ){
+					run += 1;
+					uint8_t_to_Point3( message.euler , data_stream , run );
+					run += 12;
+				}
+				else{
+					run += 1;
+				}
+			}
+			tell_data.publish( message );	
+		}
+
 	}	
 }

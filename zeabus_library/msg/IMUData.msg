@@ -1,3 +1,3 @@
 zeabus_library/Point3 euler
-zeabus_library/Point3 angular_valocity
+zeabus_library/Point3 angular_velocity
 zeabus_library/Point3 linear_acceleration

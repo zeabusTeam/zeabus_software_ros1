@@ -38,7 +38,7 @@ namespace zeabus_sensor{
 			void sensor_save_message_format( bool& result );
 			void sensor_enable_data_stream( bool use_IMU , bool use_estimation , bool& result );
 
-			void read_data_stream( std::vector< uint8_t > buffer_data_stream , bool& result );
+			void read_data_stream( std::vector< uint8_t >& buffer_data_stream , bool& result );
 
 			// this part is function to check about buffer ( data and memory used)
 			void echo_detail_buffer();

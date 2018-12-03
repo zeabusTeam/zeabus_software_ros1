@@ -15,7 +15,7 @@
 
 #include <zeabus_library/zeabus_sensor/lord_microstrain.h>
 
-#define _ACK_OR_NACK_
+//#define _ACK_OR_NACK_
 //#define _DEBUG_SIZE_PACKET_
 //#define _DEBUG_DATA_STREAM_
 
@@ -293,7 +293,7 @@ namespace zeabus_sensor{
 		#endif
 	}
 
-	void LordMicrostrain::read_data_stream( std::vector< uint8_t > buffer_data_stream 
+	void LordMicrostrain::read_data_stream( std::vector< uint8_t >& buffer_data_stream 
 											, bool &result ){
 		this->read_reply_packet( result , 0xff );
 		#ifdef _DEBUG_DATA_STREAM_
@@ -315,7 +315,7 @@ namespace zeabus_sensor{
 			; this->buffer_packet_current++ , run++ ){
 			buffer_data_stream[run] = *( this->buffer_packet_current );
 			#ifdef _DEBUG_DATA_STREAM_
-				printf( "%2x " , buffer_data_stream[run]);
+				printf( " %2x " , buffer_data_stream[run]);
 			#endif
 		}
 		

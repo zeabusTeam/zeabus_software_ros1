@@ -20,13 +20,20 @@
 #include	<string.h> // This is have to include because we will use function in this header
 #include	<vector> // for make comfortable we will receive vector for you
 
+#include	<zeabus_library/Point3.h>
 
 #ifndef _ZEABUS_LIBRRY_CONVERT_BYTES_H__
 #define _ZEABUS_LIBRRY_CONVERT_BYTES_H__
 
 	namespace zeabus_library{
 
-		void uint8_t_to_float32( float& result , std::vector< uint8_t > data , int offset = 0);
+		void uint8_t_to_float32( float& result , std::vector< uint8_t >& data , int offset = 0);
+
+		void uint8_t_to_double64( double& result , std::vector< uint8_t >& data , int offset = 0);
+
+		void uint8_t_to_Point3( const zeabus_library::Point3& result 
+								, std::vector< uint8_t >& data 
+								, int offset );
 
 	}
 

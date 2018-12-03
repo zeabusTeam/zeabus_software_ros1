@@ -9,8 +9,8 @@
 
 import sys
 import os
-PATH = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(PATH + '/python2-mscl')
+#PATH = os.path.dirname(os.path.abspath(__file__))
+sys.path.append("/usr/share/python2-mscl")
 import mscl
 import rospy
 from sensor_msgs.msg import Imu
@@ -21,11 +21,12 @@ class ImuReader:
     def __init__(self):
         rospy.init_node('ImuReader')
         
-        ns = "zeabus_sensor"
+        ns = "/zeabus_sensor"
         name = "imu"
         
-        port = rospy.get_param(ns + "/" + name + "/port", "/dev/ttyACM0")
+        port = rospy.get_param(ns + "/" + name + "/port", "/dev/ttyACM2")
         baudrate = rospy.get_param(ns + "/" + name + "/baudrate", 115200)
+        # baudrate = rospy.get_param(ns + "/" + name + "/baudrate", 460800)
         imu_rate = rospy.get_param(ns + "/" + name + "/imu_rate", 500)
         pub_topic = rospy.get_param(ns + "/" + name + "/pub_topic", "/imu/data")
 
@@ -39,6 +40,11 @@ class ImuReader:
 
         # create the connection
         self.connection = mscl.Connection.Serial(port, baudrate)
+ 
+        # self.connection.disconnect()
+        # # rospy.sleep(10)
+        # self.connection = mscl.Connection.Serial(port, baudrate)
+
         sample_rate = imu_rate
 
         # create the InertialNode
@@ -180,3 +186,5 @@ class ImuReader:
 if __name__ == "__main__":
     imu = ImuReader()
     imu.streaming()
+    # rospy.init_node("imu")
+    # print(rospy.get_param("/zeabus_sensor/imu/port"))

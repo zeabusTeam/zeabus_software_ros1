@@ -1,0 +1,5 @@
+std_msgs/String name
+zeabus_library/PoseEuler pose
+---
+std_msgs/Bool success
+

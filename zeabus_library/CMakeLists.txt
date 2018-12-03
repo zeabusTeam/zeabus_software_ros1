@@ -27,12 +27,20 @@ add_service_files(
 	NumberService.srv
 	CheckPosition.srv
 	SurveyRequest.srv
+	
 )
 
 add_service_files(
 	DIRECTORY srv/zeabus_planner
 	FILES
 	MissionResult.srv
+)
+
+
+add_service_files(
+	FILES
+	GetObject.srv
+	SetObject.srv
 )
 
 generate_messages( DEPENDENCIES std_msgs geometry_msgs)

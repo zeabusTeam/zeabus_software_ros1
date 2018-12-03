@@ -101,16 +101,19 @@ int main( int argv , char** argc ){
 		if( result ){
 			for( int run = 4 ; run < data_stream.size() ; ){
 				if( data_stream[ run ] == DataIMU::SCALED_ACCELEROMETER_VECTOR ){
+					printf("Position %d Accelerometer--> %zX\n" , run, data_stream[run] );
 					run += 1;
 					uint8_t_to_Point3( message.linear_acceleration , data_stream , run );
 					run += 12 ;
 				}
 				else if( data_stream[run] == DataIMU::SCALED_GYRO_VECTOR ){
+					printf("Position %d SCALED GYRO --> %zX\n" , run ,data_stream[run]);
 					run += 1;
 					uint8_t_to_Point3( message.angular_velocity , data_stream , run );
 					run += 12 ;
 				}
 				else if( data_stream[ run ] == DataIMU::CF_EULER_ANGLES ){
+					printf("Position %d EULER ANGLES --> %zX\n" ,run ,data_stream[run]);
 					run += 1;
 					uint8_t_to_Point3( message.euler , data_stream , run );
 					run += 12;

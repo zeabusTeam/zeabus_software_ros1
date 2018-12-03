@@ -26,7 +26,7 @@ namespace zeabus_library{
 					+( int32_t( data[ offset + 1] ) << 16 )
 					+( int32_t( data[ offset + 2] ) <<  8 )
 					+( int32_t( data[ offset + 3] ) <<  0 );
-		printf( "Reasult is %08.4f\n" , result );
+		printf( "Reasult is %8.4f\n" , result );
 		memcpy( &result , &temp_int32 , 4 );
 	}
 

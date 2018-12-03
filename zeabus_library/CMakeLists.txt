@@ -4,6 +4,7 @@ project(zeabus_library)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  geometry_msgs
   message_generation
 )
 
@@ -13,6 +14,8 @@ add_message_files(
 	Type2.msg
 	Point3.msg
 	ArrayFloat.msg
+	Euler.msg
+	PoseEuler.msg
 )
 
 add_service_files(
@@ -32,7 +35,7 @@ add_service_files(
 	MissionResult.srv
 )
 
-generate_messages( DEPENDENCIES std_msgs )
+generate_messages( DEPENDENCIES std_msgs geometry_msgs)
 
 catkin_package(
 	INCLUDE_DIRS include

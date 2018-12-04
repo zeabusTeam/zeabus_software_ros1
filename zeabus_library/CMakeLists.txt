@@ -1,11 +1,15 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(zeabus_library)
 
-find_package(catkin REQUIRED COMPONENTS
+find_package( catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   geometry_msgs
   message_generation
+)
+
+find_package( Boost REQUIRED COMPONENTS
+
 )
 
 add_message_files(
@@ -17,6 +21,7 @@ add_message_files(
 	Euler.msg
 	PoseEuler.msg
 	ObjectResult.msg
+	IMUData.msg
 )
 
 add_service_files(
@@ -51,12 +56,17 @@ catkin_package(
 	INCLUDE_DIRS include
 	LIBRARIES zeabus_library
 	CATKIN_DEPENDS roscpp message_runtime std_msgs
-#	DEPENDS system_lib
+	DEPENDS Boost
 )
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
+)
+
+set( zeabus_library_sources
+	src/convert_bytes.cpp
 )
 
 set( zeabus_control_sources
@@ -75,9 +85,19 @@ set( zeabus_control_sources
 	src/zeabus_control/sum_pid_bound_id.cpp
 )
 
-add_library( zeabus_library	STATIC ${zeabus_control_sources} )
+set( zeabus_sensor_sources
+	src/zeabus_sensor/serial_port.cpp
+	src/zeabus_sensor/base_port.cpp
+	src/zeabus_sensor/lord_microstrain.cpp	
+	src/zeabus_sensor/synchronous_port.cpp
+#	src/zeabus_sensor/asynchronous_port.cpp
+)
+
+add_library( zeabus_library	STATIC	${zeabus_control_sources} 
+									${zeabus_sensor_sources}
+									${zeabus_library_sources})
 
 add_dependencies( zeabus_library	${${PROJECT_NAME}_EXPORTED_TARGETS}
 									${catkin_EXPORTED_TARGETS} )
 
-target_link_libraries( zeabus_library	${catkin_LIBRARIES} )
+target_link_libraries( zeabus_library	${catkin_LIBRARIES} ${Boost_LIBRARIES})

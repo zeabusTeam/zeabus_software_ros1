@@ -38,11 +38,15 @@ class Map:
         for name in self.object_name:
             self.object[name] = {'x': 0, 'y': 0, 'z': 0, 'yaw': 0}
 
-        self.object = {}
         self.pixel = {}
-        self.auv = {'x': 0, 'y': 0, 'z': 0, 'radius': 5}
-        self.auv_state = {'x': 0, 'y': 0, 'z': 0, 'yaw': 0}
+        self.auv = {'x': 0, 'y': 0, 'z': 0, 'yaw': -3, 'radius': 5}
+        self.auv_state = {'x': 0, 'y': 0, 'z': 0, 'yaw': math.radians(-100)}
         self.create_map_detail()
+
+        cv.namedWindow('map')
+        cv.moveWindow('map', 100, 100)
+        cv.setMouseCallback('map', self.get_mouse_position)
+
         rospy.Subscriber('/auv/state', Odometry, self.get_auv_state)
         rospy.Service('nav/setObj', SetObject(), self.set_object_callback)
         rospy.Service('nav/getObj', GetObject(), self.get_object_callback)
@@ -133,24 +137,38 @@ class Map:
             self.click = True
             self.pixel['x'], self.pixel['y'] = x, y
 
-    def update_auv(self, x, y, z, yaw):
+    def update_auv(self):
+        x, y, z, yaw = self.state_robot_to_map()
         self.auv['x'] = int(x)
         self.auv['y'] = int(y)
         self.auv['z'] = int(z)
+        self.auv['yaw'] = int(yaw)
         self.map_auv = np.zeros((self.map_row, self.map_col), np.uint8)
-        rect = (x, y + self.auv['radius']), (5, 20), math.degrees(-yaw)
+
+        yaw = math.degrees(yaw)
+        if abs(yaw) < 45 or abs(yaw) > 135:  
+            rect = (x, y + 20), (5, 40), -yaw
+        else:
+            if yaw > 0:
+                rect = (x + 20, y) , (40, 5), 90-yaw
+            else:
+                rect = (x - 20, y) , (40, 5), -(90+yaw)
+
         box = cv.boxPoints(rect)
         box = np.int0(box)
         cv.drawContours(self.map_auv, [box], 0, (255), -1)
         cv.circle(self.map_auv, (x, y), self.auv['radius'], (255), -1)
 
     def run(self):
-        cv.namedWindow('map')
-        cv.setMouseCallback('map', self.get_mouse_position)
+        while not rospy.is_shutdown():
+            self.update_auv()
+            map_display = cv.merge(
+                (self.map_obj, self.map_auv, self.map_detail))
 
-        map_display = cv.merge((self.map_obj, self.map_auv, self.map_detail))
-        cv.imshow('map', map_display)
-        cv.waitKey(1)
+            cv.imshow('map', map_display)
+            k = cv.waitKey(500) & 0xff
+            if k == ord('q'):
+                break
 
     def get_auv_state(self, data):
         self.pose = data.pose.pose
@@ -178,7 +196,4 @@ if __name__ == '__main__':
     rospy.init_node("NavigatorMap")
     row_map, col_map, row_area, col_area = 1000, 1000, 20, 20
     map = Map(row_map, col_map, row_area, col_area)
-    while not rospy.is_shutdown():
-        map.run()
-        x, y, z, yaw = map.state_robot_to_map()
-        map.update_auv(x, y, z, yaw)
+    map.run()

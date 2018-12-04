@@ -16,6 +16,7 @@ add_message_files(
 	ArrayFloat.msg
 	Euler.msg
 	PoseEuler.msg
+	ObjectResult.msg
 )
 
 add_service_files(
@@ -38,6 +39,7 @@ add_service_files(
 
 
 add_service_files(
+	DIRECTORY srv/zeabus_navigator
 	FILES
 	GetObject.srv
 	SetObject.srv

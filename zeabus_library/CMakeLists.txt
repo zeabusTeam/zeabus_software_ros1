@@ -20,8 +20,13 @@ add_message_files(
 	ArrayFloat.msg
 	Euler.msg
 	PoseEuler.msg
-	ObjectResult.msg
 	IMUData.msg
+)
+
+add_message_files(
+	DIRECTORY msg/zeabus_navigator
+	FILES
+	ObjectResult.msg
 )
 
 add_service_files(
@@ -48,6 +53,7 @@ add_service_files(
 	FILES
 	GetObject.srv
 	SetObject.srv
+	DelObject.srv
 )
 
 generate_messages( DEPENDENCIES std_msgs geometry_msgs)

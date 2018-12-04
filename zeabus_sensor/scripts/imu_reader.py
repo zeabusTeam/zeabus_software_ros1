@@ -7,6 +7,7 @@
     Description: use mscl lib for python
 """
 
+import tf
 import sys
 import os
 sys.path.append("/usr/share/python2-mscl")
@@ -14,7 +15,7 @@ import mscl
 import rospy
 from sensor_msgs.msg import Imu
 import numpy as np
-
+import math
 
 class ImuReader:
     def __init__(self):
@@ -163,15 +164,24 @@ class ImuReader:
                 print("W %+.4f" % (self.imu.orientation.w))
 
                 print("\n================== Rotation ================================")
-                print("Roll  %+.4f" % (self.data['roll']))
-                print("Picth %+.4f" % (self.data['pitch']))
-                print("Yaw   %+.4f" % (self.data['yaw']))
+                print("Roll  %+.4f" % math.degrees(self.data['roll']))
+                print("Picth %+.4f" % math.degrees(self.data['pitch']))
+                print("Yaw   %+.4f" % math.degrees(self.data['yaw']))
+
+                euler = tf.transformations.euler_from_quaternion(
+                    (self.imu.orientation.x,
+                    self.imu.orientation.y,
+                    self.imu.orientation.z,
+                    self.imu.orientation.w,)
+                )
+                # print(euler)
 
                 # print("\n================== MAGNITUDE ===================")
                 # print("\nX %+.4f" % (self.magnitude[0][-1]))
                 # print("Y %+.4f" % (self.magnitude[1][-1]))
                 # print("Z %+.4f" % (self.magnitude[2][-1]))
-
+                # rospy.sleep(0.01)
+          
         self.node.setToIdle()
         self.connection.disconnect()
 

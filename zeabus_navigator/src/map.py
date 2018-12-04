@@ -1,15 +1,22 @@
 #!/usr/bin/python2
+"""
+    File name: map.py
+    Author: skconan
+    Date created: 2018/11/29
+    Python Version: 2.7
+    Description: Display object position and auv state 
+"""
 
-from nav_msgs.msg import Odometry
-from std_msgs.msg import Bool, String
-from zeabus_navigator.msg import object_position
-from zeabus_library.srv import SetObject, GetObject, DelObject
-from zeabus_library.msg import PoseEuler, ObjectResult
 import cv2 as cv
 import numpy as np
 import tf
 import rospy
 import math
+from nav_msgs.msg import Odometry
+from std_msgs.msg import Bool, String
+from zeabus_navigator.msg import object_position
+from zeabus_library.srv import SetObject, GetObject, DelObject
+from zeabus_library.msg import PoseEuler, ObjectResult
 
 
 class Map:
@@ -26,11 +33,11 @@ class Map:
 
         self.object = {}
         self.object_name = []
-        
+
         self.object_name = ['gate', 'flare', 'drum']
         for name in self.object_name:
             self.object[name] = {'x': 0, 'y': 0, 'z': 0, 'yaw': 0}
-        
+
         self.object = {}
         self.pixel = {}
         self.auv = {'x': 0, 'y': 0, 'z': 0, 'radius': 5}

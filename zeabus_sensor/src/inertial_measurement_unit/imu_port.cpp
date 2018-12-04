@@ -39,7 +39,7 @@ int main( int argv , char** argc ){
 	int frequency;
 
 	ph.param< std::string >("name_port_imu" , port_name 
-								, "/dev/microstrain/3dm_gx5_45_0000__6521.65901");
+								, "/dev/microstrain/3dm_gx5_45_0000__6251.65901");
 
 	ph.param< std::string >("topic_output_port_imu" , topic_output , "/sensor/imu/port");
 
@@ -68,6 +68,9 @@ int main( int argv , char** argc ){
 	imu.set_option_port( Asio::serial_port_base::stop_bits( 
 							Asio::serial_port_base::stop_bits::one ) );
 	imu.set_option_port( Asio::serial_port_base::character_size( (size_t) 8 ) );
+	
+	imu.is_open( result );
+	if( ! result ) return 1;
 
 	result = false;
 	int IMU_base_rate = 0;
@@ -118,7 +121,7 @@ int main( int argv , char** argc ){
 			for( int run = 4 ; run < data_stream.size() ; ){
 				if( data_stream[ run ] == DataIMU::SCALED_ACCELEROMETER_VECTOR ){
 					#ifdef _DEBUG_SPILT_DATA_
-						printf("Position %d Accelerometer--> %zX\n" , run, data_stream[run] );
+						printf("Position %d Accelerometer--> %2X\n" , run, data_stream[run] );
 					#endif
 					run += 1;
 					uint8_t_to_Point3( message.linear_acceleration , data_stream , run );
@@ -126,7 +129,7 @@ int main( int argv , char** argc ){
 				}
 				else if( data_stream[run] == DataIMU::SCALED_GYRO_VECTOR ){
 					#ifdef _DEBUG_SPILT_DATA_
-						printf("Position %d SCALED GYRO --> %zX\n" , run ,data_stream[run]);
+						printf("Position %d SCALED GYRO --> %2X\n" , run ,data_stream[run]);
 					#endif
 					run += 1;
 					uint8_t_to_Point3( message.angular_velocity , data_stream , run );
@@ -134,7 +137,7 @@ int main( int argv , char** argc ){
 				}
 				else if( data_stream[ run ] == DataIMU::CF_EULER_ANGLES ){
 					#ifdef _DEBUG_SPILT_DATA_
-						printf("Position %d EULER ANGLES --> %zX\n" ,run ,data_stream[run]);
+						printf("Position %d EULER ANGLES --> %2X\n" ,run ,data_stream[run]);
 					#endif
 					run += 1;
 					uint8_t_to_Point3( message.euler , data_stream , run );

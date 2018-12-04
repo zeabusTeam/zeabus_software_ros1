@@ -129,25 +129,30 @@ class AUVController:
 		return [ result.target_01 , result.target_02 ]
 
 	def velocity( self , data_velocity): # please send in dictionary type
-		self.velocity_data.linear.x = 0
-		self.velocity_data.linear.y = 0
-		self.velocity_data.linear.z = 0
-		self.velocity_data.angular.x = 0
-		self.velocity_data.angular.y = 0
-		self.velocity_data.angular.z = 0
-	
-		if 'x' in data_velocity:
+		if( 'x' in data_velocity.keys() ):
 			self.velocity_data.linear.x = data_velocity['x']
-		if 'y' in data_velocity:
+		else:
+			self.velocity_data.linear.x = 0
+		if( 'y' in data_velocity.keys() ):
 			self.velocity_data.linear.y = data_velocity['y']
-		if 'z' in data_velocity:
+		else:
+			self.velocity_data.linear.y = 0
+		if( 'z' in data_velocity.keys() ):
 			self.velocity_data.linear.z = data_velocity['z']
-		if 'roll' in data_velocity:
+		else:
+			self.velocity_data.linear.z = 0
+		if( 'roll' in data_velocity.keys() ):
 			self.velocity_data.angular.x = data_velocity['roll']
-		if 'pitch' in data_velocity:
+		else:
+			self.velocity_data.angular.x = 0
+		if( 'pitch' in data_velocity.keys() ):
 			self.velocity_data.angular.y = data_velocity['pitch']
-		if 'yaw' in data_velocity:
+		else:
+			self.velocity_data.angular.y = 0
+		if( 'yaw' in data_velocity.keys() ):
 			self.velocity_data.angular.z = data_velocity['yaw']
+		else:
+			self.velocity_data.angular.z = 0
 		self.velocity_publisher.publish( self.velocity_data )
 
 	def check_state( self , type_state , value):

@@ -40,6 +40,7 @@ class SensorFusion:
         # self.csv = CSVManager(PATH + "/csv/compare_old_new.csv")
         self.count = 0
         self.axis = axis
+        self.sampling = 50
 
     def imu_callback(self,msg):
         self.acc[0].append(msg.linear_acceleration.x)    
@@ -55,29 +56,29 @@ class SensorFusion:
         # print(self.euler)
         self.run()
 
-    # def old_imu_callback(self, msg):
-    #     self.old_acc[0] = msg.linear_acceleration.x    
-    #     self.old_acc[1] = msg.linear_acceleration.y    
-    #     self.old_acc[2] = msg.linear_acceleration.z
-
     def run(self):
-        if len(self.acc[self.axis]) > 0 and len(self.acc[self.axis]) % 100 == 0:
-            # print("Count: " + str(count*100)+"   Mean | Max | Min | Variance | Total Variance |")
-            mean100 = np.mean(self.acc[self.axis][self.count*100:self.count*100 + 100])
-            max100 = np.max(self.acc[self.axis][self.count*100:self.count*100 + 100])
-            min100 = np.min(self.acc[self.axis][self.count*100:self.count*100 + 100])
-            var100 = np.var(self.acc[self.axis][self.count*100:self.count*100 + 100])
-            var = np.var(self.acc[self.axis])
+        if len(self.acc[self.axis]) > 0 and len(self.acc[self.axis]) % self.sampling == 0:
+            # # print("Count: " + str(count*self.sampling)+"   Mean | Max | Min | Variance | Total Variance |")
+            # mean = np.mean(self.acc[self.axis][self.count*self.sampling:self.count*self.sampling + self.sampling])
+            # max = np.max(self.acc[self.axis][self.count*self.sampling:self.count*self.sampling + self.sampling])
+            # min = np.min(self.acc[self.axis][self.count*self.sampling:self.count*self.sampling + self.sampling])
+            # var = np.var(self.acc[self.axis][self.count*self.sampling:self.count*self.sampling + self.sampling])
+            mean = np.mean(self.acc[self.axis][1:self.count*self.sampling + self.sampling])
+            max = np.max(self.acc[self.axis][1:self.count*self.sampling + self.sampling])
+            min = np.min(self.acc[self.axis][1:self.count*self.sampling + self.sampling])
+            var = np.var(self.acc[self.axis][1:self.count*self.sampling + self.sampling])
+            # var = np.var(self.acc[self.axis][1:])
+            range = abs(max - min)
             self.count += 1
             if self.count % 20 == 0 and self.count > 0:
-                print("============================= Axis: %s ======================================"%self.axis)
-                print("%8s   %10s   %10s   %10s   %14s %14s" %("Count |", "Mean |", "Max |" ,"Min |" ,"Variance |", "Total Variance |"))
-            print("%6d |  %+7.6f |  %+7.6f |  %+7.6f |  %+9.10f |  %+9.10f |"%(self.count*100,mean100,max100,min100,var100,var))
+                print("=============================== Axis: %s ========================================"%self.axis)
+                print("%8s   %10s   %10s   %10s   %10s   %14s %14s" %("Count |", "Mean |", "Max |" ,"Min |","Range |" ,"Variance |", "Total Variance |"))
+            print("%6d |  %+7.6f |  %+7.6f |  %+7.6f |  %+7.6f |  %+9.10f |  %+9.10f |"%(self.count*self.sampling,mean,max,min,range,var,var))
 
 if __name__ == '__main__':
     axis = raw_input("Axis: ")
     ax = {'x':0,'y':0,'z':0}
     sf = SensorFusion(ax[axis.lower()])
-    print("============================= Axis: %s ======================================"%axis)
-    print("%8s   %10s   %10s   %10s   %14s %14s" %("Count |", "Mean |", "Max |" ,"Min |" ,"Variance |", "Total Variance |"))
+    print("=============================== Axis: %s ========================================"%axis)
+    print("%8s   %10s   %10s   %10s   %10s   %14s %14s" %("Count |", "Mean |", "Max |" ,"Min |","Range |" ,"Variance |", "Total Variance |"))
     rospy.spin()

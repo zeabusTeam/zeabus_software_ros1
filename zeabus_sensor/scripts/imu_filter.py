@@ -31,7 +31,7 @@ class SensorFusion:
     def __init__(self,axis=0):
         rospy.init_node("SensorFusion",anonymous=True)
         rospy.Subscriber("/imu/data",Imu, self.imu_callback)
-        # rospy.Subscriber("/gx4_45_imu/data",Imu, self.old_imu_callback)
+        # rospy.Subscriber("/gx4_45_imu/data",Imu, self.imu_callback)
         
         self.orientation = None
         self.euler = [0,0,0]
@@ -77,7 +77,7 @@ class SensorFusion:
 
 if __name__ == '__main__':
     axis = raw_input("Axis: ")
-    ax = {'x':0,'y':0,'z':0}
+    ax = {'x':0,'y':1,'z':2}
     sf = SensorFusion(ax[axis.lower()])
     print("=============================== Axis: %s ========================================"%axis)
     print("%8s   %10s   %10s   %10s   %10s   %14s %14s" %("Count |", "Mean |", "Max |" ,"Min |","Range |" ,"Variance |", "Total Variance |"))

@@ -2,13 +2,13 @@
 	File name			:	asynchronous_port.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 28
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 05
 	Purpose				:	This is header of file abount port style asynchronous
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
-	status				:	Prouction
+	version				:	1.0.0
+	status				:	STOP
 							
 	Namespace			:	zeabus_sensor
 */

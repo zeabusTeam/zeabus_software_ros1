@@ -2,12 +2,12 @@
 	File name			:	asynchronous_port.cpp
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 28
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 05
 	Purpose				:	This is source of file about port style asynchronous
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
+	version				:	0.0.2
 	status				:	STOP
 							
 	Namespace			:	zeabus_sensor

@@ -2,20 +2,20 @@
 	File name			:	lord_microstrain.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 05
 	Purpose				:	This is source of file about connection with port imu
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.0.0
+	status				:	Maintain & Using
 
 	Namespace			:	zeabus_sensor
 */
 
 #include <zeabus_library/zeabus_sensor/lord_microstrain.h>
 
-#define _ACK_OR_NACK_
+//#define _ACK_OR_NACK_
 //#define _DEBUG_SIZE_PACKET_
 //#define _DEBUG_DATA_STREAM_
 

@@ -2,13 +2,13 @@
 	File name			:	lord_microstrain.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 05
 	Purpose				:	This is header of file about manage connect with IMU
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.0.0
+	status				:	Maintain & Using
 
 	Namespace			:	zeabus_sensor
 */

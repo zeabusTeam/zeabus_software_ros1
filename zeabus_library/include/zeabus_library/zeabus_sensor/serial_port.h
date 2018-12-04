@@ -2,12 +2,12 @@
 	File name			:	serial_port.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 26
-	Date last modified	:	2018 , NOV 28
+	Date last modified	:	2018 , DEC 05
 	Purpose				:	This is header of file about standard doing to do with port
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
+	version				:	1.0.0
 	status				:	Production
 
 	Namespace			:	zeabus_sensor

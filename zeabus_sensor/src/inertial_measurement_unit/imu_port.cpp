@@ -2,13 +2,13 @@
 	File name			:	imu_port.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 05
 	Purpose				:	This is file to use read connect ros and IMU
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
-	status				:	Production
+	version				:	1.0.0
+	status				:	Maintain
 
 	Namespace			:	None
 */

@@ -15,7 +15,7 @@
 
 #include <zeabus_library/zeabus_sensor/lord_microstrain.h>
 
-//#define _ACK_OR_NACK_
+#define _ACK_OR_NACK_
 //#define _DEBUG_SIZE_PACKET_
 //#define _DEBUG_DATA_STREAM_
 

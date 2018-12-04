@@ -143,8 +143,7 @@ int main( int argc , char **argv){
 				if(data[run] == 
 					zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET::SCALED_GYRO_VECTOR){
 					// finish read data descriptor field
-					run++_
-			icket.clearnt16_t
+					run++;
 					temporary = ( int32_t(data[run]) << 24 ) + (int32_t(data[run+1] << 16 ) ) 
 								+ ( int32_t(data[run+2]) << 8 ) + (int32_t(data[run+3]) << 0);
 					memcpy( &message , &temporary , 4);
@@ -200,7 +199,7 @@ int main( int argc , char **argv){
 					memcpy( &message , &temporary , 4);	
 					euler_message.vector.z = message;
 					run+=4;
-					// skip to rad length data for each set 1 bytes
+					// skip to read length data for each set 1 bytes
 				}
 			}
 			// this part for publisher data

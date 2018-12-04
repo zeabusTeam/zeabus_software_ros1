@@ -15,19 +15,27 @@
 
 #include	<zeabus_library/convert_bytes.h>
 
+#define _TEST_CONVERT_
+
 namespace zeabus_library{
 
 	int32_t temp_int32;
 	float temp_float32;
 	double temp_double64;
 
-	void uint8_t_to_float32( float& result , std::vector< uint8_t >& data , int offset ){	
+	void uint8_t_to_float32( float& result , std::vector< uint8_t >& data , int offset ){
+		#ifdef _TEST_CONVERT_
+			printf( "value byte is %2X %2X %2X %2X " , data[offset] , data[offset+1]
+													, data[offset+2] , data[offset+3]);	
+		#endif
 		temp_int32 = ( int32_t( data[ offset + 0] ) << 24 )
 					+( int32_t( data[ offset + 1] ) << 16 )
 					+( int32_t( data[ offset + 2] ) <<  8 )
 					+( int32_t( data[ offset + 3] ) <<  0 );
-		printf( "Reasult is %8.4f\n" , result );
 		memcpy( &result , &temp_int32 , 4 );
+		#ifdef _TEST_CONVERT_
+			printf( "Covert to %X Result is %8.4f\n" , temp_int32 , result );
+		#endif
 	}
 
 	void uint8_t_to_double64( double& result , std::vector< uint8_t >& data , int offset ){

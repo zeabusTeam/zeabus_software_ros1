@@ -119,6 +119,7 @@ int main( int argv , char** argc ){
 					run += 12;
 				}
 				else{
+					printf("Skip\n");
 					run += 1;
 				}
 			}
@@ -126,4 +127,12 @@ int main( int argv , char** argc ){
 		}
 
 	}	
+
+	int count = 0;
+	do{
+		printf( "IMU set to ide ");
+		imu.command_idle( result );
+		rate.sleep();
+		count++;
+	}while( ( ! result ) && count < 10 );
 }

@@ -7,8 +7,8 @@
 							can use only situation 4 bytes ( 32-bit)
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
-	status				:	Production
+	version				:	1.1.0
+	status				:	Maintain & Using
 
 	Namespace			:	zeabus_library
 */
@@ -21,6 +21,8 @@
 #include	<vector> // for make comfortable we will receive vector for you
 
 #include	<zeabus_library/Point3.h>
+#include	<geometry_msgs/Quaternion.h>
+#include	<geometry_msgs/Vector3.h>
 
 #ifndef _ZEABUS_LIBRRY_CONVERT_BYTES_H__
 #define _ZEABUS_LIBRRY_CONVERT_BYTES_H__
@@ -31,9 +33,17 @@
 
 		void uint8_t_to_double64( double& result , std::vector< uint8_t >& data , int offset = 0);
 
-		void uint8_t_to_Point3( const zeabus_library::Point3& result 
+		void uint8_t_to_Point3( zeabus_library::Point3& result 
 								, std::vector< uint8_t >& data 
 								, int offset );
+
+		void uint8_t_to_Quaternion( geometry_msgs::Quaternion& result 
+								, std::vector< uint8_t >& data
+								, int offset );
+
+		void uint8_t_to_Vector3( geometry_msgs::Vector3& result 
+								, std::vector< uint8_t >& data
+								, int offest );
 
 	}
 

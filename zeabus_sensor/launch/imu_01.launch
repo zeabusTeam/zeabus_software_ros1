@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<node	name="imu_port01"				pkg="zeabus_sensor"
+			type="imu_port"					output="screen"
+	>
+		<param name="name_port_imu" type="str" value="/dev/microstrain/3dm_gx5_45_0000__6251.65903"/>
+		<param name="topic_output_port_imu_zeabus" type="str" value="/sensor/imu/port01"/>
+		<param name="topic_output_port_imu_sensor" type="str" value="/gx4_45_imu/data"/>
+		<param name="frequency_imu" type="int" value="250"/>
+	</node>
+
+</launch>

@@ -7,8 +7,8 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
-	status				:	product
+	version				:	0.5.0
+	status				:	test
 
 	Namespace			:	zeabus_library
 */
@@ -18,6 +18,11 @@
 #include	<boost/numeric/ublas/matrix.hpp>
 
 #include	<exception>
+
+#include	<math.h>
+
+#define		PI 3.14159265
+
 
 #ifndef _ZEABUS_LIBRARY_CONVERT_ROTATION_H__
 #define _ZEABUS_LIBRARY_CONVERT_ROTATION_H__
@@ -38,6 +43,10 @@ namespace zeabus_library{
 
 			void all_rotation( double roll , double pitch , double yaw 
 									, boost::numeric::ublas::matrix< double >& result );
+
+			void print_individual_matrix( std::string message 
+											, boost::numeric::ublas::matrix< double>& data);
+			void print_all_temp();
 
 		protected:
 			void check_dimension( boost::numeric::ublas::matrix< double >& result );

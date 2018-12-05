@@ -7,7 +7,7 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Maintain
 
 	Namespace			:	None
@@ -16,12 +16,14 @@
 #include	<ros/ros.h>
 
 #include	<zeabus_library/IMUData.h>
+#include	<sensor_msgs/Imu.h>
 
 #include	<zeabus_library/zeabus_sensor/lord_microstrain.h>
 #include	<zeabus_library/convert_bytes.h>
-#include	"./../../../zeabus_library/src/convert_bytes.cpp"
 
-#define	_DEBUG_SPILT_DATA_
+//#define	_DEBUG_SPILT_DATA_
+#define _TYPE_SENSOR_MSGS_
+#define _TYPE_ZEABUS_LIBRARY_MSGS_
 
 namespace Asio = boost::asio;
 namespace DataIMU = zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET ;
@@ -30,18 +32,22 @@ int main( int argv , char** argc ){
 	
 	ros::init( argv , argc , "port_imu");
 
+	ros::NodeHandle ph("~"); // Handle for manage param from launch
 	ros::NodeHandle nh(""); // Handle for manage about this file in ros system
-	ros::NodeHandle ph(""); // Handle for manage param from launch
 
 ////////////////////////////////////-- PARAMETER PART --/////////////////////////////////////////
-	std::string topic_output;
+	std::string topic_output_zeabus;
+	std::string topic_output_sensor;
 	std::string port_name;
 	int frequency;
 
 	ph.param< std::string >("name_port_imu" , port_name 
 								, "/dev/microstrain/3dm_gx5_45_0000__6251.65901");
 
-	ph.param< std::string >("topic_output_port_imu" , topic_output , "/sensor/imu/port");
+	ph.param< std::string >(	"topic_output_port_imu_zeabus" 
+								, topic_output_zeabus , "/sensor/imu/port/zeabus");
+	ph.param< std::string >(	"topic_output_port_imu_sensor" 
+								, topic_output_sensor , "/sensor/imu/port/sensor");
 
 	ph.param< int >("frequency_imu" , frequency , 250 );
 
@@ -50,10 +56,17 @@ int main( int argv , char** argc ){
 
 	ros::Rate rate( frequency );
 
-	ros::Publisher tell_data = 
-			ph.advertise< zeabus_library::IMUData >( topic_output , 1 );
+	#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
+		ros::Publisher tell_zeabus_library = 
+				ph.advertise< zeabus_library::IMUData >( topic_output_zeabus, 1 );
+		zeabus_library::IMUData message;
+	#endif
 
-	zeabus_library::IMUData message;
+	#ifdef _TYPE_SENSOR_MSGS_
+		ros::Publisher tell_sensor_msgs =
+				ph.advertise< sensor_msgs::Imu >( topic_output_sensor , 1 );
+		sensor_msgs::Imu sensor;
+	#endif
 
 	bool result ;
 
@@ -95,6 +108,7 @@ int main( int argv , char** argc ){
 		imu.sensor_add_message_type( DataIMU::SCALED_ACCELEROMETER_VECTOR );
 		imu.sensor_add_message_type( DataIMU::SCALED_GYRO_VECTOR );
 		imu.sensor_add_message_type( DataIMU::CF_EULER_ANGLES );
+		imu.sensor_add_message_type( DataIMU::CF_QUATERNION );
 		imu.sensor_setup_IMU_format( result );
 	}while( ( ! result ) && ph.ok() );
 
@@ -124,7 +138,14 @@ int main( int argv , char** argc ){
 						printf("Position %d Accelerometer--> %2X\n" , run, data_stream[run] );
 					#endif
 					run += 1;
-					uint8_t_to_Point3( message.linear_acceleration , data_stream , run );
+					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
+						zeabus_library::uint8_t_to_Point3(	message.linear_acceleration 
+															, data_stream , run );
+					#endif
+					#ifdef _TYPE_SENSOR_MSGS_
+						zeabus_library::uint8_t_to_Vector3( sensor.linear_acceleration
+															, data_stream , run );
+					#endif
 					run += 12 ;
 				}
 				else if( data_stream[run] == DataIMU::SCALED_GYRO_VECTOR ){
@@ -132,7 +153,14 @@ int main( int argv , char** argc ){
 						printf("Position %d SCALED GYRO --> %2X\n" , run ,data_stream[run]);
 					#endif
 					run += 1;
-					uint8_t_to_Point3( message.angular_velocity , data_stream , run );
+					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
+						zeabus_library::uint8_t_to_Point3(	message.angular_velocity 
+															, data_stream , run );
+					#endif
+					#ifdef _TYPE_SENSOR_MSGS_
+						zeabus_library::uint8_t_to_Vector3( sensor.angular_velocity
+															, data_stream , run );
+					#endif
 					run += 12 ;
 				}
 				else if( data_stream[ run ] == DataIMU::CF_EULER_ANGLES ){
@@ -140,8 +168,21 @@ int main( int argv , char** argc ){
 						printf("Position %d EULER ANGLES --> %2X\n" ,run ,data_stream[run]);
 					#endif
 					run += 1;
-					uint8_t_to_Point3( message.euler , data_stream , run );
+					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
+						zeabus_library::uint8_t_to_Point3( message.euler , data_stream , run );
+					#endif
 					run += 12;
+				}
+				else if( data_stream[ run ] == DataIMU::CF_QUATERNION ){
+					#ifdef _DEBUG_SPILT_DATA_
+						printf("Position %d QUATERNION --> %2X\n" ,run ,data_stream[run]);
+					#endif
+					run += 1;
+					#ifdef _TYPE_SENSOR_MSGS_
+						zeabus_library::uint8_t_to_Quaternion( sensor.orientation
+																, data_stream , run );
+					#endif
+					run += 16;
 				}
 				else{
 					#ifdef _DEBUG_SPILT_DATA_
@@ -150,7 +191,12 @@ int main( int argv , char** argc ){
 					run += 1;
 				}
 			}
-			tell_data.publish( message );	
+			#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
+				tell_zeabus_library.publish( message );	
+			#endif
+			#ifdef _TYPE_SENSOR_MSGS_
+				tell_sensor_msgs.publish( sensor );
+			#endif
 		}
 
 	}	

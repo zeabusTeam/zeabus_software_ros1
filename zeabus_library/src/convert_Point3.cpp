@@ -24,10 +24,10 @@ namespace zeabus_library{
 	}
 
 	void matrix_to_Point3(	boost::numeric::ublas::matrix< double > set_value 
-							, zeabus_library::Point3& result ){
-		result.x = set_value( 0 , 0 );
-		result.y = set_value( 0 , 1 );
-		result.z = set_value( 0 , 2 );
+							, zeabus_library::Point3& result , int offset_row ){
+		result.x = set_value( offset_row , 0 );
+		result.y = set_value( offset_row , 1 );
+		result.z = set_value( offset_row , 2 );
 	}
 
 }

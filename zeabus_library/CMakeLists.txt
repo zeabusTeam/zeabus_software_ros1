@@ -77,6 +77,7 @@ set( zeabus_library_sources
 	src/convert_Point3.cpp
 	src/convert_Type2.cpp
 	src/convert_State.cpp
+	src/convert_IMUData.cpp
 )
 
 set( zeabus_control_sources

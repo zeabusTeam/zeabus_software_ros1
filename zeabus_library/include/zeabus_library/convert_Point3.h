@@ -28,7 +28,7 @@ namespace zeabus_library{
 
 	// can use only matrix size ( 1 , 3 )	
 	void matrix_to_Point3(	boost::numeric::ublas::matrix< double > set_value 
-							, zeabus_library::Point3& result );
+							, zeabus_library::Point3& result , int offset_row = 0 );
 
 }
 

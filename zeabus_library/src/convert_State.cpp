@@ -25,10 +25,16 @@
 
 namespace zeabus_library{
 
-	void array_to_State( double* set_value , zeabus_library::State& result , int offset = 0 );
+	void array_to_State( double* set_value , zeabus_library::State& result , int offset){
+		array_to_Type2( set_value , result.position , offset + 0 );
+		array_to_Type2( set_value , result.velocity , offset + 6 );
+	}
 
 	void split_array_to_State( double* value_position , double* value_velocity
-								, zeabus_library::State& result );
+								, zeabus_library::State& result ){
+		array_to_Type2( value_position , result.position , 0 );
+		array_to_Type2( value_velocity , result.velocity , 0 );
+	}
 
 }
 

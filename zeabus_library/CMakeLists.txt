@@ -75,6 +75,7 @@ set( zeabus_library_sources
 	src/convert_bytes.cpp
 	src/convert_rotation.cpp
 	src/convert_Point3.cpp
+	src/convert_Type2.cpp
 )
 
 set( zeabus_control_sources
@@ -100,7 +101,7 @@ set( zeabus_sensor_sources
 	src/zeabus_sensor/synchronous_port.cpp
 )
 
-add_library( zeabus_library			SHARED		${zeabus_library_sources} 
+add_library( zeabus_library			STATIC		${zeabus_library_sources} 
 												${zeabus_sensor_sources}
 												${zeabus_control_sources})
 add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}

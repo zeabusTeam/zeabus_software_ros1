@@ -2,13 +2,13 @@
 	File name			:	convert_Point3.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 06
-	Date last modified	:	2018 , ??? ??
-	Purpose				:	For convert array or value to zeabus_library/IMUData
+	Date last modified	:	2018 , DEC 07
+	Purpose				:	For convert array or value to zeabus_library/Point3
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.5
-	status				:	Production
+	version				:	1.0.0
+	status				:	Maintain
 
 	Namespace			:	zeabus_library
 */

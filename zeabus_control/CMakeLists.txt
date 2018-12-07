@@ -22,7 +22,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
 #  INCLUDE_DIRS include
   LIBRARIES zeabus_control
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp std_msgs dynamic_reconfigure roslib zeabus_library
+  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp std_msgs dynamic_reconfigure roslib 
   DEPENDS  Boost
 )
 
@@ -30,14 +30,6 @@ include_directories(
  include
   ${catkin_INCLUDE_DIRS}
 )
-
-add_library( zeabus_control STATIC src/other_function_double.cpp)
-
-add_dependencies( zeabus_control ${${PROJECT_NAME}_EXPORTED_TARGETS}
-								${catkin_EXPORTED_TARGETS}
-)
-
-target_link_libraries( zeabus_control ${catkin_LIBRARIES} )
 
 add_executable(control src/main_control.cpp)
 

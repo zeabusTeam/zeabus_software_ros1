@@ -21,12 +21,15 @@
 
 #include	<zeabus_library/convert_rotation.h>
 
+#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
+#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
+
 namespace zeabus_sensor{
 
-	class listen_IMUData{
+	class ListenIMUData{
 
 		public:
-			listen_IMUData( double roll , double pitch , double yaw );
+			ListenIMUData( double roll , double pitch , double yaw );
 
 			void callback( const zeabus_library::IMUData& result );
 			void get_result( zeabus_library::IMUData& result );
@@ -37,6 +40,9 @@ namespace zeabus_sensor{
 			boost::numeric::ublas::matrix< double > result_euler;
 			boost::numeric::ublas::matrix< double > result_gyro;
 			boost::numeric::ublas::matrix< double > result_acceleration;
+			zeabus_library::MatrixRotation matrix_handle();
 	};
 
 }
+
+#endif

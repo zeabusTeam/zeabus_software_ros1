@@ -74,6 +74,7 @@ include_directories(
 set( zeabus_library_sources
 	src/convert_bytes.cpp
 	src/convert_rotation.cpp
+	src/convert_Point3.cpp
 )
 
 set( zeabus_control_sources

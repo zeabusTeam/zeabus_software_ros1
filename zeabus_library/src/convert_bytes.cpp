@@ -2,20 +2,20 @@
 	File name			:	convert_bytes.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 01
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 05
 	Purpose				:	This is source code of convert_bytes.cpp
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.1.0
+	status				:	Maintain & Used
 
 	Namespace			:	zeabus_library
 */
 
 #include	<zeabus_library/convert_bytes.h>
 
-#define _TEST_CONVERT_
+//#define _TEST_CONVERT_
 
 namespace zeabus_library{
 
@@ -59,4 +59,27 @@ namespace zeabus_library{
 		result.z = temp_float32;
 	}
 
+	void uint8_t_to_Quaternion( geometry_msgs::Quaternion& result 
+								, std::vector< uint8_t >& data
+								, int offset ){
+		uint8_t_to_float32( temp_float32 , data , offset + 0);
+		result.w = temp_float32;
+		uint8_t_to_float32( temp_float32 , data , offset + 4);
+		result.x = temp_float32;
+		uint8_t_to_float32( temp_float32 , data , offset + 8);
+		result.y = temp_float32;
+		uint8_t_to_float32( temp_float32 , data , offset + 12);
+		result.z = temp_float32;
+	}
+
+	void uint8_t_to_Vector3( geometry_msgs::Vector3& result 
+								, std::vector< uint8_t >& data
+								, int offest ){
+		uint8_t_to_float32( temp_float32 , data , offest + 0 );
+		result.x = temp_float32;
+		uint8_t_to_float32( temp_float32 , data , offest + 4 );
+		result.y = temp_float32;
+		uint8_t_to_float32( temp_float32 , data , offest + 8 );
+		result.z = temp_float32;
+	}
 }

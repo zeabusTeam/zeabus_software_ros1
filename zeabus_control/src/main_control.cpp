@@ -224,7 +224,10 @@ int main( int argv , char** argc){
 					// When have state about velocity
 					pid_velocity[run].get_result( target_velocity[run] - current_velocity[run] 
 												, pid_force[run] );
-				}
+					if( run == 2){
+						pid_force[2] = target_velocity[2]; 
+					}
+				}		
 //				else if( mode_control == 1){
 				else{
 					// When don't have data to tell velocity of robot

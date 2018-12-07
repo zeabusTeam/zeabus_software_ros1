@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-    File name: gate.py
+    File name: thrust_mapper_fix.py
     Author: robin
     Date created: 2018/11/14
     Python Version: 2.7
@@ -56,20 +56,21 @@ class ThrustMapper:
         ])
 
         self.direction_angular = np.array([
-            np.cross(self.distance[0].T, self.direction_linear[0].T),
-            np.cross(self.distance[1].T, self.direction_linear[1].T),
-            np.cross(self.distance[2].T, self.direction_linear[2].T),
-            np.cross(self.distance[3].T, self.direction_linear[3].T),
-            np.cross(self.distance[4].T, self.direction_linear[4].T),
-            np.cross(self.distance[5].T, self.direction_linear[5].T),
-            np.cross(self.distance[6].T, self.direction_linear[6].T),
-            np.cross(self.distance[7].T, self.direction_linear[7].T),
+            np.cross(self.distance[0], self.direction_linear[0]),
+            np.cross(self.distance[1], self.direction_linear[1]),
+            np.cross(self.distance[2], self.direction_linear[2]),
+            np.cross(self.distance[3], self.direction_linear[3]),
+            np.cross(self.distance[4], self.direction_linear[4]),
+            np.cross(self.distance[5], self.direction_linear[5]),
+            np.cross(self.distance[6], self.direction_linear[6]),
+            np.cross(self.distance[7], self.direction_linear[7]),
         ])
+        
 
         self.direction = np.concatenate((
-            self.direction_linear.T,
-            self.direction_angular.T
-        ))
+            self.direction_linear,
+            self.direction_angular
+        ),axis=1)
 
         self.direction_inverse = np.linalg.pinv(self.direction)
 
@@ -80,7 +81,8 @@ class ThrustMapper:
         force = np.array([message.linear.x, message.linear.y, message.linear.z,
                       message.angular.x, message.angular.y, message.angular.z])
 
-        torque = np.matmul(force, self.direction_inverse.T)
+        torque = np.matmul(self.direction_inverse.T,force.T)
+       
 
         for run in range(0, 8):
             if(torque[run] < 0):
@@ -110,11 +112,13 @@ class ThrustMapper:
         
 
         pwm = pwm_command.pwm
-        print '=========== PWM ==========='
-        print(str(pwm[0]) + "\t" + str(pwm[1]) + "\t"
-              + str(pwm[2]) + "\t" + str(pwm[3]) + "\n"
-              + str(pwm[4]) + "\t" + str(pwm[5]) + "\t"
-              + str(pwm[6]) + "\t" + str(pwm[7]))
+        print '==================== PWM ===================='
+        print("%+5.4f %+5.4f %+5.4f %+5.4f"%(pwm[0],pwm[1],pwm[2],pwm[3]))
+        print("%+5.4f %+5.4f %+5.4f %+5.4f"%(pwm[4],pwm[5],pwm[6],pwm[7]))
+        # print(str(pwm[0]) + "\t" + str(pwm[1]) + "\t"
+        #       + str(pwm[2]) + "\t" + str(pwm[3]) + "\n"
+        #       + str(pwm[4]) + "\t" + str(pwm[5]) + "\t"
+        #       + str(pwm[6]) + "\t" + str(pwm[7]))
 
         self.pwm_publisher.publish(pwm_command)
 

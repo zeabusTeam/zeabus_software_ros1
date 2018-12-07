@@ -100,11 +100,9 @@ set( zeabus_sensor_sources
 	src/zeabus_sensor/synchronous_port.cpp
 )
 
-add_library( zeabus_library	STATIC	${zeabus_control_sources} 
-									${zeabus_sensor_sources}
-									${zeabus_library_sources})
-
-add_dependencies( zeabus_library	${${PROJECT_NAME}_EXPORTED_TARGETS}
-									${catkin_EXPORTED_TARGETS} )
-
-target_link_libraries( zeabus_library	${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_library( zeabus_library			SHARED		${zeabus_library_sources} 
+												${zeabus_sensor_sources}
+												${zeabus_control_sources})
+add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}
+												${catkin_EXPORTED_TARGETS} )
+target_link_libraries( zeabus_library			${catkin_LIBRARIES} ${Boost_LIBRARIES})

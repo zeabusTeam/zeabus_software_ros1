@@ -11,7 +11,7 @@ find_package(Boost REQUIRED COMPONENTS system chrono)
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES zeabus_sensor
+  LIBRARIES zeabus_sensor  
   CATKIN_DEPENDS roscpp  zeabus_library sensor_msgs
   DEPENDS Boost 
 )

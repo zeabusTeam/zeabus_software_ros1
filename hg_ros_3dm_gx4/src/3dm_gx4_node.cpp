@@ -26,12 +26,6 @@ void publishIMUData(const hg_3dm_gx4::IMUData& data)
                    data.orientation_quaternion[3],
                    data.orientation_quaternion[0]);
 
-  tf::Matrix3x3 m(q);
-
-  double roll,pitch,yaw;  m.getRPY(roll, pitch, yaw);
-
-  q.setRPY(-(roll - M_PI/2.0), pitch, yaw);
-
   g_imu.orientation.w = q.w();
   g_imu.orientation.x = q.x();
   g_imu.orientation.y = q.y();

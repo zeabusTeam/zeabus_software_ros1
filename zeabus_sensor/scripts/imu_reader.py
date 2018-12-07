@@ -24,10 +24,10 @@ class ImuReader:
         ns = "zeabus_sensor"
         name = "imu"
         
-        port = rospy.get_param(ns + "/" + name + "/port", "/dev/ttyACM0")
+        port = rospy.get_param(ns + "/" + name + "/port", "/dev/ttyACM2")
         baudrate = rospy.get_param(ns + "/" + name + "/baudrate", 115200)
         imu_rate = rospy.get_param(ns + "/" + name + "/imu_rate", 500)
-        pub_topic = rospy.get_param(ns + "/" + name + "/pub_topic", "/imu/data")
+        pub_topic = rospy.get_param(ns + "/" + name + "/pub_topic", "/gx4_45_imu/data")
 
         print("========= PARAM DATA ===========")
         print(port)

@@ -101,6 +101,7 @@ set( zeabus_sensor_sources
 	src/zeabus_sensor/base_port.cpp
 	src/zeabus_sensor/lord_microstrain.cpp	
 	src/zeabus_sensor/synchronous_port.cpp
+	src/zeabus_sensor/listen_IMUData.cpp
 )
 
 add_library( zeabus_library			STATIC		${zeabus_library_sources} 

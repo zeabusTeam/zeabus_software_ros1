@@ -14,12 +14,16 @@
 */
 
 #include	<zeabus_library/zeabus_sensor/listen_IMUData.h>
+#define _DEBUG_RECIEVE_DATA_
+#define _DEBUG_CALCULATE_ACCELERATION_
 
 namespace zeabus_sensor{
 
 	ListenIMUData::ListenIMUData( double roll , double pitch , double yaw , double gravity ){
 		this->matrix_imu_to_robot.resize( 3 , 3 ); // set size of matrix
 		this->matrix_imu_to_world.resize( 3 , 3 ); // set size of matrix
+		this->matrix_robot_to_imu.resize( 3 , 3 ); // set size of matrix
+		this->matrix_world_to_imu.resize( 3 , 3 ); // set size of matrix
 		// find matrix to convert imu to robot so this is will have only one value	
 		this->matrix_handle.all_rotation(	roll	, pitch		, yaw 
 											, matrix_imu_to_robot );
@@ -37,16 +41,42 @@ namespace zeabus_sensor{
 	}
 			
 	void ListenIMUData::callback( const zeabus_library::IMUData& message ){
-			
+		zeabus_library::Point3_to_matrix( message.euler , this->receive_euler );
+		zeabus_library::Point3_to_matrix( message.angular_velocity , this->receive_gyro );
+		zeabus_library::Point3_to_matrix( message.linear_acceleration 
+										, this->receive_acceleration );
+		#ifdef _DEBUG_RECIEVE_DATA_
+			this->matrix_handle.print_individual_matrix( "Receive_euler" , this->receive_euler );
+			this->matrix_handle.print_individual_matrix( "Receive_gyro" , this->receive_gyro );
+			this->matrix_handle.print_individual_matrix( "Receive_acceleration" 
+															, this->receive_acceleration );
+		#endif
+		// step for delete gravity acceleration
+		// find gravity in world frame
+		this->matrix_handle.all_rotation( this->receive_euler( 0 , 0 ) 
+										, this->receive_euler( 0 , 1 )
+										, this->receive_euler( 0 , 2 )
+										, this->matrix_world_to_imu );
+		#ifdef _DEBUG_CALCULATE_ACCELERATION_
+			this->matrix_handle.print_individual_matrix( "Matrix_world_to_imu"
+															, this->matrix_world_to_imu );
+		#endif
+		this->result_acceleration = this->result_acceleration 
+								+ boost::numeric::ublas::prod( this->offset_gravity 
+															, this->matrix_world_to_imu );
+		#ifdef _DEBUG_CALCULATE_ACCELERATION_
+			this->matrix_handle.print_individual_matrix( "Result_acceleration"
+															, this->result_acceleration );
+		#endif
 	}
 
-	void set_orientation( double roll , double pitch , double yaw ){
+	void ListenIMUData::set_orientation( double roll , double pitch , double yaw ){
 		this->offset_euler( 0 , 0 ) = roll ; 
 		this->offset_euler( 0 , 1 ) = pitch;
 		this->offset_euler( 0 , 2 ) = yaw;
 	}
 
-	void set_gravity( double gravity ){
+	void ListenIMUData::set_gravity( double gravity ){
 		this->offset_gravity( 0 , 0 ) = 0 ;
 		this->offset_gravity( 0 , 1 ) = 0 ;
 		this->offset_gravity( 0 , 2 ) = gravity ;

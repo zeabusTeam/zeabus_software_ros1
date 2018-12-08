@@ -42,6 +42,8 @@ namespace zeabus_sensor{
 			// for collecting matrix transform
 			boost::numeric::ublas::matrix< double > matrix_imu_to_robot;
 			boost::numeric::ublas::matrix< double > matrix_imu_to_world;
+			boost::numeric::ublas::matrix< double > matrix_robot_to_imu;
+			boost::numeric::ublas::matrix< double > matrix_world_to_imu;
 			// for collecting specific data
 			boost::numeric::ublas::matrix< double > offset_euler;
 			boost::numeric::ublas::matrix< double > offset_gravity;
@@ -53,7 +55,7 @@ namespace zeabus_sensor{
 			boost::numeric::ublas::matrix< double > result_euler;
 			boost::numeric::ublas::matrix< double > result_gyro;
 			boost::numeric::ublas::matrix< double > result_acceleration;
-			zeabus_library::MatrixRotation matrix_handle();
+			zeabus_library::MatrixRotation matrix_handle;
 	};
 
 }

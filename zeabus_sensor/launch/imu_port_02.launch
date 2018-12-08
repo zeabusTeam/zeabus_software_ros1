@@ -8,7 +8,7 @@
 		<param name="name_port_imu" type="str" value="/dev/microstrain/3dm_gx5_45_0000__6251.65901"/>
 		<param name="topic_output_port_imu_zeabus" type="str" value="/sensor/imu/port02"/>
 		<param name="topic_output_port_imu_sensor" type="str" value="/gx4_45_imu/data"/>
-		<param name="frequency_imu" type="int" value="500"/>
+		<param name="frequency_imu" type="int" value="250"/>
 	</node>
 
 </launch>

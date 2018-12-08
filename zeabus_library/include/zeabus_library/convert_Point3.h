@@ -31,7 +31,7 @@ namespace zeabus_library{
 							, zeabus_library::Point3& result , int offset_row = 0 );
 
 	void Point3_to_matrix(	zeabus_library::Point3 data
-							, boost::numeric::ublas::matrix< double > result );
+							, boost::numeric::ublas::matrix< double >& result );
 
 	void Point3_to_array(	zeabus_library::Point3 data , double* result);
 

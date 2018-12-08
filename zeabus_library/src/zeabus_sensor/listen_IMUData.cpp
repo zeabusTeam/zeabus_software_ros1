@@ -16,6 +16,7 @@
 #include	<zeabus_library/zeabus_sensor/listen_IMUData.h>
 #define _DEBUG_RECIEVE_DATA_
 #define _DEBUG_CALCULATE_ACCELERATION_
+#define _DUBUG_CODE_
 
 namespace zeabus_sensor{
 
@@ -32,6 +33,11 @@ namespace zeabus_sensor{
 		this->result_euler.resize( 1 , 3 );
 		this->result_gyro.resize( 1 , 3 );
 		this->result_acceleration.resize( 1 , 3 );	
+
+		// set size matrix for receive when want to get value
+		this->receive_euler.resize( 1 , 3 );
+		this->receive_gyro.resize( 1 , 3 );
+		this->receive_acceleration.resize( 1 , 3 );	
 
 		// srt size matrix for collecting specific value
 		this->offset_euler.resize( 1 , 3 );

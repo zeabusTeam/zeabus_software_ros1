@@ -19,6 +19,8 @@
 
 #include	<zeabus_library/convert_rotation.h>
 
+#include	<zeabus_library/zeabus_sensor/listen_IMUData.h>
+
 int main( int argv , char** argc ){
 
 	ros::init( argv , argc , "node_imu");
@@ -31,8 +33,15 @@ int main( int argv , char** argc ){
 	std::string topic_output;
 	int frequency;
 
-	ph.param< std::string >( "topic_input_node_imu" , topic_input , "sensor/imu/port" );
+	ph.param< std::string >( "topic_input_node_imu" , topic_input , "sensor/imu/port/zeabus" );
 	ph.param< std::string >( "topic_output_node_imu" , topic_output , "sensor/imu/node" );
 	ph.param< int >("frequency_imu" , frequency , 100 );
 
+	zeabus_sensor::ListenIMUData listener( 0 , 0 , 0 , 1 );	
+
+	ros::Subscriber sub_IMUData = nh.subscribe( topic_input , 1 
+												, &zeabus_sensor::ListenIMUData::callback
+												, &listener );
+	printf("Now already listen\n");
+	ros::spin();
 }

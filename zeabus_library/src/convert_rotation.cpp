@@ -14,6 +14,8 @@
 */
 
 #include	<zeabus_library/convert_rotation.h>
+#define _DEBUG_ROTATION_
+
 
 namespace zeabus_library{
 
@@ -21,6 +23,9 @@ namespace zeabus_library{
 		temp_roll_rotation.resize( 3 , 3 );
 		temp_pitch_rotation.resize( 3 , 3 );
 		temp_yaw_rotation.resize( 3 , 3 );
+		#ifdef _DEBUG_ROTATION_
+			printf("Finish set up call MatrixRotation\n");
+		#endif
 	}
 
 	void MatrixRotation::roll_rotation( double roll 
@@ -49,12 +54,18 @@ namespace zeabus_library{
 
 	void MatrixRotation::all_rotation( double roll , double pitch , double yaw 
 										, boost::numeric::ublas::matrix< double >& result ){
+		#ifdef _DEBUG_ROTATION_
+			printf("Calculate All rotation\n");
+		#endif
 		this->check_dimension( result );	
 		this->roll_rotation( roll , this->temp_roll_rotation );
 		this->pitch_rotation( pitch , this->temp_pitch_rotation );
 		this->yaw_rotation( yaw , this->temp_yaw_rotation );
 		result = boost::numeric::ublas::prod( temp_roll_rotation , temp_pitch_rotation );
 		result = boost::numeric::ublas::prod( result , temp_yaw_rotation );
+		#ifdef _DEBUG_ROTATION_
+			printf("Finish Calculate All rotation\n");
+		#endif
 	}
 
 	void MatrixRotation::check_dimension( boost::numeric::ublas::matrix< double >& data ){

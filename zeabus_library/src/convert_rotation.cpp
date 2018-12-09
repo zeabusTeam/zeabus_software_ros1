@@ -14,7 +14,7 @@
 */
 
 #include	<zeabus_library/convert_rotation.h>
-#define _DEBUG_ROTATION_
+//#define _DEBUG_ROTATION_
 
 
 namespace zeabus_library{

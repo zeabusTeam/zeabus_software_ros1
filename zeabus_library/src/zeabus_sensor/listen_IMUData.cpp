@@ -39,9 +39,10 @@ namespace zeabus_sensor{
 		this->receive_gyro.resize( 1 , 3 );
 		this->receive_acceleration.resize( 1 , 3 );	
 
-		// srt size matrix for collecting specific value
+		// set size matrix for collecting specific value
 		this->offset_euler.resize( 1 , 3 );
 		this->offset_gravity.resize( 1 , 3 );
+		this->temporary_matrix.resize( 1 , 3 );
 		this->set_orientation( roll , pitch , yaw );
 		this->set_gravity( gravity );
 	}
@@ -58,19 +59,19 @@ namespace zeabus_sensor{
 															, this->receive_acceleration );
 		#endif
 		// step for delete gravity acceleration
-		// find gravity in world frame
-		this->matrix_handle.all_rotation( this->receive_euler( 0 , 0 ) 
+		// find gravity in robot frame
+		this->matrix_handle.inverse_all_rotation( this->receive_euler( 0 , 0 ) 
 										, this->receive_euler( 0 , 1 )
 										, this->receive_euler( 0 , 2 )
 										, this->matrix_world_to_imu );
+		this->temporary_matrix = boost::numeric::ublas::prod( this->offset_gravity 
+															, this->matrix_world_to_imu );
+		this->result_acceleration = this->receive_acceleration + this->temporary_matrix; 
 		#ifdef _DEBUG_CALCULATE_ACCELERATION_
 			this->matrix_handle.print_individual_matrix( "Matrix_world_to_imu"
 															, this->matrix_world_to_imu );
-		#endif
-		this->result_acceleration = this->result_acceleration 
-								+ boost::numeric::ublas::prod( this->offset_gravity 
-															, this->matrix_world_to_imu );
-		#ifdef _DEBUG_CALCULATE_ACCELERATION_
+			this->matrix_handle.print_individual_matrix( "Product offset and convert"
+															, this->temporary_matrix );
 			this->matrix_handle.print_individual_matrix( "Result_acceleration"
 															, this->result_acceleration );
 		#endif

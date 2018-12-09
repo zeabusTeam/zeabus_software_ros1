@@ -49,7 +49,7 @@ int main( int argv , char** argc ){
 	ph.param< std::string >(	"topic_output_port_imu_sensor" 
 								, topic_output_sensor , "/sensor/imu/port/sensor");
 
-	ph.param< int >("frequency_imu" , frequency , 250 );
+	ph.param< int >("frequency_imu" , frequency , 100 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -55,6 +55,8 @@ namespace zeabus_sensor{
 			boost::numeric::ublas::matrix< double > result_euler;
 			boost::numeric::ublas::matrix< double > result_gyro;
 			boost::numeric::ublas::matrix< double > result_acceleration;
+			// for collection temporary matrix
+			boost::numeric::ublas::matrix< double > temporary_matrix;
 			zeabus_library::MatrixRotation matrix_handle;
 	};
 

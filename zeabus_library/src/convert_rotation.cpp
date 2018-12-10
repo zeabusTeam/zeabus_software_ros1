@@ -23,6 +23,7 @@ namespace zeabus_library{
 		temp_roll_rotation.resize( 3 , 3 );
 		temp_pitch_rotation.resize( 3 , 3 );
 		temp_yaw_rotation.resize( 3 , 3 );
+		temp_result.resize( 3 , 3 );
 		#ifdef _DEBUG_ROTATION_
 			printf("Finish set up call MatrixRotation\n");
 		#endif
@@ -61,8 +62,9 @@ namespace zeabus_library{
 		this->roll_rotation( roll , this->temp_roll_rotation );
 		this->pitch_rotation( pitch , this->temp_pitch_rotation );
 		this->yaw_rotation( yaw , this->temp_yaw_rotation );
-		result = boost::numeric::ublas::prod( temp_roll_rotation , temp_pitch_rotation );
-		result = boost::numeric::ublas::prod( result , temp_yaw_rotation );
+		this->temp_result = boost::numeric::ublas::prod(	temp_roll_rotation
+															, temp_pitch_rotation );
+		result = boost::numeric::ublas::prod( temp_result , temp_yaw_rotation );
 		#ifdef _DEBUG_ROTATION_
 			printf("Finish Calculate All rotation\n");
 		#endif

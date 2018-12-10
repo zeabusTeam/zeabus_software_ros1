@@ -44,15 +44,6 @@ namespace zeabus_library{
 			void all_rotation( double roll , double pitch , double yaw 
 									, boost::numeric::ublas::matrix< double >& result );
 
-			void inverse_roll_rotation( double roll 
-									, boost::numeric::ublas::matrix< double >& result );
-			void inverse_pitch_rotation( double pitch 
-									, boost::numeric::ublas::matrix< double >& result );
-			void inverse_yaw_rotation( double yaw 
-									, boost::numeric::ublas::matrix< double >& result );
-
-			void inverse_all_rotation( double roll , double pitch , double yaw 
-									, boost::numeric::ublas::matrix< double >& result );
 			void print_individual_matrix( std::string message 
 											, boost::numeric::ublas::matrix< double>& data);
 			void print_all_temp();
@@ -64,6 +55,7 @@ namespace zeabus_library{
 			boost::numeric::ublas::matrix< double > temp_yaw_rotation;
 			boost::numeric::ublas::matrix< double > temp_roll_rotation;
 			boost::numeric::ublas::matrix< double > temp_pitch_rotation;
+			boost::numeric::ublas::matrix< double > temp_result;
 
 	};
 

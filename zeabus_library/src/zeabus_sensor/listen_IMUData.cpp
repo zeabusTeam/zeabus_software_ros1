@@ -60,13 +60,19 @@ namespace zeabus_sensor{
 		#endif
 		// step for delete gravity acceleration
 		// find gravity in robot frame
-		this->matrix_handle.inverse_all_rotation( this->receive_euler( 0 , 0 ) 
+		this->matrix_handle.all_rotation( this->receive_euler( 0 , 0 ) 
 										, this->receive_euler( 0 , 1 )
 										, this->receive_euler( 0 , 2 )
 										, this->matrix_world_to_imu );
 		this->temporary_matrix = boost::numeric::ublas::prod( this->offset_gravity 
 															, this->matrix_world_to_imu );
-		this->result_acceleration = this->receive_acceleration + this->temporary_matrix; 
+		this->result_acceleration( 0 , 0 ) = this->receive_acceleration( 0 , 0 ) - 
+												this->temporary_matrix( 0 , 0 ); 
+		this->result_acceleration( 0 , 1 ) = this->receive_acceleration( 0 , 1 ) - 
+												this->temporary_matrix( 0 , 1 ); 
+		this->result_acceleration( 0 , 2 ) = this->receive_acceleration( 0 , 2 ) + 
+												this->temporary_matrix( 0 , 2 ); 
+		
 		#ifdef _DEBUG_CALCULATE_ACCELERATION_
 			this->matrix_handle.print_individual_matrix( "Matrix_world_to_imu"
 															, this->matrix_world_to_imu );

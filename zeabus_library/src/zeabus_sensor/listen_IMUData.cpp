@@ -16,7 +16,8 @@
 #include	<zeabus_library/zeabus_sensor/listen_IMUData.h>
 #define _DEBUG_RECIEVE_DATA_
 #define _DEBUG_CALCULATE_ACCELERATION_
-#define _DUBUG_CODE_
+#define _DEBUG_CODE_
+#define _DEBUG_TIME_
 
 namespace zeabus_sensor{
 
@@ -48,6 +49,9 @@ namespace zeabus_sensor{
 	}
 			
 	void ListenIMUData::callback( const zeabus_library::IMUData& message ){
+		#ifdef _DEBUG_TIME_
+			this->timer.start();
+		#endif
 		zeabus_library::Point3_to_matrix( message.euler , this->receive_euler );
 		zeabus_library::Point3_to_matrix( message.angular_velocity , this->receive_gyro );
 		zeabus_library::Point3_to_matrix( message.linear_acceleration 
@@ -80,6 +84,9 @@ namespace zeabus_sensor{
 															, this->temporary_matrix );
 			this->matrix_handle.print_individual_matrix( "Result_acceleration"
 															, this->result_acceleration );
+		#endif
+		#ifdef _DEBUG_TIME_
+			printf("Last line of callback listen_IMUData : %15.8f\n" , this->timer.capture() );
 		#endif
 	}
 

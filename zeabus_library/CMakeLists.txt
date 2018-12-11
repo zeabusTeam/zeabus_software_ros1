@@ -78,6 +78,7 @@ set( zeabus_library_sources
 	src/convert_Type2.cpp
 	src/convert_State.cpp
 	src/convert_IMUData.cpp
+	src/capture_time.cpp
 )
 
 set( zeabus_control_sources

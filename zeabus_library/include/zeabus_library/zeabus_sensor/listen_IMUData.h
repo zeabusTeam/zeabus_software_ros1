@@ -21,6 +21,7 @@
 
 #include	<zeabus_library/convert_rotation.h>
 #include	<zeabus_library/convert_IMUData.h>
+#include	<zeabus_library/capture_time.h>
 #ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
 #define _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
 
@@ -58,6 +59,8 @@ namespace zeabus_sensor{
 			// for collection temporary matrix
 			boost::numeric::ublas::matrix< double > temporary_matrix;
 			zeabus_library::MatrixRotation matrix_handle;
+
+			zeabus_library::CaptureTime timer;
 	};
 
 }

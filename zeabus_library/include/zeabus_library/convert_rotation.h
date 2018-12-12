@@ -2,13 +2,13 @@
 	File name			:	convert_rotation.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 05
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 12
 	Purpose				:	This is header of code for use matrix trasform by orientation
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	test
+	version				:	1.0.0
+	status				:	Stop failure when apply with IMU to delete bias of acceleration
 
 	Namespace			:	zeabus_library
 */

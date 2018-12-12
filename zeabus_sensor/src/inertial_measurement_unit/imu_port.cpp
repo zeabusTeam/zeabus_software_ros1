@@ -22,7 +22,7 @@
 #include	<zeabus_library/convert_bytes.h>
 
 //#define	_DEBUG_SPILT_DATA_
-#define _TYPE_SENSOR_MSGS_
+//#define _TYPE_SENSOR_MSGS_
 #define _TYPE_ZEABUS_LIBRARY_MSGS_
 
 namespace Asio = boost::asio;

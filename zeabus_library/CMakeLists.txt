@@ -21,6 +21,7 @@ add_message_files(
 	Euler.msg
 	PoseEuler.msg
 	IMUData.msg
+	Point4.msg
 )
 
 add_message_files(

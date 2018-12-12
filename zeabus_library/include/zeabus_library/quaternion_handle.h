@@ -14,3 +14,68 @@
 */
 
 #include	<stdio.h>
+
+#include	<boost/numeric/ublas/matrix.hpp>
+
+#include	<exception>
+
+#include	<math.h>
+
+#include	<zeabus_library/Point4.h>
+
+#define		PI 3.14159265
+
+#ifndef _ZEABUS_LIBRARY_QUAternion_handle__
+#define _ZEABUS_LIBRARY_QUAternion_handle__
+
+namespace zeabus_library{
+
+	struct QuaternionVariable{
+		public:
+			QuaternionVariable();
+
+			double &w;
+			double &x;
+			double &y;
+			double &z;
+			boost::numeric::ublas::matrix< double > matrix;
+
+			void set_quaternion( double roll , double pitch , double yaw );
+			void set_quaternion( boost::numeric::ublas::matrix< double > matrix );
+			void set_quaternion( zeabus_library::Point4 data );
+			void set_quaternion( double w , double x , double y ,double z );
+
+	}
+
+	class QuaternionHandle : public QuaternionVariable{
+		
+		public:
+			QuaternionHandle();
+
+			void get_RPY( double* roll , double* pitch , double* yaw );
+
+			void get_matrix_transform( boost::numeric::ublas::matrix< double > result );
+
+			void get_matrix_transform( boost::numeric::ublas::matrix< double > result 
+									, double roll , double pitch , double yaw );
+
+			void get_matrix_transform( boost::numeric::ublas::matrix< double > result 
+									, boost::numeric::ublas::matrix< double > target );
+
+			void get_matrix_transform( boost::numeric::ublas::matrix< double > result 
+									, zeabus_library::Point4 target );
+
+			void get_matrix_transform( boost::numeric::ublas::matrix< double > result 
+									, zeabus_library::QuaternionVariable data );
+
+		private:
+			boost::numeric::ublas::matrix< double > temp_roll;
+			boost::numeric::ublas::matrix< double > temp_pitch;
+			boost::numeric::ublas::matrix< double > temp_yaw; 
+			boost::numeric::ublas::matrix< double > temp_quaternion;
+				
+	};
+
+}
+
+#endif

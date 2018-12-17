@@ -1,7 +1,7 @@
 /*
 	File name			:	quaternion_handle.h		
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , DEC 05
+	Date created		:	2018 , DEC 12
 	Date last modified	:	2018 , ??? ??
 	Purpose				:	This is header of code for use matrix trasform by quaternion
 
@@ -44,6 +44,12 @@ namespace zeabus_library{
 			void set_quaternion( boost::numeric::ublas::matrix< double > matrix );
 			void set_quaternion( zeabus_library::Point4 data );
 			void set_quaternion( double w , double x , double y ,double z );
+
+		private:
+			boost::numeric::ublas::matrix< double > temp_yaw;
+			boost::numeric::ublas::matrix< double > temp_pitch;
+			boost::numeric::ublas::matrix< double > temp_roll;
+			boost::numeric::ublas::matrix< double > temp_matrix;
 
 	}
 

@@ -15,6 +15,8 @@
 
 #include	<stdio.h>
 
+#include	<math.h>
+
 #include	<exception>
 
 #ifndef PI

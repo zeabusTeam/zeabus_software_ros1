@@ -21,6 +21,8 @@
 
 #include	<math.h>
 
+#include	<zeabus_library/euler.h>
+
 #include	<zeabus_library/Point4.h>
 
 #define		PI 3.14159265

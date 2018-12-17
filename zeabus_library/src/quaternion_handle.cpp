@@ -17,16 +17,16 @@
 
 namespace zeabus_library{
 
-	void QuaternionHandle::get_RPY( double* roll , double* pitch , double* yaw ){
-		roll = atan2( 2 * ( this->w * this->x + this->y * this->z ) 
-					,	pow( this->w , 2 ) - pow( this->x , 2 ) 
-						- pow( this->y , 2 ) + pow( this->z , 2) );
+	void QuaternionHandle::get_RPY( double& roll , double& pitch , double& yaw ){
+		roll = atan2( 2 * ( (*w) * (*x) + (*y) * (*z) ) 
+					,	pow( (*w) , 2 ) - pow( (*x) , 2 ) 
+						- pow( (*y) , 2 ) + pow( (*z) , 2) );
 		
-		yaw = atan2( 2( this->w * this->z + this->x * this->y )
-					,	pow( this->w , 2 ) + pow( this->x , 2 ) 
-						- pow( this->y , 2 ) - pow( this->z , 2) );
+		yaw = atan2( 2 * ( (*w) * (*z) + (*x) * (*y) )
+					,	pow( (*w) , 2 ) + pow( (*x) , 2 ) 
+						- pow( (*y) , 2 ) - pow( (*z) , 2) );
 		
-		pitch = -1 * asin( 2 ( this->x * this->z - this->w * this->y ) );	
+		pitch = -1 * asin( 2 * ( ( (*x) * (*z) ) - ( (*w) * (*y) ) ) );	
 	}
 
 }

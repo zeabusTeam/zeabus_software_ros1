@@ -74,7 +74,6 @@ include_directories(
 
 set( zeabus_library_sources
 	src/convert_bytes.cpp
-	src/convert_rotation.cpp
 	src/convert_Point3.cpp
 	src/convert_Type2.cpp
 	src/convert_State.cpp
@@ -84,6 +83,9 @@ set( zeabus_library_sources
 
 set( zeabus_rotation_sources
 	src/euler.cpp
+	src/quaternion_structure.cpp
+	src/convert_rotation.cpp
+	src/quaternion_handle.cpp
 )
 
 set( zeabus_control_sources

@@ -1,5 +1,5 @@
 /*
-	File name			:	quaternion_structor.cpp	
+	File name			:	quaternion_structure.cpp	
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 12
 	Date last modified	:	2018 , ??? ??

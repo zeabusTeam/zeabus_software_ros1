@@ -36,11 +36,11 @@ namespace zeabus_library{
 		public:
 			QuaternionVariable();
 
-			double &w;
-			double &x;
-			double &y;
-			double &z;
-			boost::numeric::ublas::matrix< double > matrix;
+			boost::numeric::ublas::matrix< double >matrix;
+			double* w ;
+			double* x ; 
+			double* y ;
+			double* z ;
 
 			void set_quaternion( double roll , double pitch , double yaw );
 			void set_quaternion( boost::numeric::ublas::matrix< double > matrix );
@@ -53,14 +53,14 @@ namespace zeabus_library{
 			boost::numeric::ublas::matrix< double > temp_roll;
 			boost::numeric::ublas::matrix< double > temp_matrix;
 
-	}
+	};
 
 	class QuaternionHandle : public QuaternionVariable{
 		
 		public:
 			QuaternionHandle();
 
-			void get_RPY( double* roll , double* pitch , double* yaw );
+			void get_RPY( double& roll , double& pitch , double& yaw );
 
 			void get_matrix_transform( boost::numeric::ublas::matrix< double > result );
 

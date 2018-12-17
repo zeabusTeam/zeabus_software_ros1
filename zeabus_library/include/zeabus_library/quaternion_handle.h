@@ -25,6 +25,8 @@
 
 #include	<zeabus_library/Point4.h>
 
+#include	<zeabus_library/convert_rotation.h>
+
 #define		PI 3.14159265
 
 #ifndef _ZEABUS_LIBRARY_QUAternion_handle__
@@ -77,10 +79,8 @@ namespace zeabus_library{
 									, zeabus_library::QuaternionVariable data );
 
 		private:
-			boost::numeric::ublas::matrix< double > temp_roll;
-			boost::numeric::ublas::matrix< double > temp_pitch;
-			boost::numeric::ublas::matrix< double > temp_yaw; 
 			boost::numeric::ublas::matrix< double > temp_quaternion;
+			zeabus_library::MatrixRotation matrix_handle;
 				
 	};
 

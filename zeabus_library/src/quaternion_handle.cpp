@@ -1,14 +1,14 @@
 /*
 	File name			:	quaternion_handle.cpp
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , DEC 05
-	Date last modified	:	2018 , DEC 12
+	Date created		:	2018 , DEC 17
+	Date last modified	:	2018 , ??? ??
 	Purpose				:	This is header of code for use metrix trasform by orientation
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
-	status				:	Stop because failure when apply with acceleration data from IMU
+	version				:	0.5.0
+	status				:	Production
 
 	Namespace			:	zeabus_library
 */
@@ -19,7 +19,7 @@
 
 namespace zeabus_library{
 
-	QuaternionHandle::QuaternionHandle(){
+	QuaternionHandle::QuaternionHandle() : QuaternionVariable() {
 		this->temp_quaternion.resize( 4 , 1 );
 	}
 

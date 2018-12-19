@@ -19,12 +19,13 @@
 
 #include	<zeabus_library/quaternion_handle.h>
 
-#define _test_quaternion_to_euler_
+//#define _test_quaternion_to_euler_
 
 #define _test_euler_to_quaternion_
 
 int main(){
 	zeabus_library::QuaternionHandle quaternion;
+	zeabus_library::MatrixRotation matrix_handle;
 
 	double w , x , y , z ;
 	double roll , pitch , yaw ;
@@ -48,4 +49,20 @@ int main(){
 	printf( "roll : pitch : yaw <===========> %8.6lf : %8.6lf : %8.6lf \n" , roll , pitch ,yaw );
 
 	#endif	
+
+	#ifdef _test_euler_to_quaternion_
+
+	std::cout	<< "Welcome to test base of quaternion for zeabus_library please input your "
+				<< "euler \n"
+				<< "roll : ";
+	std::cin	>> roll;
+	std::cout	<< "pitch : ";
+	std::cin	>> pitch;
+	std::cout	<< "yaw : ";
+	std::cin	>> yaw;
+
+	quaternion.set_quaternion( roll , pitch , yaw );
+	matrix_handle.print_individual_matrix("Result quaternion" , quaternion.matrix );
+
+	#endif
 }

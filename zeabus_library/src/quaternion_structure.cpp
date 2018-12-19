@@ -15,6 +15,8 @@
 
 #include	<zeabus_library/quaternion_handle.h>
 
+#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
+
 namespace zeabus_library{
 
 	QuaternionVariable::QuaternionVariable(){
@@ -23,23 +25,24 @@ namespace zeabus_library{
 		this->x = &( this->matrix( 1 , 0 ) );
 		this->y = &( this->matrix( 2 , 0 ) );
 		this->z = &( this->matrix( 3 , 0 ) );
-		this->temp_yaw.resize( 4 , 1 );
-		this->temp_pitch.resize( 4 , 1 );
-		this->temp_roll.resize( 4 , 1 );
-		this->temp_matrix.resize( 4 , 1 );
+		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
+			printf("Finish setup quaternion handle\n");
+		#endif
 	}
 
 	void QuaternionVariable::set_quaternion( double roll , double pitch , double yaw ){
-		this->temp_yaw( 0 , 0 ) = cos( zeabus_library::euler::radian_domain( yaw ) / 2 );
-		this->temp_yaw( 3 , 0 ) = sin( zeabus_library::euler::radian_domain( yaw ) / 2 );
-		this->temp_roll( 0 , 0 ) = cos( zeabus_library::euler::radian_domain( roll ) / 2 );
-		this->temp_roll( 1 , 0 ) = sin( zeabus_library::euler::radian_domain( roll ) / 2 );
-		this->temp_pitch( 0 , 0 ) = cos( zeabus_library::euler::radian_domain( pitch ) / 2 );
-		this->temp_pitch( 2 , 0 ) = sin( zeabus_library::euler::radian_domain( pitch ) / 2 );	
-		this->temp_matrix = boost::numeric::ublas::prod(	this->temp_yaw
-															, this->temp_pitch );
-		this->matrix = boost::numeric::ublas::prod(	this->temp_matrix 
-															, this->temp_roll );
+		// use sequence rotation by order ZYX
+		this->cos_yaw = cos( zeabus_library::euler::radian_domain( yaw ) / 2 );
+		this->sin_yaw = sin( zeabus_library::euler::radian_domain( yaw ) / 2 );
+		this->cos_roll = cos( zeabus_library::euler::radian_domain( roll ) / 2 );
+		this->sin_roll = sin( zeabus_library::euler::radian_domain( roll ) / 2 );
+		this->cos_pitch = cos( zeabus_library::euler::radian_domain( pitch ) / 2 );
+		this->sin_pitch = sin( zeabus_library::euler::radian_domain( pitch ) / 2 );
+
+		*(this->w) = cos_roll*cos_pitch*cos_yaw + sin_roll*sin_pitch*sin_yaw;
+		*(this->x) = sin_roll*cos_pitch*cos_yaw - cos_roll*sin_pitch*sin_yaw;
+		*(this->y) = cos_roll*sin_pitch*cos_yaw + sin_roll*cos_pitch*sin_yaw;
+		*(this->z) = cos_roll*cos_pitch*sin_yaw - sin_roll*sin_pitch*cos_yaw;	
 	}
 
 	void QuaternionVariable::set_quaternion( boost::numeric::ublas::matrix< double > matrix ){

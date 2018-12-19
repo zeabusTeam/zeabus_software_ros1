@@ -50,10 +50,13 @@ namespace zeabus_library{
 			void set_quaternion( double w , double x , double y ,double z );
 
 		private:
-			boost::numeric::ublas::matrix< double > temp_yaw;
-			boost::numeric::ublas::matrix< double > temp_pitch;
-			boost::numeric::ublas::matrix< double > temp_roll;
 			boost::numeric::ublas::matrix< double > temp_matrix;
+			double cos_yaw;
+			double sin_yaw;
+			double cos_pitch;
+			double sin_pitch;
+			double cos_roll;
+			double sin_roll;
 
 	};
 

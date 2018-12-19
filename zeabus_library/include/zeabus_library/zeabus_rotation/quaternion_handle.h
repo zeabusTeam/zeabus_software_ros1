@@ -36,32 +36,6 @@
 
 namespace zeabus_library{
 
-	struct QuaternionVariable{
-		public:
-			QuaternionVariable();
-
-			boost::numeric::ublas::matrix< double >matrix;
-			double* w ;
-			double* x ; 
-			double* y ;
-			double* z ;
-
-			void set_quaternion( double roll , double pitch , double yaw );
-			void set_quaternion( boost::numeric::ublas::matrix< double > matrix );
-			void set_quaternion( zeabus_library::Point4 data );
-			void set_quaternion( double w , double x , double y ,double z );
-
-		private:
-			boost::numeric::ublas::matrix< double > temp_matrix;
-			double cos_yaw;
-			double sin_yaw;
-			double cos_pitch;
-			double sin_pitch;
-			double cos_roll;
-			double sin_roll;
-
-	};
-
 	class QuaternionHandle : public QuaternionVariable{
 		
 		public:
@@ -85,8 +59,7 @@ namespace zeabus_library{
 
 		private:
 			zeabus_library::QuaternionVariable temp_quaternion;
-			zeabus_library::MatrixRotation matrix_handle;
-				
+
 	};
 
 }

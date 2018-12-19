@@ -1,7 +1,7 @@
 /*
-	File name			:	quaternion_structure.cpp	
+	File name			:	quaternion.cpp	
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , DEC 12
+	Date created		:	2018 , DEC 20
 	Date last modified	:	2018 , ??? ??
 	Purpose				:	source code of structure quaternion
 							
@@ -13,7 +13,7 @@
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/quaternion_handle.h>
+#include	<zeabus_library/zeabus_rotation/quaternion.h>
 
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
 

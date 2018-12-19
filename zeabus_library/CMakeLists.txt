@@ -79,6 +79,7 @@ set( zeabus_library_sources
 	src/convert_State.cpp
 	src/convert_IMUData.cpp
 	src/capture_time.cpp
+	src/matrix.cpp
 )
 
 set( zeabus_rotation_sources
@@ -89,7 +90,10 @@ set( zeabus_rotation_sources
 )
 
 set( matrix_sources
-	src/matrix.cpp
+	DIRECTORY src/zeabus_rotation
+	quaternion.cpp
+	quaternion_handle.cpp
+	convert_rotation.cpp
 )
 
 set( zeabus_control_sources

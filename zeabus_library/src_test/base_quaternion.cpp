@@ -19,7 +19,7 @@
 
 #include	<zeabus_library/matrix.h>
 
-#include	<zeabus_library/quaternion_handle.h>
+#include	<zeabus_library/zeabus_rotation/quaternion_handle.h>
 
 //#define _test_quaternion_to_euler_
 

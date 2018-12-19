@@ -13,7 +13,7 @@
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/quaternion_handle.h>
+#include	<zeabus_library/zeabus_rotation/quaternion_handle.h>
 
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
 

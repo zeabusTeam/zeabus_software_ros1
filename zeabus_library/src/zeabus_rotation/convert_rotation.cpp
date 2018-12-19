@@ -2,18 +2,18 @@
 	File name			:	convert_rotation.cpp
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 05
-	Date last modified	:	2018 , DEC 12
+	Date last modified	:	2018 , DEC 20
 	Purpose				:	This is header of code for use metrix trasform by orientation
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Stop because failure when apply with acceleration data from IMU
 
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/convert_rotation.h>
+#include	<zeabus_library/zeabus_rotation/convert_rotation.h>
 //#define _DEBUG_ROTATION_
 
 

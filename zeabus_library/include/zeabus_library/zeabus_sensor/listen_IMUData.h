@@ -60,7 +60,7 @@ namespace zeabus_sensor{
 			boost::numeric::ublas::matrix< double > result_acceleration;
 			// for collection temporary matrix
 			boost::numeric::ublas::matrix< double > temporary_matrix;
-			zeabus_library::MatrixRotation matrix_handle;
+			zeabus_library::zeabus_rotation::MatrixRotation matrix_handle;
 
 			zeabus_library::CaptureTime timer;
 	};

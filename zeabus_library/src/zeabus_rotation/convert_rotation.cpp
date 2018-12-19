@@ -17,7 +17,9 @@
 //#define _DEBUG_ROTATION_
 
 
-namespace zeabus_library::zeabus_rotation{
+namespace zeabus_library{
+
+namespace zeabus_rotation{
 
 	MatrixRotation::MatrixRotation(){
 		temp_roll_rotation.resize( 3 , 3 );
@@ -82,5 +84,7 @@ namespace zeabus_library::zeabus_rotation{
 		zeabus_library::matrix::print("temp pitch matrix" , this->temp_pitch_rotation );
 		zeabus_library::matrix::print("temp yaw matrix" , this->temp_yaw_rotation );
 	}
+
+}
 
 }

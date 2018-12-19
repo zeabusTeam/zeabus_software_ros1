@@ -17,7 +17,9 @@
 
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
 
-namespace zeabus_library::zeabus_rotation{
+namespace zeabus_library{
+
+namespace zeabus_rotation{
 
 	QuaternionHandle::QuaternionHandle() : Quaternion() {}
 
@@ -39,5 +41,7 @@ namespace zeabus_library::zeabus_rotation{
 					, roll , pitch ,yaw );
 		#endif	
 	}
+
+}
 
 }

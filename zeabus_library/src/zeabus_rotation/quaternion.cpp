@@ -17,7 +17,9 @@
 
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
 
-namespace zeabus_library::zeabus_rotation{
+namespace zeabus_library{
+
+namespace zeabus_rotation{
 
 	Quaternion::Quaternion(){
 		this->matrix.resize( 4 , 1 );
@@ -65,5 +67,7 @@ namespace zeabus_library::zeabus_rotation{
 		this->matrix( 2 , 0 ) = y;
 		this->matrix( 3 , 0 ) = z;
 	}
+
+}
 
 }

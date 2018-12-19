@@ -36,7 +36,9 @@
 
 namespace zeabus_library{
 
-	class QuaternionHandle : public QuaternionVariable{
+namespace zeabus_rotation{
+
+	class QuaternionHandle : public Quaternion{
 		
 		public:
 			QuaternionHandle();
@@ -55,12 +57,14 @@ namespace zeabus_library{
 									, zeabus_library::Point4 target );
 
 			void get_matrix_transform( boost::numeric::ublas::matrix< double > result 
-									, zeabus_library::QuaternionVariable data );
+									, zeabus_library::zeabus_rotation::Quaternion data );
 
 		private:
-			zeabus_library::QuaternionVariable temp_quaternion;
+			zeabus_library::zeabus_rotation::Quaternion temp_quaternion;
 
 	};
+
+}
 
 }
 

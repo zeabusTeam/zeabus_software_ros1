@@ -30,6 +30,8 @@
 
 namespace zeabus_library{
 
+namespace zeabus_rotation{
+
 	class MatrixRotation{
 
 		public:
@@ -58,6 +60,7 @@ namespace zeabus_library{
 
 	};
 
+}
 }
 
 #endif

@@ -36,9 +36,11 @@
 
 namespace zeabus_library{
 
-	struct QuaternionVariable{
+namespace zeabus_rotation{
+
+	struct Quaternion{
 		public:
-			QuaternionVariable();
+			Quaternion();
 
 			boost::numeric::ublas::matrix< double >matrix;
 			double* w ;
@@ -61,6 +63,8 @@ namespace zeabus_library{
 			double sin_roll;
 
 	};
+
+}
 
 }
 

@@ -28,8 +28,8 @@
 #define _test_euler_to_quaternion_
 
 int main(){
-	zeabus_library::QuaternionHandle quaternion;
-	zeabus_library::MatrixRotation matrix_handle;
+	zeabus_library::zeabus_rotation::QuaternionHandle quaternion;
+	zeabus_library::zeabus_rotation::MatrixRotation matrix_handle;
 
 	double w , x , y , z ;
 	double roll , pitch , yaw ;

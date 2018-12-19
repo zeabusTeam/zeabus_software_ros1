@@ -27,8 +27,6 @@
 
 #include	<zeabus_library/Point4.h>
 
-#include	<zeabus_library/convert_rotation.h>
-
 #ifndef PI
 	#define		PI 3.14159265
 #endif

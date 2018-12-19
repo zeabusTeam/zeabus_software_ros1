@@ -21,7 +21,7 @@
 
 #include	<zeabus_library/matrix.h>
 
-#include	<zeabus_library/convert_rotation.h>
+#include	<zeabus_library/zeabus_rotation/convert_rotation.h>
 #include	<zeabus_library/convert_IMUData.h>
 #include	<zeabus_library/capture_time.h>
 #ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__

@@ -1,9 +1,9 @@
 /*
 	File name			:	quaternion_handle.cpp
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , DEC 17
+	Date created		:	2018 , DEC 20
 	Date last modified	:	2018 , ??? ??
-	Purpose				:	This is header of code for use metrix trasform by orientation
+	Purpose				:	This is header of code for use metrix trasform by quaternion
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th

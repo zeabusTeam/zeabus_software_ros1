@@ -27,7 +27,7 @@
 
 #include	<zeabus_library/Point4.h>
 
-#include	<zeabus_library/convert_rotation.h>
+#include	<zeabus_library/zeabus_rotation/quaternion.h>
 
 #define		PI 3.14159265
 

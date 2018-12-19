@@ -80,20 +80,13 @@ set( zeabus_library_sources
 	src/convert_IMUData.cpp
 	src/capture_time.cpp
 	src/matrix.cpp
+	src/euler.cpp
 )
 
 set( zeabus_rotation_sources
-	src/euler.cpp
-	src/convert_rotation.cpp
-	src/quaternion_handle.cpp
-	src/quaternion_structure.cpp
-)
-
-set( matrix_sources
-	DIRECTORY src/zeabus_rotation
-	quaternion.cpp
-	quaternion_handle.cpp
-	convert_rotation.cpp
+	src/zeabus_rotation/quaternion.cpp
+	src/zeabus_rotation/quaternion_handle.cpp
+	src/zeabus_rotation/convert_rotation.cpp
 )
 
 set( zeabus_control_sources
@@ -129,7 +122,8 @@ add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}
 												${catkin_EXPORTED_TARGETS} )
 target_link_libraries( zeabus_library			${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable( test_base_quaternion src_test/base_quaternion.cpp)
+
+add_executable( test_base_quaternion src_test/test_base_quaternion.cpp)
 add_dependencies( test_base_quaternion ${${PROJECT_NAME}_EXPORTED_TARGETS}
 										${catkin_EXPORTED_TARGETS} )
 target_link_libraries( test_base_quaternion ${catkin_LIBRARIES} zeabus_library)

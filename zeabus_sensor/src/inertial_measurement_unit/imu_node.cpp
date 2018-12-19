@@ -17,8 +17,6 @@
 
 #include	<zeabus_library/IMUData.h>
 
-#include	<zeabus_library/convert_rotation.h>
-
 #include	<zeabus_library/zeabus_sensor/listen_IMUData.h>
 
 int main( int argv , char** argc ){

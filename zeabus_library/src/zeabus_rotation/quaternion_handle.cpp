@@ -17,9 +17,9 @@
 
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
 
-namespace zeabus_library{
+namespace zeabus_library::zeabus_rotation{
 
-	QuaternionHandle::QuaternionHandle() : QuaternionVariable() {}
+	QuaternionHandle::QuaternionHandle() : Quaternion() {}
 
 	void QuaternionHandle::get_RPY( double& roll , double& pitch , double& yaw ){
 		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_

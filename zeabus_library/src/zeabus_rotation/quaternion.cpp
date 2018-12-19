@@ -17,9 +17,9 @@
 
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
 
-namespace zeabus_library{
+namespace zeabus_library::zeabus_rotation{
 
-	QuaternionVariable::QuaternionVariable(){
+	Quaternion::Quaternion(){
 		this->matrix.resize( 4 , 1 );
 		this->w = &( this->matrix( 0 , 0 ) );
 		this->x = &( this->matrix( 1 , 0 ) );
@@ -30,7 +30,7 @@ namespace zeabus_library{
 		#endif
 	}
 
-	void QuaternionVariable::set_quaternion( double roll , double pitch , double yaw ){
+	void Quaternion::set_quaternion( double roll , double pitch , double yaw ){
 		// use sequence rotation by order ZYX
 		this->cos_yaw = cos( zeabus_library::euler::radian_domain( yaw ) / 2 );
 		this->sin_yaw = sin( zeabus_library::euler::radian_domain( yaw ) / 2 );
@@ -45,21 +45,21 @@ namespace zeabus_library{
 		*(this->z) = cos_roll*cos_pitch*sin_yaw - sin_roll*sin_pitch*cos_yaw;	
 	}
 
-	void QuaternionVariable::set_quaternion( boost::numeric::ublas::matrix< double > matrix ){
+	void Quaternion::set_quaternion( boost::numeric::ublas::matrix< double > matrix ){
 		this->matrix( 0 , 0 ) = matrix( 0 , 0 );
 		this->matrix( 1 , 0 ) = matrix( 1 , 0 );
 		this->matrix( 2 , 0 ) = matrix( 2 , 0 );
 		this->matrix( 3 , 0 ) = matrix( 3 , 0 );
 	}
 
-	void QuaternionVariable::set_quaternion( zeabus_library::Point4 data ){
+	void Quaternion::set_quaternion( zeabus_library::Point4 data ){
 		this->matrix( 0 , 0 ) = data.w;
 		this->matrix( 1 , 0 ) = data.x;
 		this->matrix( 2 , 0 ) = data.y;
 		this->matrix( 3 , 0 ) = data.z;
 	}
 
-	void QuaternionVariable::set_quaternion( double w , double x , double y , double z ){
+	void Quaternion::set_quaternion( double w , double x , double y , double z ){
 		this->matrix( 0 , 0 ) = w;
 		this->matrix( 1 , 0 ) = x;
 		this->matrix( 2 , 0 ) = y;

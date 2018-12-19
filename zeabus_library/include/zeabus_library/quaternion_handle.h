@@ -21,6 +21,8 @@
 
 #include	<math.h>
 
+#include	<zeabus_library/matrix.h>
+
 #include	<zeabus_library/euler.h>
 
 #include	<zeabus_library/Point4.h>
@@ -29,8 +31,8 @@
 
 #define		PI 3.14159265
 
-#ifndef _ZEABUS_LIBRARY_QUAternion_handle__
-#define _ZEABUS_LIBRARY_QUAternion_handle__
+#ifndef _ZEABUS_LIBRARY_QUATERNION_HANDLE_H__
+#define _ZEABUS_LIBRARY_QUATERNION_HANDLE_H__
 
 namespace zeabus_library{
 
@@ -82,7 +84,7 @@ namespace zeabus_library{
 									, zeabus_library::QuaternionVariable data );
 
 		private:
-			boost::numeric::ublas::matrix< double > temp_quaternion;
+			zeabus_library::QuaternionVariable temp_quaternion;
 			zeabus_library::MatrixRotation matrix_handle;
 				
 	};

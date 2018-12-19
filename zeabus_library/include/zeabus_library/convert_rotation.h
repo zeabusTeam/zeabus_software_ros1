@@ -7,15 +7,17 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Stop failure when apply with IMU to delete bias of acceleration
-
+							
 	Namespace			:	zeabus_library
 */
 
 #include	<stdio.h>
 
 #include	<boost/numeric/ublas/matrix.hpp>
+
+#include	<zeabus_library/matrix.h>
 
 #include	<exception>
 
@@ -43,8 +45,6 @@ namespace zeabus_library{
 			void all_rotation( double roll , double pitch , double yaw 
 									, boost::numeric::ublas::matrix< double >& result );
 
-			void print_individual_matrix( std::string message 
-											, boost::numeric::ublas::matrix< double>& data);
 			void print_all_temp();
 
 		protected:

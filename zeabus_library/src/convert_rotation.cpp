@@ -78,22 +78,9 @@ namespace zeabus_library{
 	}
 
 	void MatrixRotation::print_all_temp(){
-		this->print_individual_matrix("temp roll matrix" , this->temp_roll_rotation );
-		this->print_individual_matrix("temp pitch matrix" , this->temp_pitch_rotation );
-		this->print_individual_matrix("temp yaw matrix" , this->temp_yaw_rotation );
-	}
-
-	void MatrixRotation::print_individual_matrix( std::string message 
-												, boost::numeric::ublas::matrix< double>& data){
-		printf("%s\n\t[\n" , message.c_str() );
-		for( int run_row = 0 ; run_row < data.size1() ; run_row++ ){
-			printf("\t");
-			for( int run_column = 0 ; run_column < data.size2() ; run_column++ ){
-				printf("%10.3lf" , data( run_row , run_column ) );
-			}
-			printf("\n");
-		}
-		printf("\t]\n");
+		zeabus_library::matrix::print("temp roll matrix" , this->temp_roll_rotation );
+		zeabus_library::matrix::print("temp pitch matrix" , this->temp_pitch_rotation );
+		zeabus_library::matrix::print("temp yaw matrix" , this->temp_yaw_rotation );
 	}
 
 }

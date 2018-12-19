@@ -14,6 +14,7 @@
 */
 
 #include	<zeabus_library/zeabus_sensor/listen_IMUData.h>
+
 #define _DEBUG_RECIEVE_DATA_
 #define _DEBUG_CALCULATE_ACCELERATION_
 #define _DEBUG_CODE_
@@ -57,9 +58,9 @@ namespace zeabus_sensor{
 		zeabus_library::Point3_to_matrix( message.linear_acceleration 
 										, this->receive_acceleration );
 		#ifdef _DEBUG_RECIEVE_DATA_
-			this->matrix_handle.print_individual_matrix( "Receive_euler" , this->receive_euler );
-			this->matrix_handle.print_individual_matrix( "Receive_gyro" , this->receive_gyro );
-			this->matrix_handle.print_individual_matrix( "Receive_acceleration" 
+			zeabus_library::matrix::print( "Receive_euler" , this->receive_euler );
+			zeabus_library::matrix::print( "Receive_gyro" , this->receive_gyro );
+			zeabus_library::matrix::print( "Receive_acceleration" 
 															, this->receive_acceleration );
 		#endif
 		// step for delete gravity acceleration
@@ -78,11 +79,11 @@ namespace zeabus_sensor{
 												this->temporary_matrix( 0 , 2 ); 
 		
 		#ifdef _DEBUG_CALCULATE_ACCELERATION_
-			this->matrix_handle.print_individual_matrix( "Matrix_world_to_imu"
+			zeabus_library::matrix::print( "Matrix_world_to_imu"
 															, this->matrix_world_to_imu );
-			this->matrix_handle.print_individual_matrix( "Product offset and convert"
+			zeabus_library::matrix::print( "Product offset and convert"
 															, this->temporary_matrix );
-			this->matrix_handle.print_individual_matrix( "Result_acceleration"
+			zeabus_library::matrix::print( "Result_acceleration"
 															, this->result_acceleration );
 		#endif
 		#ifdef _DEBUG_TIME_

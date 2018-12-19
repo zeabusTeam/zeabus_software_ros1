@@ -88,6 +88,10 @@ set( zeabus_rotation_sources
 	src/quaternion_structure.cpp
 )
 
+set( matrix_sources
+	src/matrix.cpp
+)
+
 set( zeabus_control_sources
 	src/zeabus_control/service_control.cpp
 	src/zeabus_control/service_check_state.cpp
@@ -115,7 +119,8 @@ set( zeabus_sensor_sources
 add_library( zeabus_library			STATIC		${zeabus_library_sources} 
 												${zeabus_rotation_sources}
 												${zeabus_sensor_sources}
-												${zeabus_control_sources})
+												${zeabus_control_sources}
+												${matrix_sources})
 add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}
 												${catkin_EXPORTED_TARGETS} )
 target_link_libraries( zeabus_library			${catkin_LIBRARIES} ${Boost_LIBRARIES})

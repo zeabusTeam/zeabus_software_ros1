@@ -17,6 +17,8 @@
 
 #include	<iostream>
 
+#include	<zeabus_library/matrix.h>
+
 #include	<zeabus_library/quaternion_handle.h>
 
 //#define _test_quaternion_to_euler_
@@ -62,7 +64,7 @@ int main(){
 	std::cin	>> yaw;
 
 	quaternion.set_quaternion( roll , pitch , yaw );
-	matrix_handle.print_individual_matrix("Result quaternion" , quaternion.matrix );
+	zeabus_library::matrix::print("Result quaternion" , quaternion.matrix );
 
 	#endif
 }

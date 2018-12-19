@@ -19,13 +19,11 @@
 
 namespace zeabus_library{
 
-	QuaternionHandle::QuaternionHandle() : QuaternionVariable() {
-		this->temp_quaternion.resize( 4 , 1 );
-	}
+	QuaternionHandle::QuaternionHandle() : QuaternionVariable() {}
 
 	void QuaternionHandle::get_RPY( double& roll , double& pitch , double& yaw ){
 		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
-			this->matrix_handle.print_individual_matrix( "Matrix Quaternion " , this->matrix );
+			zeabus_library::matrix::print( "Matrix Quaternion " , this->matrix );
 		#endif
 		roll = atan2( 2 * ( (*w) * (*x) + (*y) * (*z) ) 
 					,	pow( (*w) , 2 ) - pow( (*x) , 2 ) 

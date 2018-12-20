@@ -31,6 +31,25 @@ namespace zeabus_library{
 			printf("\t]\n");
 		}
 
+		size_t	product(	boost::numeric::ublas::matrix< double > m_1 
+							,	boost::numeric::ublas::matrix< double > m_2
+							,	boost::numeric::ublas::matrix< double >& result 
+							,	bool init_matrix ){
+			if( m_1.size2() != m_2.size1() ){
+				zeabus_library::print_error(
+					"zeabus_library::matrix::product wrong size of condition for production");
+				return zeabus_library::ERROR_SIZE_MATRIX;
+			}
+			else if( result.size1() != m_1.size1() || result.size2() != m_2.size2() ){
+				zeabus_library::print_error(
+					"zeabus_library::matrix::product wrong size of matrix result");
+				return zeabus_library::ERROR_SIZE_MATRIX;
+			}
+			
+			boost::numeric::ublas::axpy_prod( m_1 , m_2 , result , init_matrix );
+			return zeabus_library::NO_ERROR;
+		}
+			
 	}
 
 }

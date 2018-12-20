@@ -29,7 +29,7 @@ namespace zeabus_library{
 		// function production vector size 4x1 equation is v_1*v_2 = result 
 		size_t multiplication( boost::numeric::ublas::matrix< double > v_1 
 							, boost::numeric::ublas::matrix< double > v_2 
-							, boost::numeric::ublas::matrix< double > result );
+							, boost::numeric::ublas::matrix< double >& result );
 
 	}
 

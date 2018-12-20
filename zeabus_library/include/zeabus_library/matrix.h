@@ -17,6 +17,10 @@
 
 #include	<boost/numeric/ublas/matrix.hpp>
 
+#include	<boost/numeric/ublas/operation.hpp>
+
+#include	<zeabus_library/error_code.h>
+
 #include	<exception>
 
 #ifndef _ZEABUS_LIBRARY_MATRIX_H__
@@ -24,11 +28,15 @@
 
 namespace zeabus_library{
 
-	namespace matrix{
+namespace matrix{
 
-		void print( std::string message , boost::numeric::ublas::matrix< double >& data );
+	void print( std::string message , boost::numeric::ublas::matrix< double >& data );
 
-	}
+	size_t product( boost::numeric::ublas::matrix< double > m_1
+					, boost::numeric::ublas::matrix< double > m_2 
+					, boost::numeric::ublas::matrix< double >& result 
+					, bool init_matrix = true );
+}
 
 }
 

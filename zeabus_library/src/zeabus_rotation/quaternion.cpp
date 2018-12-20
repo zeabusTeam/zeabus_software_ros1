@@ -23,6 +23,7 @@ namespace zeabus_rotation{
 
 	Quaternion::Quaternion(){
 		this->matrix.resize( 4 , 1 );
+		this->inverse_matrix.resize( 4 , 1 );
 		this->w = &( this->matrix( 0 , 0 ) );
 		this->x = &( this->matrix( 1 , 0 ) );
 		this->y = &( this->matrix( 2 , 0 ) );
@@ -30,9 +31,38 @@ namespace zeabus_rotation{
 		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
 			printf("Finish setup quaternion handle\n");
 		#endif
+		this->updated = 0;
+	}
+
+	void Quaternion::normalization(){
+		zeabus_library::vector::normalization( this->matrix);
+	}
+
+	boost::numeric::ublas::matrix< double > Quaternion::inverse(){
+		if( this->updated ) return this->inverse_matrix;
+		this->update_inverse();
+		return this->inverse_matrix;
+	}
+
+	void Quaternion::inverse( boost::numeric::ublas::matrix< double >& matrix_result ){
+		if( this->updated ){}
+		else this->update_inverse();
+		matrix_result( 0 , 0 ) = this->inverse_matrix( 0 , 0 );	
+		matrix_result( 1 , 0 ) = this->inverse_matrix( 1 , 0 );	
+		matrix_result( 2 , 0 ) = this->inverse_matrix( 2 , 0 );	
+		matrix_result( 3 , 0 ) = this->inverse_matrix( 3 , 0 );	
+	}
+
+	void Quaternion::update_inverse(){
+		this->updated = 1;
+		this->inverse_matrix( 0 , 0 ) = this->matrix( 0 , 0 );	
+		this->inverse_matrix( 1 , 0 ) = this->matrix( 1 , 0 ) * -1;	
+		this->inverse_matrix( 2 , 0 ) = this->matrix( 2 , 0 ) * -1;	
+		this->inverse_matrix( 3 , 0 ) = this->matrix( 3 , 0 ) * -1;	
 	}
 
 	void Quaternion::set_quaternion( double roll , double pitch , double yaw ){
+		this->updated = 0;
 		// use sequence rotation by order ZYX
 		this->cos_yaw = cos( zeabus_library::euler::radian_domain( yaw ) / 2 );
 		this->sin_yaw = sin( zeabus_library::euler::radian_domain( yaw ) / 2 );
@@ -48,6 +78,7 @@ namespace zeabus_rotation{
 	}
 
 	void Quaternion::set_quaternion( boost::numeric::ublas::matrix< double > matrix ){
+		this->updated = 0;
 		this->matrix( 0 , 0 ) = matrix( 0 , 0 );
 		this->matrix( 1 , 0 ) = matrix( 1 , 0 );
 		this->matrix( 2 , 0 ) = matrix( 2 , 0 );
@@ -55,6 +86,7 @@ namespace zeabus_rotation{
 	}
 
 	void Quaternion::set_quaternion( zeabus_library::Point4 data ){
+		this->updated = 0;
 		this->matrix( 0 , 0 ) = data.w;
 		this->matrix( 1 , 0 ) = data.x;
 		this->matrix( 2 , 0 ) = data.y;
@@ -62,6 +94,7 @@ namespace zeabus_rotation{
 	}
 
 	void Quaternion::set_quaternion( double w , double x , double y , double z ){
+		this->updated = 0;
 		this->matrix( 0 , 0 ) = w;
 		this->matrix( 1 , 0 ) = x;
 		this->matrix( 2 , 0 ) = y;

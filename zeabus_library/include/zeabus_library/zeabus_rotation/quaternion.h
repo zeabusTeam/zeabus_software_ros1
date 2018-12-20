@@ -21,7 +21,7 @@
 
 #include	<math.h>
 
-#include	<zeabus_library/matrix.h>
+#include	<zeabus_library/vector.h>
 
 #include	<zeabus_library/euler.h>
 
@@ -48,7 +48,7 @@ namespace zeabus_rotation{
 			double* y ;
 			double* z ;
 
-			double normalization();
+			void normalization();
 			boost::numeric::ublas::matrix< double > inverse();
 			void inverse( boost::numeric::ublas::matrix< double >& matrix_result );
 
@@ -56,9 +56,13 @@ namespace zeabus_rotation{
 			void set_quaternion( boost::numeric::ublas::matrix< double > matrix );
 			void set_quaternion( zeabus_library::Point4 data );
 			void set_quaternion( double w , double x , double y ,double z );
+	
+		protected:
+			size_t updated;
+			void update_inverse();
 
 		private:
-			boost::numeric::ublas::matrix< double > temp_matrix;
+			boost::numeric::ublas::matrix< double > inverse_matrix;
 			double cos_yaw;
 			double sin_yaw;
 			double cos_pitch;

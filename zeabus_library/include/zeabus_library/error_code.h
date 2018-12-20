@@ -15,6 +15,8 @@
 
 #include	<stdio.h>
 
+#include	<iostream>
+
 #include	<zeabus_library/text_color.h>
 
 #ifndef _ZEABUS_LIBRARY_ERROR_CODE_H__

@@ -81,6 +81,8 @@ set( zeabus_library_sources
 	src/capture_time.cpp
 	src/matrix.cpp
 	src/euler.cpp
+	src/vector.cpp
+	src/error_code.cpp
 )
 
 set( zeabus_rotation_sources
@@ -127,3 +129,8 @@ add_executable( test_base_quaternion src_test/test_base_quaternion.cpp)
 add_dependencies( test_base_quaternion ${${PROJECT_NAME}_EXPORTED_TARGETS}
 										${catkin_EXPORTED_TARGETS} )
 target_link_libraries( test_base_quaternion ${catkin_LIBRARIES} zeabus_library)
+
+add_executable( test_color_text src_test/test_color_text.cpp)
+add_dependencies( test_color_text ${${PROJECT_NAME}_EXPORTED_TARGETS}
+										${catkin_EXPORTED_TARGETS} )
+target_link_libraries( test_color_text ${catkin_LIBRARIES} zeabus_library)

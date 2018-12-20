@@ -18,7 +18,7 @@
 namespace zeabus_library{
 
 	void print( std::string message ){
-		printf( NRE "ERROR DETECTION %s" RES , message );
+		printf( NRE "ERROR DETECTION %s\n" RES , message.c_str() );
 	}
 
 }

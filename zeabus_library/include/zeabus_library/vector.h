@@ -15,7 +15,11 @@
 
 #include	<stdio.h>
 
+#include	<math.h>
+
 #include	<zeabus_library/error_code.h>
+
+#include	<zeabus_library/matrix.h>
 
 #include	<boost/numeric/ublas/matrix.hpp>
 
@@ -30,6 +34,13 @@ namespace zeabus_library{
 		size_t multiplication( boost::numeric::ublas::matrix< double > v_1 
 							, boost::numeric::ublas::matrix< double > v_2 
 							, boost::numeric::ublas::matrix< double >& result );
+
+		// normalization is make vector to unit vector
+		size_t normalization( boost::numeric::ublas::matrix< double >& vector );
+
+		size_t conjugate( boost::numeric::ublas::matrix< double >& vector );
+
+		void print( std::string message , boost::numeric::ublas::matrix< double >& vector );
 
 	}
 

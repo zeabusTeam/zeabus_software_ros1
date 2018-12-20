@@ -54,6 +54,58 @@ namespace zeabus_library{
 
 		}
 
+		size_t normalization( boost::numeric::ublas:;matrx< double >& vector){
+			if( v_1.size1() != 4 || v_1.size2() != 1 ){
+				zeabus_library::print_error(
+					"zeabus_library::vector::normalization vector wrong size matrix");
+				return zeabus_library::ERROR_SIZE_MATRIX;
+			}
+			double all_degree_two = pow( vector( 0 , 0 ) , 2 )
+									+ pow( vector( 1 , 0 ) , 2 )
+									+ pow( vector( 2 , 0 ) , 2 )
+									+ pow( vector( 3 , 0 ) , 2 );
+			vector( 0 , 0 ) /= all_degree_two;
+			vector( 1 , 0 ) /= all_degree_two;
+			vector( 2 , 0 ) /= all_degree_two;
+			vector( 3 , 0 ) /= all_degree_two;
+			return zeabus_library::NO_ERROR;
+		}
+
+		void print( std::string message , boost::numeric::ublas::matrix< double >& vector ){
+			zeabus_library::matrix::print( message , vector );
+		}
+
+		size_t conjugate( boost::numeric::ublas::matrix< double >& vector ){
+			if( vector.size1() != 4 || vector.size2() != 1){
+				zeabus_library::print_error(
+					"zeabus_library::vector::conjugate vector wrong size matrix");
+				return zeabus_library::ERROR_SIZE_MATRIX;
+			}
+			vector( 1 , 0 ) *= -1;
+			vector( 2 , 0 ) *= -1;
+			vector( 3 , 0 ) *= -1;
+			return zeabus_library::NO_ERROR;
+		}
+
+		size_t conjugate( boost::numeric::ublas::matrix< double >& vector 
+						, boost::numeric::ublas::matrix< double >& result ){
+			if( vector.size1() != 4 || vector.size2() != 1 ){
+				zeabus_library::matrix::print_error(
+					"zeabus_library::vector::conjugate vector wrong size matrix");
+				return zeabus_library::ERROR_SIZE_MATRIX;
+			}
+			else if( result.size1() != 4 || result.size2() != 1 ){
+				zeabus_library::matrix::print_error(
+					"zeabus_library::vector::conjugate result wrong size matrix");
+				return zeabus_library::ERROR_SIZE_MATRIX;
+			} 
+			result( 0 , 0 ) = vector( 0 , 0 );
+			result( 1 , 0 ) = vector( 1 , 0 ) * -1;	
+			result( 2 , 0 ) = vector( 2 , 0 ) * -1;	
+			result( 3 , 0 ) = vector( 3 , 0 ) * -1;	
+			return zeabus_library::NO_ERROR;
+		}
+
 	}
 
 }

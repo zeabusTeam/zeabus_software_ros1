@@ -40,6 +40,9 @@ namespace zeabus_library{
 
 		size_t conjugate( boost::numeric::ublas::matrix< double >& vector );
 
+		size_t conjugate( boost::numeric::ublas::matrix< double >& vector 
+						, boost::numeric::ublas::matrix< double >& result);
+
 		void print( std::string message , boost::numeric::ublas::matrix< double >& vector );
 
 	}

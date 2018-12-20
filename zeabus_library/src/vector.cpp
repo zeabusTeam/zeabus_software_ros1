@@ -54,8 +54,8 @@ namespace zeabus_library{
 
 		}
 
-		size_t normalization( boost::numeric::ublas:;matrx< double >& vector){
-			if( v_1.size1() != 4 || v_1.size2() != 1 ){
+		size_t normalization( boost::numeric::ublas::matrix< double >& vector){
+			if( vector.size1() != 4 || vector.size2() != 1 ){
 				zeabus_library::print_error(
 					"zeabus_library::vector::normalization vector wrong size matrix");
 				return zeabus_library::ERROR_SIZE_MATRIX;
@@ -90,12 +90,12 @@ namespace zeabus_library{
 		size_t conjugate( boost::numeric::ublas::matrix< double >& vector 
 						, boost::numeric::ublas::matrix< double >& result ){
 			if( vector.size1() != 4 || vector.size2() != 1 ){
-				zeabus_library::matrix::print_error(
+				zeabus_library::print_error(
 					"zeabus_library::vector::conjugate vector wrong size matrix");
 				return zeabus_library::ERROR_SIZE_MATRIX;
 			}
 			else if( result.size1() != 4 || result.size2() != 1 ){
-				zeabus_library::matrix::print_error(
+				zeabus_library::print_error(
 					"zeabus_library::vector::conjugate result wrong size matrix");
 				return zeabus_library::ERROR_SIZE_MATRIX;
 			} 

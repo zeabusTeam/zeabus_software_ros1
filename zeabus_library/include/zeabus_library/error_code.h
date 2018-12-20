@@ -13,14 +13,20 @@
 	Namespace			:	zeabus_library
 */
 
+#include	<stdio.h>
+
+#include	<zeabus_library/text_color.h>
+
 #ifndef _ZEABUS_LIBRARY_ERROR_CODE_H__
 #define _ZEABUS_LIBRARY_ERROR_CODE_H__
 
 namespace zeabus_library{
 	
-	static const uint16_t NO_ERROR = 0;
-	static const uint16_t ERROR_SIZE_ARRAY = 1;  
-	static const uint16_t ERROR_SIZE_MATRIX = 2;
+	static const size_t NO_ERROR = 0;
+	static const size_t ERROR_SIZE_ARRAY = 1;  
+	static const size_t ERROR_SIZE_MATRIX = 2;
+
+	void print( std::string message );
 
 }
 

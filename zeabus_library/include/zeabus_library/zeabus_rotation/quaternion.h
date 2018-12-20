@@ -48,6 +48,10 @@ namespace zeabus_rotation{
 			double* y ;
 			double* z ;
 
+			double normalization();
+			boost::numeric::ublas::matrix< double > inverse();
+			void inverse( boost::numeric::ublas::matrix< double > matrix_result );
+
 			void set_quaternion( double roll , double pitch , double yaw );
 			void set_quaternion( boost::numeric::ublas::matrix< double > matrix );
 			void set_quaternion( zeabus_library::Point4 data );

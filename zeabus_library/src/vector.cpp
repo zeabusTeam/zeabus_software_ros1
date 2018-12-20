@@ -25,16 +25,33 @@ namespace zeabus_library{
 			if( v_1.size1() != 4 || v_1.size2() != 1){
 				zeabus_library::print( 
 					"zeabus_library::vector::multiplication v_1 wrong size matrix");
+				return zeabus_library::ERROR_SIZE_MATRIX; 
 			}
 			else if( v_2.size1() !=4 || v_2.size2() != 1 ){
 				zeabus_library::print( 
 					"zeabus_library::vector::multiplication v_2 wrong size matrix");
+				return zeabus_library::ERROR_SIZE_MATRIX; 
 			}
 			else if( result.size1() != 4 || result.size2() != 1 ){
 				zeabus_library::print( 
 					"zeabus_library::vector::multiplication result wrong size matrix");
+				return zeabus_library::ERROR_SIZE_MATRIX; 
 			}
-			return zeabus_library::ERROR_SIZE_MATRIX; 
+
+			result( 0 , 0 ) =	v_1( 0 , 0 ) * v_2(  0 , 0 ) - v_1( 1 , 0 ) * v_2( 1 , 0 )
+								- v_1( 2 , 0 ) * v_2( 2 , 0 ) - v_1( 3 , 0 ) * v_2( 3 , 0 );
+
+			result( 1 , 0 ) =	v_1( 0 , 0 ) * v_2(  1 , 0 ) + v_1( 1 , 0 ) * v_2( 0 , 0 )
+								+ v_1( 2 , 0 ) * v_2( 3 , 0 ) - v_1( 3 , 0 ) * v_2( 2 , 0 );
+
+			result( 2 , 0 ) =	v_1( 0 , 0 ) * v_2(  2 , 0 ) - v_1( 1 , 0 ) * v_2( 3 , 0 )
+								+ v_1( 3 , 0 ) * v_2( 0 , 0 ) + v_1( 3 , 0 ) * v_2( 1 , 0 );
+
+			result( 3 , 0 ) =	v_1( 0 , 0 ) * v_2(  3 , 0 ) + v_1( 1 , 0 ) * v_2( 2 , 0 )
+								- v_1( 2 , 0 ) * v_2( 1 , 0 ) + v_1( 3 , 0 ) * v_2( 0 , 0 );
+
+			return zeabus_library::NO_ERROR;
+
 		}			
 
 	}

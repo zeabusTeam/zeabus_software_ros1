@@ -29,7 +29,6 @@
 
 int main(){
 	zeabus_library::zeabus_rotation::Quaternion quaternion;
-	zeabus_library::zeabus_rotation::MatrixRotation matrix_handle;
 
 	double w , x , y , z ;
 	double roll , pitch , yaw ;

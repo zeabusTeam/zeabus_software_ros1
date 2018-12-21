@@ -48,7 +48,8 @@ namespace zeabus_rotation{
 		public:
 			QuaternionHandle();
 
-			size_t matrix_rotation( boost::numeric::ublas::matrix< double >& result );
+			size_t matrix_rotation( boost::numeric::ublas::matrix< double >& result 
+									, bool inverse = false );
 
 			// please warning about to set what frame is start what frame is target
 			//		example value from IMU inertial frame is start and robot is target 
@@ -60,6 +61,10 @@ namespace zeabus_rotation{
 			void set_target_frame( double roll , double pitch , double yaw );
 			void set_target_frame( zeabus_library::zeabus_rotation::Quaternion quaternion );
 			void set_target_frame( zeabus_library::Point4 data );
+			
+			// please call this function before get using rotation value 
+			// but above required only you want current value from set up new quaternion
+			void update_rotation();
 
 			void start_rotation_target();
 			void target_rotation_start();
@@ -67,7 +72,8 @@ namespace zeabus_rotation{
 		protected:
 			zeabus_library::zeabus_rotation::Quaternion start_frame;
 			zeabus_library::zeabus_rotation::Quaternion target_frame;
-
+			double start_euler[3];
+			double target_euler[3];
 
 	};
 

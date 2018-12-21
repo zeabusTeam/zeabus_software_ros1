@@ -23,7 +23,8 @@ namespace zeabus_rotation{
 
 	QuaternionHandle::QuaternionHandle() : Quaternion() {}
 
-	size_t QuaternionHandle::matrix_rotation( boost::numeric::ublas::matrix< double >& result ){
+	size_t QuaternionHandle::matrix_rotation( boost::numeric::ublas::matrix< double >& result 
+											, bool inverse ){
 		if( result.size1() != 3 || result.size2() != 3 ){
 			zeabus_library::print_error(
 				"zeabus_library::zeabus_rotation::matrix_rotation result wrong size matrix");
@@ -34,12 +35,21 @@ namespace zeabus_rotation{
 		double xx = pow( *(this->x) , 2 );
 		double yy = pow( *(this->y) , 2 );
 		double zz = pow( *(this->z) , 2 );
-		double wx = (*this->w) * (*this->x) * 2;
-		double wy = (*this->w) * (*this->y) * 2;
-		double wz = (*this->w) * (*this->z) * 2;
 		double xy = (*this->x) * (*this->y) * 2;
 		double xz = (*this->x) * (*this->z) * 2;
 		double yz = (*this->y) * (*this->z) * 2;
+		double wx;
+		double wy;
+		double wz;
+		if( ! inverse ){
+			wx = (*this->w) * (*this->x) * 2;
+			wy = (*this->w) * (*this->y) * 2;
+			wz = (*this->w) * (*this->z) * 2;
+		}else{
+			wx = (*this->w) * (*this->x) * -2;
+			wy = (*this->w) * (*this->y) * -2;
+			wz = (*this->w) * (*this->z) * -2;
+		}
 		
 		result( 0 , 0 ) = ww + xx - yy - zz;
 		result( 0 , 1 ) = xy - wz;
@@ -53,6 +63,21 @@ namespace zeabus_rotation{
 
 		return zeabus_library::NO_ERROR;
 	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////
+	// this part is about rotation 
+	//		equation is diff * q_1 = q_2 when	diff = quaternion inheratace of this object
+	//											q_1 = quaternion from function set_start_frame
+	//											q_2 = quaternion from function set_target_frame
+	//			That	mean q_1 is start_frame & start_quaternion 
+	//					meaa q_2 is target_frame * target_quaternion
+	//		Above equation when call by function update_ratation() < public function>
+	// You can get matrix rotation by function matrix_rotation( result , inverse )	
+	//		normal value of inverse ins bool false when you want start to target				
+	
+	// this set up part support only set up by zeabus_library::zeabus_rotation::Quaternion
+	//										& zeabus_library::Point4
+	//										& roll , pitch , yaw	
 
 	void QuaternionHandle::set_start_frame( double roll , double pitch , double yaw ){
 		this->start_frame.set_quaternion( roll , pitch , yaw );

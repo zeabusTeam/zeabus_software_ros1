@@ -72,7 +72,8 @@ namespace zeabus_library{
 		}
 
 		void print( std::string message , boost::numeric::ublas::matrix< double >& vector ){
-			zeabus_library::matrix::print( message , vector );
+			zeabus_library::matrix::print( message + " transpose"
+				, boost::numeric::ublas::trans( vector ) );
 		}
 
 		size_t conjugate( boost::numeric::ublas::matrix< double >& vector ){

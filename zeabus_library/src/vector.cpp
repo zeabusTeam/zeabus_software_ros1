@@ -19,8 +19,8 @@ namespace zeabus_library{
 
 	namespace vector{
 
-		size_t multiplication( boost::numeric::ublas::matrix< double > v_1 
-							, boost::numeric::ublas::matrix< double > v_2 
+		size_t multiplication( boost::numeric::ublas::matrix< double >& v_1 
+							, boost::numeric::ublas::matrix< double >& v_2 
 							, boost::numeric::ublas::matrix< double >& result ){
 			if( v_1.size1() != 4 || v_1.size2() != 1){
 				zeabus_library::print_error( 

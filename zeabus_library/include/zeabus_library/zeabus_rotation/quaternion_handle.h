@@ -21,7 +21,7 @@
 
 #include	<math.h>
 
-#include	<zeabus_library/matrix.h>
+#include	<zeabus_library/vector.h>
 
 #include	<zeabus_library/error_code.h>
 
@@ -61,7 +61,8 @@ namespace zeabus_rotation{
 			void set_target_frame( zeabus_library::zeabus_rotation::Quaternion quaternion );
 			void set_target_frame( zeabus_library::Point4 data );
 
-			void update_quaternion();
+			void start_rotation_target();
+			void target_rotation_start();
 
 		protected:
 			zeabus_library::zeabus_rotation::Quaternion start_frame;

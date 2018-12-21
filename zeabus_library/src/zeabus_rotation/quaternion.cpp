@@ -79,6 +79,7 @@ namespace zeabus_rotation{
 	}
 
 	void Quaternion::update_inverse(){
+		if( this->updated ) return;
 		this->updated = 1;
 		zeabus_library::vector::conjugate( this->matrix , this->inverse_matrix );
 		zeabus_library::vector::normalization( this->inverse_matrix );

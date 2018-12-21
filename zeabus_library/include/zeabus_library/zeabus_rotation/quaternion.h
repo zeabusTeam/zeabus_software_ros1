@@ -61,11 +61,10 @@ namespace zeabus_rotation{
 			void set_quaternion( boost::numeric::ublas::matrix< double > matrix );
 			void set_quaternion( zeabus_library::Point4 data );
 			void set_quaternion( double w , double x , double y ,double z );
-	
-		protected:
-			size_t updated;
+
 			void update_inverse();
 			boost::numeric::ublas::matrix< double > inverse_matrix;
+	
 
 		private:
 			double cos_yaw;
@@ -74,6 +73,7 @@ namespace zeabus_rotation{
 			double sin_pitch;
 			double cos_roll;
 			double sin_roll;
+			size_t updated;
 
 	};
 

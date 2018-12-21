@@ -54,6 +54,38 @@ namespace zeabus_rotation{
 		return zeabus_library::NO_ERROR;
 	}
 
+	void QuaternionHandle::set_start_frame( double roll , double pitch , double yaw ){
+		this->start_frame.set_quaternion( roll , pitch , yaw );
+		this->start_frame.update_inverse();
+	}
+
+	void QuaternionHandle::set_start_frame( 
+			zeabus_library::zeabus_rotation::Quaternion quaternion ){
+		this->start_frame = quaternion;
+		this->start_frame.update_inverse();
+	}
+
+	void QuaternionHandle::set_start_frame( zeabus_library::Point4 data ){
+		this->start_frame.set_quaternion( data );
+		this->start_frame.update_inverse();
+	}
+
+	void QuaternionHandle::set_target_frame( double roll , double pitch , double yaw ){
+		this->target_frame.set_quaternion( roll , pitch , yaw );
+		this->target_frame.update_inverse();
+	}
+
+	void QuaternionHandle::set_target_frame( 
+			zeabus_library::zeabus_rotation::Quaternion quaternion ){
+		this->target_frame = quaternion;
+		this->target_frame.update_inverse();
+	}
+
+	void QuaternionHandle::set_target_frame( zeabus_library::Point4 data ){
+		this->target_frame.set_quaternion( data );
+		this->target_frame.update_inverse();
+	}
+
 }
 
 }

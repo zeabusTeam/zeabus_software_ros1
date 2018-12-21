@@ -23,6 +23,8 @@
 
 #include	<zeabus_library/matrix.h>
 
+#include	<zeabus_library/error_code.h>
+
 #include	<zeabus_library/euler.h>
 
 #include	<zeabus_library/Point4.h>
@@ -30,6 +32,9 @@
 #include	<zeabus_library/zeabus_rotation/quaternion.h>
 
 #define		PI 3.14159265
+
+// reference data information about quaternion to use rotation
+//		http://www.chrobotics.com/library/understanding-quaternions
 
 #ifndef _ZEABUS_LIBRARY_QUATERNION_HANDLE_H__
 #define _ZEABUS_LIBRARY_QUATERNION_HANDLE_H__
@@ -43,24 +48,25 @@ namespace zeabus_rotation{
 		public:
 			QuaternionHandle();
 
-			void get_RPY( double& roll , double& pitch , double& yaw );
+			size_t matrix_rotation( boost::numeric::ublas::matrix< double >& result );
 
-			void get_matrix_transform( boost::numeric::ublas::matrix< double > result );
+			// please warning about to set what frame is start what frame is target
+			//		example value from IMU inertial frame is start and robot is target 
 
-			void get_matrix_transform( boost::numeric::ublas::matrix< double > result 
-									, double roll , double pitch , double yaw );
+			void set_start_frame( double roll , double pitch , double yaw );
+			void set_start_frame( zeabus_library::zeabus_rotation::Quaternion quaternion );
+			void set_start_frame( zeabus_library::Point4 data );
 
-			void get_matrix_transform( boost::numeric::ublas::matrix< double > result 
-									, boost::numeric::ublas::matrix< double > target );
+			void set_target_frame( double roll , double pitch , double yaw );
+			void set_target_frame( zeabus_library::zeabus_rotation::Quaternion quaternion );
+			void set_target_frame( zeabus_library::Point4 data );
 
-			void get_matrix_transform( boost::numeric::ublas::matrix< double > result 
-									, zeabus_library::Point4 target );
+			void update_quaternion();
 
-			void get_matrix_transform( boost::numeric::ublas::matrix< double > result 
-									, zeabus_library::zeabus_rotation::Quaternion data );
+		protected:
+			zeabus_library::zeabus_rotation::Quaternion start_frame;
+			zeabus_library::zeabus_rotation::Quaternion target_frame;
 
-		private:
-			zeabus_library::zeabus_rotation::Quaternion temp_quaternion;
 
 	};
 

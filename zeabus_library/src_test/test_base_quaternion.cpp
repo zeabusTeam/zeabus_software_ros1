@@ -21,14 +21,14 @@
 
 #include	<zeabus_library/zeabus_rotation/convert_rotation.h>
 
-#include	<zeabus_library/zeabus_rotation/quaternion_handle.h>
+#include	<zeabus_library/zeabus_rotation/quaternion.h>
 
 //#define _test_quaternion_to_euler_
 
 #define _test_euler_to_quaternion_
 
 int main(){
-	zeabus_library::zeabus_rotation::QuaternionHandle quaternion;
+	zeabus_library::zeabus_rotation::Quaternion quaternion;
 	zeabus_library::zeabus_rotation::MatrixRotation matrix_handle;
 
 	double w , x , y , z ;

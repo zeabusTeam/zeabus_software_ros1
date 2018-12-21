@@ -27,6 +27,8 @@
 
 #include	<zeabus_library/Point4.h>
 
+#include	<zeabus_library/error_code.h>
+
 #ifndef PI
 	#define		PI 3.14159265
 #endif
@@ -49,8 +51,11 @@ namespace zeabus_rotation{
 			double* z ;
 
 			void normalization();
+
+			void get_RPY( double& roll , double& pitch , double& yaw );
+
 			boost::numeric::ublas::matrix< double > inverse();
-			void inverse( boost::numeric::ublas::matrix< double >& matrix_result );
+			size_t inverse( boost::numeric::ublas::matrix< double >& matrix_result );
 
 			void set_quaternion( double roll , double pitch , double yaw );
 			void set_quaternion( boost::numeric::ublas::matrix< double > matrix );
@@ -60,9 +65,9 @@ namespace zeabus_rotation{
 		protected:
 			size_t updated;
 			void update_inverse();
+			boost::numeric::ublas::matrix< double > inverse_matrix;
 
 		private:
-			boost::numeric::ublas::matrix< double > inverse_matrix;
 			double cos_yaw;
 			double sin_yaw;
 			double cos_pitch;

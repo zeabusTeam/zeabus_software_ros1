@@ -34,6 +34,25 @@ namespace zeabus_rotation{
 		this->updated = 0;
 	}
 
+	void Quaternion::get_RPY( double& roll , double& pitch , double& yaw ){
+		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
+			zeabus_library::matrix::print( "Matrix Quaternion " , this->matrix );
+		#endif
+		roll = atan2( 2 * ( (*w) * (*x) + (*y) * (*z) ) 
+					,	pow( (*w) , 2 ) - pow( (*x) , 2 ) 
+						- pow( (*y) , 2 ) + pow( (*z) , 2) );
+		
+		yaw = atan2( 2 * ( (*w) * (*z) + (*x) * (*y) )
+					,	pow( (*w) , 2 ) + pow( (*x) , 2 ) 
+						- pow( (*y) , 2 ) - pow( (*z) , 2) );
+		
+		pitch = -1 * asin( 2 * ( ( (*x) * (*z) ) - ( (*w) * (*y) ) ) );
+		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
+			printf( "Result roll : pitch : yaw %10.6lf : %10.6lf : %10.6lf \n" 
+					, roll , pitch ,yaw );
+		#endif	
+	}
+
 	void Quaternion::normalization(){
 		zeabus_library::vector::normalization( this->matrix);
 	}
@@ -44,26 +63,30 @@ namespace zeabus_rotation{
 		return this->inverse_matrix;
 	}
 
-	void Quaternion::inverse( boost::numeric::ublas::matrix< double >& matrix_result ){
+	size_t Quaternion::inverse( boost::numeric::ublas::matrix< double >& matrix_result ){
+		if( matrix_result.size1() != 4 || matrix_result.size2() != 1 ){
+			zeabus_library::print_error( 
+				"zeabus_library::zeabus_rotation::Quaternion::inverse matrix_result wrong size");
+			return zeabus_library::ERROR_SIZE_MATRIX;
+		}
 		if( this->updated ){}
 		else this->update_inverse();
 		matrix_result( 0 , 0 ) = this->inverse_matrix( 0 , 0 );	
 		matrix_result( 1 , 0 ) = this->inverse_matrix( 1 , 0 );	
 		matrix_result( 2 , 0 ) = this->inverse_matrix( 2 , 0 );	
 		matrix_result( 3 , 0 ) = this->inverse_matrix( 3 , 0 );	
+		return zeabus_library::NO_ERROR;
 	}
 
 	void Quaternion::update_inverse(){
 		this->updated = 1;
-		this->inverse_matrix( 0 , 0 ) = this->matrix( 0 , 0 );	
-		this->inverse_matrix( 1 , 0 ) = this->matrix( 1 , 0 ) * -1;	
-		this->inverse_matrix( 2 , 0 ) = this->matrix( 2 , 0 ) * -1;	
-		this->inverse_matrix( 3 , 0 ) = this->matrix( 3 , 0 ) * -1;	
+		zeabus_library::vector::conjugate( this->matrix , this->inverse_matrix );
+		zeabus_library::vector::normalization( this->inverse_matrix );
 	}
 
 	void Quaternion::set_quaternion( double roll , double pitch , double yaw ){
 		this->updated = 0;
-		// use sequence rotation by order ZYX
+		// use sequence rotation by order ZYX < plan >
 		this->cos_yaw = cos( zeabus_library::euler::radian_domain( yaw ) / 2 );
 		this->sin_yaw = sin( zeabus_library::euler::radian_domain( yaw ) / 2 );
 		this->cos_roll = cos( zeabus_library::euler::radian_domain( roll ) / 2 );

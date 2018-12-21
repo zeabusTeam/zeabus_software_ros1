@@ -23,23 +23,35 @@ namespace zeabus_rotation{
 
 	QuaternionHandle::QuaternionHandle() : Quaternion() {}
 
-	void QuaternionHandle::get_RPY( double& roll , double& pitch , double& yaw ){
-		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
-			zeabus_library::matrix::print( "Matrix Quaternion " , this->matrix );
-		#endif
-		roll = atan2( 2 * ( (*w) * (*x) + (*y) * (*z) ) 
-					,	pow( (*w) , 2 ) - pow( (*x) , 2 ) 
-						- pow( (*y) , 2 ) + pow( (*z) , 2) );
+	size_t QuaternionHandle::matrix_rotation( boost::numeric::ublas::matrix< double >& result ){
+		if( result.size1() != 3 || result.size2() != 3 ){
+			zeabus_library::print_error(
+				"zeabus_library::zeabus_rotation::matrix_rotation result wrong size matrix");
+			return zeabus_library::ERROR_SIZE_MATRIX;
+		}
+
+		double ww = pow( *(this->w) , 2 );
+		double xx = pow( *(this->x) , 2 );
+		double yy = pow( *(this->y) , 2 );
+		double zz = pow( *(this->z) , 2 );
+		double wx = (*this->w) * (*this->x) * 2;
+		double wy = (*this->w) * (*this->y) * 2;
+		double wz = (*this->w) * (*this->z) * 2;
+		double xy = (*this->x) * (*this->y) * 2;
+		double xz = (*this->x) * (*this->z) * 2;
+		double yz = (*this->y) * (*this->z) * 2;
 		
-		yaw = atan2( 2 * ( (*w) * (*z) + (*x) * (*y) )
-					,	pow( (*w) , 2 ) + pow( (*x) , 2 ) 
-						- pow( (*y) , 2 ) - pow( (*z) , 2) );
-		
-		pitch = -1 * asin( 2 * ( ( (*x) * (*z) ) - ( (*w) * (*y) ) ) );
-		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
-			printf( "Result roll : pitch : yaw %10.6lf : %10.6lf : %10.6lf \n" 
-					, roll , pitch ,yaw );
-		#endif	
+		result( 0 , 0 ) = ww + xx - yy - zz;
+		result( 0 , 1 ) = xy - wz;
+		result( 0 , 2 ) = xz + wy;
+		result( 1 , 0 ) = xy + wz;
+		result( 1 , 1 ) = ww - xx + yy - zz;
+		result( 1 , 2 ) = yz - wx;
+		result( 2 , 0 ) = xz - wy;
+		result( 2 , 1 ) = yz + wx;
+		result( 2 , 2 ) = ww - xx - yy + zz;
+
+		return zeabus_library::NO_ERROR;
 	}
 
 }

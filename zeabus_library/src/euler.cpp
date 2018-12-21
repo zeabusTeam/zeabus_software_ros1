@@ -112,6 +112,18 @@ namespace euler{
 		return radian * 180 / PI;
 	}
 
+	double find_min_diff( double start , double target ){
+		bound_show( start );
+		bound_show( target );
+		double temp_direction = target - start;
+		if( fabs( temp_direction ) <= PI ) return temp_direction;
+		else return copysign( 2 * PI - fabs( temp_direction ) , temp_direction ) * -1 ;
+	}
+
+	void find_min_diff( double start , double target , double& result ){
+		result = find_min_diff( start , target );
+	}
+
 }
 
 }

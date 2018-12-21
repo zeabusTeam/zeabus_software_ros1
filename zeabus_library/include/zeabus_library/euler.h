@@ -38,6 +38,16 @@ namespace zeabus_library{
 		double radian_domain( double radian );
 		double degree_domain( double degree );
 
+		// function for conversation between radian and degree
+		double degree_to_radian( double degree );
+		void degree_to_radiian( double degree , double& radian );
+		double radian_to_degree( double radian );
+		void radian_to_degree( double radian , double& degree );
+
+		// function for find min in radian unit
+		void find_min_diff( double start , double target , double& result );
+		double find_min_diff( double start , double target );
+
 		// function standard math in cpp and limit bound value of domain
 		void sin( double radian , double& result );
 		void cos( double radian , double& result );	

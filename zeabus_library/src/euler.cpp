@@ -96,6 +96,22 @@ namespace euler{
 		return tan( radian );
 	}
 
+	void degree_to_radian( double degree , double& radian ){
+		radian = degree * PI / 180 ;
+	}
+
+	double degree_to_radian( double degree ){
+		return degree * PI / 180 ;
+	}
+
+	void radian_to_degree( double radian , double& degree ){
+		degree = radian * 180 / PI;
+	}
+
+	double radian_to_degree( double radian ){
+		return radian * 180 / PI;
+	}
+
 }
 
 }

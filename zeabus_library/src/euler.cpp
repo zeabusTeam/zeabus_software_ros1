@@ -15,7 +15,7 @@
 
 #include	<zeabus_library/euler.h>
 
-#define _DEBUG_ZEABUS_LIBRARY_EULER_
+//#define _DEBUG_ZEABUS_LIBRARY_EULER_
 
 namespace zeabus_library{
 

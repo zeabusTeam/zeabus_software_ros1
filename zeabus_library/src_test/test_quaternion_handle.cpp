@@ -35,10 +35,11 @@ int main(){
 
 	zeabus_library::zeabus_rotation::QuaternionHandle quaternion_handle;
 	double roll , pitch , yaw;
-	input_value( "Please input start euler " , roll , pitch , yaw );
-	quaternion_handle.set_start_frame( roll , pitch , yaw );	
-	input_value( "Please input target euler " , roll , pitch , yaw );
-	quaternion_handle.set_target_frame( roll , pitch , yaw );
+
+	std::cout << "Standard test rotation";
+	
+	quaternion_handle.set_start_frame( 0 , 0 , 0 );	
+	quaternion_handle.set_target_frame( 0 , 0 , 90 );
 	
 	quaternion_handle.update_rotation();
 

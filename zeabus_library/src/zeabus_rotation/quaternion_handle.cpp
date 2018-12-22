@@ -96,6 +96,7 @@ namespace zeabus_rotation{
 												, this->matrix );	
 		#ifdef _DEBUG_ROTATION_QUATERNION_
 			zeabus_library::vector::print("Start_frame" , this->start_frame.matrix );
+			zeabus_library::vector::print("Start_inverse" , this->start_frame.inverse_matrix );
 			zeabus_library::vector::print("Target_frame" , this->target_frame.matrix );
 			zeabus_library::vector::print("Different quaternion" , this->matrix);
 			this->get_RPY( this->diff_euler[0] , this->diff_euler[1] , this->diff_euler[2] );
@@ -130,7 +131,7 @@ namespace zeabus_rotation{
 			printf(" target |%8.4lf|%8.4lf|%8.4lf\n", this->target_euler[0] 
 													, this->target_euler[1]
 													, this->target_euler[2] );
-			printf("  diffe |%8.4lf|%8.4lf|%8.4lf\n", this->diff_euler[0] 
+			printf("  diff  |%8.4lf|%8.4lf|%8.4lf\n", this->diff_euler[0] 
 													, this->diff_euler[1]
 													, this->diff_euler[2] );
 		#endif

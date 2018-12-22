@@ -7,8 +7,8 @@
 							boost matrix double
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.0.0
+	status				:	testing & maintain
 
 	Namespace			:	zeabus_library
 */
@@ -45,7 +45,7 @@ namespace zeabus_library{
 								+ v_1( 2 , 0 ) * v_2( 3 , 0 ) - v_1( 3 , 0 ) * v_2( 2 , 0 );
 
 			result( 2 , 0 ) =	v_1( 0 , 0 ) * v_2(  2 , 0 ) - v_1( 1 , 0 ) * v_2( 3 , 0 )
-								+ v_1( 3 , 0 ) * v_2( 0 , 0 ) + v_1( 3 , 0 ) * v_2( 1 , 0 );
+								+ v_1( 2 , 0 ) * v_2( 0 , 0 ) + v_1( 3 , 0 ) * v_2( 1 , 0 );
 
 			result( 3 , 0 ) =	v_1( 0 , 0 ) * v_2(  3 , 0 ) + v_1( 1 , 0 ) * v_2( 2 , 0 )
 								- v_1( 2 , 0 ) * v_2( 1 , 0 ) + v_1( 3 , 0 ) * v_2( 0 , 0 );

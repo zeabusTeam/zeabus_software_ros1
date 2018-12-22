@@ -35,6 +35,13 @@ namespace zeabus_rotation{
 
 	QuaternionHandle::QuaternionHandle() : Quaternion() {}
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+//	This part is get matrix rotation 
+//		if inverse is false you will get matrix rotation for start to target
+//		if inverse is true you will get matrix rotation for target to start
+//	reference http://www.chrobotics.com/library/understanding-quaternions
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 	size_t QuaternionHandle::matrix_rotation( boost::numeric::ublas::matrix< double >& result 
 											, bool inverse ){
 		if( result.size1() != 3 || result.size2() != 3 ){
@@ -161,18 +168,18 @@ namespace zeabus_rotation{
 
 	void QuaternionHandle::set_target_frame( double roll , double pitch , double yaw ){
 		this->target_frame.set_quaternion( roll , pitch , yaw );
-		this->target_frame.update_inverse();
+//		this->target_frame.update_inverse();
 	}
 
 	void QuaternionHandle::set_target_frame( 
 			zeabus_library::zeabus_rotation::Quaternion quaternion ){
 		this->target_frame = quaternion;
-		this->target_frame.update_inverse();
+//		this->target_frame.update_inverse();
 	}
 
 	void QuaternionHandle::set_target_frame( zeabus_library::Point4 data ){
 		this->target_frame.set_quaternion( data );
-		this->target_frame.update_inverse();
+//		this->target_frame.update_inverse();
 	}
 
 }

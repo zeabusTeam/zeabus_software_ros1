@@ -74,6 +74,7 @@ namespace zeabus_rotation{
 			zeabus_library::zeabus_rotation::Quaternion target_frame;
 			double start_euler[3];
 			double target_euler[3];
+			double diff_euler[3];
 
 	};
 

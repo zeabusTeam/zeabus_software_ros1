@@ -15,6 +15,18 @@
 
 #include	<zeabus_library/zeabus_rotation/quaternion_handle.h>
 
+#define _ROTATION_EULER_
+
+#ifdef _ROTATION_EULER_
+	#define _DEBUG_ROTATION_EULER_
+#endif
+
+#define _ROTATION_QUATERNION_
+
+#ifdef _ROTATION_QUATERNION_
+	#define _DEBUG_ROTATION_QUATERNION_
+#endif
+
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
 
 namespace zeabus_library{
@@ -73,7 +85,56 @@ namespace zeabus_rotation{
 	//					meaa q_2 is target_frame * target_quaternion
 	//		Above equation when call by function update_ratation() < public function>
 	// You can get matrix rotation by function matrix_rotation( result , inverse )	
-	//		normal value of inverse ins bool false when you want start to target				
+	//		normal value of inverse ins bool false when you want start to target			
+	void QuaternionHandle::update_rotation(){
+		#ifdef _ROTATION_QUATERNION_
+
+		zeabus_library::vector::multiplication( this->target_frame.matrix
+												, this->start_frame.inverse_matrix 
+												, this->matrix );	
+		#ifdef _DEBUG_ROTATION_QUATERNION_
+			zeabus_library::vector::print("Start_frame" , this->start_frame.matrix );
+			zeabus_library::vector::print("Target_frame" , this->target_frame.matrix );
+			zeabus_library::vector::print("Different quaternion" , this->matrix);
+			this->get_RPY( this->diff_euler[0] , this->diff_euler[1] , this->diff_euler[2] );
+			printf("different quaternion roll : pitch : yaw === %8.4lf %8.4lf %8.4lf\n"
+					, this->diff_euler[0] , this->diff_euler[1] , this->diff_euler[2] );
+		#endif
+
+		#endif
+
+		#ifdef _ROTATION_EULER_
+
+		this->start_frame.get_RPY( this->start_euler[0] 
+								, this->start_euler[1] 
+								, this->start_euler[2] );
+		this->target_frame.get_RPY( this->target_euler[0]
+								, this->target_euler[1]
+								, this->target_euler[2] );
+		zeabus_library::euler::find_min_diff( this->start_euler[0] 
+											, this->target_euler[0] 
+											, this->diff_euler[0] );
+		zeabus_library::euler::find_min_diff( this->start_euler[1] 
+											, this->target_euler[1] 
+											, this->diff_euler[1] );
+		zeabus_library::euler::find_min_diff( this->start_euler[2] 
+											, this->target_euler[2] 
+											, this->diff_euler[2] );
+		#ifdef _DEBUG_ROTATION_EULER_
+			printf("        |  roll  |  pitch  |  yaw  \n" );
+			printf("  start |%8.4lf|%8.4lf|%8.4lf\n", this->start_euler[0] 
+													, this->start_euler[1]
+													, this->start_euler[2] );
+			printf(" target |%8.4lf|%8.4lf|%8.4lf\n", this->target_euler[0] 
+													, this->target_euler[1]
+													, this->target_euler[2] );
+			printf("  diffe |%8.4lf|%8.4lf|%8.4lf\n", this->diff_euler[0] 
+													, this->diff_euler[1]
+													, this->diff_euler[2] );
+		#endif
+
+		#endif
+	}	
 	
 	// this set up part support only set up by zeabus_library::zeabus_rotation::Quaternion
 	//										& zeabus_library::Point4

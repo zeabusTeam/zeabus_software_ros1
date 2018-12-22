@@ -47,17 +47,21 @@ int main(){
 	value( 1 , 0 ) = 0 ;
 	value( 2 , 0 ) = 1 ;
 
+	std::cout << "\nZero Test\n";
+	rotation_handle.set_target_frame( 0 , 0 , 0 );
+	rotation_handle.target_rotation( value , result );
+
 	std::cout << "\nFirst Test yaw is 90 \n";
 	rotation_handle.set_target_frame( 0 , 0 , degree( 90 ) );
-	rotation_handle.start_rotation( value , result );
+	rotation_handle.target_rotation( value , result );
 
 	std::cout << "\nSecond Test pitch 90 \n";
 	rotation_handle.set_target_frame( 0 , degree(90) , 0);
-	rotation_handle.start_rotation( value , result );
+	rotation_handle.target_rotation( value , result );
 
 	std::cout << "\nThird Test roll 90\n";
 	rotation_handle.set_target_frame( degree(90) , 0 , 0);
-	rotation_handle.start_rotation( value , result );
+	rotation_handle.target_rotation( value , result );
 
 	return 0; 
 

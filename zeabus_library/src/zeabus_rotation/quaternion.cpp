@@ -16,7 +16,7 @@
 #include	<zeabus_library/zeabus_rotation/quaternion.h>
 
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
-#define _DEBUG_VALUE_INPUT_MATH_H_
+//#define _DEBUG_VALUE_INPUT_MATH_H_
 namespace zeabus_library{
 
 namespace zeabus_rotation{
@@ -62,7 +62,7 @@ namespace zeabus_rotation{
 
 		roll = atan2( temp_roll_01 , temp_roll_02 );
 		yaw = atan2( temp_yaw_01 , temp_yaw_02 );
-		pitch = -1*asin( temp_pitch );
+		pitch = asin( temp_pitch ) * -1;
 		
 		printf("temp_roll 01 : 02 === %8.4lf : %8.4lf\n" , temp_roll_01 , temp_roll_02 );
 		printf("temp_pitch === %0.4lf\n" , temp_pitch);

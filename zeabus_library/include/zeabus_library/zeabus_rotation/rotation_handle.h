@@ -38,6 +38,9 @@ namespace zeabus_rotation{
 			size_t start_rotation( boost::numeric::ublas::matrix< double >& value 
 							, boost::numeric::ublas::matrix< double >& result );
 
+			size_t target_rotation( boost::numeric::ublas::matrix< double >& value 
+							, boost::numeric::ublas::matrix< double >& result );
+
 		private:
 			boost::numeric::ublas::matrix< double > temporary_matrix;
 			double diff_euler[3];	 

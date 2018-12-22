@@ -19,6 +19,10 @@
 
 #include	<zeabus_library/zeabus_rotation/rotation_handle.h>
 
+#include	<zeabus_library/vector.h>
+
+#include	<zeabus_library/matrix.h>
+
 #include	<zeabus_library/euler.h>
 
 #include	<boost/numeric/ublas/matrix.hpp>
@@ -27,12 +31,36 @@ double degree( double degree ){
 	return zeabus_library::euler::degree_domain( degree );
 }
 
+void result_test( int number_test , boost::numeric::ublas::matrix< double >& value
+								  , boost::numeric::ublas::matrix< double >& result
+								  , boost::numeric::ublas::matrix< double >& expected ){
+	if( abs( result( 0 , 0 ) - expected( 0 , 0 ) ) <= EPSILON &&
+		abs( result( 1 , 0 ) - expected( 1 , 0 ) ) <= EPSILON &&
+		abs( result( 2 , 0 ) - expected( 2 , 0 ) ) <= EPSILON ){
+		printf("Test number %d is correct\n" , number_test );
+	}
+	else{
+		printf("Test number %d is wrong\n" , number_test );
+		zeabus_library::vector::print( "Value before rotation" , value );
+		zeabus_library::vector::print( "Result after rotation" , result );
+		zeabus_library::vector::print( "Expected value after " , expected );
+	}
+}
+
+void input_value( boost::numeric::ublas::matrix< double >& vector 
+					, double num1 , double num2 , double num3 ){
+	vector( 0 , 0 ) = num1;
+	vector( 1 , 0 ) = num2;
+	vector( 2 , 0 ) = num3;
+}
+
 int main(){
 
 	zeabus_library::zeabus_rotation::RotationHandle rotation_handle;
 
 	boost::numeric::ublas::matrix< double > value;
 	boost::numeric::ublas::matrix< double > result;
+	boost::numeric::ublas::matrix< double > expected;
 	value.resize( 3 , 1 );
 	result.resize( 3 , 1 );
 
@@ -49,19 +77,27 @@ int main(){
 
 	std::cout << "\nZero Test\n";
 	rotation_handle.set_target_frame( 0 , 0 , 0 );
-	rotation_handle.target_rotation( value , result );
+	rotation_handle.start_rotation( value , result );
+	input_value( expected , 0 , 0 , 1 );
+	result_test( 0 , value , result , expected );
 
 	std::cout << "\nFirst Test yaw is 90 \n";
 	rotation_handle.set_target_frame( 0 , 0 , degree( 90 ) );
-	rotation_handle.target_rotation( value , result );
+	rotation_handle.start_rotation( value , result );
+	input_value( expected , 0 , 0 , 1 );
+	result_test( 1 , value , result , expected );
 
 	std::cout << "\nSecond Test pitch 90 \n";
 	rotation_handle.set_target_frame( 0 , degree(90) , 0);
-	rotation_handle.target_rotation( value , result );
+	rotation_handle.start_rotation( value , result );
+	input_value( expected , -1 , 0 , 0 );
+	result_test( 2 , value , result , expected );
 
 	std::cout << "\nThird Test roll 90\n";
 	rotation_handle.set_target_frame( degree(90) , 0 , 0);
-	rotation_handle.target_rotation( value , result );
+	rotation_handle.start_rotation( value , result );
+	input_value( expected , 0 , 1 , 0 );
+	result_test( 3 , value , result , expected );
 
 	return 0; 
 

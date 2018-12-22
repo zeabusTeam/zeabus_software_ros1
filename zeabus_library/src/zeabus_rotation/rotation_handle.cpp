@@ -15,7 +15,7 @@
 
 #include	<zeabus_library/zeabus_rotation/rotation_handle.h>
 
-#define _DEBUG_ROTATION_VALUE_
+//#define _DEBUG_ROTATION_VALUE_
 
 namespace zeabus_library{
 
@@ -36,16 +36,16 @@ namespace zeabus_rotation{
 			return zeabus_library::ERROR_SIZE_MATRIX;
 		}
 		this->update_rotation();
-		this->matrix_rotation( this->temporary_matrix , false );
+		this->matrix_rotation( this->temporary_matrix , true );
 
 		zeabus_library::matrix::product( temporary_matrix , value , result );
 
 		#ifdef _DEBUG_ROTATION_VALUE_
 			printf("Infomation of start rotation to target\n");
 			this->get_RPY( this->diff_euler[0] , this->diff_euler[1] , this->diff_euler[2] );
-			zeabus_library::vector::print("result matrix " , result );
-			zeabus_library::matrix::print("Matrix rotation" , this->temporary_matrix );
 			zeabus_library::vector::print("value matrix " , value );
+			zeabus_library::matrix::print("Matrix rotation" , this->temporary_matrix );
+			zeabus_library::vector::print("result matrix " , result );
 			printf("Diff roll : pitch : yaw <====> %8.4lf : %8.4lf : %8.4lf\n"
 					, this->diff_euler[0] , this->diff_euler[1] , this->diff_euler[2] );
 		#endif
@@ -65,16 +65,16 @@ namespace zeabus_rotation{
 			return zeabus_library::ERROR_SIZE_MATRIX;
 		}
 		this->update_rotation();
-		this->matrix_rotation( this->temporary_matrix , true );
+		this->matrix_rotation( this->temporary_matrix , false );
 
 		zeabus_library::matrix::product( temporary_matrix , value , result );
 
 		#ifdef _DEBUG_ROTATION_VALUE_
 			printf("Infomation of target rotation to start\n");
 			this->get_RPY( this->diff_euler[0] , this->diff_euler[1] , this->diff_euler[2] );
-			zeabus_library::vector::print("result matrix " , result );
-			zeabus_library::matrix::print("Matrix rotation" , this->temporary_matrix );
 			zeabus_library::vector::print("value matrix " , value );
+			zeabus_library::matrix::print("Matrix rotation" , this->temporary_matrix );
+			zeabus_library::vector::print("result matrix " , result );
 			printf("Diff roll : pitch : yaw <====> %8.4lf : %8.4lf : %8.4lf\n"
 					, this->diff_euler[0] , this->diff_euler[1] , this->diff_euler[2] );
 		#endif

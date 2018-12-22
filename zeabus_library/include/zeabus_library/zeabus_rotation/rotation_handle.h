@@ -34,6 +34,12 @@ namespace zeabus_rotation{
 	
 		public:
 			RotationHandle();
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//	reference is http://www.chrobotics.com/library/understanding-quaternions
+//		but we have confuse and testing follow referene it isn't work
+//		But it dosen't mean all data is wrong I think it wrong about Vb = Rbi(Qbi)Vi
+//		we muest to invese to make it work
 	
 			size_t start_rotation( boost::numeric::ublas::matrix< double >& value 
 							, boost::numeric::ublas::matrix< double >& result );

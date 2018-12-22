@@ -31,7 +31,13 @@
 
 #include	<zeabus_library/zeabus_rotation/quaternion.h>
 
-#define		PI 3.14159265
+#ifndef PI
+	#define		PI 3.14159265
+#endif
+
+#ifndef EPSILON
+	#define	EPSILON 1.0e-7
+#endif
 
 // reference data information about quaternion to use rotation
 //		http://www.chrobotics.com/library/understanding-quaternions
@@ -69,12 +75,14 @@ namespace zeabus_rotation{
 			void start_rotation_target();
 			void target_rotation_start();
 
+			// In normal situation we don't suggest to this variable it for test only
+			double diff_euler[3];
+
 		protected:
 			zeabus_library::zeabus_rotation::Quaternion start_frame;
 			zeabus_library::zeabus_rotation::Quaternion target_frame;
 			double start_euler[3];
 			double target_euler[3];
-			double diff_euler[3];
 
 	};
 

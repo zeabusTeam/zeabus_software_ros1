@@ -20,7 +20,11 @@
 #include	<exception>
 
 #ifndef PI
-	#define		PI 3.14159265
+	#define	PI 3.14159265
+#endif
+
+#ifndef EPSILON
+	#define	EPSILON 1.0e-7
 #endif
 
 #ifndef _ZEABUS_LIBRARY_EULER_H__

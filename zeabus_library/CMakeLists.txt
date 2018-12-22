@@ -134,3 +134,6 @@ add_executable( test_color_text src_test/test_color_text.cpp)
 add_dependencies( test_color_text ${${PROJECT_NAME}_EXPORTED_TARGETS}
 										${catkin_EXPORTED_TARGETS} )
 target_link_libraries( test_color_text ${catkin_LIBRARIES} zeabus_library)
+
+add_executable( test_quaternion_handle src_test/test_quaternion_handle.cpp)
+target_link_libraries( test_quaternion_handle ${catkin_LIBRARIES} zeabus_library)

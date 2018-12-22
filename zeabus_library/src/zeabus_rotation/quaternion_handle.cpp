@@ -76,16 +76,18 @@ namespace zeabus_rotation{
 		return zeabus_library::NO_ERROR;
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////
-	// this part is about rotation 
-	//		equation is diff * q_1 = q_2 when	diff = quaternion inheratace of this object
-	//											q_1 = quaternion from function set_start_frame
-	//											q_2 = quaternion from function set_target_frame
-	//			That	mean q_1 is start_frame & start_quaternion 
-	//					meaa q_2 is target_frame * target_quaternion
-	//		Above equation when call by function update_ratation() < public function>
-	// You can get matrix rotation by function matrix_rotation( result , inverse )	
-	//		normal value of inverse ins bool false when you want start to target			
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//	 this part is about rotation 
+//		equation is diff * q_1 = q_2 when	diff = quaternion inheratace of this object
+//											q_1 = quaternion from function set_start_frame
+//											q_2 = quaternion from function set_target_frame
+//			That	mean q_1 is start_frame & start_quaternion 
+//					meaa q_2 is target_frame * target_quaternion
+//		Above equation when call by function update_ratation() < public function>
+//	You can get matrix rotation by function matrix_rotation( result , inverse )	
+//		normal value of inverse ins bool false when you want start to target			
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 	void QuaternionHandle::update_rotation(){
 		#ifdef _ROTATION_QUATERNION_
 

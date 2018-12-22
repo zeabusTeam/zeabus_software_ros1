@@ -16,7 +16,7 @@
 #include	<zeabus_library/zeabus_rotation/quaternion.h>
 
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
-
+#define _DEBUG_VALUE_INPUT_MATH_H_
 namespace zeabus_library{
 
 namespace zeabus_rotation{
@@ -38,6 +38,8 @@ namespace zeabus_rotation{
 		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
 			zeabus_library::matrix::print( "Matrix Quaternion " , this->matrix );
 		#endif
+
+		#ifndef _DEBUG_VALUE_INPUT_MATH_H_
 		roll = atan2( 2 * ( (*w) * (*x) + (*y) * (*z) ) 
 					,	pow( (*w) , 2 ) - pow( (*x) , 2 ) 
 						- pow( (*y) , 2 ) + pow( (*z) , 2) );
@@ -47,6 +49,28 @@ namespace zeabus_rotation{
 						- pow( (*y) , 2 ) - pow( (*z) , 2) );
 		
 		pitch = -1 * asin( 2 * ( ( (*x) * (*z) ) - ( (*w) * (*y) ) ) );
+		#endif
+
+		#ifdef _DEBUG_VALUE_INPUT_MATH_H_
+		double temp_roll_01 , temp_roll_02 , temp_pitch , temp_yaw_01 , temp_yaw_02 ;
+		temp_roll_01 = 2 * ( (*w) * (*x) + (*y) * (*z) ); 
+		temp_roll_02 = pow( (*w) , 2 ) - pow( (*x) , 2 ) - pow( (*y) , 2 ) + pow( (*z) , 2);
+		temp_yaw_01 = 2 * ( (*w) * (*z) + (*x) * (*y) );
+		temp_yaw_02	= pow( (*w) , 2 ) + pow( (*x) , 2 ) - pow( (*y) , 2 ) - pow( (*z) , 2); 
+		
+		temp_pitch = 2 * ( ( (*x) * (*z) ) - ( (*w) * (*y) ) ) ;
+
+		roll = atan2( temp_roll_01 , temp_roll_02 );
+		yaw = atan2( temp_yaw_01 , temp_yaw_02 );
+		pitch = -1*asin( temp_pitch );
+		
+		printf("temp_roll 01 : 02 === %8.4lf : %8.4lf\n" , temp_roll_01 , temp_roll_02 );
+		printf("temp_pitch === %0.4lf\n" , temp_pitch);
+		printf("temp_yaw 01 : 02 === %8.4lf : %8.4lf\n" , temp_yaw_01 , temp_yaw_02 );
+		
+
+		#endif
+
 		#ifdef _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
 			printf( "Result roll : pitch : yaw %10.6lf : %10.6lf : %10.6lf \n" 
 					, roll , pitch ,yaw );

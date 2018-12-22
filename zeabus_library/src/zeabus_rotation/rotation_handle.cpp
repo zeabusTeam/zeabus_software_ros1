@@ -31,8 +31,9 @@ namespace zeabus_rotation{
 			zeabus_library::print_error( "zeabus_library::zeabus_rotation::RotationHandle::start_rotation value wrong size" );
 			return zeabus_library::ERROR_SIZE_MATRIX;
 		}
-		else if( ! ( result.size1() == 3 && result.size2() == 3 ) ){
-			zeabus_library::print_error( "zeabus_library::zeabus_rotation::RotationHandle::start_erotation value wrong size" );
+		else if( ! ( result.size1() == 3 && result.size2() == 1 ) ){
+			zeabus_library::print_error( "zeabus_library::zeabus_rotation::RotationHandle::start_rotation value wrong size" );
+			return zeabus_library::ERROR_SIZE_MATRIX;
 		}
 		this->update_rotation();
 		this->matrix_rotation( this->temporary_matrix , false );

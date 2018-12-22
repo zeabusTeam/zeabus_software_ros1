@@ -32,8 +32,8 @@ namespace matrix{
 
 	void print( std::string message , boost::numeric::ublas::matrix< double >& data );
 
-	size_t product( boost::numeric::ublas::matrix< double > m_1
-					, boost::numeric::ublas::matrix< double > m_2 
+	size_t product( boost::numeric::ublas::matrix< double >& m_1
+					, boost::numeric::ublas::matrix< double >& m_2 
 					, boost::numeric::ublas::matrix< double >& result 
 					, bool init_matrix = true );
 }

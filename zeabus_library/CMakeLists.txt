@@ -87,8 +87,9 @@ set( zeabus_library_sources
 
 set( zeabus_rotation_sources
 	src/zeabus_rotation/quaternion.cpp
-	src/zeabus_rotation/quaternion_handle.cpp
+	src/zeabus_rotation/rotation_handle.cpp
 	src/zeabus_rotation/convert_rotation.cpp
+	src/zeabus_rotation/quaternion_handle.cpp
 )
 
 set( zeabus_control_sources

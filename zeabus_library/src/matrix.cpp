@@ -31,8 +31,8 @@ namespace zeabus_library{
 			printf("\t]\n");
 		}
 
-		size_t	product(	boost::numeric::ublas::matrix< double > m_1 
-							,	boost::numeric::ublas::matrix< double > m_2
+		size_t	product(	boost::numeric::ublas::matrix< double >& m_1 
+							,	boost::numeric::ublas::matrix< double >& m_2
 							,	boost::numeric::ublas::matrix< double >& result 
 							,	bool init_matrix ){
 			if( m_1.size2() != m_2.size1() ){

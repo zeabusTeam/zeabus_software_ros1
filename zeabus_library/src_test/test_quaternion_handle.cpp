@@ -31,7 +31,7 @@ void input_value( std::string message , double& roll , double& pitch , double& y
 void result_test( int& correct , int& wrong 
 					, zeabus_library::zeabus_rotation::QuaternionHandle& quaternion_handle ){
 	quaternion_handle.get_RPY( roll , pitch , yaw );
-	printf("                      : roll\tpitch\tyaw\n");
+	printf("                      :    roll\t\t   pitch\t  yaw\n");
 	printf("Value from quaternion : %8.4lf\t%8.4lf\t%8.4lf\n" , roll , pitch , yaw );
 	printf("Value form euler      : %8.4lf\t%8.4lf\t%8.4lf\n" , quaternion_handle.diff_euler[0]
 															, quaternion_handle.diff_euler[1]
@@ -70,6 +70,12 @@ int main(){
 	std::cout << "fourth test\n";
 	quaternion_handle.set_start_frame( 0 , 0 , 0 );	
 	quaternion_handle.set_target_frame( -30 , 45 , 90 );
+	quaternion_handle.update_rotation();
+	result_test( correct , wrong , quaternion_handle );
+
+	std::cout << "fifth test\n";
+	quaternion_handle.set_start_frame( 180 , 0 , 0 );	
+	quaternion_handle.set_target_frame( 180 , 0 , 90 );
 	quaternion_handle.update_rotation();
 	result_test( correct , wrong , quaternion_handle );
 

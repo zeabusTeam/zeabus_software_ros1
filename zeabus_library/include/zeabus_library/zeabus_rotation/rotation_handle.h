@@ -42,7 +42,7 @@ namespace zeabus_rotation{
 			boost::numeric::ublas::matrix< double > temporary_matrix;
 			double diff_euler[3];	 
 
-	} 
+	}; 
 
 }
 

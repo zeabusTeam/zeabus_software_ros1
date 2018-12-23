@@ -2,12 +2,12 @@
 	File name			:	imu_port.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
-	Date last modified	:	2018 , DEC 05
+	Date last modified	:	2018 , DEC 23
 	Purpose				:	This is file to use read connect ros and IMU
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.2.0
 	status				:	Maintain
 
 	Namespace			:	None
@@ -15,6 +15,7 @@
 
 #include	<ros/ros.h>
 
+#include	<zeabus_library/IMUQuaternion.h>
 #include	<zeabus_library/IMUData.h>
 #include	<sensor_msgs/Imu.h>
 
@@ -23,7 +24,8 @@
 
 //#define	_DEBUG_SPILT_DATA_
 //#define _TYPE_SENSOR_MSGS_
-#define _TYPE_ZEABUS_LIBRARY_MSGS_
+//#define _TYPE_ZEABUS_LIBRARY_MSGS_
+#define _TYPE_ZEABUS_LIBRARY_QUATERNION_
 
 namespace Asio = boost::asio;
 namespace DataIMU = zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET ;
@@ -60,6 +62,12 @@ int main( int argv , char** argc ){
 		ros::Publisher tell_zeabus_library = 
 				ph.advertise< zeabus_library::IMUData >( topic_output_zeabus, 1 );
 		zeabus_library::IMUData message;
+	#endif
+
+	#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
+		ros::Publisher tell_zeabus_library = 
+				ph.advertise< zeabus_library::IMUQuaternion >( topic_output_zeabus, 1 );
+		zeabus_library::IMUQuaternion imu_quaternion;
 	#endif
 
 	#ifdef _TYPE_SENSOR_MSGS_
@@ -107,7 +115,9 @@ int main( int argv , char** argc ){
 		imu.sensor_init_setup_IMU_format( 3 );
 		imu.sensor_add_message_type( DataIMU::SCALED_ACCELEROMETER_VECTOR );
 		imu.sensor_add_message_type( DataIMU::SCALED_GYRO_VECTOR );
-		imu.sensor_add_message_type( DataIMU::CF_EULER_ANGLES );
+		#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
+			imu.sensor_add_message_type( DataIMU::CF_EULER_ANGLES );
+		#endif
 		imu.sensor_add_message_type( DataIMU::CF_QUATERNION );
 		imu.sensor_setup_IMU_format( result );
 	}while( ( ! result ) && ph.ok() );
@@ -146,6 +156,10 @@ int main( int argv , char** argc ){
 						zeabus_library::uint8_t_to_Vector3( sensor.linear_acceleration
 															, data_stream , run );
 					#endif
+					#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
+						zeabus_library::uint8_t_to_Point3( imu_quaternion.linear_acceleration
+															, data_stream , run );
+					#endif
 					run += 12 ;
 				}
 				else if( data_stream[run] == DataIMU::SCALED_GYRO_VECTOR ){
@@ -159,6 +173,10 @@ int main( int argv , char** argc ){
 					#endif
 					#ifdef _TYPE_SENSOR_MSGS_
 						zeabus_library::uint8_t_to_Vector3( sensor.angular_velocity
+															, data_stream , run );
+					#endif
+					#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
+						zeabus_library::uint8_t_to_Point3( imu_quaternion.angular_velocity
 															, data_stream , run );
 					#endif
 					run += 12 ;
@@ -181,6 +199,10 @@ int main( int argv , char** argc ){
 					#ifdef _TYPE_SENSOR_MSGS_
 						zeabus_library::uint8_t_to_Quaternion( sensor.orientation
 																, data_stream , run );
+					#endif
+					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
+						zeabus_library::uint8_t_to_Point4( imu_quaternion.quaternion
+															, data_stream , run );
 					#endif
 					run += 16;
 				}

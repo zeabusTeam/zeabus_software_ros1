@@ -72,6 +72,19 @@ namespace zeabus_library{
 		result.z = temp_float32;
 	}
 
+	void uint8_t_to_Point4( zeabus_library::Point4& result 
+								, std::vector< uint8_t >& data
+								, int offset ){
+		uint8_t_to_float32( temp_float32 , data , offset + 0);
+		result.w = temp_float32;
+		uint8_t_to_float32( temp_float32 , data , offset + 4);
+		result.x = temp_float32;
+		uint8_t_to_float32( temp_float32 , data , offset + 8);
+		result.y = temp_float32;
+		uint8_t_to_float32( temp_float32 , data , offset + 12);
+		result.z = temp_float32;
+	}
+
 	void uint8_t_to_Vector3( geometry_msgs::Vector3& result 
 								, std::vector< uint8_t >& data
 								, int offest ){

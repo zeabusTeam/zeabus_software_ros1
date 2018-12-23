@@ -21,6 +21,7 @@
 #include	<vector> // for make comfortable we will receive vector for you
 
 #include	<zeabus_library/Point3.h>
+#include	<zeabus_library/Point4.h>
 #include	<geometry_msgs/Quaternion.h>
 #include	<geometry_msgs/Vector3.h>
 
@@ -44,6 +45,10 @@
 		void uint8_t_to_Vector3( geometry_msgs::Vector3& result 
 								, std::vector< uint8_t >& data
 								, int offest );
+
+		void uint8_t_to_Point4( zeabus_library::Point4& result
+								, std::vector< uint8_t >& data
+								, int offset );
 
 	}
 

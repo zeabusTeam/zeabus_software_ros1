@@ -1,0 +1,3 @@
+zeabus_library/Point4 quaternion
+zeabus_library/Point3 angular_velocity
+zeabus_library/Point3 linear_acceleration

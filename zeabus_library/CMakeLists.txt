@@ -16,12 +16,13 @@ add_message_files(
 	FILES
 	State.msg
 	Type2.msg
-	Point3.msg
-	ArrayFloat.msg
 	Euler.msg
-	PoseEuler.msg
-	IMUData.msg
+	Point3.msg
 	Point4.msg
+	IMUData.msg
+	PoseEuler.msg
+	ArrayFloat.msg
+	IMUQuaternion.msg
 )
 
 add_message_files(

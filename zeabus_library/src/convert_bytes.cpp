@@ -2,12 +2,12 @@
 	File name			:	convert_bytes.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 01
-	Date last modified	:	2018 , DEC 05
+	Date last modified	:	2018 , DEC 23
 	Purpose				:	This is source code of convert_bytes.cpp
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.2.0
 	status				:	Maintain & Used
 
 	Namespace			:	zeabus_library

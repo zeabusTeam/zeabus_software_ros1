@@ -2,12 +2,12 @@
 	File name			:	convert_bytes.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 01
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 23
 	Purpose				:	This is header of file of convert for main purpose is using in IMU
 							can use only situation 4 bytes ( 32-bit)
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.2.0
 	status				:	Maintain & Using
 
 	Namespace			:	zeabus_library

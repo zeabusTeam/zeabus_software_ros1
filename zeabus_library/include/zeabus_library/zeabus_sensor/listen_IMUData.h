@@ -2,12 +2,12 @@
 	File name			:	listen_IMUData.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 06
-	Date last modified	:	2018 , ??? 06
+	Date last modified	:	2018 , DEC 23
 	Purpose				:	This is header of file for listen zeabus_library/IMUData.h
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
+	version				:	0.5.0
 	status				:	Product
 							
 	Namespace			:	zeabus_sensor
@@ -17,13 +17,12 @@
 
 #include	<stdio.h>
 
-#include	<zeabus_library/IMUData.h>
-
 #include	<zeabus_library/matrix.h>
 
 #include	<zeabus_library/zeabus_rotation/convert_rotation.h>
 #include	<zeabus_library/convert_IMUData.h>
 #include	<zeabus_library/capture_time.h>
+
 #ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
 #define _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
 

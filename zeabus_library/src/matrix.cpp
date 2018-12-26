@@ -44,8 +44,7 @@ namespace zeabus_library{
 				zeabus_library::print_error(
 					"zeabus_library::matrix::product wrong size of matrix result");
 				return zeabus_library::ERROR_SIZE_MATRIX;
-			}
-			
+			}		
 			boost::numeric::ublas::axpy_prod( m_1 , m_2 , result , init_matrix );
 			return zeabus_library::NO_ERROR;
 		}

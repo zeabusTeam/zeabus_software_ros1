@@ -51,7 +51,7 @@ int main( int argv , char** argc ){
 	ph.param< std::string >(	"topic_output_port_imu_sensor" 
 								, topic_output_sensor , "/sensor/imu/port/sensor");
 
-	ph.param< int >("frequency_imu" , frequency , 100 );
+	ph.param< int >("frequency_imu" , frequency , 50 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -200,7 +200,7 @@ int main( int argv , char** argc ){
 						zeabus_library::uint8_t_to_Quaternion( sensor.orientation
 																, data_stream , run );
 					#endif
-					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
+					#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
 						zeabus_library::uint8_t_to_Point4( imu_quaternion.quaternion
 															, data_stream , run );
 					#endif
@@ -215,6 +215,9 @@ int main( int argv , char** argc ){
 			}
 			#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
 				tell_zeabus_library.publish( message );	
+			#endif
+			#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
+				tell_zeabus_library.publish( imu_quaternion );	
 			#endif
 			#ifdef _TYPE_SENSOR_MSGS_
 				tell_sensor_msgs.publish( sensor );

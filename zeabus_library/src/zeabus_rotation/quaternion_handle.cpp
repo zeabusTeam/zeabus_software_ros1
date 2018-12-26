@@ -15,7 +15,7 @@
 
 #include	<zeabus_library/zeabus_rotation/quaternion_handle.h>
 
-#define _ROTATION_EULER_
+//#define _ROTATION_EULER_
 
 #ifdef _ROTATION_EULER_
 //	#define _DEBUG_ROTATION_EULER_
@@ -24,7 +24,7 @@
 #define _ROTATION_QUATERNION_
 
 #ifdef _ROTATION_QUATERNION_
-//	#define _DEBUG_ROTATION_QUATERNION_
+	#define _DEBUG_ROTATION_QUATERNION_
 #endif
 
 #define _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_

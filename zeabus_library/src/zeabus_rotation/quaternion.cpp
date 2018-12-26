@@ -15,7 +15,7 @@
 
 #include	<zeabus_library/zeabus_rotation/quaternion.h>
 
-#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
+//#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
 //#define _DEBUG_VALUE_INPUT_MATH_H_
 namespace zeabus_library{
 

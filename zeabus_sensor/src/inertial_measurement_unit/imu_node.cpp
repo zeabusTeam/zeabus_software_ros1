@@ -19,6 +19,8 @@
 
 #include	<zeabus_library/zeabus_sensor/listen_IMUData.h>
 
+#include	<zeabus_library/zeabus_sensor/listen_IMUQuaternion.h>
+
 int main( int argv , char** argc ){
 
 	ros::init( argv , argc , "node_imu");
@@ -35,10 +37,12 @@ int main( int argv , char** argc ){
 	ph.param< std::string >( "topic_output_node_imu" , topic_output , "sensor/imu/node" );
 	ph.param< int >("frequency_imu" , frequency , 100 );
 
-	zeabus_sensor::ListenIMUData listener( 0 , 0 , 0 , 1 );	
+	printf("Bofore Init variable listener\n");
+	zeabus_sensor::ListenIMUQuaternion listener( 0 , 0 , 0 , 1 );	
+	printf("After Init variable listener\n");
 
 	ros::Subscriber sub_IMUData = nh.subscribe( topic_input , 1 
-												, &zeabus_sensor::ListenIMUData::callback
+												, &zeabus_sensor::ListenIMUQuaternion::callback
 												, &listener );
 	printf("Now already listen\n");
 	ros::spin();

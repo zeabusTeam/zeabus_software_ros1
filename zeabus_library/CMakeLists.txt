@@ -76,6 +76,7 @@ include_directories(
 set( zeabus_library_sources
 	src/convert_bytes.cpp
 	src/convert_Point3.cpp
+	src/convert_Point4.cpp
 	src/convert_Type2.cpp
 	src/convert_State.cpp
 	src/convert_IMUData.cpp
@@ -116,6 +117,7 @@ set( zeabus_sensor_sources
 	src/zeabus_sensor/lord_microstrain.cpp	
 	src/zeabus_sensor/synchronous_port.cpp
 	src/zeabus_sensor/listen_IMUData.cpp
+	src/zeabus_sensor/listen_IMUQuaternion.cpp
 )
 
 add_library( zeabus_library			STATIC		${zeabus_library_sources} 

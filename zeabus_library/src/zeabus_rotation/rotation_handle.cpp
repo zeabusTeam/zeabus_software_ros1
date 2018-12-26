@@ -15,14 +15,18 @@
 
 #include	<zeabus_library/zeabus_rotation/rotation_handle.h>
 
-//#define _DEBUG_ROTATION_VALUE_
+#define _DEBUG_ROTATION_VALUE_
+//#define _DEBUG_DECLARE_CLASS_
 
 namespace zeabus_library{
 
 namespace zeabus_rotation{
 
-	RotationHandle::RotationHandle(){
+	RotationHandle::RotationHandle() : QuaternionHandle(){
 		temporary_matrix.resize( 3 , 3 );
+		#ifdef _DEBUG_DECLARE_CLASS_
+			printf("After RotationHandle init function\n");
+		#endif
 	}
 
 	size_t RotationHandle::start_rotation( boost::numeric::ublas::matrix< double >& value 

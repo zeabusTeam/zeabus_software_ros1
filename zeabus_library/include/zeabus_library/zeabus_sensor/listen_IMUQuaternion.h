@@ -17,21 +17,29 @@
 
 #include	<stdio.h>
 
-#include	<zeabus_library/matrix.h>
+#include	<zeabus_library/zeabus_rotation/rotation_handle.h>
 
-#include	<zeabus_library/zeabus_rotation/convert_rotation.h>
-#include	<zeabus_library/convert_IMUData.h>
+#include	<zeabus_library/convert_IMUQuaternion.h>
+
+#include	<zeabus_library/convert_Point4.h>
+
+#include	<zeabus_library/convert_Point3.h>
+
 #include	<zeabus_library/capture_time.h>
 
-#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
-#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
+#include	<zeabus_library/matrix.h>
+
+#include	<zeabus_library/vector.h>
+
+#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUQUATERNION_H__
+#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUQUATERNION_H__
 
 namespace zeabus_sensor{
 
-	class ListenIMUData{
+	class ListenIMUQuaternion{
 
 		public:
-			ListenIMUData( double roll = 0 , double pitch = 0, double yaw = 0
+			ListenIMUQuaternion( double roll = 0 , double pitch = 0, double yaw = 0
 							, double gravity = 0 );
 
 			void callback( const zeabus_library::IMUQuaternion& message );
@@ -41,9 +49,20 @@ namespace zeabus_sensor{
 			void set_gravity( double gravity );
 
 		private:
-			zeabus_library::zeabus_rotation::QuaternionHandle QH;
+			boost::numeric::ublas::matrix< double > offset_gravity;
+			boost::numeric::ublas::matrix< double > receive_acceleration;
+
+			zeabus_library::zeabus_rotation::RotationHandle RH;
+
+			zeabus_library::IMUQuaternion receive_msg;
 
 			zeabus_library::CaptureTime timer;
+
+			void copy_value(  zeabus_library::IMUQuaternion target );
+
+			boost::numeric::ublas::matrix< double > result_quaternion;
+			boost::numeric::ublas::matrix< double > result_gyro;
+			boost::numeric::ublas::matrix< double > result_acceleration;
 	};
 
 }

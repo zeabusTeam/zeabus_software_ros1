@@ -17,6 +17,8 @@
 
 #include	<boost/numeric/ublas/matrix.hpp>
 
+#include	<zeabus_library/error_code.h>
+
 #include	<zeabus_library/Point3.h>
 
 #ifndef _ZEABUS_LIBRARY_CONVERT_POINT3_H__
@@ -27,10 +29,10 @@ namespace zeabus_library{
 	void array_to_Point3( double* set_value , zeabus_library::Point3& result , int offset = 0 );
 
 	// can use only matrix size ( 1 , 3 )	
-	void matrix_to_Point3(	boost::numeric::ublas::matrix< double > set_value 
+	size_t matrix_to_Point3(	boost::numeric::ublas::matrix< double > set_value 
 							, zeabus_library::Point3& result , int offset_row = 0 );
 
-	void Point3_to_matrix(	zeabus_library::Point3 data
+	size_t Point3_to_matrix(	zeabus_library::Point3 data
 							, boost::numeric::ublas::matrix< double >& result );
 
 	void Point3_to_array(	zeabus_library::Point3 data , double* result);

@@ -2,15 +2,15 @@
 	File name			:	listen_IMUData.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 06
-	Date last modified	:	2018 , DEC 23
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is header of file for listen zeabus_library/IMUData.h
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Product
+	version				:	1.1.0
+	status				:	Stop that have problem we must to use quaternion for rotation
 							
-	Namespace			:	zeabus_sensor
+	Namespace			:	zeabus_library/sensor
 */
 
 #include	<ros/ros.h>
@@ -19,14 +19,16 @@
 
 #include	<zeabus_library/matrix.h>
 
-#include	<zeabus_library/zeabus_rotation/convert_rotation.h>
-#include	<zeabus_library/convert_IMUData.h>
+#include	<zeabus_library/rotation/matrix_rotation.h>
+#include	<zeabus_library/convert/IMUData.h>
 #include	<zeabus_library/capture_time.h>
 
-#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
-#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_LISTEN_IMUDATA_H__
+#ifndef _ZEABUS_LIBRARY_SENSOR_LISTEN_IMUDATA_H__
+#define _ZEABUS_LIBRARY_SENSOR_LISTEN_IMUDATA_H__
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+
+namespace sensor{
 
 	class ListenIMUData{
 
@@ -59,11 +61,12 @@ namespace zeabus_sensor{
 			boost::numeric::ublas::matrix< double > result_acceleration;
 			// for collection temporary matrix
 			boost::numeric::ublas::matrix< double > temporary_matrix;
-			zeabus_library::zeabus_rotation::MatrixRotation matrix_handle;
+			zeabus_library::rotation::MatrixRotation matrix_handle;
 
 			zeabus_library::CaptureTime timer;
 	};
 
+}
 }
 
 #endif

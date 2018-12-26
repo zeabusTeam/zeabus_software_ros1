@@ -10,7 +10,7 @@
 	version				:	0.5.0
 	status				:	test
 
-	Namespace			:	zeabus_library
+	Namespace			:	zeabus_library/rotation
 */
 
 #include	<stdio.h>
@@ -21,18 +21,18 @@
 
 #include	<math.h>
 
-#include	<zeabus_library/vector.h>
+#include	<zeabus_library/rotation/quaternion.h>
 
-#include	<zeabus_library/error_code.h>
+#include	<zeabus_library/vector.h>
 
 #include	<zeabus_library/euler.h>
 
+#include	<zeabus_library/error_code.h>
+
 #include	<zeabus_library/Point4.h>
 
-#include	<zeabus_library/zeabus_rotation/quaternion.h>
-
 #ifndef PI
-	#define		PI 3.14159265
+	#define	PI 3.14159265
 #endif
 
 #ifndef EPSILON
@@ -42,12 +42,12 @@
 // reference data information about quaternion to use rotation
 //		http://www.chrobotics.com/library/understanding-quaternions
 
-#ifndef _ZEABUS_LIBRARY_QUATERNION_HANDLE_H__
-#define _ZEABUS_LIBRARY_QUATERNION_HANDLE_H__
+#ifndef _ZEABUS_LIBRARY_ROTATION_QUATERNION_HANDLE_H__
+#define _ZEABUS_LIBRARY_ROTATION_QUATERNION_HANDLE_H__
 
 namespace zeabus_library{
 
-namespace zeabus_rotation{
+namespace rotation{
 
 	class QuaternionHandle : public Quaternion{
 		

@@ -2,15 +2,15 @@
 	File name			:	synchronous_port.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 28
-	Date last modified	:	2018 , NOV 28
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is header of file abount port style synchronous
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
-	status				:	Stop Maintain
-							< I think when you want read data from IMU  must use Asynchronous>
-	Namespace			:	zeabus_sensor
+	version				:	1.1.0
+	status				:	Using & Maintain
+
+	Namespace			:	zeabus_library/sensor
 */
 
 #include	<zeabus_library/zeabus_sensor/serial_port.h>
@@ -20,10 +20,12 @@
 #include	<stdio.h> // standard library of c language
 #include	<iostream> // standard library of cpp language
 
-#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_SYNCHRONOUS_PORT_H__
-#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_SYNCHRONOUS_PORT_H__
+#ifndef _ZEABUS_LIBRARY_SENSOR_SYNCHRONOUS_PORT_H__
+#define _ZEABUS_LIBRARY_SENSOR_SYNCHRONOUS_PORT_H__
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+
+namespace sensor{
 
 	class SynchroPort : public SerialPort{
 
@@ -40,6 +42,7 @@ namespace zeabus_sensor{
 
 	};
 
+}
 }
 
 #endif 

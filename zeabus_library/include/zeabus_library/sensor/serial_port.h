@@ -2,12 +2,12 @@
 	File name			:	serial_port.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 26
-	Date last modified	:	2018 , DEC 05
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is header of file about standard doing to do with port
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Production
 
 	Namespace			:	zeabus_sensor
@@ -32,12 +32,14 @@
 		:	https://www.boost.org/doc/libs/1_61_0/boost/system/error_code.hpp
 */
 
-#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_SERIAL_PORT_H__
-#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_SERIAL_PORT_H__
+#ifndef _ZEABUS_LIBRARY_SENSOR_SERIAL_PORT_H__
+#define _ZEABUS_LIBRARY_SENSOR_SERIAL_PORT_H__
 
 namespace errc = boost::system::errc;
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+
+namespace sensor{
 
 	const uint8_t IO_ERROR = 0;
 	const uint8_t IO_DONE = 1;
@@ -77,6 +79,7 @@ namespace zeabus_sensor{
 				
 		
 	};
+}
 }
 
 #endif

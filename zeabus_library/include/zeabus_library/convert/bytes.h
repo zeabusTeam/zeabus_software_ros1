@@ -1,16 +1,16 @@
 /*
-	File name			:	convert_bytes.h		
+	File name			:	bytes.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 01
-	Date last modified	:	2018 , DEC 23
+	Date last modified	:	2018 , DEC 26
 	Purpose				:	This is header of file of convert for main purpose is using in IMU
 							can use only situation 4 bytes ( 32-bit)
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.2.0
+	version				:	1.2.2
 	status				:	Maintain & Using
 
-	Namespace			:	zeabus_library
+	Namespace			:	zeabus_library/convert
 */
 
 #include	<stdio.h> // include standard library of c
@@ -29,6 +29,8 @@
 #define _ZEABUS_LIBRRY_CONVERT_BYTES_H__
 
 	namespace zeabus_library{
+
+	namespace convert{
 
 		void uint8_t_to_float32( float& result , std::vector< uint8_t >& data , int offset = 0);
 
@@ -50,6 +52,7 @@
 								, std::vector< uint8_t >& data
 								, int offset );
 
+	}
 	}
 
 #endif

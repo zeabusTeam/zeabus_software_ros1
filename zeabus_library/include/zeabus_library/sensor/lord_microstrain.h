@@ -2,24 +2,27 @@
 	File name			:	lord_microstrain.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
-	Date last modified	:	2018 , DEC 05
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is header of file about manage connect with IMU
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Maintain & Using
 
 	Namespace			:	zeabus_sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/synchronous_port.h>
-#include	<zeabus_library/zeabus_sensor/MIP_COMMUNICATION.h>
+#include	<zeabus_library/sensor/synchronous_port.h>
 
-#ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_LORD_MICROSTRAIN_H__
-#define _ZEABUS_LIBRARY_ZEABUS_SENSOR_LORD_MICROSTRAIN_H__
+#include	<zeabus_library/sensor/MIP_COMMUNICATION.h>
 
-namespace zeabus_sensor{
+#ifndef _ZEABUS_LIBRARY_SENSOR_LORD_MICROSTRAIN_H__
+#define _ZEABUS_LIBRARY_SENSOR_LORD_MICROSTRAIN_H__
+
+namespace zeabus_library{
+
+namespace sensor{
 
 	class LordMicrostrain : public SynchroPort {
 
@@ -69,6 +72,7 @@ namespace zeabus_sensor{
 			std::vector< uint8_t >::iterator buffer_packet_current;
 			std::vector< uint8_t >::iterator buffer_packet_last;
 	};
+}
 }
 
 #endif

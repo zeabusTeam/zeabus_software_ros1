@@ -2,15 +2,15 @@
 	File name			:	quaternion.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 20
-	Date last modified	:	2018 , ??? ??
-	Purpose				:	Quaternion structur in form w x y z or matrix of boost
+	Date last modified	:	2018 , DEC 26
+	Purpose				:	Quaternion structure in form w x y z or matrix of boost
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.0.0
+	status				:	Use & Maintain
 
-	Namespace			:	zeabus_library
+	Namespace			:	zeabus_library/rotation
 */
 
 #include	<stdio.h>
@@ -25,9 +25,9 @@
 
 #include	<zeabus_library/euler.h>
 
-#include	<zeabus_library/Point4.h>
-
 #include	<zeabus_library/error_code.h>
+
+#include	<zeabus_library/Point4.h>
 
 #ifndef PI
 	#define		PI 3.14159265
@@ -38,7 +38,7 @@
 
 namespace zeabus_library{
 
-namespace zeabus_rotation{
+namespace rotation{
 
 	struct Quaternion{
 		public:

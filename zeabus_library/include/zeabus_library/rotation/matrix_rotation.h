@@ -1,13 +1,13 @@
 /*
-	File name			:	convert_rotation.h		
+	File name			:	matrix_rotation.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 05
-	Date last modified	:	2018 , DEC 12
+	Date last modified	:	2018 , DEC 26
 	Purpose				:	This is header of code for use matrix trasform by orientation
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.3.0
 	status				:	Stop failure when apply with IMU to delete bias of acceleration
 							
 	Namespace			:	zeabus_library
@@ -23,14 +23,16 @@
 
 #include	<math.h>
 
-#define		PI 3.14159265
+#ifndef PI
+	#define		PI 3.14159265
+#endif
 
-#ifndef _ZEABUS_LIBRARY_CONVERT_ROTATION_H__
-#define _ZEABUS_LIBRARY_CONVERT_ROTATION_H__
+#ifndef _ZEABUS_LIBRARY_ROTATION_MATRIX_ROTATION_H__
+#define _ZEABUS_LIBRARY_ROTATION_MATRIX_ROTATION_H__
 
 namespace zeabus_library{
 
-namespace zeabus_rotation{
+namespace rotation{
 
 	class MatrixRotation{
 

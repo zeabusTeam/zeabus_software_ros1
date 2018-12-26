@@ -10,7 +10,7 @@
 	version				:	1.0.0
 	status				:	STOP
 							
-	Namespace			:	zeabus_sensor
+	Namespace			:	zeabus_library/sensor
 */
 
 #include	<zeabus_library/zeabus_sensor/serial_port.h>
@@ -26,7 +26,8 @@
 #ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_SYNCHRONOUS_PORT_H__
 #define _ZEABUS_LIBRARY_ZEABUS_SENSOR_SYNCHRONOUS_PORT_H__
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+namespace sensor{
 
 	class AsynchroPort : public SerialPort{
 
@@ -53,6 +54,7 @@ namespace zeabus_sensor{
 
 	};
 
+}
 }
 
 #endif 

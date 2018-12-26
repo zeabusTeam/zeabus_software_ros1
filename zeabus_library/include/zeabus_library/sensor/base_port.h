@@ -23,7 +23,9 @@
 #ifndef _ZEABUS_LIBRARY_ZEABUS_SENSOR_BASE_PORT_H__
 #define _ZEABUS_LIBRARY_ZEABUS_SENSOR_BASE_PORT_H__
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+namespace sensor{
+
 	class BasePort : public SerialPort{
 
 		public:
@@ -35,6 +37,8 @@ namespace zeabus_sensor{
 			size_t write_data( std::vector<uint8_t>& buffer , size_t size );
 
 	};
+
+}
 }
 
 #endif

@@ -2,25 +2,25 @@
 	File name			:	rotation_handle.cpp
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 23
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is file for apply matrix and quaternionhandle
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
+	version				:	1.0.0
 	status				:	Production
 
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/zeabus_rotation/rotation_handle.h>
+#include	<zeabus_library/rotation/rotation_handle.h>
 
 #define _DEBUG_ROTATION_VALUE_
 //#define _DEBUG_DECLARE_CLASS_
 
 namespace zeabus_library{
 
-namespace zeabus_rotation{
+namespace rotation{
 
 	RotationHandle::RotationHandle() : QuaternionHandle(){
 		temporary_matrix.resize( 3 , 3 );

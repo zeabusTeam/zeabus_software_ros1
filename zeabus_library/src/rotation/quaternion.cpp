@@ -2,24 +2,24 @@
 	File name			:	quaternion.cpp	
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 20
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	source code of structure quaternion
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	product
+	version				:	1.1.0
+	status				:	Using & Maintain
 
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/zeabus_rotation/quaternion.h>
+#include	<zeabus_library/rotation/quaternion.h>
 
 //#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
 //#define _DEBUG_VALUE_INPUT_MATH_H_
 namespace zeabus_library{
 
-namespace zeabus_rotation{
+namespace rotation{
 
 	Quaternion::Quaternion(){
 		this->matrix.resize( 4 , 1 );

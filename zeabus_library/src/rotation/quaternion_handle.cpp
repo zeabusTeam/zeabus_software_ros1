@@ -2,18 +2,18 @@
 	File name			:	quaternion_handle.cpp
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 20
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is header of code for use metrix trasform by quaternion
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
+	version				:	1.0.0
 	status				:	Production
 
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/zeabus_rotation/quaternion_handle.h>
+#include	<zeabus_library/rotation/quaternion_handle.h>
 
 //#define _ROTATION_EULER_
 
@@ -31,7 +31,7 @@
 
 namespace zeabus_library{
 
-namespace zeabus_rotation{
+namespace rotation{
 
 	QuaternionHandle::QuaternionHandle() : Quaternion() {}
 

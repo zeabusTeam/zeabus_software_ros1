@@ -1,5 +1,5 @@
 /*
-	File name			:	convert_IMUData.cpp	
+	File name			:	IMUData.cpp	
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 07
 	Date last modified	:	2018 , DEC 07
@@ -7,15 +7,16 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Maintain
 
-	Namespace			:	zeabus_library
+	Namespace			:	zeabus_library/convert
 */
 
-#include	<zeabus_library/convert_IMUData.h>
+#include	<zeabus_library/convert/IMUData.h>
 
 namespace zeabus_library{
+namespace convert{
 
 	void array_to_IMUData( double* set_value , zeabus_library::IMUData& result, int offset ){
 		array_to_Point3( set_value , result.euler , offset + 0 );
@@ -48,4 +49,4 @@ namespace zeabus_library{
 	}
 
 }
-
+}

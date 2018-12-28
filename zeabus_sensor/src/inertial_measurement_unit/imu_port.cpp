@@ -2,12 +2,12 @@
 	File name			:	imu_port.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
-	Date last modified	:	2018 , DEC 23
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is file to use read connect ros and IMU
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.2.0
+	version				:	1.2.1
 	status				:	Maintain
 
 	Namespace			:	None
@@ -19,8 +19,8 @@
 #include	<zeabus_library/IMUData.h>
 #include	<sensor_msgs/Imu.h>
 
-#include	<zeabus_library/zeabus_sensor/lord_microstrain.h>
-#include	<zeabus_library/convert_bytes.h>
+#include	<zeabus_library/sensor/lord_microstrain.h>
+#include	<zeabus_library/convert/bytes.h>
 
 //#define	_DEBUG_SPILT_DATA_
 //#define _TYPE_SENSOR_MSGS_
@@ -28,7 +28,7 @@
 #define _TYPE_ZEABUS_LIBRARY_QUATERNION_
 
 namespace Asio = boost::asio;
-namespace DataIMU = zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET ;
+namespace DataIMU = zeabus_library::sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET ;
 
 int main( int argv , char** argc ){
 	
@@ -78,7 +78,7 @@ int main( int argv , char** argc ){
 
 	bool result ;
 
-	zeabus_sensor::LordMicrostrain imu( port_name );
+	zeabus_library::sensor::LordMicrostrain imu( port_name );
 
 	imu.open_port( result );
 
@@ -149,15 +149,18 @@ int main( int argv , char** argc ){
 					#endif
 					run += 1;
 					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
-						zeabus_library::uint8_t_to_Point3(	message.linear_acceleration 
+						zeabus_library::convert::uint8_t_to_Point3(	
+															message.linear_acceleration 
 															, data_stream , run );
 					#endif
 					#ifdef _TYPE_SENSOR_MSGS_
-						zeabus_library::uint8_t_to_Vector3( sensor.linear_acceleration
+						zeabus_library::convert::uint8_t_to_Vector3( 
+															sensor.linear_acceleration
 															, data_stream , run );
 					#endif
 					#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
-						zeabus_library::uint8_t_to_Point3( imu_quaternion.linear_acceleration
+						zeabus_library::convert::uint8_t_to_Point3( 
+															imu_quaternion.linear_acceleration
 															, data_stream , run );
 					#endif
 					run += 12 ;
@@ -168,15 +171,18 @@ int main( int argv , char** argc ){
 					#endif
 					run += 1;
 					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
-						zeabus_library::uint8_t_to_Point3(	message.angular_velocity 
+						zeabus_library::convert::uint8_t_to_Point3(	
+															message.angular_velocity 
 															, data_stream , run );
 					#endif
 					#ifdef _TYPE_SENSOR_MSGS_
-						zeabus_library::uint8_t_to_Vector3( sensor.angular_velocity
+						zeabus_library::convert::uint8_t_to_Vector3( 
+															sensor.angular_velocity
 															, data_stream , run );
 					#endif
 					#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
-						zeabus_library::uint8_t_to_Point3( imu_quaternion.angular_velocity
+						zeabus_library::convert::uint8_t_to_Point3( 
+															imu_quaternion.angular_velocity
 															, data_stream , run );
 					#endif
 					run += 12 ;
@@ -187,7 +193,9 @@ int main( int argv , char** argc ){
 					#endif
 					run += 1;
 					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
-						zeabus_library::uint8_t_to_Point3( message.euler , data_stream , run );
+						zeabus_library::convert::uint8_t_to_Point3( 
+															message.euler 
+															, data_stream , run );
 					#endif
 					run += 12;
 				}
@@ -197,11 +205,11 @@ int main( int argv , char** argc ){
 					#endif
 					run += 1;
 					#ifdef _TYPE_SENSOR_MSGS_
-						zeabus_library::uint8_t_to_Quaternion( sensor.orientation
+						zeabus_library::convert::uint8_t_to_Quaternion( sensor.orientation
 																, data_stream , run );
 					#endif
 					#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
-						zeabus_library::uint8_t_to_Point4( imu_quaternion.quaternion
+						zeabus_library::convert::uint8_t_to_Point4( imu_quaternion.quaternion
 															, data_stream , run );
 					#endif
 					run += 16;

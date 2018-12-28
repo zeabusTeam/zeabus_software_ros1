@@ -17,7 +17,7 @@
 
 #include	<iostream>
 
-#include	<zeabus_library/zeabus_rotation/quaternion_handle.h>
+#include	<zeabus_library/rotation/quaternion_handle.h>
 
 double roll , pitch , yaw;
 
@@ -44,7 +44,7 @@ void result_test( int& correct , int& wrong
 
 int main(){
 
-	zeabus_library::zeabus_rotation::QuaternionHandle quaternion_handle;
+	zeabus_library::rotation::QuaternionHandle quaternion_handle;
 	int correct = 0 ;
 	int wrong = 0 ;
 

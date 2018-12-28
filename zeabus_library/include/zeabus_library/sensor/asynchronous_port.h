@@ -13,7 +13,7 @@
 	Namespace			:	zeabus_library/sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/serial_port.h>
+#include	<zeabus_library/sensor/serial_port.h>
 
 #include	<boost/chrono.hpp> // have to use time for check time out
 #include	<boost/bind.hpp> // have to use bind for send function in class to callback

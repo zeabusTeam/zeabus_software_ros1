@@ -2,25 +2,27 @@
 	File name			:	listen_IMUData.cpp
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 07
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 26
 	Purpose				:	This is source of file for listen zeabus_library/IMUData.h
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
+	version				:	0.5.0
 	status				:	Product
 							
-	Namespace			:	zeabus_sensor
+	Namespace			:	zeabus_library/sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/listen_IMUData.h>
+#include	<zeabus_library/sensor/listen_IMUData.h>
 
 #define _DEBUG_RECIEVE_DATA_
 #define _DEBUG_CALCULATE_ACCELERATION_
 #define _DEBUG_CODE_
 #define _DEBUG_TIME_
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+
+namespace sensor{
 
 	ListenIMUData::ListenIMUData( double roll , double pitch , double yaw , double gravity ){
 		this->matrix_imu_to_robot.resize( 3 , 3 ); // set size of matrix
@@ -53,9 +55,10 @@ namespace zeabus_sensor{
 		#ifdef _DEBUG_TIME_
 			this->timer.start();
 		#endif
-		zeabus_library::Point3_to_matrix( message.euler , this->receive_euler );
-		zeabus_library::Point3_to_matrix( message.angular_velocity , this->receive_gyro );
-		zeabus_library::Point3_to_matrix( message.linear_acceleration 
+		this->receive_msg = message;
+		zeabus_library::convert::Point3_to_matrix( this->receive_msg.euler , this->receive_euler );
+		zeabus_library::convert::Point3_to_matrix( this->receive_msg.angular_velocity , this->receive_gyro );
+		zeabus_library::convert::Point3_to_matrix( this->receive_msg.linear_acceleration 
 										, this->receive_acceleration );
 		#ifdef _DEBUG_RECIEVE_DATA_
 			zeabus_library::matrix::print( "Receive_euler" , this->receive_euler );
@@ -104,8 +107,9 @@ namespace zeabus_sensor{
 	}
 
 	void ListenIMUData::get_result( zeabus_library::IMUData& message ){
-		split_matrix_to_IMUData( this->result_euler , this->result_gyro
+		zeabus_library::convert::split_matrix_to_IMUData( this->result_euler , this->result_gyro
 								,this->result_acceleration , message );		
 	}
 
+}
 }

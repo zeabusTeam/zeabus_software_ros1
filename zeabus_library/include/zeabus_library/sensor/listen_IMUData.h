@@ -20,7 +20,9 @@
 #include	<zeabus_library/matrix.h>
 
 #include	<zeabus_library/rotation/matrix_rotation.h>
+
 #include	<zeabus_library/convert/IMUData.h>
+
 #include	<zeabus_library/capture_time.h>
 
 #ifndef _ZEABUS_LIBRARY_SENSOR_LISTEN_IMUDATA_H__
@@ -62,6 +64,8 @@ namespace sensor{
 			// for collection temporary matrix
 			boost::numeric::ublas::matrix< double > temporary_matrix;
 			zeabus_library::rotation::MatrixRotation matrix_handle;
+
+			zeabus_library::IMUData receive_msg;
 
 			zeabus_library::CaptureTime timer;
 	};

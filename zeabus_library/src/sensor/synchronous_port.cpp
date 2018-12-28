@@ -10,14 +10,16 @@
 	version				:	1.0.0
 	status				:	Maintain & Using
 							
-	Namespace			:	zeabus_sensor
+	Namespace			:	zeabus_library/sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/synchronous_port.h>
+#include	<zeabus_library/sensor/synchronous_port.h>
 
 //#define		_DEBUG_CONNECTION_
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+
+namespace sensor{
 
 	SynchroPort::SynchroPort( std::string name_port ) : SerialPort( name_port ){}
 
@@ -70,4 +72,5 @@ namespace zeabus_sensor{
 			}
 	}
 
+}
 }

@@ -2,7 +2,7 @@
 	File name			:	base_port.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 26
-	Date last modified	:	2018 , DEC 05
+	Date last modified	:	2018 , DEC 26
 	Purpose				:	This is source of file abount using method in class
 
 	Maintainer			:	Supasan Komonlit
@@ -13,11 +13,13 @@
 	Namespace			:	zeabus_sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/base_port.h>
+#include	<zeabus_library/sensor/base_port.h>
 
 #define DEBUG_CODE
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+
+namespace sensor{
 
 	BasePort::BasePort( std::string name_port ):
 		SerialPort( name_port ){}
@@ -60,5 +62,5 @@ namespace zeabus_sensor{
 		}
 		return write_size;
 	}
-
+}
 }

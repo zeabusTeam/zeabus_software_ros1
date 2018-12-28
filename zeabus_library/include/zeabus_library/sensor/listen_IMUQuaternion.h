@@ -47,18 +47,27 @@ namespace sensor{
 		private:
 			boost::numeric::ublas::matrix< double > offset_gravity;
 			boost::numeric::ublas::matrix< double > receive_acceleration;
+			boost::numeric::ublas::matrix< double > receive_quaternion;
 
-			zeabus_library::rotation::RotationHandle RH;
+			zeabus_library::rotation::RotationHandle RH_acceleration;
 
 			zeabus_library::IMUQuaternion receive_msg;
 
 			zeabus_library::CaptureTime timer;
+
+			zeabus_library::rotation::Quaternion diff_quaternion;
+			zeabus_library::rotation::Quaternion temp_quaternion;
+
+			double roll;
+			double pitch;
+			double yaw;
 
 			void copy_value(  zeabus_library::IMUQuaternion target );
 
 			boost::numeric::ublas::matrix< double > result_quaternion;
 			boost::numeric::ublas::matrix< double > result_gyro;
 			boost::numeric::ublas::matrix< double > result_acceleration;
+			boost::numeric::ublas::matrix< double > return_acceleration;
 	};
 }
 }

@@ -1,29 +1,22 @@
 /*
-	File name			:	convert_State.h		
+	File name			:	State.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 07
-	Date last modified	:	2018 , DEC 07
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	For convert array or value to zeabus_library/State
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Maintain
 
-	Namespace			:	zeabus_library
+	Namespace			:	zeabus_library/convert
 */
 
-#include	<stdio.h>
-
-#include	<boost/numeric/ublas/matrix.hpp>
-
-#include	<zeabus_library/convert_Type2.h>
-#include	<zeabus_library/State.h>
-
-#ifndef _ZEABUS_LIBRARY_CONVERT_STATE_H__
-#define _ZEABUS_LIBRARY_CONVERT_STATE_H__
+#include	<zeabus_library/convert/State.h>
 
 namespace zeabus_library{
+namespace convert{
 
 	void array_to_State( double* set_value , zeabus_library::State& result , int offset){
 		array_to_Type2( set_value , result.position , offset + 0 );
@@ -37,5 +30,4 @@ namespace zeabus_library{
 	}
 
 }
-
-#endif
+}

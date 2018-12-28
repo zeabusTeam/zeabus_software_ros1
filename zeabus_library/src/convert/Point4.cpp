@@ -1,21 +1,22 @@
 /*
-	File name			:	convert_Point4.cpp		
+	File name			:	Point4.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 24
-	Date last modified	:	2018 , DEC 24
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	For convert array or value to zeabus_library/Point4
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Maintain
 
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/convert_Point4.h>
+#include	<zeabus_library/convert/Point4.h>
 
 namespace zeabus_library{
+namespace convert{
 
 	void array_to_Point4( double* set_value , zeabus_library::Point4& result , int offset ){
 		result.w = set_value[ offset + 0 ];
@@ -81,4 +82,5 @@ namespace zeabus_library{
 		result[3] = data.z;
 	}
 
+}
 }

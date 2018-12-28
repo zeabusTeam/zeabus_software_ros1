@@ -2,12 +2,12 @@
 	File name			:	imu_node.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 05
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is file to filter convert value before send to next node
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.0.1
+	version				:	0.6.0
 	status				:	Product
 
 	Namespace			:	None
@@ -17,9 +17,9 @@
 
 #include	<zeabus_library/IMUData.h>
 
-#include	<zeabus_library/zeabus_sensor/listen_IMUData.h>
+#include	<zeabus_library/euler.h>
 
-#include	<zeabus_library/zeabus_sensor/listen_IMUQuaternion.h>
+#include	<zeabus_library/sensor/listen_IMUQuaternion.h>
 
 int main( int argv , char** argc ){
 
@@ -38,12 +38,16 @@ int main( int argv , char** argc ){
 	ph.param< int >("frequency_imu" , frequency , 100 );
 
 	printf("Bofore Init variable listener\n");
-	zeabus_sensor::ListenIMUQuaternion listener( 0 , 0 , 0 , 1 );	
+	zeabus_library::sensor::ListenIMUQuaternion listener( 
+												zeabus_library::euler::degree_domain( 0 ) 
+												, zeabus_library::euler::degree_domain( 0 ) 
+												, zeabus_library::euler::degree_domain( -90 ) 
+												, 1 );	
 	printf("After Init variable listener\n");
 
 	ros::Subscriber sub_IMUData = nh.subscribe( topic_input , 1 
-												, &zeabus_sensor::ListenIMUQuaternion::callback
-												, &listener );
+									, &zeabus_library::sensor::ListenIMUQuaternion::callback
+									, &listener );
 	printf("Now already listen\n");
 	ros::spin();
 }

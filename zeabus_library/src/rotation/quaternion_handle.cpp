@@ -24,10 +24,10 @@
 #define _ROTATION_QUATERNION_
 
 #ifdef _ROTATION_QUATERNION_
-	#define _DEBUG_ROTATION_QUATERNION_
+//	#define _DEBUG_ROTATION_QUATERNION_
 #endif
 
-#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
+//#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
 
 namespace zeabus_library{
 
@@ -46,7 +46,7 @@ namespace rotation{
 											, bool inverse ){
 		if( result.size1() != 3 || result.size2() != 3 ){
 			zeabus_library::print_error(
-				"zeabus_library::zeabus_rotation::matrix_rotation result wrong size matrix");
+				"zeabus_library::rotation::matrix_rotation result wrong size matrix");
 			return zeabus_library::ERROR_SIZE_MATRIX;
 		}
 
@@ -146,7 +146,7 @@ namespace rotation{
 		#endif
 	}	
 	
-	// this set up part support only set up by zeabus_library::zeabus_rotation::Quaternion
+	// this set up part support only set up by zeabus_library::rotation::Quaternion
 	//										& zeabus_library::Point4
 	//										& roll , pitch , yaw	
 
@@ -156,7 +156,7 @@ namespace rotation{
 	}
 
 	void QuaternionHandle::set_start_frame( 
-			zeabus_library::zeabus_rotation::Quaternion quaternion ){
+			zeabus_library::rotation::Quaternion quaternion ){
 		this->start_frame = quaternion;
 		this->start_frame.update_inverse();
 	}
@@ -172,7 +172,7 @@ namespace rotation{
 	}
 
 	void QuaternionHandle::set_target_frame( 
-			zeabus_library::zeabus_rotation::Quaternion quaternion ){
+			zeabus_library::rotation::Quaternion quaternion ){
 		this->target_frame = quaternion;
 //		this->target_frame.update_inverse();
 	}

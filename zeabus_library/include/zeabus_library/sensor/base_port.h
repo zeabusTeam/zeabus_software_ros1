@@ -13,7 +13,7 @@
 	Namespace			:	zeabus_sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/serial_port.h> 
+#include	<zeabus_library/sensor/serial_port.h> 
 
 #include	<vector> // use to make buffer for get data
 

@@ -2,24 +2,25 @@
 	File name			:	lord_microstrain.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
-	Date last modified	:	2018 , DEC 05
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is source of file about connection with port imu
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Maintain & Using
 
-	Namespace			:	zeabus_sensor
+	Namespace			:	zeabus_library/sensor
 */
 
-#include <zeabus_library/zeabus_sensor/lord_microstrain.h>
+#include <zeabus_library/sensor/lord_microstrain.h>
 
 //#define _ACK_OR_NACK_
 //#define _DEBUG_SIZE_PACKET_
 //#define _DEBUG_DATA_STREAM_
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+namespace sensor{
 	
 	LordMicrostrain::LordMicrostrain( std::string name_port ) : SynchroPort( name_port ){
 		this->buffer_packet.resize( 100 );
@@ -409,4 +410,5 @@ namespace zeabus_sensor{
 
 	}
 			
+}
 }

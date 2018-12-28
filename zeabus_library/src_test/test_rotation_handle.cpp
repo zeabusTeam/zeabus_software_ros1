@@ -17,7 +17,7 @@
 
 #include	<iostream>
 
-#include	<zeabus_library/zeabus_rotation/rotation_handle.h>
+#include	<zeabus_library/rotation/rotation_handle.h>
 
 #include	<zeabus_library/vector.h>
 
@@ -56,7 +56,7 @@ void input_value( boost::numeric::ublas::matrix< double >& vector
 
 int main(){
 
-	zeabus_library::zeabus_rotation::RotationHandle rotation_handle;
+	zeabus_library::rotation::RotationHandle rotation_handle;
 
 	boost::numeric::ublas::matrix< double > value;
 	boost::numeric::ublas::matrix< double > result;

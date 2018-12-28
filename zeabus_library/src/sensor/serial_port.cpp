@@ -7,15 +7,17 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.1
+	version				:	1.1.1
 	status				:	Maintain & Using
 
-	Namespace			:	zeabus_sensor
+	Namespace			:	zeabus_library/sensor
 */
 
-#include	<zeabus_library/zeabus_sensor/serial_port.h>
+#include	<zeabus_library/sensor/serial_port.h>
 
-namespace zeabus_sensor{
+namespace zeabus_library{
+
+namespace sensor{
 	
 	SerialPort::SerialPort( std::string name_port ) : io_port( this->io_service ){
 		this->name_port = name_port;
@@ -141,4 +143,5 @@ namespace zeabus_sensor{
 						, this->name_port.c_str() );
 		}
 	}
+}
 }

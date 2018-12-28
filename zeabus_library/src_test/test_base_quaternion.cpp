@@ -19,16 +19,14 @@
 
 #include	<zeabus_library/matrix.h>
 
-#include	<zeabus_library/zeabus_rotation/convert_rotation.h>
-
-#include	<zeabus_library/zeabus_rotation/quaternion.h>
+#include	<zeabus_library/rotation/quaternion.h>
 
 //#define _test_quaternion_to_euler_
 
 #define _test_euler_to_quaternion_
 
 int main(){
-	zeabus_library::zeabus_rotation::Quaternion quaternion;
+	zeabus_library::rotation::Quaternion quaternion;
 
 	double w , x , y , z ;
 	double roll , pitch , yaw ;

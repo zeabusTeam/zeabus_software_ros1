@@ -64,6 +64,7 @@ namespace euler{
 		#ifdef _DEBUG_ZEABUS_LIBRARY_EULER_
 			printf( " < %.8lf > \n" , radian );
 		#endif
+		return radian;
 	}
 
 	void sin( double radian , double& result ){

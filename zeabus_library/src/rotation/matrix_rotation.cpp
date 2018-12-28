@@ -13,7 +13,7 @@
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/rotation/convert_rotation.h>
+#include	<zeabus_library/rotation/matrix_rotation.h>
 //#define _DEBUG_ROTATION_
 
 

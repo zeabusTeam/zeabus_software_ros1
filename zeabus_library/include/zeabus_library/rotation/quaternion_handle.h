@@ -61,11 +61,11 @@ namespace rotation{
 			//		example value from IMU inertial frame is start and robot is target 
 
 			void set_start_frame( double roll , double pitch , double yaw );
-			void set_start_frame( zeabus_library::zeabus_rotation::Quaternion quaternion );
+			void set_start_frame( zeabus_library::rotation::Quaternion quaternion );
 			void set_start_frame( zeabus_library::Point4 data );
 
 			void set_target_frame( double roll , double pitch , double yaw );
-			void set_target_frame( zeabus_library::zeabus_rotation::Quaternion quaternion );
+			void set_target_frame( zeabus_library::rotation::Quaternion quaternion );
 			void set_target_frame( zeabus_library::Point4 data );
 			
 			// please call this function before get using rotation value 
@@ -79,8 +79,8 @@ namespace rotation{
 			double diff_euler[3];
 
 		protected:
-			zeabus_library::zeabus_rotation::Quaternion start_frame;
-			zeabus_library::zeabus_rotation::Quaternion target_frame;
+			zeabus_library::rotation::Quaternion start_frame;
+			zeabus_library::rotation::Quaternion target_frame;
 			double start_euler[3];
 			double target_euler[3];
 

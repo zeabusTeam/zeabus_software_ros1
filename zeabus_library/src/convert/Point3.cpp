@@ -1,5 +1,5 @@
 /*
-	File name			:	convert_Point3.cpp		
+	File name			:	Point3.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 06
 	Date last modified	:	2018 , DEC 09
@@ -7,15 +7,16 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.1
+	version				:	1.1.1
 	status				:	Maintain
 
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/convert_Point3.h>
+#include	<zeabus_library/convert/Point3.h>
 
 namespace zeabus_library{
+namespace convert{
 
 	void array_to_Point3( double* set_value , zeabus_library::Point3& result , int offset ){
 		result.x = set_value[ offset + 0 ];
@@ -23,7 +24,7 @@ namespace zeabus_library{
 		result.z = set_value[ offset + 2 ];
 	}
 
-	size_t matrix_to_Point3(	boost::numeric::ublas::matrix< double > set_value 
+	size_t matrix_to_Point3(	boost::numeric::ublas::matrix< double >& set_value 
 							, zeabus_library::Point3& result , int offset_row ){
 		size_t num_roll , num_column;
 		num_roll = set_value.size1();
@@ -46,7 +47,7 @@ namespace zeabus_library{
 		}
 	}
 
-	size_t Point3_to_matrix(	zeabus_library::Point3 data
+	size_t Point3_to_matrix(	zeabus_library::Point3& data
 							, boost::numeric::ublas::matrix< double >& result ){
 		size_t num_roll , num_column;
 		num_roll = result.size1();
@@ -75,4 +76,5 @@ namespace zeabus_library{
 		result[2] = data.z;
 	}
 
+}
 }

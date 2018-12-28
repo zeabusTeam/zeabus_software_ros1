@@ -13,11 +13,12 @@
 	Namespace			:	zeabus_library
 */
 
-#include	<zeabus_library/convert_bytes.h>
+#include	<zeabus_library/convert/bytes.h>
 
 //#define _TEST_CONVERT_
 
 namespace zeabus_library{
+namespace convert{
 
 	int32_t temp_int32;
 	float temp_float32;
@@ -95,4 +96,6 @@ namespace zeabus_library{
 		uint8_t_to_float32( temp_float32 , data , offest + 8 );
 		result.z = temp_float32;
 	}
+
+}
 }

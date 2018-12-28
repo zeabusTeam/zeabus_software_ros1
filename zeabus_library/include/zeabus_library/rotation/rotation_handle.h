@@ -10,12 +10,12 @@
 	version				:	0.5.0
 	status				:	test
 
-	Namespace			:	zeabus_library
+	Namespace			:	zeabus_library/rotation
 */
 
 #include	<stdio.h>
 
-#include	<zeabus_library/zeabus_rotation/quaternion_handle.h>
+#include	<zeabus_library/rotation/quaternion_handle.h>
 
 #include	<zeabus_library/matrix.h>
 
@@ -23,12 +23,12 @@
 
 #include	<zeabus_library/error_code.h>
 
-#ifndef _ZEABUS_LIBRARY_ZEABUS_ROTATION_ROTATION_HANDLE_H__
-#define _ZEABUS_LIBRARY_ZEABUS_ROTATION_ROTATION_HANDLE_H__
+#ifndef _ZEABUS_LIBRARY_ROTATION_ROTATION_HANDLE_H__
+#define _ZEABUS_LIBRARY_ROTATION_ROTATION_HANDLE_H__
 
 namespace zeabus_library{
 
-namespace zeabus_rotation{
+namespace rotation{
 
 	class RotationHandle : public QuaternionHandle{
 	

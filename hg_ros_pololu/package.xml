@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package>
+	<name>hg_ros_pololu</name>
+	<version>0.0.1</version>
+	<description>Pololu drivers</description>
+	
+	<maintainer email="mahisorn.w@hiveground.com">mahisorn</maintainer>
+	<author>Mahisorn Wongphati</author>
+	<license>LGPL</license>
+	
+	<buildtool_depend>catkin</buildtool_depend>
+	
+	<build_depend>roscpp</build_depend>
+	<run_depend>roscpp</run_depend>
+	
+	<build_depend>hg_ros_serial</build_depend>
+	<run_depend>hg_ros_serial</run_depend>
+	
+	<build_depend>message_generation</build_depend>
+	<run_depend>message_runtime</run_depend>
+	
+	<build_depend>std_msgs</build_depend>
+	<run_depend>std_msgs</run_depend>
+	
+	<build_depend>std_srvs</build_depend>
+	<run_depend>std_srvs</run_depend>
+	
+	<export>
+		<cpp cflags="-I${prefix}/include"/>
+	</export>
+</package>

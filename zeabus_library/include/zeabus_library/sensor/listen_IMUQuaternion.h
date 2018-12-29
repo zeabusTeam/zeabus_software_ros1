@@ -48,8 +48,10 @@ namespace sensor{
 			boost::numeric::ublas::matrix< double > offset_gravity;
 			boost::numeric::ublas::matrix< double > receive_acceleration;
 			boost::numeric::ublas::matrix< double > receive_quaternion;
+			boost::numeric::ublas::matrix< double > receive_gyro;
 
-			zeabus_library::rotation::RotationHandle RH_acceleration;
+			zeabus_library::rotation::RotationHandle RH_world;
+			zeabus_library::rotation::RotationHandle RH_robot;
 
 			zeabus_library::IMUQuaternion receive_msg;
 

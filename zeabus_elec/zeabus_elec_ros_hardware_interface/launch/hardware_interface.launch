@@ -1,0 +1,15 @@
+<launch>
+
+    <include file="$(find zeabus_elec_ros_power_dist)/launch/power_dist.launch"/>
+
+    <include file="$(find zeabus_elec_ros_peripheral_bridge)/launch/peripheral_bridge.launch"/>
+
+    <node name="Zeabus_Elec_Hardware_interface" pkg="zeabus_elec_ros_hardware_interface" type="zeabus_elec_ros_hardware_interface" output="screen">
+
+        <param name="atm_pressure" value="14.8717"/>
+        <param name="depth_offset" value="0"/>
+
+    </node>
+
+</launch>
+

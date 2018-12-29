@@ -1,0 +1,6 @@
+<launch>
+	<node pkg="zeabus_elec_ros_power_dist" type="zeabus_elec_ros_power_dist" name="Zeabus_Elec_Power_dist" output="screen" respawn="true">
+		<param name="IODirection" value="65535"/>
+		<param name="IOPinState" value="7936"/>		
+        </node>
+</launch>

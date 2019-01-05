@@ -32,6 +32,8 @@ def publish_result(img, type, topicName):
         msg = bridge.cv2_to_imgmsg(img, "mono8")
     elif type == 'bgr':
         msg = bridge.cv2_to_imgmsg(img, "bgr8")
+    elif type == 'bgra':
+        msg = bridge.cv2_to_imgmsg(img, "bgra8")
     pub.publish(msg)
 
 

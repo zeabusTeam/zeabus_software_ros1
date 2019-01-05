@@ -235,8 +235,9 @@ def find_gate():
         pos = -1
     else:
         pos = 0
-    cv.rectangle(display, (int(cx1), int(cy1)),
-                 (int(cx2), int(cy2)), (0, 255, 0), 3)
+    # cv.rectangle(display, (int(cx1), int(cy1)),
+                #  (int(cx2), int(cy2)), (0, 255, 0), 3)
+    cv.circle(display,(int((cx1+cx2)/2),int((cy1+cy2)/2)),3,(0,255,255),-1)
     area = 1.0*abs(cx2-cx1)*abs(cy1-cy2)/(himg*wimg)
     publish_result(display, 'bgr', public_topic + 'image_result')
     publish_result(vertical, 'gray', public_topic + 'mask/vertical')

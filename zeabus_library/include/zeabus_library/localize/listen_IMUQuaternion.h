@@ -23,3 +23,22 @@
 
 #include	<zeabus_library/rotation/quaternion.h>
 
+namespace zeabus_library{
+
+namespace localize{
+
+	class ListenIMUQuaternion{
+		
+		public:
+			ListenIMUQuaternion( zeabus_library::rotation::Quaternion& variable );
+
+			void register_result( zeabus_library::rotation::Quaternion& variable );
+
+			void callback( const zeabus_library::IMUQuaternion& message );
+
+
+	}
+
+}
+
+}

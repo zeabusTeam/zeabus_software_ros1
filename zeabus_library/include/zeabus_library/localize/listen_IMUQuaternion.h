@@ -30,13 +30,20 @@ namespace localize{
 	class ListenIMUQuaternion{
 		
 		public:
-			ListenIMUQuaternion( zeabus_library::rotation::Quaternion& variable );
+			ListenIMUQuaternion( zeabus_library::rotation::Quaternion& quaternion 
+								, boost::numeric::ublas::matrix< double >& angular_velocity
+								, zeabus_library::Point3& linear_acceleration );
 
-			void register_result( zeabus_library::rotation::Quaternion& variable );
+			void register_quaternion( zeabus_library::rotation::Quaternion& variable );
+			void register_acceleration( boost::numeric::ublas::matrix< double >& variable );
+			void register_gyrometer( zeabus_library::Point3& variable)
 
 			void callback( const zeabus_library::IMUQuaternion& message );
 
-
+		private:
+			zeabus_library::rotation::Quaternion quaternion;
+			zeabus_library::Point3 angular_velocity;
+			boost::numeric::ublas::matrix< double > linear_acceleration;
 	}
 
 }

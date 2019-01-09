@@ -20,6 +20,7 @@ add_message_files(
 	Point3.msg
 	Point4.msg
 	IMUData.msg
+	Odometry.msg
 	PoseEuler.msg
 	ArrayFloat.msg
 	IMUQuaternion.msg

@@ -25,8 +25,8 @@ namespace localize{
 		this->velocity = variable;	
 	}
 
-	size_t ListenDVLGeometry::register_quaternion( 
-							zeabus_library::rotation::Quaternion& variable ){
+	size_t ListenDVLGeometry::register_velocity( 
+							boost::numeric::ublas::matrix< double >& variable ){
 		if( variable.size1() != 3 && variable.size2() != 1 ){
 			zeabus_library::print_error(
 				"zeabus_library::~::register_quaternion wrong size of matrix to register ");
@@ -36,10 +36,10 @@ namespace localize{
 		return zeabus_library::NO_ERROR;
 	}
 
-	void ListenDVLGeometry::callback( const zeabus_library::IMUQuaternion& message ){
-		this->velocity = message.twist.linear.x;
-		this->velocity = message.twist.linear.y;
-		this->velocity = message.twist.linear.z;
+	void ListenDVLGeometry::callback( const geometry_msgs::TwistWithCovarianceStamped& message){
+		this->velocity( 0 , 0 ) = message.twist.twist.linear.x;
+		this->velocity( 1 , 0 ) = message.twist.twist.linear.y;
+		this->velocity( 2 , 0 ) = message.twist.twist.linear.z;
 	}
 
 

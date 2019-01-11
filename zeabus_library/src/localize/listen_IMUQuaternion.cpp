@@ -20,8 +20,8 @@ namespace zeabus_library{
 namespace localize{
 
 	ListenIMUQuaternion::ListenIMUQuaternion( zeabus_library::rotation::Quaternion& quaternion 
-									, boost::numeric::ublas::matrix< double >& angular_velocity 
-									, zeabus_library::Point4& linear_acceleration ){
+									, zeabus_library::Point3& angular_velocity 
+									, zeabus_library::Point3& linear_acceleration ){
 		this->quaternion = quaternion;
 		this->angular_velocity = angular_velocity;
 		this->linear_acceleration = linear_acceleration;
@@ -32,13 +32,13 @@ namespace localize{
 		this->quaternion = variable;
 	}
 
-	void ListenIMUQuaternion::register_acceleration(
-							boost::numeric:::ublas::matrix< double >& variable ){
-		this->linear_acceleration = variable;
+	void ListenIMUQuaternion::register_gyrometer(
+							zeabus_library::Point3& variable ){
+		this->angular_velocity = variable;
 	}
 
-	void ListenIMUQuaternion::register_gyrometer( zeabus_library::Point3& variable ){
-		this->angular_velocity = variable;
+	void ListenIMUQuaternion::register_acceleration( zeabus_library::Point3& variable ){
+		this->linear_acceleration = variable;
 	}
 
 	void ListenIMUQuaternion::callback( const zeabus_library::IMUQuaternion& message ){

@@ -17,7 +17,7 @@
 
 #include	<nav_msgs/Odometry.h>
 
-#ifdef _ZEABUS_LIRABRY_LOCALIZE_LISTEN_PRESSURE_NAV_H__
+#ifndef _ZEABUS_LIRABRY_LOCALIZE_LISTEN_PRESSURE_NAV_H__
 #define _ZEABUS_LIRABRY_LOCALIZE_LISTEN_PRESSURE_NAV_H__
 
 namespace zeabus_library{

@@ -21,6 +21,8 @@
 
 #include	<boost/numeric/ublas/matrix.hpp>
 
+#include	<geometry_msgs/TwistWithCovarianceStamped.h>
+
 #include	<zeabus_library/IMUQuaternion.h>
 
 #include	<zeabus_library/rotation/rotation_handle.h>
@@ -51,6 +53,15 @@ int main( int argv , char** argc ){
 
 	ros::Rate rate( frequency );
 
-	zeabus_library::Odometry message;
-	zeabus_library::rotation::RotationHandle rotation_handle;
+	zeabus_library::Odometry message; // for send output
+
+	zeabus_library::rotation::RotationHandle rotation_handle; 
+		// for rotation and receive message imu to target_frame
+
+	geometry_msgs/TwistWithCovarianceStamped message_dvl; // for receive message dvl
+	nav_msgs/Odometry message_pressure; // for receive message pressure sensor
+
+	zeabus_library::localize::ListenIMUQuaternion listen_imu;
+	zeabus_library::localize::ListenPressure listen_pressure;
+	zeabus_library::localize::ListenDVL listen_dvl;
 }

@@ -22,7 +22,7 @@
 #include	<geometry_msgs/TwistWithCovarianceStamped.h>
 
 #ifndef _ZEABUS_LIBRARY_LOCALIZE_LISTEN_DVL_GEOMETRY_H__
-#ifdef _ZEABUS_LIBRARY_LOCALIZE_LISTEN_DVL_GEOMETRY_H__
+#define _ZEABUS_LIBRARY_LOCALIZE_LISTEN_DVL_GEOMETRY_H__
 
 namespace zeabus_library{
 
@@ -33,7 +33,7 @@ namespace localize{
 		public:
 			ListenDVLGeometry( boost::numeric::ublas::matrix< double>& variable );
 		
-			void register_velocity( boost::numeric::ublas::matrix< double >& variable );
+			size_t register_velocity( boost::numeric::ublas::matrix< double >& variable );
 
 			void callback( const geometry_msgs::TwistWithCovarianceStamped& message );
 

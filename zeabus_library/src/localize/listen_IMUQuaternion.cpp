@@ -13,15 +13,7 @@
 	Namespace			:	zeabus_library/localize
 */
 
-#include	<ros/ros.h>
-
-#include	<stdio.h>
-
-#include	<zeabus_library/vector.h>
-
-#include	<zeabus_library/IMUQuaternion.h>
-
-#include	<zeabus_library/rotation/quaternion.h>
+#include	<zeabus_library/localize/listen_IMUQuaternion.h>
 
 namespace zeabus_library{
 

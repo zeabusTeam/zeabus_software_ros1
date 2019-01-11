@@ -72,8 +72,8 @@ namespace rotation{
 			// but above required only you want current value from set up new quaternion
 			void update_rotation();
 
-			void start_rotation_target();
-			void target_rotation_start();
+			void start_rotation_target(); // Update quaternion heritage for rotate S -> T
+			void target_rotation_start(); // Update quaternion heritage for rotate T -> S
 
 			// In normal situation we don't suggest to this variable it for test only
 			double diff_euler[3];

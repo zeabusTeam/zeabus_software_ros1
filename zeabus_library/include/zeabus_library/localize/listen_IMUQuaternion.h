@@ -1,7 +1,7 @@
 /*
 	File name			:	listen_IMUQuaternion.h		
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , DEC 29
+	Date created		:	2018 , JAN 29
 	Date last modified	:	2018 , ??? ??
 	Purpose				:	For count_time
 							
@@ -22,6 +22,9 @@
 #include	<zeabus_library/IMUQuaternion.h>
 
 #include	<zeabus_library/rotation/quaternion.h>
+
+#ifndef _ZEABUS_LIBRARY_LOCALIZE_LISTEN_IMUQUATERNION_H__
+#define _ZEABUS_LIBRARY_LOCALIZE_LISTEN_IMUQUATERNION_H__
 
 namespace zeabus_library{
 
@@ -49,3 +52,5 @@ namespace localize{
 }
 
 }
+
+#endif

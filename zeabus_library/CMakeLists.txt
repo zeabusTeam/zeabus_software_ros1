@@ -92,6 +92,12 @@ set( zeabus_library_sources
 	src/error_code.cpp
 )
 
+set( zeabus_library_localize_sources
+	src/localize/listen_DVL_geometry.cpp
+	src/localize/listen_pressure_nav.cpp
+	src/localize/listen_IMUQuaternion.cpp
+)
+
 set( zeabus_library_rotation_sources
 	src/rotation/quaternion.cpp
 	src/rotation/rotation_handle.cpp
@@ -111,9 +117,12 @@ set( zeabus_library_sensor_sources
 add_library( zeabus_library			STATIC		${zeabus_library_sources} 
 												${zeabus_library_sensor_sources}
 												${zeabus_library_convert_sources}
+												${zeabus_library_localize_sources}
 												${zeabus_library_rotation_sources} )
+
 add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}
 												${catkin_EXPORTED_TARGETS} )
+
 target_link_libraries( zeabus_library			${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 

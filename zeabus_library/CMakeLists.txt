@@ -14,6 +14,8 @@ find_package( Boost REQUIRED COMPONENTS
 
 add_message_files(
 	FILES
+	Pose.msg
+	Twist.msg
 	State.msg
 	Type2.msg
 	Euler.msg
@@ -93,6 +95,7 @@ set( zeabus_library_sources
 )
 
 set( zeabus_library_localize_sources
+	src/localize/listen_DVL.cpp
 	src/localize/listen_DVL_geometry.cpp
 	src/localize/listen_pressure_nav.cpp
 	src/localize/listen_IMUQuaternion.cpp
@@ -119,12 +122,9 @@ add_library( zeabus_library			STATIC		${zeabus_library_sources}
 												${zeabus_library_convert_sources}
 												${zeabus_library_localize_sources}
 												${zeabus_library_rotation_sources} )
-
 add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}
 												${catkin_EXPORTED_TARGETS} )
-
 target_link_libraries( zeabus_library			${catkin_LIBRARIES} ${Boost_LIBRARIES})
-
 
 add_executable( test_base_quaternion src_test/test_base_quaternion.cpp)
 add_dependencies( test_base_quaternion ${${PROJECT_NAME}_EXPORTED_TARGETS}

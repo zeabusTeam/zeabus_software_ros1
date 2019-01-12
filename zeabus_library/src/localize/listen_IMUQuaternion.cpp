@@ -19,32 +19,32 @@ namespace zeabus_library{
 
 namespace localize{
 
-	ListenIMUQuaternion::ListenIMUQuaternion( zeabus_library::rotation::Quaternion& quaternion 
-									, zeabus_library::Point3& angular_velocity 
-									, zeabus_library::Point3& linear_acceleration ){
+	ListenIMUQuaternion::ListenIMUQuaternion( zeabus_library::Point4* quaternion 
+									, zeabus_library::Point3* angular_velocity 
+									, zeabus_library::Point3* linear_acceleration ){
 		this->quaternion = quaternion;
 		this->angular_velocity = angular_velocity;
 		this->linear_acceleration = linear_acceleration;
 	}
 
 	void ListenIMUQuaternion::register_quaternion( 
-							zeabus_library::rotation::Quaternion& variable ){
+							zeabus_library::Point4* variable ){
 		this->quaternion = variable;
 	}
 
 	void ListenIMUQuaternion::register_gyrometer(
-							zeabus_library::Point3& variable ){
+							zeabus_library::Point3* variable ){
 		this->angular_velocity = variable;
 	}
 
-	void ListenIMUQuaternion::register_acceleration( zeabus_library::Point3& variable ){
+	void ListenIMUQuaternion::register_acceleration( zeabus_library::Point3* variable ){
 		this->linear_acceleration = variable;
 	}
 
 	void ListenIMUQuaternion::callback( const zeabus_library::IMUQuaternion& message ){
-		this->quaternion.set_quaternion( message.quaternion );
-		this->angular_velocity = message.angular_velocity;
-		this->linear_acceleration = message.linear_acceleration;
+		*(this->quaternion) = message.quaternion ;
+		*(this->angular_velocity) = message.angular_velocity;
+		*(this->linear_acceleration) = message.linear_acceleration;
 	}
 
 

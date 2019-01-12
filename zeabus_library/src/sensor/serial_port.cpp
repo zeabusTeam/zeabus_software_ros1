@@ -34,8 +34,10 @@ namespace sensor{
 		try{
 			this->io_port.open( this->name_port );
 			printf( "Port < %s > now open\n" , this->name_port.c_str() );
+			result = true;
 		}
 		catch( const std::exception& error ){
+			result = false;
 			printf( "<==== WARNING ====> Error open port < %s >\n"
 							, this->name_port.c_str());
 		}

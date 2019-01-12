@@ -30,10 +30,10 @@ int main( int argc , char ** argv ){
 
 //////////////////////////////-- PARAMETER PART --///////////////////////////////////////////////
 
-	std::string port_name;
+	std::string port_name =  "/dev/usb2serial/ftdi_FT2VR5PM_02";
 	std::string topic_output;
 
-	ph.param< std::string >("name_port_dvl" , port_name , "/dev/usb2serial/ftdi_FT03OMNT_03");
+//	ph.param< std::string >("name_port_dvl" , port_name , "/dev/usb2serial/ftdi_FT2VR5PM_02");
 	ph.param< std::string >("topic_output_port_dvl" , topic_output , "/sensor/dvl/port" );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,16 +42,22 @@ int main( int argc , char ** argv ){
 
 	bool result;
 	std::string message;
+	int count = 0;
 
 	serial_port.open_port( result );
-	if( ~ result ){
-		printf("Failure to open port %s\n" , port_name );
+	if( !(result) ){
+		printf("Failure to open port %s\n" , port_name.c_str() );
 		return -1 ;
 	}
 
 	serial_port.set_option_port( boost::asio::serial_port_base::baud_rate( 115200 ) );
 
 	serial_port.write_data("===");
+	count = 0;
+	do{
+		serial_port.read_data( message );
+		count++;
+	}while( message != "Explorer DVL" && count < 50 );
 	serial_port.read_data( message );
 	serial_port.read_data( message );
 	serial_port.read_data( message );

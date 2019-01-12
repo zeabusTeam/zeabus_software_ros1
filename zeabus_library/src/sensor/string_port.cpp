@@ -18,6 +18,7 @@
 //#define		_DEBUG_CONNECTION_
 
 #define _DEBUG_READ_LINE_
+//#define _DEBUG_INDIVIDUAL_READ_
 
 namespace zeabus_library{
 
@@ -30,16 +31,40 @@ namespace sensor{
 	size_t StringPort::read_data( std::string& message ){
 		message = "";
 		this->count = 0;
+		#ifdef _DEBUG_INDIVIDUAL_READ_
+			std::cout << "READ : ";
+		#endif
 		while( true ){
 			this->buffer_size = boost::asio::read( this->io_port
 												, boost::asio::buffer( &(this->temp) , 1 ) );
-			if( this->temp == '\r' ) break;
-			else if( this->temp == '\n' ) break;
+			if( this->temp == '\r' ){
+				#ifdef _DEBUG_INDIVIDUAL_READ_
+					std::cout << " <STARTCURSOR>" << "\n";
+				#endif
+				continue;
+			}
+			else if( this->temp == '\n' ){
+				#ifdef _DEBUG_INDIVIDUAL_READ_
+					std::cout << " <NEWLINE> " << "\n";
+				#endif
+				break;
+			}
+			else if( this->temp == '\0' ){
+				#ifdef _DEBUG_INDIVIDUAL_READ_
+					std::cout << " <ENDSTRING> " << "\n";
+				#endif
+			}
 			else{
 				message += this->temp; 
+				#ifdef _DEBUG_INDIVIDUAL_READ_
+					std::cout << this->temp << " ";
+				#endif
 				this->count++;
 			}
 		}
+		#ifdef _DEBUG_INDIVIDUAL_READ_
+				std::cout << "\n";
+		#endif
 		#ifdef _DEBUG_READ_LINE_
 			std::cout << "OUTPUT : " << message << "\n" ;
 		#endif

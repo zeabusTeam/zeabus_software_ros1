@@ -36,6 +36,7 @@ namespace sensor{
 
 			size_t read_data( std::string& message );
 			size_t write_data( std::string& message );
+			size_t write_data( std::string message );
 
 		private:
 			char temp;

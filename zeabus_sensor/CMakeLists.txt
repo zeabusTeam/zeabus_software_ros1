@@ -25,3 +25,7 @@ target_link_libraries( imu_port ${catkin_LIBRARIES} ${boost_LIBRARIES})
 add_executable( imu_node src/inertial_measurement_unit/imu_node.cpp )
 add_dependencies( imu_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries( imu_node ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+add_executable( dvl_port src/teledyne_dvl/dvl_port.cpp )
+add_dependencies( dvl_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( dvl_port ${catkin_LIBRARIES} ${boost_LIBRARIES})

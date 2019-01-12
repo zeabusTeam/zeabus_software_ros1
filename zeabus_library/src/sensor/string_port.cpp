@@ -17,6 +17,8 @@
 
 //#define		_DEBUG_CONNECTION_
 
+#define _DEBUG_READ_LINE_
+
 namespace zeabus_library{
 
 namespace sensor{
@@ -38,6 +40,9 @@ namespace sensor{
 				this->count++;
 			}
 		}
+		#ifdef _DEBUG_READ_LINE_
+			std::cout << "OUTPUT : " << message << "\n" ;
+		#endif
 		return this->count; 
 	}
 
@@ -50,5 +55,12 @@ namespace sensor{
 		return this->buffer_size;	
 	}
 
+	size_t StringPort::write_data( std::string message ){
+		this->buffer_size = boost::asio::write( this->io_port 
+									, boost::asio::buffer( message )
+									, boost::asio::transfer_all()
+									, this->error_code );
+		return this->buffer_size;	
+	}
 }
 }

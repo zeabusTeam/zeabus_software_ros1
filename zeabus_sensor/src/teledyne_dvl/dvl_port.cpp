@@ -12,3 +12,52 @@
 
 	Namespace			:	None
 */
+
+#include	<ros/ros.h>
+
+#include	<stdio.h>
+
+#include	<iostream>
+
+#include	<zeabus_library/sensor/string_port.h>
+
+int main( int argc , char ** argv ){
+
+	ros::init( argc , argv , "port_dvl" );
+
+	ros::NodeHandle nh(""); // Handle for manage about this file in ros system
+	ros::NodeHandle ph("~"); // Handle for managae param from launch 
+
+//////////////////////////////-- PARAMETER PART --///////////////////////////////////////////////
+
+	std::string port_name;
+	std::string topic_output;
+
+	ph.param< std::string >("name_port_dvl" , port_name , "/dev/usb2serial/ftdi_FT03OMNT_03");
+	ph.param< std::string >("topic_output_port_dvl" , topic_output , "/sensor/dvl/port" );
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+	zeabus_library::sensor::StringPort serial_port( port_name ) ;
+
+	bool result;
+	std::string message;
+
+	serial_port.open_port( result );
+	if( ~ result ){
+		printf("Failure to open port %s\n" , port_name );
+		return -1 ;
+	}
+
+	serial_port.set_option_port( boost::asio::serial_port_base::baud_rate( 115200 ) );
+
+	serial_port.write_data("===");
+	serial_port.read_data( message );
+	serial_port.read_data( message );
+	serial_port.read_data( message );
+
+	serial_port.close_port( result );
+	printf("End Action on DVL port file\n");
+	return 0;
+
+}

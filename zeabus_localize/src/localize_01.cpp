@@ -55,6 +55,8 @@ int main( int argv , char** argc ){
 	ph.param< std::string >("topic_pressure" , topic_pressure , "/sensor/pressure/node");
 	ph.param< int >("frequency" , frequency , 50 );
 
+	double period = 1.0 / frequency ;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 	ros::Rate rate( frequency );
@@ -87,9 +89,13 @@ int main( int argv , char** argc ){
 	ros::Publisher tell_auv_state = 
 						nh.advertise< zeabus_library::Odometry >( topic_output , 1 );
 
+////////////////////////////////////-- PART LOCALIZE --//////////////////////////////////////////
+
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
+		message.pose.position.x += message.velocity.linear.x * period;
+		message.pose.position.y += message.velocity.linear.y * period;
 		tell_auv_state.publish( message );
 	} 
 }

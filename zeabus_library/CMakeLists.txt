@@ -111,6 +111,7 @@ set( zeabus_library_rotation_sources
 set( zeabus_library_sensor_sources
 	src/sensor/serial_port.cpp
 	src/sensor/base_port.cpp
+	src/sensor/string_port.cpp
 	src/sensor/lord_microstrain.cpp	
 	src/sensor/synchronous_port.cpp
 	src/sensor/listen_IMUData.cpp

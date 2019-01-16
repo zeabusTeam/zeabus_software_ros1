@@ -25,8 +25,8 @@ namespace convert{
 		return temporary.str();
 	}
 
-	void time_to_string( boost::posix_time::ptime data , std::string& result ){
-		std:;ostringstream temporary;
+	void time_to_string( boost::posix_time::ptime& data , std::string& result ){
+		std::ostringstream temporary;
 		temporary << data;
 		result = temporary.str();
 	}
@@ -37,7 +37,7 @@ namespace convert{
 		return temporary.str();
 	}
 
-	void time_to_string( boost::gregorian::date data , std::string& result ){
+	void time_to_string( boost::gregorian::date& data , std::string& result ){
 		std::ostringstream temporary;
 		temporary << data;
 		result = temporary.str();

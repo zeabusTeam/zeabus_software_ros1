@@ -14,7 +14,7 @@
 */
 
 #include	<boost/date_time/gregorian/gregorian.hpp> 
-#include	<boost/date_time/posix_time/posizx_time.hpp>
+#include	<boost/date_time/posix_time/posix_time.hpp>
 
 #include	<iostream>
 
@@ -27,7 +27,7 @@ namespace zeabus_library{
 
 namespace convert{
 
-	std::string time_to_string( boost::posix_time::ptimei& data );
+	std::string time_to_string( boost::posix_time::ptime& data );
 	
 	void time_to_string( boost::posix_time::ptime& data , std::string& result );
 

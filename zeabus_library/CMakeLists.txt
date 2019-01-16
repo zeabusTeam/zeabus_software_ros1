@@ -83,6 +83,7 @@ set( zeabus_library_convert_sources
 	src/convert/Type2.cpp
 	src/convert/State.cpp
 	src/convert/IMUData.cpp
+	src/convert/boost_time.cpp
 	src/convert/IMUQuaternion.cpp
 )
 

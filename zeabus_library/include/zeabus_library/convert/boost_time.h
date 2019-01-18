@@ -27,6 +27,7 @@ namespace zeabus_library{
 
 namespace convert{
 
+
 	std::string time_to_string( boost::posix_time::ptime& data );
 	
 	void time_to_string( boost::posix_time::ptime& data , std::string& result );
@@ -34,6 +35,7 @@ namespace convert{
 	std::string time_to_string( boost::gregorian::date& data );
 	
 	void time_to_string( boost::gregorian::date& data , std::string& result );
+
 
 }
 

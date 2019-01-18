@@ -77,6 +77,7 @@ include_directories(
 )
 
 set( zeabus_library_convert_sources
+	src/convert/general.cpp
 	src/convert/bytes.cpp
 	src/convert/Point3.cpp
 	src/convert/Point4.cpp
@@ -93,6 +94,7 @@ set( zeabus_library_sources
 	src/euler.cpp
 	src/vector.cpp
 	src/error_code.cpp
+	src/file.cpp
 )
 
 set( zeabus_library_localize_sources

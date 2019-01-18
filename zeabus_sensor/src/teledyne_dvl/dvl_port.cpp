@@ -28,6 +28,7 @@
 #include	<zeabus_library/sensor/string_port.h>
 
 #define _COLLECTING_DATA_
+#define _DEBUG_CODE_
 
 int main( int argc , char ** argv ){
 
@@ -58,6 +59,10 @@ int main( int argc , char ** argv ){
 	bool result;
 	std::string message;
 	int count = 0;
+
+	#ifdef _DEBUG_CODE_
+		printf("Try to open port\n");
+	#endif
 
 	serial_port.open_port( result );
 	if( !(result) ){

@@ -32,6 +32,7 @@ namespace convert{
 			if( problem[order] == '\0' ) break;
 			else if( check_syntax( problem[ order ] ) ) result += key;
 			else result += to_string( problem[ order ] );
+			order++;
 		}
 	}
 

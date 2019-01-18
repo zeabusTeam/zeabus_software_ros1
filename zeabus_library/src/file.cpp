@@ -15,14 +15,16 @@
 
 #include	<zeabus_library/file.h>
 
+#define _DEBUG_CODE_
+
 namespace zeabus_library{
 
 	File::File( std::string package , std::string directory , std::string name , bool time ){
+		this->status_file = false;
 		this->update_time();
 		this->set_package_file( package );
 		this->set_directory_file( directory );
 		this->set_name_file( name , time );
-		this->status_file = false;
 	}
 
 	File::~File(){
@@ -37,6 +39,9 @@ namespace zeabus_library{
 			return ERROR_STATUS;		
 		}
 		this->location_file.package = ros::package::getPath( package );
+		#ifdef _DEBUG_CODE_
+			printf("Finish set directory package\n");
+		#endif
 		return NO_ERROR;
 	}
 
@@ -46,6 +51,9 @@ namespace zeabus_library{
 			return ERROR_STATUS;		
 		}
 		this->location_file.subdirectory = directory;
+		#ifdef _DEBUG_CODE_
+			printf("Finish set directory support\n");
+		#endif
 		return NO_ERROR;
 	}
 
@@ -61,6 +69,9 @@ namespace zeabus_library{
 		else{
 			this->location_file.name_file = name + ".txt";
 		}
+		#ifdef _DEBUG_CODE_
+			printf("Finish set name file\n");
+		#endif
 		return NO_ERROR;
 	}
 

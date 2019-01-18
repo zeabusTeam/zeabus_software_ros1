@@ -63,7 +63,7 @@ namespace zeabus_library{
 			return ERROR_STATUS;		
 		}
 		if( time ){
-			this->location_file.name_file = name +  
+			this->location_file.name_file = name + "_" +  
 				convert::edit_string( this->time , "_") + ".txt";
 		}	
 		else{
@@ -93,11 +93,13 @@ namespace zeabus_library{
 		}
 		this->update_directory();
 		this->file = fopen( this->location_file.result.c_str() , "w");
+		status_file = true;
 		return NO_ERROR;
 	}
 
 	size_t File::close(){
 		fclose( this->file );
+		status_file = false;
 		return NO_ERROR;
 	}
 

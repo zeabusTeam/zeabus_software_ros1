@@ -102,6 +102,12 @@ int main( int argc , char ** argv ){
 	// set type of data stream 
 	serial_port.write_data("PD6\n");
 	
+	serial_port.write_data("CK\n");
+	serial_port.read_data( message );
+	serial_port.read_data( message );
+
+	serial_port.write_data("CS\n"); // continue stream
+
 ////////////////////////////////////-- ROS SYSTEM --////////////////////////////////////////////
 	zeabus_library::Point3 data_ros;
 

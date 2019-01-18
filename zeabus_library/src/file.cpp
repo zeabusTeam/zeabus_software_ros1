@@ -18,6 +18,7 @@
 namespace zeabus_library{
 
 	File::File( std::string package , std::string directory , std::string name , bool time ){
+		this->update_time();
 		this->set_package_file( package );
 		this->set_directory_file( directory );
 		this->set_name_file( name , time );
@@ -30,7 +31,7 @@ namespace zeabus_library{
 		}
 	}
 
-	size_t File::set_package_file( std::string directory ){
+	size_t File::set_package_file( std::string package ){
 		if( status_file ){
 			print_warning( "zeabus_library::File::set_package_file now file open" );
 			return ERROR_STATUS;		
@@ -55,13 +56,17 @@ namespace zeabus_library{
 		}
 		if( time ){
 			this->location_file.name_file = name +  
-				edit_string( zeabus_library::convert::time_to_string( 
-								boost::posix_time::second_clock::local_time() ), "_") + ".txt";
+				convert::edit_string( this->time , "_") + ".txt";
 		}	
 		else{
 			this->location_file.name_file = name + ".txt";
 		}
 		return NO_ERROR;
+	}
+
+	void File::update_time(){
+		this->time_ptime = boost::posix_time::second_clock::local_time();
+		this->time = zeabus_library::convert::time_to_string( this->time_ptime );
 	}
 
 	void File::update_directory(){
@@ -76,7 +81,7 @@ namespace zeabus_library{
 			return ERROR_STATUS;
 		}
 		this->update_directory();
-		this->file = fopen( this->location_file.result , "w");
+		this->file = fopen( this->location_file.result.c_str() , "w");
 		return NO_ERROR;
 	}
 
@@ -90,7 +95,7 @@ namespace zeabus_library{
 			print_error( "zeabus_library::File::write please open file before write file");
 			return ERROR_STATUS;
 		}
-		fprintf( this->file , "%c" , message.c_str() );
+		fprintf( this->file , "%s" , message.c_str() );
 		return NO_ERROR;
 	}
 

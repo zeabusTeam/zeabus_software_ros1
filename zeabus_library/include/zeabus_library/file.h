@@ -58,6 +58,8 @@ namespace zeabus_library{
 
 			size_t open();
 			size_t close();
+
+			void update_time();
 		
 		protected:
 			void update_directory();
@@ -68,6 +70,9 @@ namespace zeabus_library{
 			FILE *file; // file in c system will use for write or read
 	
 			Directory location_file; // split to 3 part of string to commerge file
+
+			boost::posix_time::ptime time_ptime;
+			std::string time;
 			
 	};
 

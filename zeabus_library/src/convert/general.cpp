@@ -29,9 +29,9 @@ namespace convert{
 		result = "";
 		int order = 0;
 		while( true ){
-			if( data[order] == '\0' ) break;
-			else if( check_syntax( data[ order ] ) ) result += key;
-			else result += to_string( data[ order ] );
+			if( problem[order] == '\0' ) break;
+			else if( check_syntax( problem[ order ] ) ) result += key;
+			else result += to_string( problem[ order ] );
 		}
 	}
 

@@ -31,6 +31,7 @@ namespace zeabus_library{
 
 	void print_error( std::string message );
 
+	void print_warning( std::string message );
 }
 
 #endif

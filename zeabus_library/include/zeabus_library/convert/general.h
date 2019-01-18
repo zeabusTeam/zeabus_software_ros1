@@ -17,6 +17,8 @@
 
 #include	<iostream>
 
+#include	<sstream> // include variable type std::ostringstream
+
 #ifndef _ZEABUS_LIBRARY_CONVERT_GENERAL_H__
 #define _ZEABUS_LIBRARY_CONVERT_GENERAL_H__
 

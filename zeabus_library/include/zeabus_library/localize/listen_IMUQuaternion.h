@@ -47,6 +47,8 @@ namespace localize{
 
 			void callback( const zeabus_library::IMUQuaternion& message );
 
+			void callback_quaternion( const zeabus_library::IMUQuaternion& message);
+
 		private:
 			zeabus_library::Point4* quaternion;
 			zeabus_library::Point3* linear_acceleration;

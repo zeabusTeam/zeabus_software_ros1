@@ -47,7 +47,9 @@ namespace localize{
 		*(this->linear_acceleration) = message.linear_acceleration;
 	}
 
-
+	void ListenIMUQuaternion::callback_quaternion( const zeabus_library::IMUQuaternion& message){
+		*(this->quaternion) = message.quaternion;
+	}
 }
 
 }

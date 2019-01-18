@@ -22,7 +22,8 @@ namespace zeabus_library{
 namespace localize{
 
 	ListenDVL::ListenDVL( zeabus_library::Point3* variable ){ 
-		this->velocity = variable;	
+		this->velocity = variable;
+		this->count_receive = 20;	
 	}
 
 	size_t ListenDVL::register_velocity( zeabus_library::Point3* variable ){
@@ -35,8 +36,12 @@ namespace localize{
 			printf("Callback in ListenDVL\n\n");
 		#endif
 		*(this->velocity) = message;
+		this->count = this->count_receive;
 	}
 
+	void ListenDVL::set_count_receive( int number ){
+		this->count_receive = number;
+	}
 
 }
 

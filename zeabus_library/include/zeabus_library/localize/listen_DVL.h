@@ -34,10 +34,16 @@ namespace localize{
 			ListenDVL( zeabus_library::Point3* variable );
 		
 			size_t register_velocity( zeabus_library::Point3* variable );
+			size_t 
 
 			void callback( const zeabus_library::Point3& message );
 
+			void set_count_receive( int number );
+
+			int count; // for use to count receive
+
 		private:
+			int count_receive;
 			zeabus_library::Point3* velocity;
 
 	};

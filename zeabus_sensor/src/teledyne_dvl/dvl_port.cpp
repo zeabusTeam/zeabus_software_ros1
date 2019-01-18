@@ -19,6 +19,8 @@
 
 #include	<iostream>
 
+#include	<zeabus_library/error_code.h>
+
 #include	<zeabus_library/sensor/string_port.h>
 
 #define _COLLECTING_DATA_
@@ -39,6 +41,13 @@ int main( int argc , char ** argv ){
 	ph.param< std::string >("topic_output_port_dvl" , topic_output , "/sensor/dvl/port" );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+
+	#ifdef _COLLECTING_DATA_
+		zeabus_library::File log_file( "zeabus_log" , "sensor/dvl" , "dvl_port" );
+		size_t result;
+		result = log_file.open();
+		if( !( result == zeabus_library::NO_ERROR ) ) return zeabus_library::ERROR_ACTION;
+	#endif
 
 	zeabus_library::sensor::StringPort serial_port( port_name ) ;
 
@@ -85,13 +94,40 @@ int main( int argc , char ** argv ){
 	serial_port.write_data("PD6\n");
 	
 ////////////////////////////////////-- ROS SYSTEM --////////////////////////////////////////////
+	zeabus_library::Point3 data_ros;
+
 	ros::Publisher tell_dvl = nh.advertise< zeabus_library::Point3 >( topic_output , 1 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+	std::string data;
+	char status;	
+
 	while( nh.ok() ){
+		serial_port.read_data( data );
+		#ifdef _COLLECTING_DATA_
+			log_file.wirteline( data );
+		#endif
+		if( data.find(":BS") != std::string::npos ){
+			sscanf( data.c_str() , ":BS,%d,%d,%d,%c" , &( data_ros.x ) , &( data_ros.y )
+													, &( data_ros.y) , &status );
+			if( status == 'A' ){
+				printf( "<-------- DVL GOOD DATA ---------->\n");
+				data_ros.x * 0.001;
+				data_ros.y * 0.001;
+				data_ros.z * 0.001;
+				tell_dvl.publish( data_ros );
+			}
+			else{
+				printf( "<-------- DVL BAD DATA ----------->\n");
+			}
+		}	
 		
 	}
+
+	#ifdef _COLLECTING_DATA_
+		log_file.close();
+	#endif
 
 	serial_port.close_port( result );
 	printf("End Action on DVL port file\n");

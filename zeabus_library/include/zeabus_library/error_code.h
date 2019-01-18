@@ -27,6 +27,7 @@ namespace zeabus_library{
 	static const size_t NO_ERROR = 0;
 	static const size_t ERROR_SIZE_ARRAY = 1;  
 	static const size_t ERROR_SIZE_MATRIX = 2;
+	static const size_t ERROR_STATUS = 3;
 
 	void print_error( std::string message );
 

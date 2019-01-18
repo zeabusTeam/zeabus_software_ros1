@@ -21,6 +21,8 @@
 
 #include	<zeabus_library/sensor/string_port.h>
 
+#define _COLLECTING_DATA_
+
 int main( int argc , char ** argv ){
 
 	ros::init( argc , argv , "port_dvl" );
@@ -81,6 +83,15 @@ int main( int argc , char ** argv ){
 
 	// set type of data stream 
 	serial_port.write_data("PD6\n");
+	
+////////////////////////////////////-- ROS SYSTEM --////////////////////////////////////////////
+	ros::Publisher tell_dvl = nh.advertise< zeabus_library::Point3 >( topic_output , 1 );
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+	while( nh.ok() ){
+		
+	}
 
 	serial_port.close_port( result );
 	printf("End Action on DVL port file\n");

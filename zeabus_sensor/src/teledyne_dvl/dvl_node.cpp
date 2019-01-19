@@ -38,7 +38,7 @@ int main( int argc , char** argv ){
 
 	std::string topic_input;
 	std::string topic_output;
-	std::string topic_imu
+	std::string topic_imu;
 	int frequency;
 
 	ph.param< std::string >("topic_input_node_dvl" , topic_input , "/sensor/dvl/port");

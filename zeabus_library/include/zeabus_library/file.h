@@ -3,12 +3,12 @@
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , JAN 20
 	Date last modified	:	2018 , ??? ??
-	Purpose				:	This header library for managing log data will commerge ros and file c
+	Purpose				:	This header library for managing log data will commerge ros and file
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.1.0
+	status				:	maintainance
 
 	Namespace			:	zeabus_library
 */
@@ -60,6 +60,8 @@ namespace zeabus_library{
 			size_t close();
 
 			void update_time();
+
+			size_t write_time();
 		
 		protected:
 			void update_directory();

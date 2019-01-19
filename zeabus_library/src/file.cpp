@@ -7,8 +7,8 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	product
+	version				:	1.1.0
+	status				:	maintainance
 
 	Namespace			:	zeabus_library
 */
@@ -78,6 +78,18 @@ namespace zeabus_library{
 	void File::update_time(){
 		this->time_ptime = boost::posix_time::second_clock::local_time();
 		this->time = zeabus_library::convert::time_to_string( this->time_ptime );
+	}
+
+	size_t File::write_time(){
+		if( ! status_file ){
+			print_error( "zeabus_library::File::write_time please open file before use this");
+			return ERROR_STATUS;
+		}
+		this->time_ptime = boost::posix_time::second_clock::local_time();
+		this->time = zeabus_library::convert::time_to_string( this->time_ptime );
+		std::string temp = "=============== " + this->time + " ===============\n";
+		this->write( temp );
+		return NO_ERROR;
 	}
 
 	void File::update_directory(){

@@ -2,13 +2,13 @@
 	File name			:	quaternion_handle.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 12
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , JAN 20
 	Purpose				:	This is header of code for use matrix trasform by quaternion
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	test
+	version				:	1.1.0
+	status				:	Maintainance
 
 	Namespace			:	zeabus_library/rotation
 */
@@ -75,9 +75,10 @@ namespace rotation{
 			// In normal situation we don't suggest to this variable it for test only
 			double diff_euler[3];
 
-		protected:
 			zeabus_library::rotation::Quaternion start_frame;
 			zeabus_library::rotation::Quaternion target_frame;
+
+		protected:
 			double start_euler[3];
 			double target_euler[3];
 

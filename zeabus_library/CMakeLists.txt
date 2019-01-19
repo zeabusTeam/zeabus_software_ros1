@@ -98,6 +98,7 @@ set( zeabus_library_sources
 	src/file.cpp
 	src/listen_basic.cpp
 	src/text_color.cpp
+	src/general.h
 )
 
 set( zeabus_library_localize_sources

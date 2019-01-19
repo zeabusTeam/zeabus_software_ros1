@@ -2,13 +2,13 @@
 	File name			:	text_colot.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 20
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , JAN 19
 	Purpose				:	This header library for define text_color
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.1.0
+	status				:	Maintainance
 
 	Namespace			:	zeabus_library
 */
@@ -39,5 +39,24 @@
 	#define BMA "\x1B[1;35m"
 
 	#define RES "\x1B[0m"
+
+namespace zeabus_library{
+
+	void normal_red( std::string message );
+	void bold_red( std::string message );
+
+	void normal_green( std::string message );
+	void bold_green( std::string message );
+
+	void normal_yellow( std::string message );
+	void bold_yellow( std::string message );
+
+	void normal_blue( std::string message );
+	void bold_blue( std::string message );
+
+	void normal_magenta( std::string message );
+	void bold_magenta( std::string message );
+
+}
 
 #endif

@@ -21,7 +21,8 @@ namespace localize{
 
 	ListenIMUQuaternion::ListenIMUQuaternion( zeabus_library::Point4* quaternion 
 									, zeabus_library::Point3* angular_velocity 
-									, zeabus_library::Point3* linear_acceleration ){
+									, zeabus_library::Point3* linear_acceleration ) 
+										: ListenBasic(){
 		this->quaternion = quaternion;
 		this->angular_velocity = angular_velocity;
 		this->linear_acceleration = linear_acceleration;
@@ -45,10 +46,12 @@ namespace localize{
 		*(this->quaternion) = message.quaternion ;
 		*(this->angular_velocity) = message.angular_velocity;
 		*(this->linear_acceleration) = message.linear_acceleration;
+		this->set_count();
 	}
 
 	void ListenIMUQuaternion::callback_quaternion( const zeabus_library::IMUQuaternion& message){
 		*(this->quaternion) = message.quaternion;
+		this->set_count();
 	}
 }
 

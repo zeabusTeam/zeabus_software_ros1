@@ -96,6 +96,7 @@ set( zeabus_library_sources
 	src/vector.cpp
 	src/error_code.cpp
 	src/file.cpp
+	src/listen_basic.cpp
 )
 
 set( zeabus_library_localize_sources

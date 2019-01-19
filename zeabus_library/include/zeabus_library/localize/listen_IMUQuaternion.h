@@ -23,6 +23,8 @@
 
 #include	<zeabus_library/Point4.h>
 
+#include	<zeabus_library/listen_basic.h>
+
 #include	<zeabus_library/IMUQuaternion.h>
 
 #include	<zeabus_library/rotation/quaternion.h>
@@ -34,7 +36,7 @@ namespace zeabus_library{
 
 namespace localize{
 
-	class ListenIMUQuaternion{
+	class ListenIMUQuaternion : public zeabus_library::ListenBasic{
 		
 		public:
 			ListenIMUQuaternion( zeabus_library::Point4* quaternion 

@@ -2,13 +2,13 @@
 	File name			:	dvl_port.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2019 , JAN 12
-	Date last modified	:	2019 , ??? ??
+	Date last modified	:	2019 , JAN 18
 	Purpose				:	This is file to use read connect ros and DVL
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Maintain
+	version				:	1.0.0
+	status				:	Maintainance
 
 	Namespace			:	None
 */
@@ -42,7 +42,7 @@ int main( int argc , char ** argv ){
 	std::string port_name =  "/dev/usb2serial/ftdi_FT2VR5PM_02";
 	std::string topic_output;
 
-//	ph.param< std::string >("name_port_dvl" , port_name , "/dev/usb2serial/ftdi_FT2VR5PM_02");
+	ph.param< std::string >("name_port_dvl" , port_name , "/dev/usb2serial/ftdi_FT2VR5PM_02");
 	ph.param< std::string >("topic_output_port_dvl" , topic_output , "/sensor/dvl/port" );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

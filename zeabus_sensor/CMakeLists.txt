@@ -29,3 +29,7 @@ target_link_libraries( imu_node ${catkin_LIBRARIES} ${boost_LIBRARIES})
 add_executable( dvl_port src/teledyne_dvl/dvl_port.cpp )
 add_dependencies( dvl_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries( dvl_port ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+add_executable( dvl_node src/teledyne_dvl/dvl_node.cpp )
+add_dependencies( dvl_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( dvl_node ${catkin_LIBRARIES} ${boost_LIBRARIES})

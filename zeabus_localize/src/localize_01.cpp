@@ -103,7 +103,7 @@ int main( int argv , char** argc ){
 
 		#ifdef _PRINT_OUTPUT_
 			quaternion.set_quaternion( message.pose.quaternion );
-			quaternion.get_RPY( euler[0] , euler[1] , euler[2] )
+			quaternion.get_RPY( euler[0] , euler[1] , euler[2] );
 			printf("POSITION:%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf"
 				, message.pose.position.x , message.pose.position.y , message.pose.position.z 
 				, euler[0] , euler[1] , euler[2] );

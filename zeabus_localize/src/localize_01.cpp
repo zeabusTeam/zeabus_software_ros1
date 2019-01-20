@@ -25,7 +25,7 @@
 
 #include	<zeabus_library/IMUQuaternion.h>
 
-#include	<zeabus_library/rotation/rotation_handle.h>
+#include	<zeabus_library/rotation/quaternion.h>
 
 #include	<zeabus_library/localize/listen_IMUQuaternion.h>
 
@@ -34,6 +34,7 @@
 #include	<zeabus_library/localize/listen_pressure_nav.h>
 
 #define _TEST_RECEVIE_VALUE
+#define _PRINT_OUTPUT_
 
 int main( int argv , char** argc ){
 
@@ -64,9 +65,6 @@ int main( int argv , char** argc ){
 	zeabus_library::Odometry message; // for send output
 	zeabus_library::Point3 temp_linear_imu;
 
-	zeabus_library::rotation::RotationHandle rotation_handle; 
-		// for rotation and receive message imu to target_frame
-
 	zeabus_library::localize::ListenIMUQuaternion listen_imu( &(message.pose.quaternion) 
 															, &(message.velocity.angular) 
 															, &(temp_linear_imu) );
@@ -74,6 +72,11 @@ int main( int argv , char** argc ){
 	zeabus_library::localize::ListenPressureNav listen_pressure( &(message.pose.position.z) );
 	printf("Position of message.pose.position.z is %x \n" , &(message.pose.position.z ) );
 	zeabus_library::localize::ListenDVL listen_dvl( &(message.velocity.linear) );
+
+	#ifdef _PRINT_OUTPUT_
+		zeabus_library::rotation::Quaternion quaternion;
+		double euler[3];
+	#endif
 
 ////////////////////////////////////-- ROS SYSTEM --/////////////////////////////////////////////
 	ros::Subscriber sub_imu = nh.subscribe( topic_imu , 1 
@@ -97,5 +100,16 @@ int main( int argv , char** argc ){
 		message.pose.position.x += message.velocity.linear.x * period;
 		message.pose.position.y += message.velocity.linear.y * period;
 		tell_auv_state.publish( message );
+
+		#ifdef _PRINT_OUTPUT_
+			quaternion.set_quaternion( message.pose.quaternion );
+			quaternion.get_RPY( euler[0] , euler[1] , euler[2] )
+			printf("POSITION:%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf"
+				, message.pose.position.x , message.pose.position.y , message.pose.position.z 
+				, euler[0] , euler[1] , euler[2] );
+			printf("LINEAR  :%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf"
+				, message.velocity.linear.x , message.velocity.linear.y , message.velocity.linear.z 
+				, message.velocity.angular.x , message.velocity.angular.y , message.velocity.angular.z );
+		#endif
 	} 
 }

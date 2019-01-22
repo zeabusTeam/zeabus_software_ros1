@@ -29,13 +29,13 @@ namespace convert{
 		size_t num_roll , num_column;
 		num_roll = set_value.size1();
 		num_column = set_value.size2();
-		if( num_roll == 1 && num_column == 4 ){ 
+		if( num_roll == 1 && num_column == 3 ){ 
 			result.x = set_value( 0 , 0 );
 			result.y = set_value( 0 , 1 );
 			result.z = set_value( 0 , 2 );
 			return zeabus_library::NO_ERROR;
 		}
-		else if( num_roll == 4 && num_column == 1 ){
+		else if( num_roll == 3 && num_column == 1 ){
 			result.x = set_value( 0 , 0 );
 			result.y = set_value( 1 , 0 );
 			result.z = set_value( 2 , 0 );

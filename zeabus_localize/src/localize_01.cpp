@@ -35,6 +35,7 @@
 
 #define _TEST_RECEVIE_VALUE
 #define _PRINT_OUTPUT_
+#define _DEBUG_JUMP_VALUE_
 
 int main( int argv , char** argc ){
 
@@ -78,6 +79,9 @@ int main( int argv , char** argc ){
 		double euler[3];
 	#endif
 
+	double adding_x;
+	double adding_y;
+
 ////////////////////////////////////-- ROS SYSTEM --/////////////////////////////////////////////
 	ros::Subscriber sub_imu = nh.subscribe( topic_imu , 1 
 									, &zeabus_library::localize::ListenIMUQuaternion::callback
@@ -97,19 +101,28 @@ int main( int argv , char** argc ){
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
-		message.pose.position.x += message.velocity.linear.x * period;
-		message.pose.position.y += message.velocity.linear.y * period;
+		adding_x = message.velocity.linear.x * period;
+		adding_y = message.velocity.linear.y * period;
+		if( adding_x > 0.001 || adding_x < -0.001 ) message.pose.position.x += adding_x;
+		if( adding_y > 0.001 || adding_y < -0.001 ) message.pose.position.y += adding_y;
 		tell_auv_state.publish( message );
 
 		#ifdef _PRINT_OUTPUT_
 			quaternion.set_quaternion( message.pose.quaternion );
 			quaternion.get_RPY( euler[0] , euler[1] , euler[2] );
-			printf("POSITION:%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf"
+			printf("Adding  :%20.6lf%20.6lf\n" , adding_x , adding_y );
+			printf("POSITION:%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf\n"
 				, message.pose.position.x , message.pose.position.y , message.pose.position.z 
 				, euler[0] , euler[1] , euler[2] );
-			printf("LINEAR  :%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf"
+			printf("LINEAR  :%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf%10.3lf\n"
 				, message.velocity.linear.x , message.velocity.linear.y , message.velocity.linear.z 
 				, message.velocity.angular.x , message.velocity.angular.y , message.velocity.angular.z );
 		#endif
-	} 
+		#ifdef _DEBUG_JUMP_VALUE_
+			if( message.pose.position.x > 2 || message.pose.position.x < -2 ) break;
+			if( message.pose.position.y > 2 || message.pose.position.y < -2 ) break;
+		#endif
+	}
+	printf("Message velocity linear x %10.3lf\n" , message.velocity.linear.x );
+	printf("Message velocity linear y %10.3lf\n" , message.velocity.linear.y );
 }

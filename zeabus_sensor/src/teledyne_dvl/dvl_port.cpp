@@ -91,7 +91,7 @@ int main( int argc , char ** argv ){
 	serial_port.write_data("BX00060\n"); // set maximum tracking depth in unit decimeter
 
 	// set heading alignment look at sign three to heading by clock wise
-	serial_port.write_data("EA00000\n"); // unit 18000 is 180.00 degree
+	serial_port.write_data("EA09000\n"); // unit 18000 is 180.00 degree
 	
 	serial_port.write_data("ES35\n"); // set salinity of water ( salt is component )
 
@@ -130,8 +130,8 @@ int main( int argc , char ** argv ){
 			if( status == 'A' ){
 				printf( "<-------- DVL GOOD DATA ---------->\n");
 				data_ros.x = temp_x * 0.001;
-				data_ros.y = temp_y * 0.001;
-				data_ros.z = temp_z * 0.001;
+				data_ros.y = temp_y * -0.001;
+				data_ros.z = temp_z * -0.001;
 				tell_dvl.publish( data_ros );
 			}
 			else{

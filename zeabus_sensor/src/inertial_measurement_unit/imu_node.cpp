@@ -21,6 +21,8 @@
 
 #include	<zeabus_library/sensor/listen_IMUQuaternion.h>
 
+#include	<zeabus_library/IMUQuaternion.h>
+
 int main( int argv , char** argc ){
 
 	ros::init( argv , argc , "node_imu");
@@ -37,17 +39,31 @@ int main( int argv , char** argc ){
 	ph.param< std::string >( "topic_output_node_imu" , topic_output , "sensor/imu/node" );
 	ph.param< int >("frequency_imu" , frequency , 100 );
 
+	ros::Rate rate( frequency );
+
 	printf("Bofore Init variable listener\n");
 	zeabus_library::sensor::ListenIMUQuaternion listener( 
 												zeabus_library::euler::degree_domain( 0 ) 
 												, zeabus_library::euler::degree_domain( 0 ) 
-												, zeabus_library::euler::degree_domain( -90 ) 
+												, zeabus_library::euler::degree_domain( 90 ) 
 												, 1 );	
 	printf("After Init variable listener\n");
 
 	ros::Subscriber sub_IMUData = nh.subscribe( topic_input , 1 
 									, &zeabus_library::sensor::ListenIMUQuaternion::callback
 									, &listener );
+
+	zeabus_library::IMUQuaternion message;
+
+	ros::Publisher tell_IMUQuaternion = nh.advertise< zeabus_library::IMUQuaternion >(
+						topic_output , 1 );
+
 	printf("Now already listen\n");
-	ros::spin();
+	
+	while( nh.ok() ){
+		rate.sleep();
+		ros::spinOnce();
+		listener.get_result( message );
+		tell_IMUQuaternion.publish( message );
+	}
 }

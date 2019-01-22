@@ -27,6 +27,8 @@
 
 #include	<zeabus_library/localize/listen_DVL.h>
 
+#define _DEBUG_JUMP_VALUE_
+
 int main( int argc , char** argv ){
 
 	ros::init( argc , argv , "node_dvl" );
@@ -44,7 +46,7 @@ int main( int argc , char** argv ){
 	ph.param< std::string >("topic_input_node_dvl" , topic_input , "/sensor/dvl/port");
 	ph.param< std::string >("topic_imu" , topic_imu , "/sensor/imu/node");
 	ph.param< std::string >("topic_output_node_dvl" , topic_output , "/sensor/dvl/node");
-	ph.param< int >("frequency" , frequency , 60 );
+	ph.param< int >("frequency" , frequency , 40 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -95,9 +97,19 @@ int main( int argc , char** argv ){
 		if( listen_imu.count < 0 ) zeabus_library::bold_red( "Fatal! IMU missing receive\n\n");
 		rh.set_target_frame( data_quaternion );
 		zeabus_library::convert::Point3_to_matrix( data_dvl , receive_matrix );
+		#ifdef _DEBUG_JUMP_VALUE_
+			printf("Receive value %8.3lf\t%8.3lf\n" , data_dvl.x , data_dvl.y );
+		#endif
 		rh.target_rotation( receive_matrix , result_matrix );
 		zeabus_library::convert::matrix_to_Point3( result_matrix , data_dvl );
 		tell_dvl.publish( data_dvl );
-	}
+		#ifdef _DEBUG_JUMP_VALUE_
+			printf("send value %8.3lf\t%8.3lf\n\n\n" , data_dvl.x , data_dvl.y );
+		#endif
 
+		#ifdef _DEBUG_JUMP_VALUE_
+			if( data_dvl.x > 2 || data_dvl.x < -2 ) break;
+			if( data_dvl.y > 2 || data_dvl.y < -2 ) break;
+		#endif
+	}
 }

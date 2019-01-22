@@ -44,7 +44,7 @@ int main( int argv , char** argc ){
 	int frequency;
 
 	ph.param< std::string >("name_port_imu" , port_name 
-								, "/dev/microstrain/3dm_gx5_45_0000__6251.65901");
+								, "/dev/microstrain/3dm_gx5_45_0000__6251.65903");
 
 	ph.param< std::string >(	"topic_output_port_imu_zeabus" 
 								, topic_output_zeabus , "/sensor/imu/port/zeabus");

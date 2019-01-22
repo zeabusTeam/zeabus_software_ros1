@@ -17,7 +17,7 @@
 
 //#define		_DEBUG_CONNECTION_
 
-#define _DEBUG_READ_LINE_
+//#define _DEBUG_READ_LINE_
 //#define _DEBUG_INDIVIDUAL_READ_
 
 namespace zeabus_library{

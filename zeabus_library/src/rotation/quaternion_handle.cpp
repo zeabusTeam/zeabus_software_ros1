@@ -24,10 +24,12 @@
 #define _ROTATION_QUATERNION_
 
 #ifdef _ROTATION_QUATERNION_
-//	#define _DEBUG_ROTATION_QUATERNION_
+	#define _DEBUG_ROTATION_QUATERNION_
 #endif
 
 //#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
+
+#define _DEBUG_SET_TARGET_FRAME_
 
 namespace zeabus_library{
 
@@ -174,11 +176,21 @@ namespace rotation{
 	void QuaternionHandle::set_target_frame( 
 			zeabus_library::rotation::Quaternion quaternion ){
 		this->target_frame = quaternion;
+		#ifdef _DEBUG_SET_TARGET_FRAME_
+			printf("QuaternionHandle function set target frame by quaternion\n");
+			printf("\tw : %lf\n\tx : %lf\n\ty : %lf\n\tz : %lf\n" 
+					, quaternion.w , quaternion.x , quaternion.y , quaternion.z );
+		#endif
 //		this->target_frame.update_inverse();
 	}
 
 	void QuaternionHandle::set_target_frame( zeabus_library::Point4 data ){
 		this->target_frame.set_quaternion( data );
+		#ifdef _DEBUG_SET_TARGET_FRAME_
+			printf("QuaternionHandle function set target frame by Point4\n");
+			printf("\tw : %lf\n\tx : %lf\n\ty : %lf\n\tz : %lf\n" 
+					, data.w , data.x , data.y , data.z );
+		#endif
 //		this->target_frame.update_inverse();
 	}
 

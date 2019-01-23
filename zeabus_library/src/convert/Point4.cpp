@@ -15,6 +15,8 @@
 
 #include	<zeabus_library/convert/Point4.h>
 
+//#define _DEBUG_CHECK_SIZE_
+
 namespace zeabus_library{
 namespace convert{
 
@@ -80,6 +82,18 @@ namespace convert{
 		result[1] = data.x;
 		result[2] = data.y;
 		result[3] = data.z;
+	}
+
+	double check_size( zeabus_library::Point4 data ){
+		#ifndef _DEBUG_CHECK_SIZE_
+			return sqrt( pow( data.w , 2 ) +pow( data.x , 2 ) 
+						+pow( data.y , 2 ) +pow( data.z , 2 ) );
+		#else
+			double size  =  sqrt( pow( data.w , 2 ) +pow( data.x , 2 ) 
+						+pow( data.y , 2 ) +pow( data.z , 2 ) );
+			printf( "zeabus_library::convert::check_size of Point4 size is %lf\n" , size );
+			return size;
+		#endif
 	}
 
 }

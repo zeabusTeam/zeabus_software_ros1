@@ -15,6 +15,10 @@
 
 #include	<zeabus_library/localize/listen_IMUQuaternion.h>
 
+#define _DEBUG_CALL_BACK_QUATERNION_
+#define _USE_DEBUG_SIZE_
+
+
 namespace zeabus_library{
 
 namespace localize{
@@ -50,6 +54,15 @@ namespace localize{
 	}
 
 	void ListenIMUQuaternion::callback_quaternion( const zeabus_library::IMUQuaternion& message){
+		#ifdef _DEBUG_CALL_BACK_QUATERNION_
+			printf("ListenIMUQuaternion::callback_quaternion message receive\n");
+			printf("\tw : %lf\n\tx : %lf\n\ty : %lf\n\tz : %lf\n" ,
+					message.quaternion.w , message.quaternion.x , 
+					message.quaternion.y , message.quaternion.z );
+		#endif
+		#ifdef _USE_DEBUG_SIZE_
+			if( zeabus_library::convert::check_size( message.quaternion ) > 1.5 ) return;
+		#endif
 		*(this->quaternion) = message.quaternion;
 		this->set_count();
 	}

@@ -15,7 +15,7 @@
 
 #include	<zeabus_library/rotation/rotation_handle.h>
 
-//#define _DEBUG_ROTATION_VALUE_
+#define _DEBUG_ROTATION_VALUE_
 //#define _DEBUG_DECLARE_CLASS_
 
 namespace zeabus_library{

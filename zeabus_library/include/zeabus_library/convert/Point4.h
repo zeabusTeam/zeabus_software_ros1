@@ -15,6 +15,8 @@
 
 #include	<stdio.h>
 
+#include	<math.h>
+
 #include	<cstdlib>
 
 #include	<boost/numeric/ublas/matrix.hpp>
@@ -39,6 +41,8 @@ namespace convert{
 							, boost::numeric::ublas::matrix< double >& result );
 
 	void Point4_to_array(	zeabus_library::Point4& data , double* result);
+
+	double check_size( zeabus_library::Point4 data );
 
 }
 }

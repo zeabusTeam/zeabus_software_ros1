@@ -23,6 +23,8 @@
 #define _DEBUG_TIME_
 #define _DEBUG_DECLARE_OBJECT_
 
+#define _USE_DEBUG_SIZE_
+
 namespace zeabus_library{
 
 namespace sensor{

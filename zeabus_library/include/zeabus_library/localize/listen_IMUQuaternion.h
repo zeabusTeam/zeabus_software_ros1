@@ -23,6 +23,8 @@
 
 #include	<zeabus_library/Point4.h>
 
+#include	<zeabus_library/convert/Point4.h>
+
 #include	<zeabus_library/listen_basic.h>
 
 #include	<zeabus_library/IMUQuaternion.h>

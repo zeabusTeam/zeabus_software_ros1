@@ -99,6 +99,7 @@ set( zeabus_library_sources
 	src/listen_basic.cpp
 	src/text_color.cpp
 	src/general.cpp
+	src/linear_equation.cpp
 )
 
 set( zeabus_library_localize_sources

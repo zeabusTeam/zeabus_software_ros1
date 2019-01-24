@@ -35,4 +35,20 @@ namespace zeabus_library{
 		else return true;
 	}
 
+	bool check_equal( double number_01 , double number_02 ){
+		return( check_zero( number_01 - number_02 ) );
+	}
+
+	bool check_equal( int number_01 , int number_02 ){
+		return( check_zero( number_01 - number_02 ) );
+	}
+
+	double abs( double number ){
+		return fabs( number );
+	}
+
+	int abs( int number ){
+		return abs( number );
+	}
+
 }

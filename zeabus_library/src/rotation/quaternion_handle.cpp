@@ -29,7 +29,7 @@
 
 //#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_HANDLE_
 
-#define _DEBUG_SET_TARGET_FRAME_
+//#define _DEBUG_SET_TARGET_FRAME_
 
 namespace zeabus_library{
 

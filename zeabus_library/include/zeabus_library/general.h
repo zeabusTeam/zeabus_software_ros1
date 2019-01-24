@@ -17,6 +17,8 @@
 
 #include	<iostream>
 
+#include	<math.h>
+
 #ifndef PI
 	#define	PI 3.14159265
 #endif
@@ -33,6 +35,13 @@ namespace zeabus_library{
 	bool check_zero( double number );
 	bool check_zero( float number );
 	bool check_zero( int number );
+
+	bool check_equal( double number_01 , double number_02 );
+	bool check_equal( int number_01 , int number_02 );
+
+	double abs( double number );
+	int abs( int abs );
+
 
 }
 

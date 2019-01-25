@@ -1,5 +1,8 @@
 """
-    ansi code for printing color text
+    File name: color_text.py
+    Author: AyumiizZ
+    Python Version: 2.7
+    About: ansi code for printing color text
 """
 ESC_CODE = '\033['
 

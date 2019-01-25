@@ -17,6 +17,10 @@
 
 namespace zeabus_library{
 
+	void clear_screen(){
+		std::system("clear");
+	}
+
 	void normal_red( std::string message ){
 		printf( NRE "%s" RES , message.c_str() );
 	}

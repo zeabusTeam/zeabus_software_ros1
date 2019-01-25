@@ -128,14 +128,14 @@ int main( int argc , char ** argv ){
 			sscanf( data.c_str() , ":BS,%d,%d,%d,%c" , &( temp_x ) , &( temp_y )
 													, &( temp_z) , &status );
 			if( status == 'A' ){
-				printf( "<-------- DVL GOOD DATA ---------->\n");
+				printf( "<-------- DVL GOOD DATA ---------->\n\n");
 				data_ros.x = temp_x * 0.001;
 				data_ros.y = temp_y * 0.001;
 				data_ros.z = temp_z * 0.001;
 				tell_dvl.publish( data_ros );
 			}
 			else{
-				printf( "<-------- DVL BAD DATA ----------->\n");
+				printf( "<-------- DVL BAD DATA ----------->\n\n");
 			}
 		}	
 		

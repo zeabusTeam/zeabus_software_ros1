@@ -401,11 +401,11 @@ namespace sensor{
 		if( MSB == *(this->buffer_packet_last - 2 )  &&
 			LSB == *(this->buffer_packet_last - 1 ) ){
 			result = true;
-			printf("<------ IMU GOOD PACKET ------>\n");
+			printf("<------ IMU GOOD PACKET ------>\n\n");
 		}
 		else{
 			result = false;
-			printf("<------ IMU BAD PACKET ------>\n");
+			printf("<------ IMU BAD PACKET ------>\n\n");
 		}
 
 	}

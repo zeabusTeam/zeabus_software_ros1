@@ -1,21 +1,23 @@
 /*
-	File name			:	text_colot.h		
+	File name			:	text_color.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 20
-	Date last modified	:	2018 , JAN 19
+	Date last modified	:	2018 , JAN 25
 	Purpose				:	This header library for define text_color
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.2.0
 	status				:	Maintainance
 
 	Namespace			:	zeabus_library
 */
 
-#include <stdio.h>
+#include	<stdio.h>
 
-#include <iostream>
+#include	<cstdlib>
+
+#include	<iostream>
 
 #ifndef _ZEABUS_LIBRARY_TEXT_COLOR_H__
 #define _ZEABUS_LIBRARY_TEXT_COLOR_H__
@@ -43,6 +45,8 @@
 	#define RES "\x1B[0m"
 
 namespace zeabus_library{
+
+	void clear_screen();
 
 	void normal_red( std::string message );
 	void bold_red( std::string message );

@@ -21,7 +21,7 @@
 		<param name="frequency_imu" type="int" value="50"/>
 	</node>
 
-	<node name="dvl_port" output="log" pkg="zeabus_sensor" type="dvl_port">
+	<node name="dvl_port" output="screen" pkg="zeabus_sensor" type="dvl_port">
 		<param name="name_port_dvl" value="$(arg dvl_serialport)"/>
 		<param name="topic_output_port" type="str" value="/sensor/dvl/port"/>
 	</node>
@@ -31,7 +31,7 @@
     <include file="$(find zeabus_elec_ros_peripheral_bridge)/launch/peripheral_bridge.launch"/>
 
     <node name="Zeabus_Elec_Hardware_interface" pkg="zeabus_elec_ros_hardware_interface" 
-			type="zeabus_elec_ros_hardware_interface" output="log">
+			type="zeabus_elec_ros_hardware_interface" output="screen">
 
         <param name="atm_pressure" value="14.8717"/>
         <param name="depth_offset" value="0"/>

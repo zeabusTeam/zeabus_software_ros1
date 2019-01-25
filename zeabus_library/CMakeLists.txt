@@ -98,7 +98,8 @@ set( zeabus_library_localize_sources
 
 set( zeabus_library_control_sources
 	src/control/listen_odometry.cpp	
-	src/control/listen_twist.cpp	
+	src/control/listen_twist.cpp
+	src/control/pid.cpp	
 )
 
 set( zeabus_library_rotation_sources

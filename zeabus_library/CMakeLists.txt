@@ -126,6 +126,7 @@ set( zeabus_library_sources
 	src/vector.cpp
 	src/error_code.cpp
 	src/file.cpp
+	src/ros.cpp
 	src/listen_basic.cpp
 	src/text_color.cpp
 	src/general.cpp

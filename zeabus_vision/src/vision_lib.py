@@ -175,3 +175,9 @@ def gen_grid(data, shape):
         cv.circle(grid,pos,3,(0,255,0),-1)
         cv.putText(grid,key,pos,cv.FONT_HERSHEY_COMPLEX_SMALL,2,(255,255,255),2)    
     return grid
+
+def print_mission(task,req=''):
+    print_result('mission_callback', ct.CYAN)
+    req = 'BLANK' if req == '' else req
+    print("task is " + ct.UNDERLINE + task + ct.DEFAULT +
+          " and req is " + ct.UNDERLINE + req + ct.DEFAULT)

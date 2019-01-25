@@ -1,57 +1,50 @@
 #!/usr/bin/env python
 """
     File name:gate.py
-    Author: skconan
+    Author: skconan, AyumiizZ
     Date created: 2018/10/13
+    Date edit: 2018/1/23 
     Python Version: 2.7
-    Rewrite: AyumiizZ
 """
-
+# from statistics import Statistics
+import rospy
+import numpy as np
 import cv2 as cv
-import color_text as ct
-from vision_lib import *
-import constant as CONST
-import matplotlib.pyplot as plt
-from statistics import Statistics
-from zeabus_vision.msg import vision_gate
 from sensor_msgs.msg import CompressedImage
+from zeabus_vision.msg import vision_gate
 from zeabus_vision.srv import vision_srv_gate
-from fourier_transform import FourierTransform
+import color_text as ct
+import vision_lib as lib
+# from fourier_transform import FourierTransform
 from operator import itemgetter
 
-image_input = None
-public_topic = '/vision/mission/gate/'
-sub_sampling = 0.3
-debug = False
-debug_time = False
-stat = Statistics()
-fft = FourierTransform()
-bg = None
-previous_bg = None
-first_object = True
-tracker = None
-tracker_status = False
-object_box = None
-untrack_frame = 0
+IMAGE = None
+PROCESS_DATA = {}
+PUBLIC_TOPIC = '/vision/mission/gate/'
+SUB_SAMPLING = 0.3
+DEBUG = {
+    'time': False,
+    'console': False,
+    'rqt-grid': False,
+    'detail': False
+}
 
 
 def mission_callback(msg):
-    print_result('mission_callback', ct.CYAN)
     task = str(msg.task.data)
-    req = str(msg.req.data)
-    req = 'BLANK' if req == '' else req
-    print("task is " + ct.UNDERLINE + task + ct.DEFAULT +
-          " and req is " + ct.UNDERLINE + req + ct.DEFAULT)
+    req =  str(msg.req.data)
+    if DEBUG['console']:
+        lib.print_mission(task,req)
     if task == 'gate':
         return find_gate()
 
 
 def image_callback(msg):
-    global image_input, sub_sampling
+    global IMAGE
     arr = np.fromstring(msg.data, np.uint8)
     bgr = cv.resize(cv.imdecode(arr, 1), (0, 0),
-                    fx=sub_sampling, fy=sub_sampling)
-    image_input = bgr.copy()
+                    fx=SUB_SAMPLING, fy=SUB_SAMPLING)
+    IMAGE = bgr.copy()
 
 
 def message(state=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
@@ -63,9 +56,8 @@ def message(state=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
     msg.cx2 = cx2
     msg.cy2 = cy2
     msg.area = area
-    if debug:
-        print state
-    print msg
+    if DEBUG['console'] or DEBUG['detail']:
+        print msg
     return msg
 
 
@@ -124,9 +116,9 @@ def find_pipe(binary, align):
             cv.drawContours(pipe, [box], 0, (255, 0, 255), 2)
             result.append([int(x), int(y), int(w), int(h), angle])
     if align == 'v':
-        publish_result(pipe, 'bgr', public_topic + 'mask/vpipe')
+        lib.publish_result(pipe, 'bgr', PUBLIC_TOPIC + 'mask/vpipe')
     if align == 'h':
-        publish_result(pipe, 'bgr', public_topic+'mask/hpipe')
+        lib.publish_result(pipe, 'bgr', PUBLIC_TOPIC+'mask/hpipe')
     if align == 'v':
         result = sorted(result, key=itemgetter(3), reverse=True)
     else:
@@ -139,32 +131,31 @@ def find_pipe(binary, align):
 
 
 def find_gate():
-    global image_input, stat, previous_bg, first_object, tracker, tracker_status, object_box, untrack_frame
-    if image_input is None:
-        img_is_none()
+    global IMAGE
+    if IMAGE is None:
+        lib.img_is_none()
         return message(state=-1)
-    gray = cv.cvtColor(image_input.copy(), cv.COLOR_BGR2GRAY)
 
-    obj = bg_subtraction(gray)
+    display = IMAGE.copy()
+    gray = cv.cvtColor(IMAGE.copy(), cv.COLOR_BGR2GRAY)
+    obj = lib.bg_subtraction(gray)
 
-    kernel_vertical = get_kernel(ksize=(1, 21))
-    kernel_horizontal = get_kernel(ksize=(21, 1))
-    kernel_box = get_kernel(ksize=(7, 7))
+    kernel_box = lib.get_kernel(ksize=(7, 7))
 
+    kernel_vertical = lib.get_kernel(ksize=(1, 21))
     vertical = cv.erode(obj.copy(), kernel_vertical)
     vertical = cv.dilate(vertical.copy(), kernel_box)
-    kernel_erode = get_kernel(ksize=(3, 11))
+    kernel_erode = lib.get_kernel(ksize=(3, 11))
     vertical = cv.erode(vertical.copy(), kernel_erode)
 
+    kernel_horizontal = lib.get_kernel(ksize=(21, 1))
     horizontal = cv.erode(obj.copy(), kernel_horizontal)
     horizontal = cv.dilate(horizontal.copy(), kernel_box)
-    kernel_erode = get_kernel(ksize=(11, 3))
+    kernel_erode = lib.get_kernel(ksize=(11, 3))
     horizontal = cv.erode(horizontal.copy(), kernel_erode)
 
     vertical_pipe, no_pipe_v = find_pipe(vertical, 'v')
     horizontal_pipe, no_pipe_h = find_pipe(horizontal, 'h')
-
-    display = image_input.copy()
 
     horizontal_cx = []
     horizontal_cy = []
@@ -199,29 +190,30 @@ def find_gate():
     else:
         mode = 0
     if mode == 0:
-        print_result("NOT FOUND", ct.RED)
-        publish_result(display, 'bgr', public_topic + 'image_result')
-        publish_result(vertical, 'gray', public_topic + 'mask/vertical')
-        publish_result(horizontal, 'gray', public_topic + 'mask/horizontal')
-        publish_result(obj, 'gray', public_topic + 'mask')
+        lib.print_result("NOT FOUND", ct.RED)
+        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'image_result')
+        lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
+        lib.publish_result(horizontal, 'gray',
+                           PUBLIC_TOPIC + 'mask/horizontal')
+        lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
         return message()
     elif mode == 1:
-        print_result("FOUND GATE", ct.GREEN)
+        lib.print_result("FOUND GATE", ct.GREEN)
         cx1 = (horizontal_cx[0][0] + min(vertical_cx)) / 2.
         cx2 = (horizontal_cx[0][1] + max(vertical_cx)) / 2.
         cy1 = horizontal_cy[0]
     elif mode == 2:
-        print_result("FOUND ONE V AND ONE H", ct.YELLOW)
+        lib.print_result("FOUND ONE V AND ONE H", ct.YELLOW)
         cx1 = horizontal_cx[0][0]
         cx2 = horizontal_cx[0][1]
         cy1 = horizontal_cy[0]
     elif mode == 3:
-        print_result("FOUND ONE H", ct.YELLOW)
+        lib.print_result("FOUND ONE H", ct.YELLOW)
         cx1 = horizontal_cx[0][0]
         cx2 = horizontal_cx[0][1]
         cy1 = horizontal_cy[0]
     elif mode == 4:
-        print_result("FOUND TWO V", ct.YELLOW)
+        lib.print_result("FOUND TWO V", ct.YELLOW)
         cx1 = min(vertical_cx)
         cx2 = max(vertical_cx)
         cy1 = (sum(vertical_cy1)+min(vertical_cy1))/len(vertical_cy1)
@@ -240,30 +232,22 @@ def find_gate():
     cv.circle(display, (int((cx1+cx2)/2), int((cy1+cy2)/2)),
               3, (0, 255, 255), -1)
     area = 1.0*abs(cx2-cx1)*abs(cy1-cy2)/(himg*wimg)
-    # display = cv.cvtColor(display,cv.COLOR_BGR2BGRA)
-    data = {}
-    data['c1'] = (cx1, cy1)
-    data['c2'] = (cx2, cy2)
-    data['c'] = ((cx1+cx2)/2, (cy1+cy2)/2)
-    grid = gen_grid(data, display.shape)
-    publish_result(display, 'bgr', public_topic + 'image_result')
-    publish_result(grid, 'bgr', public_topic + 'grid')
-    publish_result(vertical, 'gray', public_topic + 'mask/vertical')
-    publish_result(horizontal, 'gray', public_topic + 'mask/horizontal')
-    publish_result(obj, 'gray', public_topic + 'mask')
-    cx1 = Aconvert(cx1, wimg)
-    cx2 = Aconvert(cx2, wimg)
-    cy1 = -1.0*Aconvert(cy1, himg)
-    cy2 = -1.0*Aconvert(cy2, himg)
+    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'image_result')
+    lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
+    lib.publish_result(horizontal, 'gray', PUBLIC_TOPIC + 'mask/horizontal')
+    lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
+    cx1 = lib.Aconvert(cx1, wimg)
+    cx2 = lib.Aconvert(cx2, wimg)
+    cy1 = -1.0*lib.Aconvert(cy1, himg)
+    cy2 = -1.0*lib.Aconvert(cy2, himg)
     return message(state=mode, cx1=cx1, cx2=cx2, cy1=cy1, cy2=cy2, pos=pos, area=area)
 
 
 if __name__ == '__main__':
     rospy.init_node('vision_gate', anonymous=False)
-    image_topic = get_topic("front")
-    rospy.Subscriber(image_topic, CompressedImage, image_callback)
+    rospy.Subscriber(lib.get_topic("front"), CompressedImage, image_callback)
     rospy.Service('vision/gate', vision_srv_gate(),
                   mission_callback)
-    print_result("INIT NODE GATE", ct.GREEN)
+    lib.print_result("INIT NODE GATE", ct.GREEN)
     rospy.spin()
-    print_result("END PROGRAM", ct.YELLOW_HL+ct.RED)
+    lib.print_result("END PROGRAM", ct.YELLOW_HL+ct.RED)

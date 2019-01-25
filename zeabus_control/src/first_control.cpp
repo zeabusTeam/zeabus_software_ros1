@@ -162,8 +162,33 @@ int main( int argv , char** argc ){
 									, diff_position.x , diff_position.y );
 				message.linear.x = temp_message.linear.x + assign_velocity_xy( diff_position.x);
 				message.linear.y = temp_message.linear.y + assign_velocity_xy( diff_position.y);
+				count_velocity[0]--;
 			}
 			else if( count_velocity[1] != 0 ){
+				temp_bool = count_velocity[1] == constant_value;
+				if( temp_bool ){
+					temp_message.linear.x = target_velocity.y
+											* zeabus_library::euler::cos( target_euler[2] + PI );
+					temp_message.linear.y = target_velocity.y
+											* zeabus_library::euler::sin( target_euler[2] + PI );
+					next_point_xy( target_euler[2] , current_position.x , current_position.y
+								, temporary_position.x , temporary_position.y 
+								, 0 , copysign( 20 , target_velocity.x ) );	 
+					line.set_point( current_position.x , current_position.y 
+									, temporary_position.x , temporary_position.y );
+					line.update();	
+				}
+				line.distance_split( current_position.x , current_position.y
+									, diff_position.x , diff_position.y );
+				message.linear.x = temp_message.linear.x + assign_velocity_xy( diff_position.x);
+				message.linear.y = temp_message.linear.y + assign_velocity_xy( diff_position.y);
+				count_velocity[1]--;
+			}
+			else{
+				diff_position.x = current_position.x - target_position.x;
+				diff_position.y = current_position.y - target_position.y;
+				message.linear.x = assign_velocity_xy( diff_position.x );
+				message.linear.y = assign_velocity_xy( diff_position.y );
 			}
 		}
 	}

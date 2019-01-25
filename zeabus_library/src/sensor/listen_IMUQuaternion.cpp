@@ -15,13 +15,13 @@
 
 #include	<zeabus_library/sensor/listen_IMUQuaternion.h>
 
-#define _DEBUG_RECIEVE_DATA_
+//#define _DEBUG_RECIEVE_DATA_
 //#define _DEBUG_CALCULATE_ACCELERATION_
 //#define _DEBUG_CALCULATE_QUATERNION_
-#define _DEBUG_CALCULATE_GYROMETER_
-#define _DEBUG_CODE_
-#define _DEBUG_TIME_
-#define _DEBUG_DECLARE_OBJECT_
+//#define _DEBUG_CALCULATE_GYROMETER_
+//#define _DEBUG_CODE_
+//#define _DEBUG_TIME_
+//#define _DEBUG_DECLARE_OBJECT_
 
 #define _USE_DEBUG_SIZE_
 

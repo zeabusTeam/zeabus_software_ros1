@@ -15,7 +15,7 @@
 
 #include	<zeabus_library/localize/listen_IMUQuaternion.h>
 
-#define _DEBUG_CALL_BACK_QUATERNION_
+//#define _DEBUG_CALL_BACK_QUATERNION_
 #define _USE_DEBUG_SIZE_
 
 

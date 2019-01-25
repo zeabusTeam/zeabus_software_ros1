@@ -32,7 +32,7 @@ namespace DataIMU = zeabus_library::sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SE
 
 int main( int argv , char** argc ){
 	
-	ros::init( argv , argc , "port_imu");
+	ros::init( argv , argc , "imu_port");
 
 	ros::NodeHandle ph("~"); // Handle for manage param from launch
 	ros::NodeHandle nh(""); // Handle for manage about this file in ros system

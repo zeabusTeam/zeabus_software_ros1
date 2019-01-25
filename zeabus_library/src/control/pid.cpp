@@ -35,7 +35,7 @@ namespace control{
 		this->reset_value();
 	}
 
-	void PID:::reset_value(){
+	void PID::reset_value(){
 		this->sum = 0;
 		this->previous_error = 0;
 		this->first_time = true;
@@ -55,7 +55,7 @@ namespace control{
 		this->offset = offset;
 	}
 
-	void PID:limit_i( double limit ){
+	void PID::limit_i( double limit ){
 		this->limit = limit;
 	}
 

@@ -37,7 +37,7 @@ namespace matrix{
 					, boost::numeric::ublas::matrix< double >& result 
 					, bool init_matrix = true );
 
-	double det( boost::numeric::ublas::matrix< double >& matrix );
+	double det( boost::numeric::ublas::matrix< double >& problem );
 }
 
 }

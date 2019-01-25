@@ -50,8 +50,8 @@ namespace zeabus_library{
 		}
 		
 
-		double det( boost::numeric::ublas::matrix< double >& matrix ){
-			return matrix( 0 , 0 ) * matrix( 1 , 1 ) - matrix( 0 , 1 ) * matrix( 1 , 0 );
+		double det( boost::numeric::ublas::matrix< double >& problem ){
+			return problem( 0 , 0 ) * problem( 1 , 1 ) - problem( 0 , 1 ) * problem( 1 , 0 );
 		}	
 	}
 

@@ -89,19 +89,6 @@ set( zeabus_library_convert_sources
 	src/convert/IMUQuaternion.cpp
 )
 
-set( zeabus_library_sources
-	src/capture_time.cpp
-	src/matrix.cpp
-	src/euler.cpp
-	src/vector.cpp
-	src/error_code.cpp
-	src/file.cpp
-	src/listen_basic.cpp
-	src/text_color.cpp
-	src/general.cpp
-	src/linear_equation.cpp
-)
-
 set( zeabus_library_localize_sources
 	src/localize/listen_DVL.cpp
 	src/localize/listen_DVL_geometry.cpp
@@ -129,6 +116,19 @@ set( zeabus_library_sensor_sources
 	src/sensor/synchronous_port.cpp
 	src/sensor/listen_IMUData.cpp
 	src/sensor/listen_IMUQuaternion.cpp
+)
+
+set( zeabus_library_sources
+	src/capture_time.cpp
+	src/matrix.cpp
+	src/euler.cpp
+	src/vector.cpp
+	src/error_code.cpp
+	src/file.cpp
+	src/listen_basic.cpp
+	src/text_color.cpp
+	src/general.cpp
+	src/linear_equation.cpp
 )
 
 add_library( zeabus_library			STATIC		${zeabus_library_sources} 

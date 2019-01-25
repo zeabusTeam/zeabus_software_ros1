@@ -17,6 +17,8 @@
 
 #include	<zeabus_library/general.h>
 
+#include	<zeabus_library/matrix.h>
+
 #include	<math.h>
 
 #include	<iostream>
@@ -32,6 +34,7 @@ namespace zeabus_library{
 			double A;
 			double B;
 			double C;
+			double M;
 
 			LinearEquation( double x0 = 0 , double y0 = 0 , double x1 = 0 , double y1 = 0 );
 			
@@ -40,13 +43,18 @@ namespace zeabus_library{
 			void set_point1( double x , double y );
 
 			void update();
-			double distance_point( double x , double y ); 
+			double distance_point( double x , double y );
+			void distance_split( double x , double y , double& ans_x , double& ans_y); 
 
 		protected:
 			double x0;
 			double y0;
 			double x1;
 			double y1;
+			double root_AB;
+
+		private:
+			boost::numeric::ublas::matrix< double > temp_matrix;
 
 	};
 

@@ -17,6 +17,8 @@
 
 #include	<ros/ros.h>
 
+#include	<math.h>
+
 #include	<zeabus_library/euler.h>
 
 #include	<zeabus_library/text_color.h>
@@ -30,6 +32,8 @@
 #include	<zeabus_library/control/listen_odometry.h>
 
 #include	<zeabus_library/control/listen_twist.h>
+
+#include	<zeabus_library/linear_equation.h>
 
 #include	<zeabus_library/general.h>
 
@@ -52,6 +56,7 @@ int main( int argv , char** argc ){
 	std::string topic_state;
 	std::string topic_output;
 	int frequency;
+	int constant_value = 12;
 
 	ph.param< std::string >("topic_state" , topic_state , "/localize/state");
 	ph.param< std::string >("topic_output" ,topic_output , "/control/target" );
@@ -61,14 +66,16 @@ int main( int argv , char** argc ){
 	ros::Rate rate( frequency );
 
 	zeabus_library::Twist message; // for send target velocity to node second_control
-	int count_target_velocity[6];
+	zeabus_library::Twist temp_message; 
+	int count_velocity[6];
 
 	zeabus_library::Point3 current_position; // for collection current position		
-	zeabus_library::Point3 diff_position;
+	zeabus_library::Point3 diff_position; // for collecting error position
 	zeabus_library::Point3 target_position; // for collecting target position
-	zeabus_library::Point3 temporary_position; // for collectin linear position for velocity
+	zeabus_library::Point3 temporary_position; // for collecting linear position for velocity
 	zeabus_library::Point3 current_velocity; // for collecting linear velocity form localize
 	zeabus_library::Point3 current_gyroscope; // for collecting angular velocity form localize
+	zeabus_library::LinearEquation line;
 	clear_point3( current_position );
 	clear_point3( target_position );
 	clear_point3( temporary_position );
@@ -88,13 +95,19 @@ int main( int argv , char** argc ){
 	listen_odometry.register_linear_velocity( &current_velocity );
 	listen_odometry.register_gyroscope( &current_gyroscope );
 
-	zeabus_library::control::ListenTwist listen_twist( count_target_velocity );
+	zeabus_library::control::ListenTwist listen_twist( count_velocity );
 	zeabus_library::Point3 target_velocity;
 	zeabus_library::Point3 target_gyroscope;
 	listen_twist.register_linear( &target_velocity );
 	listen_twist.register_angular( &target_gyroscope );
-	listen_twist.set_constant( 12 );
+	listen_twist.set_constant( constant_value );
+
+	int mode_control = 0;	//  mode control is consider by roll and pitch
+							//	mode 0 is roll & pitch normal is 0
 	
+	bool temp_bool;
+	double temp_distance;
+
 //////////////////////////////////////-- ROS SYSTEM --///////////////////////////////////////////
 	ros::Subscriber sub_state = nh.subscribe( topic_state , 1 
 								, &zeabus_library::control::ListenOdometry::callback
@@ -110,35 +123,51 @@ int main( int argv , char** argc ){
 		// for find diff euler
 		rh.set_start_frame( current_quaternion ); 
 		rh.set_target_frame( target_quaternion );
+		rh.target_frame.get_RPY( target_euler );
 		rh.update_rotation();
-		rh.start_frame.get_RPY( current_euler[0] , current_euler[1] , current_euler[2] );
 
-		// case plan XY
-		if( count_target_velocity[0] > 0 || count_target_velocity[1] > 0 ){
-			target_position.x = current_position.x;
-			target_position.y = current_position.y;
-			message.linear.x = target_velocity.x * zeabus_library::euler::cos( current_euler[0] )
-						+ target_velocity.y * zeabus_library::euler::cos( current_euler[1] + PI);
-			message.linear.y = target_velocity.x * zeabus_library::euler::sin( current_euler[0] )
-						+ target_velocity.y * zeabus_library::euler::sin( current_euler[1] + PI);
-			count_target_velocity[0]--;
-			count_target_velocity[1]--;
-		}	
-		else{
-			diff_position.x = target_position.x - current_position.x;
-			diff_position.y = target_position.y - current_position.y;
-			if( check_zero( diff_position.x ) ) message.linear.x = 0;
-			else if( diff_position.x < -1 ) message.linear.x = -1;
-			else if( diff_position.x > 1 ) message.linear.x = 1;
-			else if( diff_position.x < 0 ) message.linear.x = -0.05;
-			else message.linear.x = 0.05;
-
-			if( check_zero( diff_position.y ) ) message.linear.y = 0;
-			else if( diff_position.y < -1 ) message.linear.y = -1;
-			else if( diff_position.y > 1 ) message.linear.y = 1;
-			else if( diff_position.y < 0 ) message.linear.y = -0.05;
-			else message.linear.y = 0.05;
+		if( mode_control == 0 ){
+			if( count_velocity[0] != 0 && count_velocity[1] != 0 ){
+				temp_bool = count_velocity[0] == constant_value;
+				if( temp_bool ){
+					message.linear.x = target_velocity.x 
+											* zeabus_library::euler::cos( target_euler[2] )
+										+ target_velocity.y
+											* zeabus_library::euler::cos( target_euler[2] + PI );
+					message.linear.y = target_velocity.x
+											* zeabus_library::euler::sin( target_euler[2] )
+										+ target_velocity.y
+											* zeabus_library::euler::sin( target_euler[2] + PI );
+				}
+				target_position.x = current_position.x;
+				target_position.y = current_position.y;
+				count_velocity[0]--;
+				count_velocity[1]--;
+			}
+			else if( count_velocity[0] != 0 ){
+				temp_bool = count_velocity[0] == constant_value;
+				if( temp_bool ){
+					temp_message.linear.x = target_velocity.x 
+											* zeabus_library::euler::cos( target_euler[2] );
+					temp_message.linear.y = target_velocity.x
+											* zeabus_library::euler::sin( target_euler[2] )
+					next_point_xy( euler[2] , current_position.x , current_position.y
+								, temporary_position.x , temporary_position.y 
+								, copysign( 20 , target_velocity.x ) , 0 );	 
+					line.set_point( current_position.x , current_position.y 
+									, temporary_position.x , temporary_position.y );
+					line.update();	
+				}
+				line.distance_split( current_position.x , current_position.y
+									, diff_position.x , diff_position.y );
+				message.linear.x = temp_message.linear.x + assign_velocity_xy( diff_position.x);
+				message.linear.y = temp_message.linear.y + assign_velocity_xy( diff_position.y);
+			}
+			else if( count_velocity[1] != 0 ){
+			}
 		}
 	}
 
 }
+
+// This first control will interest in world frame but 

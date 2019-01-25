@@ -11,21 +11,31 @@
 <launch>
 
 	<arg name="dvl_serialport" default="/dev/usb2serial/ftdi_FT2VR5PM_02"/>
-	<arg name="microstrain_serial" default="/dev/microstrain/3dm_gx5_45_0000__6521.659030"/>
+	<arg name="microstrain_serial" default="/dev/microstrain/3dm_gx5_45_0000__6521.65903"/>
 	<arg name="modbus_serialport" defaul="/dev/usb2serial/ftdi_FT030MNT_00"/>
 
 	<node name="imu_port" output="screen" pkg="zeabus_sensor" type="imu_port">
-		<param name="mane_port_imu" value="$(arg microstrain_serial)"/>
-		<param name="topic_output_port_imu_zeabus" type="str" value="/sensor/imu/port">
-		<param name="topic_output_port_imu_sensor" type="str" value="/gx4_45_imu/data">
+		<param name="name_port_imu" value="$(arg microstrain_serial)"/>
+		<param name="topic_output_port_imu_zeabus" type="str" value="/sensor/imu/port"/>
+		<param name="topic_output_port_imu_sensor" type="str" value="/gx4_45_imu/data"/>
 		<param name="frequency_imu" type="int" value="50"/>
 	</node>
 
-	<node name="dvl" output="screen" pkg="hg_ros_teledyne_dvl" type="dvl_node">
-		<param name="device" value="$(arg dvl_serialport)"/>
-		<param name="baudrate" value="115200"/>
-		<param name="velocity_stdev" value="0.018"/>
-		<param name="ublish_invalid_data" value="true"/>
+	<node name="imu_node" output="screen" pkg="zeabus_sensor" type="imu_node">
+		<param name="topic_input_node_imu" type="str" value="/sensor/imu/port"/>
+		<param name="topic_output_node_imu" type="str" value="/sensor/imu/node"/>
+		<param name="frequency_imu" type="int" value="50"/>
+	</node>
+
+	<node name="dvl_port" output="screen" pkg="zeabus_sensor" type="dvl_port">
+		<param name="name_port_dvl" value="$(arg dvl_serialport)"/>
+		<param name="topic_output_port" type="str" value="/sensor/dvl/port"/>
+	</node>
+
+	<node name="dvl_node" output="screen" pkg="zeabus_sensor" type="dvl_node">
+		<param name="topic_input_node_dvl" type="str" value="/sensor/dvl/port"/>
+		<param name="topic_output_node_dvl" type="str" value="/sensor/dvl/node"/>
+		<param name="topic_imu" type="str" value="/sensor/imu/node"/>
 	</node>
 
 	<include file="$(find zeabus_elec_ros_hardward_interface)/launch/hardware_interface.launch"/>

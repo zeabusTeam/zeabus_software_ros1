@@ -51,8 +51,8 @@ namespace control{
 			// value condition of i
 			double offset;
 			double limit;
-			// value of pid
 			double sum;	
+			// value of pid
 			double previous_error;
 		
 	};

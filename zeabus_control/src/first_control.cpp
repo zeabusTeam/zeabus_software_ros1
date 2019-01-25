@@ -117,6 +117,8 @@ int main( int argv , char** argc ){
 								, &zeabus_library::control::ListenTwist::callback
 								, &listen_twist );
 
+	ros::Publisher tell_target = nh.advertise< zeabus_library::Twist >( topic_output , 1 );
+
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
@@ -206,6 +208,7 @@ int main( int argv , char** argc ){
 				message.angular.z = assign_gyroscope_z( diff_euler[2] );
 			}
 		}
+		tell_target.publish( message );
 	}
 
 }

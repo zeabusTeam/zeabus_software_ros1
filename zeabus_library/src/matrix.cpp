@@ -48,7 +48,11 @@ namespace zeabus_library{
 			boost::numeric::ublas::axpy_prod( m_1 , m_2 , result , init_matrix );
 			return zeabus_library::NO_ERROR;
 		}
-			
+		
+
+		double det( boost::numeric::ublas::matrix< double >& matrix ){
+			return matrix( 0 , 0 ) * matrix( 1 , 1 ) - matrix( 0 , 1 ) * matrix( 1 , 0 );
+		}	
 	}
 
 }

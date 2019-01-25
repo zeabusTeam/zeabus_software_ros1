@@ -7,8 +7,8 @@
 							Support Boost matrix
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.1.0
+	status				:	Use & Maintainance
 
 	Namespace			:	zeabus_library::matrix
 */
@@ -36,6 +36,8 @@ namespace matrix{
 					, boost::numeric::ublas::matrix< double >& m_2 
 					, boost::numeric::ublas::matrix< double >& result 
 					, bool init_matrix = true );
+
+	double det( boost::numeric::ublas::matrix< double >& matrix );
 }
 
 }

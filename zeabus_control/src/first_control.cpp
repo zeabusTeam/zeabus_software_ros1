@@ -124,6 +124,7 @@ int main( int argv , char** argc ){
 		rh.set_start_frame( current_quaternion ); 
 		rh.set_target_frame( target_quaternion );
 		rh.target_frame.get_RPY( target_euler[0] , target_euler[1] , target_euler[2] );
+		rh.get_RPY( diff_euler[0] , diff_euler[1] , diff_euler[2] ); // start go to target
 		rh.update_rotation();
 
 		if( mode_control == 0 ){
@@ -189,6 +190,20 @@ int main( int argv , char** argc ){
 				diff_position.y = current_position.y - target_position.y;
 				message.linear.x = assign_velocity_xy( diff_position.x );
 				message.linear.y = assign_velocity_xy( diff_position.y );
+			}
+			if( count_velocity[2] != 0 ){
+				message.linear.z = target_velocity.z;
+				count_velocity[2]--;
+			}
+			else{
+				diff_position.z = current_position.z - target_position.z;
+			}
+			if( count_velocity[5] != 0 ){
+				message.angular.z = target_gyroscope.z;
+				count_velocity[5]--;
+			}
+			else{
+				message.angular.z = assign_gyroscope_z( diff_euler[2] );
 			}
 		}
 	}

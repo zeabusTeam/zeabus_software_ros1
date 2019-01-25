@@ -46,7 +46,7 @@ int main( int argc , char** argv ){
 	ph.param< std::string >("topic_input_node_dvl" , topic_input , "/sensor/dvl/port");
 	ph.param< std::string >("topic_imu" , topic_imu , "/sensor/imu/node");
 	ph.param< std::string >("topic_output_node_dvl" , topic_output , "/sensor/dvl/node");
-	ph.param< int >("frequency" , frequency , 40 );
+	ph.param< int >("frequency" , frequency , 100 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -71,7 +71,7 @@ int main( int argc , char** argv ){
 
 	receive_matrix.resize( 3 , 1 );
 	result_matrix.resize( 3 , 1 );
-	rh.set_start_frame( 0 , 0 , 0 );
+	rh.set_start_frame( PI , 0 , 0 );
 	rh.set_target_frame( 0 , 0 , 0 );
 	
 /////////////////////////////////////-- ROS SYSTEM --///////////////////////////////////////////

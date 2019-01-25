@@ -36,6 +36,7 @@
 		<param name="topic_input_node_dvl" type="str" value="/sensor/dvl/port"/>
 		<param name="topic_output_node_dvl" type="str" value="/sensor/dvl/node"/>
 		<param name="topic_imu" type="str" value="/sensor/imu/node"/>
+		<param name="frequency" type="int" value="100"/>
 	</node>
 
     <include file="$(find zeabus_elec_ros_power_dist)/launch/power_dist.launch"/>

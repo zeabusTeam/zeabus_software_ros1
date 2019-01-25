@@ -130,8 +130,8 @@ int main( int argc , char ** argv ){
 			if( status == 'A' ){
 				printf( "<-------- DVL GOOD DATA ---------->\n");
 				data_ros.x = temp_x * 0.001;
-				data_ros.y = temp_y * -0.001;
-				data_ros.z = temp_z * -0.001;
+				data_ros.y = temp_y * 0.001;
+				data_ros.z = temp_z * 0.001;
 				tell_dvl.publish( data_ros );
 			}
 			else{

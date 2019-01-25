@@ -55,7 +55,7 @@ int main( int argv , char** argc ){
 	ph.param< std::string >("topic_imu" , topic_imu , "/sensor/imu/node");
 	ph.param< std::string >("topic_dvl" , topic_dvl , "/sensor/dvl/node");
 	ph.param< std::string >("topic_pressure" , topic_pressure , "/sensor/pressure/node");
-	ph.param< int >("frequency" , frequency , 50 );
+	ph.param< int >("frequency" , frequency , 100 );
 
 	double period = 1.0 / frequency ;
 
@@ -119,8 +119,8 @@ int main( int argv , char** argc ){
 				, message.velocity.angular.x , message.velocity.angular.y , message.velocity.angular.z );
 		#endif
 		#ifdef _DEBUG_JUMP_VALUE_
-			if( message.pose.position.x > 2 || message.pose.position.x < -2 ) break;
-			if( message.pose.position.y > 2 || message.pose.position.y < -2 ) break;
+			if( adding_x > 2 || adding_x < -2 ) break;
+			if( adding_y > 2 || adding_y < -2 ) break;
 		#endif
 	}
 	printf("Message velocity linear x %10.3lf\n" , message.velocity.linear.x );

@@ -40,11 +40,11 @@ include_directories(
 
 #target_link_libraries( control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
 
-#add_executable(first_control src/first_control.cpp)
+add_executable(first_control src/first_control.cpp)
 
-#add_dependencies( first_control	${PROJECT_NAME}_gencfg 
-#							${${PROJECT_NAME}_EXPORTED_TARGETS}
-#							${catkin_EXPORTED_TARGETS}
-#)
+add_dependencies( first_control	${PROJECT_NAME}_gencfg 
+							${${PROJECT_NAME}_EXPORTED_TARGETS}
+							${catkin_EXPORTED_TARGETS}
+)
 
-#target_link_libraries( first_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries( first_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )

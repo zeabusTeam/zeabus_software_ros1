@@ -40,7 +40,7 @@ void clear_point3( zeabus_library::Point3& variable ){
 	variable.z = 0;
 }
 
-void next_point_xy( double& yaw , double& x0 , double& y0 , double& x1 , double& x2 
+void next_point_xy( double& yaw , double& x0 , double& y0 , double& x1 , double& y1 
 						, double distance_x , double distance_y ){
 	x1 = x0 
 		+ distance_x*zeabus_library::euler::cos( yaw ) 

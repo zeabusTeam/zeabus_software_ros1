@@ -123,7 +123,7 @@ int main( int argv , char** argc ){
 		// for find diff euler
 		rh.set_start_frame( current_quaternion ); 
 		rh.set_target_frame( target_quaternion );
-		rh.target_frame.get_RPY( target_euler );
+		rh.target_frame.get_RPY( target_euler[0] , target_euler[1] , target_euler[2] );
 		rh.update_rotation();
 
 		if( mode_control == 0 ){
@@ -150,8 +150,8 @@ int main( int argv , char** argc ){
 					temp_message.linear.x = target_velocity.x 
 											* zeabus_library::euler::cos( target_euler[2] );
 					temp_message.linear.y = target_velocity.x
-											* zeabus_library::euler::sin( target_euler[2] )
-					next_point_xy( euler[2] , current_position.x , current_position.y
+											* zeabus_library::euler::sin( target_euler[2] );
+					next_point_xy( target_euler[2] , current_position.x , current_position.y
 								, temporary_position.x , temporary_position.y 
 								, copysign( 20 , target_velocity.x ) , 0 );	 
 					line.set_point( current_position.x , current_position.y 

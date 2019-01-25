@@ -49,7 +49,7 @@ namespace zeabus_library{
 		return zeabus_library::abs( this->A * x + this->B * y + this->C ) / this->root_AB;
 	}
 
-	void distance_split( double x , double y , double& ans_x , double& ans_y){
+	void LinearEquation::distance_split( double x , double y , double& ans_x , double& ans_y){
 		double temp_M = -1.0 * this->M;
 		double temp_C = y - ( temp_M * x );
 		this->temp_matrix( 0 , 0 ) = temp_M; // -1.0 * this->M

@@ -2,12 +2,12 @@
 	File name			:	matrix.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 20
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , JAN 26
 	Purpose				:	This header library for support using matrix
 							Support Boost matrix
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.2.0
 	status				:	Use & Maintainance
 
 	Namespace			:	zeabus_library::matrix
@@ -38,6 +38,9 @@ namespace matrix{
 					, bool init_matrix = true );
 
 	double det( boost::numeric::ublas::matrix< double >& problem );
+
+	void to_array( boost::numeric::ublas::matrix< double>& problem , double* array );
+	void to_matrix( double* array , boost::numeric::ublas::matrix< double >& problem );
 }
 
 }

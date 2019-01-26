@@ -2,12 +2,12 @@
 	File name			:	Point3.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 06
-	Date last modified	:	2018 , DEC 09
+	Date last modified	:	2018 , JAN 26
 	Purpose				:	For convert array or value to zeabus_library/Point3
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.1
+	version				:	1.2.0
 	status				:	Maintain
 
 	Namespace			:	zeabus_library
@@ -70,10 +70,10 @@ namespace convert{
 		}
 	}
 
-	void Point3_to_array(	zeabus_library::Point3 data , double* result ){
-		result[0] = data.x;
-		result[1] = data.y;
-		result[2] = data.z;
+	void Point3_to_array( zeabus_library::Point3& data , double* result , int offset){
+		result[0 + offset ] = data.x;
+		result[1 + offset ] = data.y;
+		result[2 + offset ] = data.z;
 	}
 
 }

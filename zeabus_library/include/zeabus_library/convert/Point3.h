@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.2.0
 	status				:	Maintain
 
 	Namespace			:	zeabus_library/convert
@@ -36,7 +36,7 @@ namespace convert{
 	size_t Point3_to_matrix(	zeabus_library::Point3& data
 							, boost::numeric::ublas::matrix< double >& result );
 
-	void Point3_to_array(	zeabus_library::Point3& data , double* result);
+	void Point3_to_array(	zeabus_library::Point3& data , double* result , int offset = 0 );
 
 }
 }

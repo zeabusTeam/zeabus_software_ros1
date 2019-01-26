@@ -11,14 +11,14 @@ import rospy
 import numpy as np
 import LookUpPWM_2018 as lup
 from hg_ros_pololu.msg import Pwm
-from geometry_msgs.msg import Twist
+from zeabus_library.msg import Twist
 
 
 class ThrustMapper:
     def __init__(self):
         rospy.init_node('Thrust_mapper')
         self.pwm_publisher = rospy.Publisher('/pwm', Pwm, queue_size=1)
-        rospy.Subscriber("/cmd_vel", Twist, self.torque_callback)
+        rospy.Subscriber("/control/force", Twist, self.torque_callback)
 
         cos_45 = math.cos(math.radians(45))
         sin_45 = math.sin(math.radians(45))

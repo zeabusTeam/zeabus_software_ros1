@@ -53,6 +53,18 @@ namespace zeabus_library{
 		double det( boost::numeric::ublas::matrix< double >& problem ){
 			return problem( 0 , 0 ) * problem( 1 , 1 ) - problem( 0 , 1 ) * problem( 1 , 0 );
 		}	
+
+		void to_array( boost::numeric::ublas::matrix< double>& problem , double* array ){
+			array[ 0 ] = problem( 0 , 0 );
+			array[ 1 ] = problem( 1 , 0 );
+			array[ 2 ] = problem( 2 , 0 );
+		}
+
+		void to_matrix( double* array , boost::numeric::ublas::matrix< double >& problem ){
+			problem( 0 , 0 ) = array[0];
+			problem( 1 , 0 ) = array[1];
+			problem( 2 , 0 ) = array[2];
+		}
 	}
 
 }

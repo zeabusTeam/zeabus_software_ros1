@@ -66,9 +66,9 @@ namespace control{
 			result = this->sum;
 		}
 		else{
-			this->sum += ( error * this->i );
-			result = (this->sum + error*this->p) * this->period 
+			this->sum += ( error * this->i ) * this->period
 					+ ( error - this->previous_error) / this->period;
+			result = this->sum + error*this->p; 
 			this->previous_error = error;
 		}
 	}

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(zeabus_teleop)
 ## Find catkin macros and libraries
-find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs joy)
+find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs joy zeabus_library)
 
 include_directories(${catkin_INCLUDE_DIRS})
 
@@ -18,8 +18,8 @@ catkin_package(
 add_executable(zeabus_joy src/zeabus_joy.cpp)
 target_link_libraries(zeabus_joy ${catkin_LIBRARIES})
 
-add_executable(joy_node src/joy_node.cpp)
-target_link_libraries(joy_node ${catkin_LIBRARIES})
+add_executable(node_joy src/joy_node.cpp)
+target_link_libraries(node_joy ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############

@@ -41,6 +41,7 @@
 #include "boost/thread/mutex.hpp"
 #include "boost/thread/thread.hpp"
 #include "ros/console.h"
+#include <zeabus_library/Twist.h>
 
 class ZeabusTeleop
 {
@@ -57,7 +58,7 @@ private:
 
   ros::Publisher vel_pub_;
   ros::Subscriber joy_sub_;
-  geometry_msgs::Twist last_published_;
+  zeabus_library::Twist last_published_;
   boost::mutex publish_mutex_;
 
   bool deadman_pressed_;
@@ -106,7 +107,7 @@ void ZeabusTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   double r, p, y, depth;
 
-  geometry_msgs::Twist vel;
+  zeabus_library::Twist vel;
 
   if(!joy->buttons[mode_button_])
   {

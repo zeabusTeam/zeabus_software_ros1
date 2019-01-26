@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.1
+	version				:	1.0.2
 	status				:	Product
 
 	Namespace			:	zeabus_library/control
@@ -70,6 +70,9 @@ namespace control{
 		else{
 			this->sum += ( error * this->i ) * this->period
 					+ ( error - this->previous_error) / this->period;
+
+			if( zeabus_library::abs( this->sum ) > this->limit )
+				this->sum = copysign( this->limit , this->sum );
 			result = this->sum + error*this->p; 
 			this->previous_error = error;
 		}

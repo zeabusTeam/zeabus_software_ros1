@@ -19,6 +19,8 @@
 
 #include	<math.h>
 
+#include	<zeabus_library/general.h>
+
 #ifndef _ZEABUS_LIBRARY_CONTROL_PID_H__
 #define _ZEABUS_LIBRARY_CONTROL_PID_H__
 

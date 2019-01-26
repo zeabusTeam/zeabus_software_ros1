@@ -2,12 +2,12 @@
 	File name			:	dvl_node.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2019 , JAN 12
-	Date last modified	:	2019 , ??? ??
+	Date last modified	:	2019 , JAN 26
 	Purpose				:	This is file to use read connect and convert dvl data in ros system
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
+	version				:	1.1.0
 	status				:	Maintain
 
 	Namespace			:	None
@@ -26,6 +26,8 @@
 #include	<zeabus_library/localize/listen_IMUQuaternion.h>
 
 #include	<zeabus_library/localize/listen_DVL.h>
+
+#include	<zeabus_library/general.h>
 
 #define _DEBUG_JUMP_VALUE_
 
@@ -55,6 +57,7 @@ int main( int argc , char** argv ){
 	zeabus_library::rotation::RotationHandle rh;
 
 	boost::numeric::ublas::matrix< double > receive_matrix;
+	boost::numeric::ublas::matrix< double > previous_matrix;
 	boost::numeric::ublas::matrix< double > result_matrix;
 	zeabus_library::Point3 data_dvl;
 
@@ -71,6 +74,7 @@ int main( int argc , char** argv ){
 
 	receive_matrix.resize( 3 , 1 );
 	result_matrix.resize( 3 , 1 );
+	previous_matrix.resize( 3 , 1 );
 	rh.set_start_frame( PI , 0 , 0 );
 	rh.set_target_frame( 0 , 0 , 0 );
 	
@@ -97,6 +101,15 @@ int main( int argc , char** argv ){
 		if( listen_imu.count < 0 ) zeabus_library::bold_red( "Fatal! IMU missing receive\n\n");
 		rh.set_target_frame( data_quaternion );
 		zeabus_library::convert::Point3_to_matrix( data_dvl , receive_matrix );
+
+		if( zeabus_library::abs( receive_matrix( 0 , 0 ) ) < 0.01 ) 
+			receive_matrix( 0 , 0 ) = previous_matrix( 0 , 0 );
+		if( zeabus_library::abs( receive_matrix( 1 , 0 ) ) < 0.01 ) 
+			receive_matrix( 1 , 0 ) = previous_matrix( 1 , 0 );
+		if( zeabus_library::abs( receive_matrix( 2 , 0 ) ) < 0.01 ) 
+			receive_matrix( 2 , 0 ) = previous_matrix( 2 , 0 );
+		
+		zeabus_library::convert::Point3_to_matrix( data_dvl , previous_matrix );
 		#ifdef _DEBUG_JUMP_VALUE_
 			printf("Receive value %8.3lf\t%8.3lf\n" , data_dvl.x , data_dvl.y );
 		#endif

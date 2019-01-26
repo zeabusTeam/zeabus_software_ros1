@@ -27,7 +27,7 @@ bool already_loading_constant = false;
 bool want_save_constant = false;
 
 void dynamic_reconfigure_callback( zeabus_control::pid_Config &config , uint32_t level){
-	printf("Tunning constant value");
+	printf("Tunning constant value\n");
 
 	constant_velocity[0][0] = config.p_x_velocity;
 	constant_velocity[1][0] = config.i_x_velocity;

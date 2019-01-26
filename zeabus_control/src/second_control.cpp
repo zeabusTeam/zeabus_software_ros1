@@ -93,7 +93,7 @@ int main( int argv , char** argc ){
 	server.setCallback( function );
 	zeabus_library::DynParam tune_value;
 	tune_value.set_package_file( "zeabus_control" );
-	tune_value.set_directory_file( "const" );
+	tune_value.set_directory_file( "constant" );
 	tune_value.set_name_file( "second_control" );
 	tune_value.set_node( "second_control" );
 
@@ -144,10 +144,10 @@ int main( int argv , char** argc ){
 			printf("error_velocity  : %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf\n\n"
 				, error_velocity[0] , error_velocity[1] , error_velocity[2] 
 				, error_velocity[3] , error_velocity[4] , error_velocity[5] );
-			printf("world_force		: %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf\n\n"
+			printf("world_force     : %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf\n\n"
 				, world_force( 0 , 0 ) , world_force( 1 , 0 ) , world_force( 2 , 0 ) 
 				, force_velocity[3] , force_velocity[4] , force_velocity[5] );
-			printf("robot_force		: %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf\n\n"
+			printf("robot_force     : %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf\n\n"
 				, robot_force( 0 , 0 ) , robot_force( 1 , 0 ) , robot_force( 2 , 0 ) 
 				, force_velocity[3] , force_velocity[4] , force_velocity[5] );
 

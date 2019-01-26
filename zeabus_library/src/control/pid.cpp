@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
+	version				:	1.0.1
 	status				:	Product
 
 	Namespace			:	zeabus_library/control
@@ -24,6 +24,7 @@ namespace control{
 		this->offset_i( 0 );
 		this->limit_i( 1 );
 		this->set_period( 0.001 );
+		this->reset_value();
 	}
 
 	PID::~PID(){}
@@ -64,6 +65,7 @@ namespace control{
 			this->sum = copysign( this->offset , error );
 			this->previous_error = error;
 			result = this->sum;
+			this->first_time = false;
 		}
 		else{
 			this->sum += ( error * this->i ) * this->period

@@ -18,18 +18,18 @@ dictitems:
         state: []
       i_pitch_velocity: 0.0
       i_roll_velocity: 0.0
-      i_x_velocity: 0.0
-      i_y_velocity: 0.0
-      i_yaw_velocity: 0.0
-      i_z_velocity: 0.0
+      i_x_velocity: 0.1
+      i_y_velocity: 0.1
+      i_yaw_velocity: 0.01
+      i_z_velocity: 0.5
       id: 0
       name: Default
       p_pitch_velocity: 0.0
       p_roll_velocity: 0.0
       p_x_velocity: 1.0
-      p_y_velocity: 0.0
-      p_yaw_velocity: 0.0
-      p_z_velocity: 0.0
+      p_y_velocity: 1.0
+      p_yaw_velocity: 1.0
+      p_z_velocity: 1.0
       parameters: !!python/object/new:dynamic_reconfigure.encoding.Config
         state: []
       parent: 0
@@ -44,16 +44,16 @@ dictitems:
     state: []
   i_pitch_velocity: 0.0
   i_roll_velocity: 0.0
-  i_x_velocity: 0.0
-  i_y_velocity: 0.0
-  i_yaw_velocity: 0.0
-  i_z_velocity: 0.0
+  i_x_velocity: 0.1
+  i_y_velocity: 0.1
+  i_yaw_velocity: 0.01
+  i_z_velocity: 0.5
   p_pitch_velocity: 0.0
   p_roll_velocity: 0.0
   p_x_velocity: 1.0
-  p_y_velocity: 0.0
-  p_yaw_velocity: 0.0
-  p_z_velocity: 0.0
+  p_y_velocity: 1.0
+  p_yaw_velocity: 1.0
+  p_z_velocity: 1.0
   pitch_offset: 0.0
   roll_offset: 0.0
   x_offset: 0.0

@@ -28,7 +28,7 @@
 #include	<zeabus_library/Point4.h>
 
 void clear_point4( zeabus_library::Point4& variable ){
-	variable.w = 0;
+	variable.w = 1;
 	variable.x = 0;
 	variable.y = 0;
 	variable.z = 0;

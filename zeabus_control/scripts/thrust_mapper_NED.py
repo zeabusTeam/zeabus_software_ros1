@@ -35,14 +35,14 @@ class ThrustMapper:
         ])
 
         self.distance = np.array([
-            [0.332,  0.2202, -0.023],  	# thruster 1
-            [0.332, -0.2202, -0.023],  	# thruster 2
-            [-0.332,  0.2202, -0.023],  # thruster 3
-            [-0.332, -0.2202, -0.023],  # thruster 4
-            [0.3536,  0.3536, -0.023],  # thruster 5
-            [0.3536, -0.3536, -0.023],  # thruster 6
-            [-0.3536,  0.3536, -0.023], # thruster 7
-            [-0.3536, -0.3536, -0.023], # thruster 8
+            [0.332,  -0.2202, -0.023],  	# thruster 1
+            [0.332, 0.2202, -0.023],  	# thruster 2
+            [-0.332,  -0.2202, -0.023],  # thruster 3
+            [-0.332, 0.2202, -0.023],  # thruster 4
+            [0.3536,  -0.3536, -0.023],  # thruster 5
+            [0.3536, 0.3536, -0.023],  # thruster 6
+            [-0.3536,  -0.3536, -0.023], # thruster 7
+            [-0.3536, 0.3536, -0.023], # thruster 8
         ])
 
         self.min_force = np.array([	[-0.048, 0.045],	
@@ -80,6 +80,9 @@ class ThrustMapper:
 
         force = np.array([message.linear.x, message.linear.y, message.linear.z,
                       message.angular.x, message.angular.y, message.angular.z])
+        print '==================== PWM ===================='
+        print("%+5.4f %+5.4f %+5.4f"%(message.linear.x,message.linear.y,message.linear.z))
+        print("%+5.4f %+5.4f %+5.4f"%(message.angular.x,message.angular.y,message.angular.z))
 
         torque = np.matmul(self.direction_inverse.T,force.T)
        

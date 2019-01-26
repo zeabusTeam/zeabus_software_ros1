@@ -37,6 +37,9 @@ namespace control{
 			void register_linear_velocity( zeabus_library::Point3* variable );
 			void register_gyroscope( zeabus_library::Point3* variable );
 
+			void register_target_position( zeabus_library::Point3* variable );
+			void register_target_quaternion( zeabus_library::Point4* variable );
+
 			void callback( const zeabus_library::Odometry& message );
 
 			void callback_twist( const zeabus_library::Odometry& message );
@@ -48,6 +51,10 @@ namespace control{
 			zeabus_library::Point4* quaternion;
 			zeabus_library::Point3* linear_velocity;
 			zeabus_library::Point3* gyroscope;
+			zeabus_library::Point3* target_linear_position;
+			zeabus_library::Point4* target_quaternion;
+
+			bool first_time;
 
 	};
 

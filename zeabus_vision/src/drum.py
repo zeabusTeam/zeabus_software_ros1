@@ -1,4 +1,10 @@
 #!/usr/bin/python2.7
+"""
+    File name: drum.py
+    Author: AyumiizZ
+    Python Version: 2.7
+    About: code for finding drum
+"""
 import rospy
 import numpy as np
 import cv2 as cv
@@ -7,11 +13,16 @@ from zeabus_vision.msg import vision_drum
 from zeabus_vision.srv import vision_srv_drum
 from vision_lib import *
 import color_text as ct
+from time import time
 
 bgr = None
 image_result = None
 public_topic = '/vision/mission/drum/'
 sub_sampling = 1
+his = []
+last_time = 0
+start_shade = 0
+shade = ["dark","light"]
 
 
 def mission_callback(msg):
@@ -55,7 +66,7 @@ def message(state=0, cx1=0, cy1=0, cx2=0, cy2=0, forward=False, backward=False, 
     return msg
 
 
-def get_mask(img, color):
+def get_mask(img, color, shade="dark"):
     blur = cv.medianBlur(img, 5)
     hsv = cv.cvtColor(blur, cv.COLOR_BGR2HSV)
     _, s, _ = cv.split(hsv)
@@ -66,8 +77,12 @@ def get_mask(img, color):
         upper = np.array([120, 255, 255], dtype=np.uint8)
         lower = np.array([90, 160, 0], dtype=np.uint8)
     if color == "yellow":
-        upper = np.array([47, 255, 255], dtype=np.uint8)
-        lower = np.array([20, 17, 228], dtype=np.uint8)
+        if shade == "dark":
+            upper = np.array([47, 255, 255], dtype=np.uint8)
+            lower = np.array([20, 17, 228], dtype=np.uint8)
+        elif shade == "light":
+            upper = np.array([60, 255, 255], dtype=np.uint8)
+            lower = np.array([27, 160, 97], dtype=np.uint8)
     if color == "green":
         upper = np.array([90, 255, 255], dtype=np.uint8)
         lower = np.array([60, 160, 0], dtype=np.uint8)
@@ -92,7 +107,7 @@ def get_ROI(mask, obj='drop'):
         area = cv.contourArea(cnt)
         check_area = 1000
         if obj == 'pick':
-            check_area = 200
+            check_area = 100
         if area < check_area:
             continue
         ROI.append(cnt)
@@ -175,38 +190,57 @@ def find_drum(objective):
         return message(state=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,
                        backward=backward, left=left, right=right, area=area)
 
+def append_history(data):
+    global his
+    if len(his) == 5:
+        his = [data]
+    else:
+        his.append(data)
 
 def find_golf(objective):
-    global bgr
+    global bgr, last_time, his, start_shade, shade
     if bgr is None:
         img_is_none()
         return message(state=-1)
+    if(last_time == 0 or time()-last_time > 5 or his is None):
+        his = []
     himg, wimg = bgr.shape[:2]
     if himg > 1000 or wimg > 1000:
         print_result("size bug plz wait", color=ct.RED)
+        last_time = time()
         return message(state=-2)
-    golf_mask = get_mask(bgr, "yellow")
+    if len(his) == 5 and 1 not in his:
+        start_shade += 1
+        start_shade %= len(shade)
+    print(shade[start_shade],his)
+    golf_mask = get_mask(bgr, "yellow",shade=shade[start_shade])
     ROI = get_ROI(golf_mask, objective)
     if ROI is None:
         print_result("size bug plz wait", color=ct.RED)
+        last_time = time()
         return message(state=-2)
     mode = len(ROI)
     if mode == 0:
         print_result("CANNOT FOUND GOLF", ct.RED)
         publish_result(golf_mask, 'gray', public_topic+'mask/golf')
         publish_result(image_result, 'bgr', public_topic+'image_result')
+        last_time = time()
+        append_history(0)
         return message()
     elif mode >= 1:
         if mode == 1:
             print_result("FOUND GOLF", ct.GREEN)
+            append_history(1)
         elif mode > 1:
             print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
+            append_history(1.0/mode)
         cnt = max(ROI, key=cv.contourArea)
         cx1, cy1, cx2, cy2, area = get_cx(cnt)
         forward, backward, left, right = get_excess(cnt)
         publish_result(golf_mask, 'gray', public_topic+'mask/golf')
         publish_result(image_result, 'bgr', public_topic+'image_result')
+        last_time = time()
         return message(state=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,
                        backward=backward, left=left, right=right, area=area)
 

@@ -15,6 +15,8 @@
 
 #include	<zeabus_library/linear_equation.h>
 
+#define _DEBUG_ORDERED_
+
 namespace zeabus_library{
 
 	LinearEquation::LinearEquation( double x0 , double y0 , double x1 , double y1 ){
@@ -50,6 +52,9 @@ namespace zeabus_library{
 	}
 
 	void LinearEquation::distance_split( double x , double y , double& ans_x , double& ans_y){
+		#ifdef _DEBUG_ORDERED_
+			printf("BEGIN LinearEquation::distance_split\n");
+		#endif
 		double temp_M = -1.0 * this->M;
 		double temp_C = y - ( temp_M * x );
 		this->temp_matrix( 0 , 0 ) = temp_M; // -1.0 * this->M
@@ -68,5 +73,8 @@ namespace zeabus_library{
 		double cut_y = zeabus_library::matrix::det( this->temp_matrix ) / det_A;
 		ans_x = cut_x - x ;
 		ans_y = cut_y - y ;
+		#ifdef _DEBUG_ORDERED_
+			printf("END LinearEquation::distance_split\n");
+		#endif
 	}
 }

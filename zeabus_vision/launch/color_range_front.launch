@@ -1,0 +1,13 @@
+<launch>
+	<arg name="mission"/>
+	<arg name="number"/>
+    <node pkg="zeabus_vision" name="cating" type="check_files.sh" args="$(arg number) $(arg mission) front" output="screen"/>
+    <node pkg="zeaus_vision" name="sleep" type="sleep.sh" output="screen" />
+	<rosparam ns="color_range_front_$(arg number)_$(arg mission)" command="load" file="$(find zeabus_vision)/params/$(arg number)/color_front_$(arg mission).yaml" />
+	<node pkg="zeabus_vision" name="color_range_front_$(arg number)_$(arg mission)" type="color_range.py" args="color_range_front_$(arg number)_$(arg mission)" output="screen">
+		<param name="camera_topic" type="str" value="/vision/front/image_rect_color/compressed"/>
+		<param name="camera_position" type="str" value="front"/>
+		<param name="mission" type="str" value="$(arg mission)"/>
+		<param name="number" type="str" value="$(arg number)"/>
+	</node>
+</launch>

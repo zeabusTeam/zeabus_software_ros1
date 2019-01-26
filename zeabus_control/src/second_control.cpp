@@ -43,7 +43,7 @@
 int main( int argv , char** argc ){
 
 	double ok_error[6] = { 0.01 , 0.01 , 0.05 , 0.02 , 0.02 , 0.02};
-	double limit_pid[6] = { 1 , 1 , 1 , 1 , 1 , 1};
+	double limit_pid[6] = { 1 , 1 , 3 , 1 , 1 , 1};
 
 	ros::init( argv , argc , "second_control");
 
@@ -59,6 +59,7 @@ int main( int argv , char** argc ){
 
 	zeabus_library::Point3 temp_position;
 	zeabus_library::Point4 quaternion;
+	zeabus_library::Point4 temp_quaternion;
 
 	zeabus_library::Twist current;
 	zeabus_library::Twist target;
@@ -73,6 +74,8 @@ int main( int argv , char** argc ){
 	listen_odometry.register_linear_velocity( &current.linear );
 	listen_odometry.register_quaternion( &quaternion );
 	listen_odometry.register_linear_position( &temp_position );
+	listen_odometry.register_target_position( &temp_position );
+	listen_odometry.register_target_quaternion( &temp_quaternion );
 	listen_odometry.register_gyroscope( &current.angular );
 
 	listen_twist.register_linear( &target.linear );
@@ -83,11 +86,11 @@ int main( int argv , char** argc ){
 
 	ros::Publisher tell_force = nh.advertise< zeabus_library::Twist >("/control/force" , 10 );
 
-	ros::Subscriber sum_current = nh.subscribe( "/localize/state" , 1 
+	ros::Subscriber sub_current = nh.subscribe( "/localize/state" , 1 
 							, &zeabus_library::control::ListenOdometry::callback
 							, &listen_odometry );
 
-	ros::Subscriber sum_target = nh.subscribe( "/control/twist" , 1
+	ros::Subscriber sub_target = nh.subscribe( "/control/target" , 1
 							, &zeabus_library::control::ListenTwist::callback
 							, &listen_twist );
 
@@ -111,6 +114,8 @@ int main( int argv , char** argc ){
 
 	for( int run = 0 ; run < 6 ; run++ ){
 		pid[run].limit_i( limit_pid[run] );
+		pid[run].set_constant( 0 , 0 , 0 );
+		pid[run].offset_i(0);
 	}
 
 	while( nh.ok() ){
@@ -140,7 +145,9 @@ int main( int argv , char** argc ){
 		zeabus_library::matrix::to_matrix( force_velocity , world_force );
 		rh.start_rotation( world_force , robot_force );
 		zeabus_library::matrix::to_array( robot_force , force_velocity );
+		zeabus_library::convert::array_to_Point3( force_velocity , force.linear , 0 );
 
+		tell_force.publish( force );
 		#ifdef _PRINT_DATA_
 			rh.target_frame.get_RPY( temp_euler[0] , temp_euler[1] , temp_euler[2] );	
 			zeabus_library::clear_screen();
@@ -159,6 +166,9 @@ int main( int argv , char** argc ){
 			printf("robot_force     : %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf\n\n"
 				, robot_force( 0 , 0 ) , robot_force( 1 , 0 ) , robot_force( 2 , 0 ) 
 				, force_velocity[3] , force_velocity[4] , force_velocity[5] );
+			printf("sending_force   : %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf\n\n"
+				, force.linear.x , force.linear.y , force.linear.z 
+				, force.angular.x , force.angular.y , force.angular.z );
 			printf("current_euler   : %8.4lf  %8.4lf  %8.4lf\n\n"
 				, temp_euler[0] , temp_euler[1] , temp_euler[2] );
 

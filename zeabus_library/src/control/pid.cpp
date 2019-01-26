@@ -69,7 +69,7 @@ namespace control{
 		}
 		else{
 			this->sum += ( error * this->i ) * this->period
-					+ ( error - this->previous_error) / this->period;
+					+ ( error - this->previous_error) / this->period * this->d;
 
 			if( zeabus_library::abs( this->sum ) > this->limit )
 				this->sum = copysign( this->limit , this->sum );

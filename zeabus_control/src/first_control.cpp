@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.1
+	version				:	1.0.2
 	status				:	USE
 
 	Namespace			:	-
@@ -43,7 +43,13 @@
 
 #include	"first_control_function.cpp"
 
+#ifndef PI
+	#define PI 3.14159265
+#endif
+
 #define _PRINT_DATA_
+
+//#define _DEBUG_ORDER_
 
 int main( int argv , char** argc ){
 
@@ -66,6 +72,8 @@ int main( int argv , char** argc ){
 	ros::Rate rate( frequency );
 
 	zeabus_library::Twist message; // for send target velocity to node second_control
+	clear_point3( message.linear);
+	clear_point3( message.angular);
 	zeabus_library::Twist temp_message; 
 	int count_velocity[6] = { 0 , 0 , 0 , 0 , 0 , 0 };
 
@@ -92,6 +100,8 @@ int main( int argv , char** argc ){
 	zeabus_library::control::ListenOdometry listen_odometry;
 	listen_odometry.register_linear_position( &current_position );
 	listen_odometry.register_quaternion( &current_quaternion );
+	listen_odometry.register_target_position( &target_position );
+	listen_odometry.register_target_quaternion( &target_quaternion );
 	listen_odometry.register_linear_velocity( &current_velocity );
 	listen_odometry.register_gyroscope( &current_gyroscope );
 
@@ -101,12 +111,14 @@ int main( int argv , char** argc ){
 	listen_twist.register_linear( &target_velocity );
 	listen_twist.register_angular( &target_gyroscope );
 	listen_twist.set_constant( constant_value );
+	clear_point3( target_velocity );
+	clear_point3( target_gyroscope );
 
 	int mode_control = 0;	//  mode control is consider by roll and pitch
 							//	mode 0 is roll & pitch normal is 0
 	
-	bool temp_bool;
-	double temp_distance;
+	bool temp_bool = false;
+	double temp_distance = 0;
 
 //////////////////////////////////////-- ROS SYSTEM --///////////////////////////////////////////
 	ros::Subscriber sub_state = nh.subscribe( topic_state , 1 
@@ -126,34 +138,53 @@ int main( int argv , char** argc ){
 		rh.set_start_frame( current_quaternion ); 
 		rh.set_target_frame( target_quaternion );
 		rh.target_frame.get_RPY( target_euler[0] , target_euler[1] , target_euler[2] );
+		rh.update_rotation();
 		rh.get_RPY( diff_euler[0] , diff_euler[1] , diff_euler[2] ); // start go to target
 		rh.update_rotation();
 
 		if( mode_control == 0 ){
+			#ifdef _DEBUG_ORDER_
+				printf("Before plane XY\n");
+			#endif
 			if( count_velocity[0] != 0 && count_velocity[1] != 0 ){
-				temp_bool = count_velocity[0] == constant_value;
+				#ifdef _DEBUG_ORDER_
+					printf("IN plane XY case 00\n");
+				#endif
+				temp_bool = ( count_velocity[0] == constant_value);
 				if( temp_bool ){
-					message.linear.x = target_velocity.x 
-											* zeabus_library::euler::cos( target_euler[2] )
+					#ifdef _DEBUG_ORDER_
+						printf("IN plane XY case 00 befor calculate message.linear.x\n");
+					#endif
+					message.linear.x = target_velocity.x
+											* cos( target_euler[2] )
 										+ target_velocity.y
-											* zeabus_library::euler::cos( target_euler[2] + PI );
+											* cos( target_euler[2] + PI );
+					#ifdef _DEBUG_ORDER_
+						printf("IN plane XY case 00 befor calculate message.linear.y\n");
+					#endif
 					message.linear.y = target_velocity.x
-											* zeabus_library::euler::sin( target_euler[2] )
+											* sin( target_euler[2] )
 										+ target_velocity.y
-											* zeabus_library::euler::sin( target_euler[2] + PI );
+											* sin( target_euler[2] + PI );
 				}
+				#ifdef _DEBUG_ORDER_
+					printf("IN plane XY case00 after check temp_bool\n");
+				#endif
 				target_position.x = current_position.x;
 				target_position.y = current_position.y;
 				count_velocity[0]--;
 				count_velocity[1]--;
 			}
 			else if( count_velocity[0] != 0 ){
-				temp_bool = count_velocity[0] == constant_value;
+				#ifdef _DEBUG_ORDER_
+					printf("IN plane XY case 10\n");
+				#endif
+				temp_bool = (count_velocity[0] == constant_value);
 				if( temp_bool ){
 					temp_message.linear.x = target_velocity.x 
-											* zeabus_library::euler::cos( target_euler[2] );
+											* cos( target_euler[2] );
 					temp_message.linear.y = target_velocity.x
-											* zeabus_library::euler::sin( target_euler[2] );
+											* sin( target_euler[2] );
 					next_point_xy( target_euler[2] , current_position.x , current_position.y
 								, temporary_position.x , temporary_position.y 
 								, copysign( 20 , target_velocity.x ) , 0 );	 
@@ -166,14 +197,19 @@ int main( int argv , char** argc ){
 				message.linear.x = temp_message.linear.x + assign_velocity_xy( diff_position.x);
 				message.linear.y = temp_message.linear.y + assign_velocity_xy( diff_position.y);
 				count_velocity[0]--;
+				target_position.x = current_position.x;
+				target_position.y = current_position.y;	
 			}
 			else if( count_velocity[1] != 0 ){
-				temp_bool = count_velocity[1] == constant_value;
+				#ifdef _DEBUG_ORDER_
+					printf("IN plane XY case 01\n");
+				#endif
+				temp_bool = ( count_velocity[1] == constant_value );
 				if( temp_bool ){
 					temp_message.linear.x = target_velocity.y
-											* zeabus_library::euler::cos( target_euler[2] + PI );
+											* cos( target_euler[2] + PI );
 					temp_message.linear.y = target_velocity.y
-											* zeabus_library::euler::sin( target_euler[2] + PI );
+											* sin( target_euler[2] + PI );
 					next_point_xy( target_euler[2] , current_position.x , current_position.y
 								, temporary_position.x , temporary_position.y 
 								, 0 , copysign( 20 , target_velocity.x ) );	 
@@ -186,22 +222,34 @@ int main( int argv , char** argc ){
 				message.linear.x = temp_message.linear.x + assign_velocity_xy( diff_position.x);
 				message.linear.y = temp_message.linear.y + assign_velocity_xy( diff_position.y);
 				count_velocity[1]--;
+				target_position.x = current_position.x;
+				target_position.y = current_position.y;
 			}
 			else{
-				diff_position.x = current_position.x - target_position.x;
-				diff_position.y = current_position.y - target_position.y;
+				#ifdef _DEBUG_ORDER_
+					printf("IN plane XY case 11\n");
+				#endif
+				diff_position.x = target_position.x - current_position.x;
+				diff_position.y = target_position.y - current_position.y;
 				message.linear.x = assign_velocity_xy( diff_position.x );
 				message.linear.y = assign_velocity_xy( diff_position.y );
 			}
+			#ifdef _DEBUG_ORDER_
+				printf("Before plane Z\n");
+			#endif
 			if( count_velocity[2] != 0 ){
 				message.linear.z = target_velocity.z;
 				count_velocity[2]--;
 			}
 			else{
-				diff_position.z = current_position.z - target_position.z;
+				diff_position.z = target_velocity.z - current_position.z;
 			}
+			#ifdef _DEBUG_ORDER_
+				printf("Before plane YAW\n");
+			#endif
 			if( count_velocity[5] != 0 ){
 				message.angular.z = target_gyroscope.z;
+				current_quaternion = target_quaternion;
 				count_velocity[5]--;
 			}
 			else{

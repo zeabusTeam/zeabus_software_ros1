@@ -1,0 +1,1 @@
+KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="1ffb", ATTRS{idProduct}=="008a", ENV{ID_USB_INTERFACE_NUM}=="00", SYMLINK+="pololu/maestro/%s{serial}"

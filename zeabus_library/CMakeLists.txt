@@ -6,6 +6,7 @@ find_package( catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   message_generation
+  roslib
 )
 
 find_package( Boost REQUIRED COMPONENTS
@@ -14,13 +15,18 @@ find_package( Boost REQUIRED COMPONENTS
 
 add_message_files(
 	FILES
+	Pose.msg
+	Twist.msg
 	State.msg
 	Type2.msg
-	Point3.msg
-	ArrayFloat.msg
 	Euler.msg
-	PoseEuler.msg
+	Point3.msg
+	Point4.msg
 	IMUData.msg
+	Odometry.msg
+	PoseEuler.msg
+	ArrayFloat.msg
+	IMUQuaternion.msg
 )
 
 add_message_files(
@@ -71,42 +77,84 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
 )
 
+set( zeabus_library_convert_sources
+	src/convert/general.cpp
+	src/convert/bytes.cpp
+	src/convert/Point3.cpp
+	src/convert/Point4.cpp
+	src/convert/Type2.cpp
+	src/convert/State.cpp
+	src/convert/IMUData.cpp
+	src/convert/boost_time.cpp
+	src/convert/IMUQuaternion.cpp
+)
+
+set( zeabus_library_localize_sources
+	src/localize/listen_DVL.cpp
+	src/localize/listen_DVL_geometry.cpp
+	src/localize/listen_pressure_nav.cpp
+	src/localize/listen_IMUQuaternion.cpp
+)
+
+set( zeabus_library_control_sources
+	src/control/listen_odometry.cpp	
+	src/control/listen_twist.cpp
+	src/control/pid.cpp	
+)
+
+set( zeabus_library_rotation_sources
+	src/rotation/quaternion.cpp
+	src/rotation/rotation_handle.cpp
+	src/rotation/matrix_rotation.cpp
+	src/rotation/quaternion_handle.cpp
+)
+
+set( zeabus_library_sensor_sources
+	src/sensor/serial_port.cpp
+	src/sensor/base_port.cpp
+	src/sensor/string_port.cpp
+	src/sensor/lord_microstrain.cpp	
+	src/sensor/synchronous_port.cpp
+	src/sensor/listen_IMUData.cpp
+	src/sensor/listen_IMUQuaternion.cpp
+)
+
 set( zeabus_library_sources
-	src/convert_bytes.cpp
-	src/convert_rotation.cpp
-	src/convert_Point3.cpp
-	src/convert_Type2.cpp
-	src/convert_State.cpp
-	src/convert_IMUData.cpp
-)
-
-set( zeabus_control_sources
-	src/zeabus_control/service_control.cpp
-	src/zeabus_control/service_check_state.cpp
-	src/zeabus_control/service_get_target.cpp
-	src/zeabus_control/service_one_point.cpp
-	src/zeabus_control/service_two_point.cpp
-	src/zeabus_control/service_number_service.cpp
-	src/zeabus_control/service_survey_request.cpp
-	src/zeabus_control/listen_odometry.cpp
-	src/zeabus_control/listen_twist.cpp
-	src/zeabus_control/find_error_state_double.cpp
-	src/zeabus_control/find_robot_error_double.cpp
-	src/zeabus_control/find_robot_force_double.cpp
-	src/zeabus_control/sum_pid_bound_id.cpp
-)
-
-set( zeabus_sensor_sources
-	src/zeabus_sensor/serial_port.cpp
-	src/zeabus_sensor/base_port.cpp
-	src/zeabus_sensor/lord_microstrain.cpp	
-	src/zeabus_sensor/synchronous_port.cpp
-	src/zeabus_sensor/listen_IMUData.cpp
+	src/capture_time.cpp
+	src/matrix.cpp
+	src/euler.cpp
+	src/vector.cpp
+	src/error_code.cpp
+	src/file.cpp
+	src/ros.cpp
+	src/listen_basic.cpp
+	src/text_color.cpp
+	src/general.cpp
+	src/linear_equation.cpp
 )
 
 add_library( zeabus_library			STATIC		${zeabus_library_sources} 
-												${zeabus_sensor_sources}
-												${zeabus_control_sources})
+												${zeabus_library_sensor_sources}
+												${zeabus_library_convert_sources}
+												${zeabus_library_control_sources}
+												${zeabus_library_localize_sources}
+												${zeabus_library_rotation_sources} )
 add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}
 												${catkin_EXPORTED_TARGETS} )
 target_link_libraries( zeabus_library			${catkin_LIBRARIES} ${Boost_LIBRARIES})
+
+add_executable( test_base_quaternion src_test/test_base_quaternion.cpp)
+add_dependencies( test_base_quaternion ${${PROJECT_NAME}_EXPORTED_TARGETS}
+										${catkin_EXPORTED_TARGETS} )
+target_link_libraries( test_base_quaternion ${catkin_LIBRARIES} zeabus_library)
+
+add_executable( test_color_text src_test/test_color_text.cpp)
+add_dependencies( test_color_text ${${PROJECT_NAME}_EXPORTED_TARGETS}
+										${catkin_EXPORTED_TARGETS} )
+target_link_libraries( test_color_text ${catkin_LIBRARIES} zeabus_library)
+
+#add_executable( test_quaternion_handle src_test/test_quaternion_handle.cpp)
+#target_link_libraries( test_quaternion_handle ${catkin_LIBRARIES} zeabus_library)
+
+add_executable( test_rotation_handle src_test/test_rotation_handle.cpp)
+target_link_libraries( test_rotation_handle ${catkin_LIBRARIES} zeabus_library)

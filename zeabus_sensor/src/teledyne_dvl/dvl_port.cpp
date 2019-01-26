@@ -1,138 +1,152 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//	File	: dvl_port.cpp
-//
-//	Edit	: Aug 25 , 2018
-//	Author	: Supasan Komonlit
-//
-//	Thanks	: Mahisorn Dec 22 , 2014
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+	File name			:	dvl_port.cpp		
+	Author				:	Supasan Komonlit
+	Date created		:	2019 , JAN 12
+	Date last modified	:	2019 , JAN 18
+	Purpose				:	This is file to use read connect ros and DVL
 
-//#include	<zeabus_sensor/dvl_port.h>
-#include	"dvl_port.h"
+	Maintainer			:	Supasan Komonlit
+	e-mail				:	supasan.k@ku.th
+	version				:	1.0.0
+	status				:	Maintainance
 
-int main( int argc , char **argv){
+	Namespace			:	None
+*/
 
-	ros::init( argc , argv , "port_dvl"); // init node name
+#include	<ros/ros.h>
 
-	ros::NodeHandle nh("~");
+#include	<stdio.h>
 
-	zeabus_serial::serial serial; // setup variable for connect device
+#include	<iostream>
 
-// set up variable for receivce param data
-	std::string device;
-	int baudrate;
-	std::string frame_id;
-	int maximum_bottom_search_depth;
-	double heading_alignment;
-	int salinity_water;
-	std::string time_between_ensemble;
-	std::string time_between_pings;
-	int data_stream_select;
+#include	<zeabus_library/error_code.h>
 
-// get param data
-	nh.param< std::string >("device" , device , "/dev/usb2serial/ftdi_FT03OMNT_03");
-	nh.param< int >("baudrate" , baudrate , 115200 );
-	nh.param< std::string >("frame_id" , frame_id , "dvl_link"); // what
-	nh.param< float >("surface_depth" , surface_depth , 4.7);
-	nh.param< int >("maximum_bottom_search_depth" , maximum_bottom_search_depth , 100);
-	nh.param< double >("heading_alignment" ,  heading_alignment , 0.0);
-	nh.param< int >("salinity_water" , salinity_water , 0);
-	nh.param< std::string >("time_between_ensemble" , time_between_ensemble , "00:00:00.00");
-	nh.param< std::string >("time_between_pings" , time_between_pings , "00:00.00");
-	nh.param< int >("data_stream_select" , data_stream_select , 6);
+#include	<zeabus_library/file.h>
 
-// try to open port is can't open will close program
-	if( !serial.open_port( device , baudrate )){
-		ROS_FATAL(" Cannot open port %s" , device.c_str());
-		return -1;
-	}
-	
-	ROS_INFO("Open DVL on : %s" , device.c_str());
-	ROS_INFO("\tbaudrate : %d" , baudrate);
-	ROS_INFO("\tframe_id : %s" , frame_id.c_str());
+#include	<zeabus_library/Point3.h>
 
-// stop device for write device
-	serial.write_string("===");
-	serial.read_line();
-	serial.read_line();
-	serial.read_line();
-	serial.read_line();
+#include	<zeabus_library/sensor/string_port.h>
 
-// load default
-	serial.write_string("CR1\n"); // 1 is load default of factory
-	serial.read_line();
-	serial.read_line();
+#define _COLLECTING_DATA_
+#define _DEBUG_CODE_
 
-// enable = 1 , 0 = uenable single-ping bottom tracking
-	serial.write_string("BP001\n");
+int main( int argc , char ** argv ){
 
-//set maximum bottom search depth (dm)
-	std::ostringstream temporary;
-	temporary << "BX" << maximum_bottom_search_depth << "\n";
-	serial.write_string( temporary.str() );
+	ros::init( argc , argv , "port_dvl" );
 
-//set Heading alignment to 0 degrees , page 133
-	std::string heading_alignment_angle = 
-				zeabus_extension::convert::to_string( heading_alignment , true , false);
-	heading_alignment_angle = "EA" + heading_alignment_angle + "\n";
-	serial.write_string( heading_alignment_angle );	
+	ros::NodeHandle nh(""); // Handle for manage about this file in ros system
+	ros::NodeHandle ph("~"); // Handle for managae param from launch 
 
-//set salinity ( salt is component ) value of water
-	std::string salinity_water_string = 
-				zeabus_extension::convert::to_string( salinity_water , true , 5 , false);
-	salinity_water_string = "ES" + salinity_water_string + "\n";
-	serial.write_string( salinity_water_string );
+//////////////////////////////-- PARAMETER PART --///////////////////////////////////////////////
 
-// set time between ensemble
-	serial.write_string("TE" + time_between_ensemble + "\n");
+	std::string port_name =  "/dev/usb2serial/ftdi_FT2VR5PM_02";
+	std::string topic_output;
 
-// set time between ping
-	serial.write_string("TP" + time_between_pings + "\n");
+	ph.param< std::string >("name_port_dvl" , port_name , "/dev/usb2serial/ftdi_FT2VR5PM_02");
+	ph.param< std::string >("topic_output_port_dvl" , topic_output , "/sensor/dvl/port" );
 
-// select type of data stream
-	serial.write_string("PD" + 
-				zeabus_extension::convert::to_string( data_stream_select ) + "\n");
-// see detail of PD6 in page 212
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-// keep paramter and start to ping
-	serial.write_string("CK\n");
-	serial.write_string("CS\n");
+	#ifdef _COLLECTING_DATA_
+		zeabus_library::File log_file( "zeabus_log" , "sensor/dvl" , "dvl_port" );
+		size_t result_file;
+		result_file = log_file.open();
+		if( !( result_file == zeabus_library::NO_ERROR ) ) return zeabus_library::ERROR_ACTION;
+	#endif
 
-//------------------------------ FINISH SETTING DVL -------------------------------------------//
+	zeabus_library::sensor::StringPort serial_port( port_name ) ;
 
-//----------------------------------------SET UP ROS-------------------------------------------//
+	bool result;
+	std::string message;
+	int count = 0;
 
-	ros::Publisher publisher_dvl_port = ros::NodeHandle().advertise< std_msgs::String >(
-											"dvl/port" , 10 );
-	std_msgs::String data_dvl_port;
-// -------------------------------- SET UP DIAGNOSTIC UPDATER --------------------------------//
+	#ifdef _DEBUG_CODE_
+		printf("Try to open port\n");
+	#endif
 
-/*	diagnostic_msgs::Updater updater;
-	updater.setHardwareIDF("Teledyne DVL @ %s" , device.c_str());
-	updater.add("DVL status updater" , check_dvl_status);
-	updater.force_update() */
-
-	while( ros::ok() ){
-		try{
-
-//			updater.update();
-
-			data_dvl_port.data = serial.read_line();
-			publisher_dvl_port.publish( data_dvl_port );
-		}
-		catch ( std::exception& error){
-			std::cout << error.what() << "\n";
-		}
-		ros::spinOnce();
+	serial_port.open_port( result );
+	if( !(result) ){
+		printf("Failure to open port %s\n" , port_name.c_str() );
+		return -1 ;
 	}
 
-	serial.write_string("===");
-	serial.read_line();
-	serial.read_line();
-	serial.read_line();
-	serial.read_line();
-	std::cout << "end file of DVL port\n";
+	serial_port.set_option_port( boost::asio::serial_port_base::baud_rate( 115200 ) );
+
+	serial_port.write_data("==="); // stop device for write device
+	count = 0;
+	do{
+		serial_port.read_data( message );
+		count++;
+	}while( message != "Explorer DVL" && count < 50 );
+	serial_port.read_data( message );
+	serial_port.read_data( message );
+	serial_port.read_data( message );
+
+	serial_port.write_data("CR1\n"); // 1 is factory and 0 is user load default value
+	serial_port.read_data( message );
+	serial_port.read_data( message );
+
+	serial_port.write_data("BP001\n"); // single-ping bottom tracking 1 = enable , 0 = unable
+
+	serial_port.write_data("BX00060\n"); // set maximum tracking depth in unit decimeter
+
+	// set heading alignment look at sign three to heading by clock wise
+	serial_port.write_data("EA09000\n"); // unit 18000 is 180.00 degree
 	
+	serial_port.write_data("ES35\n"); // set salinity of water ( salt is component )
+
+	serial_port.write_data("TE00:00:00.00\n"); // set time between ensemble
+
+	serial_port.write_data("TP00:00.00\n"); // set time between ping
+
+	// set type of data stream 
+	serial_port.write_data("PD6\n");
+	
+	serial_port.write_data("CK\n");
+	serial_port.read_data( message );
+	serial_port.read_data( message );
+
+	serial_port.write_data("CS\n"); // continue stream
+
+////////////////////////////////////-- ROS SYSTEM --////////////////////////////////////////////
+	zeabus_library::Point3 data_ros;
+
+	ros::Publisher tell_dvl = nh.advertise< zeabus_library::Point3 >( topic_output , 1 );
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+	std::string data;
+	char status;
+	int temp_x , temp_y , temp_z;	
+
+	while( nh.ok() ){
+		serial_port.read_data( data );
+		#ifdef _COLLECTING_DATA_
+			log_file.writeline( data );
+		#endif
+		if( data.find(":BS") != std::string::npos ){
+			sscanf( data.c_str() , ":BS,%d,%d,%d,%c" , &( temp_x ) , &( temp_y )
+													, &( temp_z) , &status );
+			if( status == 'A' ){
+				printf( "<-------- DVL GOOD DATA ---------->\n\n");
+				data_ros.x = temp_x * 0.001;
+				data_ros.y = temp_y * 0.001;
+				data_ros.z = temp_z * 0.001;
+				tell_dvl.publish( data_ros );
+			}
+			else{
+				printf( "<-------- DVL BAD DATA ----------->\n\n");
+			}
+		}	
+		
+	}
+
+	#ifdef _COLLECTING_DATA_
+		log_file.close();
+	#endif
+
+	serial_port.close_port( result );
+	printf("End Action on DVL port file\n");
+	return 0;
+
 }

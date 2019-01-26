@@ -1,99 +1,128 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//	File	: dvl_node.cpp
-//
-//	Edit	: Sep 11 , 2018
-//	Author	: Supasan Komonlit
-//
-//	Thanks	: Mahisorn Dec 22 , 2014
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+	File name			:	dvl_node.cpp		
+	Author				:	Supasan Komonlit
+	Date created		:	2019 , JAN 12
+	Date last modified	:	2019 , JAN 26
+	Purpose				:	This is file to use read connect and convert dvl data in ros system
 
-#include	"dvl_node.h"
+	Maintainer			:	Supasan Komonlit
+	e-mail				:	supasan.k@ku.th
+	version				:	1.1.0
+	status				:	Maintain
 
-int main( int argc , char **argv){
+	Namespace			:	None
+*/
 
-// init name node but if you have launch this node will name up to launch file
-	ros::init( argc , argv, "node_dvl");
+#include	<stdio.h>
 
-// this is equipment of ros
-	ros::NodeHandle nh;
+#include	<iostream>
 
-// Set to Subscriber from topic dvl/port for geting value form port
-	ros::Subscriber subscriber_dvl_port = 
-		nh.subscribe( "dvl/port" , 10 , &listen_port_dvl);
+#include	<zeabus_library/rotation/rotation_handle.h>
 
-// Set to send data form port after read meaning
-	publisher_dvl_data = ros::NodeHandle().advertise<
-											geometry_msgs::Twist >( "dvl/data" , 10);
+#include	<zeabus_library/convert/Point3.h>
 
-	std::cout << "Welcome to read value dvl_data output type PD6 ";
+#include	<zeabus_library/text_color.h>
 
-	ros::spin();
+#include	<zeabus_library/localize/listen_IMUQuaternion.h>
 
-}
+#include	<zeabus_library/localize/listen_DVL.h>
 
+#include	<zeabus_library/general.h>
 
-void listen_port_dvl( const std_msgs::String message){
-	std::string data = message.data;
+#define _DEBUG_JUMP_VALUE_
 
-	dvl_log.write( data );
+int main( int argc , char** argv ){
 
-//01// READ PART of SYSTEM ATTITUDE DATA
-	if( data.find(":SA") != std::string::npos ){}
-	else{}
+	ros::init( argc , argv , "node_dvl" );
 
-//02// READ PART of TIMING and SCALING DATA
-	if( data.find(":TS") != std::string::npos ){}
-	else{}
+	ros::NodeHandle nh(""); // Handle for manage about this file in ros system
+	ros::NodeHandle ph("~"); // Handle for manage param from launch
 
-//03// READ PART of WATER-MASS, INSTRUMENT-REFERENCED VELOCITY DATA
-	if( data.find(":WI") != std::string::npos ){}
-	else{}
+/////////////////////////////////-- PARAMETER PART --///////////////////////////////////////////
 
-//04// READ PART of BOTTOM-TRACK, INSTRUMENT-REFERENCED VELOCITY DATA
-	if( data.find(":BI") != std::string::npos ){}
-	else{}
+	std::string topic_input;
+	std::string topic_output;
+	std::string topic_imu;
+	int frequency;
 
-//05// READ PART of WATER-MASS, SHIP-REFERENCED VELOCITY DATA
-	if( data.find(":WS") != std::string::npos ){}
-	else{}
+	ph.param< std::string >("topic_input_node_dvl" , topic_input , "/sensor/dvl/port");
+	ph.param< std::string >("topic_imu" , topic_imu , "/sensor/imu/node");
+	ph.param< std::string >("topic_output_node_dvl" , topic_output , "/sensor/dvl/node");
+	ph.param< int >("frequency" , frequency , 100 );
 
-//06// READ PART of BOTTOM-TRACK, SHIP-REFERENCED VELOCITY DATA
-	if( data.find(":BS") != std::string::npos ){
-		int v_x , v_y , v_z ;
-		char status;
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-		sscanf( data.c_str() , ":BS,%d,%d,%d,%c" , &v_x , &v_y , &v_z , &status);
+	ros::Rate rate( frequency );
 
-		if( status == 'A'){
-			ROS_INFO("DVL : GOOD DATA");
-			data_dvl_node.linear.x = v_x * 0.001;
-			data_dvl_node.linear.y = v_y * 0.001;
-			data_dvl_node.linear.z = v_z * 0.001;
-			publisher_dvl_data.publish( data_dvl_node );
-		}
-		else{
-			ROS_INFO("DVL : BAD DATA");
-		}
+	zeabus_library::rotation::RotationHandle rh;
+
+	boost::numeric::ublas::matrix< double > receive_matrix;
+	boost::numeric::ublas::matrix< double > previous_matrix;
+	boost::numeric::ublas::matrix< double > result_matrix;
+	zeabus_library::Point3 data_dvl;
+
+	zeabus_library::Point4 data_quaternion;
+	zeabus_library::Point3 data_angular_velocity;
+	zeabus_library::Point3 data_linear_acceleration;
+
+	zeabus_library::localize::ListenDVL listen_dvl( &data_dvl );
+	zeabus_library::localize::ListenIMUQuaternion listen_imu( &data_quaternion 
+												, &data_angular_velocity
+												,  &data_linear_acceleration );
+	listen_dvl.set_limit_count( 10 );
+	listen_imu.set_limit_count( 10 );
+
+	receive_matrix.resize( 3 , 1 );
+	result_matrix.resize( 3 , 1 );
+	previous_matrix.resize( 3 , 1 );
+	rh.set_start_frame( PI , 0 , 0 );
+	rh.set_target_frame( 0 , 0 , 0 );
+	
+/////////////////////////////////////-- ROS SYSTEM --///////////////////////////////////////////
+
+	ros::Subscriber sub_quaternion = nh.subscribe( topic_imu , 1 
+						, &zeabus_library::localize::ListenIMUQuaternion::callback_quaternion
+						, &listen_imu );
+
+	ros::Subscriber sub_dvl = nh.subscribe( topic_input , 1 
+						, &zeabus_library::localize::ListenDVL::callback
+						, &listen_dvl );
+
+	ros::Publisher tell_dvl = nh.advertise< zeabus_library::Point3 >( topic_output , 1 );
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+	while( nh.ok() ){
+		rate.sleep();
+		ros::spinOnce();
+		listen_dvl.count --;
+		listen_imu.count --;
+		if( listen_dvl.count < 0 ) zeabus_library::bold_red( "Fatal! DVL missing receive\n\n");
+		if( listen_imu.count < 0 ) zeabus_library::bold_red( "Fatal! IMU missing receive\n\n");
+		rh.set_target_frame( data_quaternion );
+		zeabus_library::convert::Point3_to_matrix( data_dvl , receive_matrix );
+
+		if( zeabus_library::abs( receive_matrix( 0 , 0 ) ) < 0.01 ) 
+			receive_matrix( 0 , 0 ) = previous_matrix( 0 , 0 );
+		if( zeabus_library::abs( receive_matrix( 1 , 0 ) ) < 0.01 ) 
+			receive_matrix( 1 , 0 ) = previous_matrix( 1 , 0 );
+		if( zeabus_library::abs( receive_matrix( 2 , 0 ) ) < 0.01 ) 
+			receive_matrix( 2 , 0 ) = previous_matrix( 2 , 0 );
+		
+		zeabus_library::convert::Point3_to_matrix( data_dvl , previous_matrix );
+		#ifdef _DEBUG_JUMP_VALUE_
+			printf("Receive value %8.3lf\t%8.3lf\n" , data_dvl.x , data_dvl.y );
+		#endif
+		rh.target_rotation( receive_matrix , result_matrix );
+		zeabus_library::convert::matrix_to_Point3( result_matrix , data_dvl );
+		tell_dvl.publish( data_dvl );
+		#ifdef _DEBUG_JUMP_VALUE_
+			printf("send value %8.3lf\t%8.3lf\n\n\n" , data_dvl.x , data_dvl.y );
+		#endif
+
+		#ifdef _DEBUG_JUMP_VALUE_
+			if( data_dvl.x > 2 || data_dvl.x < -2 ) break;
+			if( data_dvl.y > 2 || data_dvl.y < -2 ) break;
+		#endif
 	}
-	else{}
-
-//07//	READ PART of WATER-MASS, EARTH-REFERENCED VELOCITY DATA
-	if( data.find(":WE") != std::string::npos ){}
-	else{}
-
-//08//	READ PART of BOTTOM_TRACK, EARTH-REFERENCED VELOCITY DATA
-	if( data.find(":BE") != std::string::npos ){}
-	else{}
-
-//09//	READ PART of WATER-MASS, EARTH-REFERENCED DISTANCE DATA
-	if( data.find(":WD") != std::string::npos ){}
-	else{}
-
-//10//	READ PART of BOTTOM-TRACK, EARTH-REFERENCED DISTANCE DATA
-	if( data.find(":BD") != std::string::npos ){}
-	else{}
-	if( data.find(":WD") != std::string::npos ){}
-	else{}
 }

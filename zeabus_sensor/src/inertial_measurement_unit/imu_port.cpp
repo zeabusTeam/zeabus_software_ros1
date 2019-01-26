@@ -2,12 +2,12 @@
 	File name			:	imu_port.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , NOV 27
-	Date last modified	:	2018 , DEC 05
+	Date last modified	:	2018 , DEC 27
 	Purpose				:	This is file to use read connect ros and IMU
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.2.1
 	status				:	Maintain
 
 	Namespace			:	None
@@ -15,22 +15,24 @@
 
 #include	<ros/ros.h>
 
+#include	<zeabus_library/IMUQuaternion.h>
 #include	<zeabus_library/IMUData.h>
 #include	<sensor_msgs/Imu.h>
 
-#include	<zeabus_library/zeabus_sensor/lord_microstrain.h>
-#include	<zeabus_library/convert_bytes.h>
+#include	<zeabus_library/sensor/lord_microstrain.h>
+#include	<zeabus_library/convert/bytes.h>
 
 //#define	_DEBUG_SPILT_DATA_
-#define _TYPE_SENSOR_MSGS_
-#define _TYPE_ZEABUS_LIBRARY_MSGS_
+//#define _TYPE_SENSOR_MSGS_
+//#define _TYPE_ZEABUS_LIBRARY_MSGS_
+#define _TYPE_ZEABUS_LIBRARY_QUATERNION_
 
 namespace Asio = boost::asio;
-namespace DataIMU = zeabus_sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET ;
+namespace DataIMU = zeabus_library::sensor::MIP_COMMUNICATION::DATA::IMU_DATA_SET ;
 
 int main( int argv , char** argc ){
 	
-	ros::init( argv , argc , "port_imu");
+	ros::init( argv , argc , "imu_port");
 
 	ros::NodeHandle ph("~"); // Handle for manage param from launch
 	ros::NodeHandle nh(""); // Handle for manage about this file in ros system
@@ -42,14 +44,14 @@ int main( int argv , char** argc ){
 	int frequency;
 
 	ph.param< std::string >("name_port_imu" , port_name 
-								, "/dev/microstrain/3dm_gx5_45_0000__6251.65901");
+								, "/dev/microstrain/3dm_gx5_45_0000__6251.65903");
 
 	ph.param< std::string >(	"topic_output_port_imu_zeabus" 
 								, topic_output_zeabus , "/sensor/imu/port/zeabus");
 	ph.param< std::string >(	"topic_output_port_imu_sensor" 
 								, topic_output_sensor , "/sensor/imu/port/sensor");
 
-	ph.param< int >("frequency_imu" , frequency , 100 );
+	ph.param< int >("frequency_imu" , frequency , 50 );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -62,6 +64,12 @@ int main( int argv , char** argc ){
 		zeabus_library::IMUData message;
 	#endif
 
+	#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
+		ros::Publisher tell_zeabus_library = 
+				ph.advertise< zeabus_library::IMUQuaternion >( topic_output_zeabus, 1 );
+		zeabus_library::IMUQuaternion imu_quaternion;
+	#endif
+
 	#ifdef _TYPE_SENSOR_MSGS_
 		ros::Publisher tell_sensor_msgs =
 				ph.advertise< sensor_msgs::Imu >( topic_output_sensor , 1 );
@@ -70,7 +78,7 @@ int main( int argv , char** argc ){
 
 	bool result ;
 
-	zeabus_sensor::LordMicrostrain imu( port_name );
+	zeabus_library::sensor::LordMicrostrain imu( port_name );
 
 	imu.open_port( result );
 
@@ -107,7 +115,9 @@ int main( int argv , char** argc ){
 		imu.sensor_init_setup_IMU_format( 3 );
 		imu.sensor_add_message_type( DataIMU::SCALED_ACCELEROMETER_VECTOR );
 		imu.sensor_add_message_type( DataIMU::SCALED_GYRO_VECTOR );
-		imu.sensor_add_message_type( DataIMU::CF_EULER_ANGLES );
+		#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
+			imu.sensor_add_message_type( DataIMU::CF_EULER_ANGLES );
+		#endif
 		imu.sensor_add_message_type( DataIMU::CF_QUATERNION );
 		imu.sensor_setup_IMU_format( result );
 	}while( ( ! result ) && ph.ok() );
@@ -139,11 +149,18 @@ int main( int argv , char** argc ){
 					#endif
 					run += 1;
 					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
-						zeabus_library::uint8_t_to_Point3(	message.linear_acceleration 
+						zeabus_library::convert::uint8_t_to_Point3(	
+															message.linear_acceleration 
 															, data_stream , run );
 					#endif
 					#ifdef _TYPE_SENSOR_MSGS_
-						zeabus_library::uint8_t_to_Vector3( sensor.linear_acceleration
+						zeabus_library::convert::uint8_t_to_Vector3( 
+															sensor.linear_acceleration
+															, data_stream , run );
+					#endif
+					#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
+						zeabus_library::convert::uint8_t_to_Point3( 
+															imu_quaternion.linear_acceleration
 															, data_stream , run );
 					#endif
 					run += 12 ;
@@ -154,11 +171,18 @@ int main( int argv , char** argc ){
 					#endif
 					run += 1;
 					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
-						zeabus_library::uint8_t_to_Point3(	message.angular_velocity 
+						zeabus_library::convert::uint8_t_to_Point3(	
+															message.angular_velocity 
 															, data_stream , run );
 					#endif
 					#ifdef _TYPE_SENSOR_MSGS_
-						zeabus_library::uint8_t_to_Vector3( sensor.angular_velocity
+						zeabus_library::convert::uint8_t_to_Vector3( 
+															sensor.angular_velocity
+															, data_stream , run );
+					#endif
+					#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
+						zeabus_library::convert::uint8_t_to_Point3( 
+															imu_quaternion.angular_velocity
 															, data_stream , run );
 					#endif
 					run += 12 ;
@@ -169,7 +193,9 @@ int main( int argv , char** argc ){
 					#endif
 					run += 1;
 					#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
-						zeabus_library::uint8_t_to_Point3( message.euler , data_stream , run );
+						zeabus_library::convert::uint8_t_to_Point3( 
+															message.euler 
+															, data_stream , run );
 					#endif
 					run += 12;
 				}
@@ -179,8 +205,12 @@ int main( int argv , char** argc ){
 					#endif
 					run += 1;
 					#ifdef _TYPE_SENSOR_MSGS_
-						zeabus_library::uint8_t_to_Quaternion( sensor.orientation
+						zeabus_library::convert::uint8_t_to_Quaternion( sensor.orientation
 																, data_stream , run );
+					#endif
+					#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
+						zeabus_library::convert::uint8_t_to_Point4( imu_quaternion.quaternion
+															, data_stream , run );
 					#endif
 					run += 16;
 				}
@@ -193,6 +223,9 @@ int main( int argv , char** argc ){
 			}
 			#ifdef _TYPE_ZEABUS_LIBRARY_MSGS_
 				tell_zeabus_library.publish( message );	
+			#endif
+			#ifdef _TYPE_ZEABUS_LIBRARY_QUATERNION_
+				tell_zeabus_library.publish( imu_quaternion );	
 			#endif
 			#ifdef _TYPE_SENSOR_MSGS_
 				tell_sensor_msgs.publish( sensor );

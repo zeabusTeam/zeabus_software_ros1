@@ -1,0 +1,13 @@
+<launch>
+	<node pkg="hg_ros_pololu" type="maestro_node" name="maestro12" output="screen">
+
+		<param name="device" value="/dev/pololu/maestro/00185168"/>
+		<param name="baudrate" value="115200"/>		
+		<param name="device_id" value="12"/>
+		<param name="num_channel" value="8"/>
+		<param name="warn_num_channel" value="true"/>
+		<param name="enable_timeout" value="true"/>
+		<param name="timeout_period" value="0.5"/>
+		<param name="warm_timeout" value="true"/>	
+	</node>
+</launch>

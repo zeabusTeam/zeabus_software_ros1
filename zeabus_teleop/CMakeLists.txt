@@ -18,6 +18,8 @@ catkin_package(
 add_executable(zeabus_joy src/zeabus_joy.cpp)
 target_link_libraries(zeabus_joy ${catkin_LIBRARIES})
 
+add_executable(joy_node src/joy_node.cpp)
+target_link_libraries(joy_node ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############

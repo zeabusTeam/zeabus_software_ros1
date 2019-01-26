@@ -2,13 +2,13 @@
 	File name			:	first_control.cpp
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , JAN 20
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , JAN 26
 	Purpose				:	For control system will give target velocity
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.0.1
+	status				:	USE
 
 	Namespace			:	-
 */
@@ -67,7 +67,7 @@ int main( int argv , char** argc ){
 
 	zeabus_library::Twist message; // for send target velocity to node second_control
 	zeabus_library::Twist temp_message; 
-	int count_velocity[6];
+	int count_velocity[6] = { 0 , 0 , 0 , 0 , 0 , 0 };
 
 	zeabus_library::Point3 current_position; // for collection current position		
 	zeabus_library::Point3 diff_position; // for collecting error position

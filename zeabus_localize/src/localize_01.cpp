@@ -7,7 +7,7 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.2.0
+	version				:	1.2.1
 	status				:	Using
 
 	Namespace			:	None
@@ -105,8 +105,8 @@ int main( int argv , char** argc ){
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
-		adding_x = message.velocity.linear.x + previous_message.velocity.linear.x * period;
-		adding_x = message.velocity.linear.x + previous_message.velocity.linear.x * period;
+		adding_x = message.velocity.linear.x + previous_message.velocity.linear.x * period / 2;
+		adding_x = message.velocity.linear.x + previous_message.velocity.linear.x * period / 2;
 		if( adding_x > 0.001 || adding_x < -0.001 ) message.pose.position.x += adding_x;
 		if( adding_y > 0.001 || adding_y < -0.001 ) message.pose.position.y += adding_y;
 		tell_auv_state.publish( message );

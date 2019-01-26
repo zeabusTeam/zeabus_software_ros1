@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Production
 
 	Namespace			:	-
@@ -42,6 +42,9 @@
 
 int main( int argv , char** argc ){
 
+	double ok_error[6] = { 0.01 , 0.01 , 0.05 , 0.02 , 0.02 , 0.02};
+	double limit_pid[6] = { 1 , 1 , 1 , 1 , 1 , 1};
+
 	ros::init( argv , argc , "second_control");
 
 	ros::NodeHandle nh("");
@@ -64,7 +67,8 @@ int main( int argv , char** argc ){
 	double target_velocity[6];
 	double force_velocity[6];
 	double error_velocity[6];
-	double ok_error[6];
+
+	double temp_euler[3];
 
 	listen_odometry.register_linear_velocity( &current.linear );
 	listen_odometry.register_quaternion( &quaternion );
@@ -105,6 +109,10 @@ int main( int argv , char** argc ){
 	world_force.resize( 3 , 1 );
 	robot_force.resize( 3 , 1 );
 
+	for( int run = 0 ; run < 6 ; run++ ){
+		pid[run].limit_i( limit_pid[run] );
+	}
+
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
@@ -134,6 +142,7 @@ int main( int argv , char** argc ){
 		zeabus_library::matrix::to_array( robot_force , force_velocity );
 
 		#ifdef _PRINT_DATA_
+			rh.target_frame.get_RPY( temp_euler[0] , temp_euler[1] , temp_euler[2] );	
 			zeabus_library::clear_screen();
 			printf("target_velocity : %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf\n\n"
 				, target_velocity[0] , target_velocity[1] , target_velocity[2] 
@@ -150,6 +159,8 @@ int main( int argv , char** argc ){
 			printf("robot_force     : %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf  %8.4lf\n\n"
 				, robot_force( 0 , 0 ) , robot_force( 1 , 0 ) , robot_force( 2 , 0 ) 
 				, force_velocity[3] , force_velocity[4] , force_velocity[5] );
+			printf("current_euler   : %8.4lf  %8.4lf  %8.4lf\n\n"
+				, temp_euler[0] , temp_euler[1] , temp_euler[2] );
 
 		#endif
 	}

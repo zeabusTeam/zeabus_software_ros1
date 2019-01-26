@@ -209,6 +209,31 @@ int main( int argv , char** argc ){
 			}
 		}
 		tell_target.publish( message );
+		#ifdef _PRINT_DATA_
+			zeabus_library::clear_screen();
+			rh.start_frame.get_RPY( current_euler[0] , current_euler[1] , current_euler[2] );
+			printf("current_position   : %8.3lf  %8.3lf  %8.3lf  %8.3ld  %8.3lf  %8.3lf\n\n"
+						, current_position.x , current_position.y , current_position.z 
+						, current_euler[0] , current_euler[1] , current_euler[2] );
+			printf("target_position    : %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf\n\n"
+						, target_position.x , target_position.y , target_position.z 
+						, target_euler[0] , target_euler[1] , target_euler[2] );
+			printf("diff_position      : %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf\n\n"
+						, diff_position.x , diff_position.y , diff_position.z 
+						, diff_euler[0] , diff_euler[1] , diff_euler[2] );
+			printf("output_velocity    : %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf\n\n"
+						, message.linear.x , message.linear.y ,message.linear.z 
+						, message.angular.x , message.angular.y , message.angular.z );
+			printf("current_velocity   : %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf\n\n"
+						, current_velocity.x , current_velocity.y ,current_velocity.z 
+						, current_gyroscope.x , current_gyroscope.y , current_gyroscope.z );
+			printf("target_velocity    : %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf\n\n"
+						, target_velocity.x , target_velocity.y ,target_velocity.z 
+						, target_gyroscope.x , target_gyroscope.y , target_gyroscope.z );
+			printf("count_velocity     : %8.3d  %8.3d  %8.3d  %8.3d  %8.3d  %8.3d\n\n"
+						, count_velocity[0] , count_velocity[1] ,count_velocity[2] 
+						, count_velocity[3] , count_velocity[4] , count_velocity[5] );
+		#endif
 	}
 
 }

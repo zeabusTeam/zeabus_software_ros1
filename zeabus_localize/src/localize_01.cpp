@@ -2,13 +2,13 @@
 	File name			:	localize_01.cpp
 	Author				:	Supasan Komonlit	
 	Date created		:	2019 , JAN 09
-	Date last modified	:	2019 , ??? ??
+	Date last modified	:	2019 , JAN 26
 	Purpose				:	For localize by DVL , IMU 1 , Pressure
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	?.?.?
-	status				:	Production
+	version				:	1.2.0
+	status				:	Using
 
 	Namespace			:	None
 */

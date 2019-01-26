@@ -48,7 +48,7 @@
 #endif
 
 #define _PRINT_DATA_
-
+//#define _PRINT_QUATERNION_
 //#define _DEBUG_ORDER_
 
 int main( int argv , char** argc ){
@@ -61,10 +61,12 @@ int main( int argv , char** argc ){
 ///////////////////////////////////-- PARAMETER PART --//////////////////////////////////////////
 	std::string topic_state;
 	std::string topic_output;
+	std::string topic_twist;
 	int frequency;
 	int constant_value = 12;
 
 	ph.param< std::string >("topic_state" , topic_state , "/localize/state");
+	ph.param< std::string >("topic_twist" , topic_twist , "/control/twist");
 	ph.param< std::string >("topic_output" ,topic_output , "/control/target" );
 	ph.param< int >("frequency" , frequency , 50 );
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +127,7 @@ int main( int argv , char** argc ){
 								, &zeabus_library::control::ListenOdometry::callback
 								, &listen_odometry );
 
-	ros::Subscriber sub_target = nh.subscribe( "control/twist" , 1
+	ros::Subscriber sub_target = nh.subscribe( topic_twist , 1
 								, &zeabus_library::control::ListenTwist::callback
 								, &listen_twist );
 
@@ -143,42 +145,24 @@ int main( int argv , char** argc ){
 		rh.update_rotation();
 
 		if( mode_control == 0 ){
-			#ifdef _DEBUG_ORDER_
-				printf("Before plane XY\n");
-			#endif
 			if( count_velocity[0] != 0 && count_velocity[1] != 0 ){
-				#ifdef _DEBUG_ORDER_
-					printf("IN plane XY case 00\n");
-				#endif
 				temp_bool = ( count_velocity[0] == constant_value);
 				if( temp_bool ){
-					#ifdef _DEBUG_ORDER_
-						printf("IN plane XY case 00 befor calculate message.linear.x\n");
-					#endif
 					message.linear.x = target_velocity.x
 											* cos( target_euler[2] )
 										+ target_velocity.y
 											* cos( target_euler[2] + PI );
-					#ifdef _DEBUG_ORDER_
-						printf("IN plane XY case 00 befor calculate message.linear.y\n");
-					#endif
 					message.linear.y = target_velocity.x
 											* sin( target_euler[2] )
 										+ target_velocity.y
 											* sin( target_euler[2] + PI );
 				}
-				#ifdef _DEBUG_ORDER_
-					printf("IN plane XY case00 after check temp_bool\n");
-				#endif
 				target_position.x = current_position.x;
 				target_position.y = current_position.y;
 				count_velocity[0]--;
 				count_velocity[1]--;
 			}
 			else if( count_velocity[0] != 0 ){
-				#ifdef _DEBUG_ORDER_
-					printf("IN plane XY case 10\n");
-				#endif
 				temp_bool = (count_velocity[0] == constant_value);
 				if( temp_bool ){
 					temp_message.linear.x = target_velocity.x 
@@ -201,9 +185,6 @@ int main( int argv , char** argc ){
 				target_position.y = current_position.y;	
 			}
 			else if( count_velocity[1] != 0 ){
-				#ifdef _DEBUG_ORDER_
-					printf("IN plane XY case 01\n");
-				#endif
 				temp_bool = ( count_velocity[1] == constant_value );
 				if( temp_bool ){
 					temp_message.linear.x = target_velocity.y
@@ -226,30 +207,24 @@ int main( int argv , char** argc ){
 				target_position.y = current_position.y;
 			}
 			else{
-				#ifdef _DEBUG_ORDER_
-					printf("IN plane XY case 11\n");
-				#endif
 				diff_position.x = target_position.x - current_position.x;
 				diff_position.y = target_position.y - current_position.y;
 				message.linear.x = assign_velocity_xy( diff_position.x );
 				message.linear.y = assign_velocity_xy( diff_position.y );
 			}
-			#ifdef _DEBUG_ORDER_
-				printf("Before plane Z\n");
-			#endif
+
 			if( count_velocity[2] != 0 ){
 				message.linear.z = target_velocity.z;
+				target_position.z = current_position.z;
 				count_velocity[2]--;
 			}
 			else{
 				diff_position.z = target_velocity.z - current_position.z;
 			}
-			#ifdef _DEBUG_ORDER_
-				printf("Before plane YAW\n");
-			#endif
+
 			if( count_velocity[5] != 0 ){
 				message.angular.z = target_gyroscope.z;
-				current_quaternion = target_quaternion;
+				target_quaternion = current_quaternion;
 				count_velocity[5]--;
 			}
 			else{
@@ -260,7 +235,7 @@ int main( int argv , char** argc ){
 		#ifdef _PRINT_DATA_
 			zeabus_library::clear_screen();
 			rh.start_frame.get_RPY( current_euler[0] , current_euler[1] , current_euler[2] );
-			printf("current_position   : %8.3lf  %8.3lf  %8.3lf  %8.3ld  %8.3lf  %8.3lf\n\n"
+			printf("current_position   : %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf\n\n"
 						, current_position.x , current_position.y , current_position.z 
 						, current_euler[0] , current_euler[1] , current_euler[2] );
 			printf("target_position    : %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf\n\n"
@@ -281,6 +256,14 @@ int main( int argv , char** argc ){
 			printf("count_velocity     : %8.3d  %8.3d  %8.3d  %8.3d  %8.3d  %8.3d\n\n"
 						, count_velocity[0] , count_velocity[1] ,count_velocity[2] 
 						, count_velocity[3] , count_velocity[4] , count_velocity[5] );
+		#ifdef _PRINT_QUATERNION_
+			printf("current_quaternion : %8.3lf %8.3lf %8.3lf %8.3lf\n\n"
+							, current_quaternion.w , current_quaternion.x 
+							, current_quaternion.y ,current_quaternion.z );
+			printf("target_quaternion : %8.3lf %8.3lf %8.3lf %8.3lf\n\n"
+							, target_quaternion.w , target_quaternion.x 
+							, target_quaternion.y , target_quaternion.z );
+		#endif
 		#endif
 	}
 

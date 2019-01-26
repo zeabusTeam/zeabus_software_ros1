@@ -38,18 +38,9 @@ namespace control{
 	}
 
 	void ListenTwist::callback( const zeabus_library::Twist& message ){
-		#ifdef _DEBUG_RECEIVE_
-			printf("ListenTwist::callback before get value\n");
-		#endif
 		*( this->linear ) = message.linear;
 		*( this->angular ) = message.angular;
-		#ifdef _DEBUG_RECEIVE_
-			printf("ListenTwist::callback before check_zero_linear\n");
-		#endif
 		this->check_zero_linear();
-		#ifdef _DEBUG_RECEIVE_
-			printf("ListenTwist::callback before check_zero_angular\n");
-		#endif
 		this->check_zero_angular();
 	}
 

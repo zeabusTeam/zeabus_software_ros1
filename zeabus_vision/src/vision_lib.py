@@ -4,6 +4,7 @@ import numpy as np
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 import color_text as ct
+# import math
 
 
 def print_result(msg, color=ct.DEFAULT):
@@ -32,12 +33,14 @@ def publish_result(img, type, topicName):
         msg = bridge.cv2_to_imgmsg(img, "mono8")
     elif type == 'bgr':
         msg = bridge.cv2_to_imgmsg(img, "bgr8")
+    elif type == 'bgra':
+        msg = bridge.cv2_to_imgmsg(img, "bgra8")
     pub.publish(msg)
 
 
 def get_topic(camera):
     if camera == 'front':
-        return '/vision/front/image_raw/compressed'
+        return '/vision/front/image_rect_color/compressed'
     elif camera == 'bottom':
         return '/vision/bottom/image_raw/compressed'
 
@@ -136,5 +139,45 @@ def center_of_contour(cnt):
 def clear_screen():
     print("\033[H\033[J")
 
-# def pre_process(bgr,mission):
-#     return bgr
+def pre_process(bgr, mission):
+    return bgr
+
+# def add_grid(bgr):
+#     himg, wimg = bgr.shape[:2]
+#     grid = np.ones((himg,wimg,3),dtype=np.uint8)
+#     scale = [1.0*i/10 for i in range(1,10)]
+#     h = [int(round(i*himg)) for i in scale]
+#     w = [int(round(i*wimg)) for i in scale]
+#     for i in h:
+#         cv.line(grid,(0,i),(wimg,i),(0,0,0),1)
+#     for i in w:
+#         cv.line(grid,(0,i),(wimg,i),(0,0,0),1)
+#     print(h)
+#     print(w)
+#     return grid
+
+def gen_grid(data, shape):
+    himg, wimg = shape[:2]
+    grid = np.ones((himg,wimg,3),dtype=np.uint8)
+    scale = [1.0*i/10 for i in range(1,10)]
+    h = [int(round(i*himg)) for i in scale]
+    w = [int(round(i*wimg)) for i in scale]
+    graph_color = (175,175,175)
+    for i in h:
+        cv.line(grid,(0,i),(wimg,i),graph_color,1)
+    for i in w:
+        cv.line(grid,(i,0),(i,himg),graph_color,1)
+    cv.line(grid,(0,h[4]),(wimg,h[4]),graph_color,3)
+    cv.line(grid,(w[4],0),(w[4],himg),graph_color,3)
+    for key in data:
+        pos = data[key]
+        pos = (int(pos[0]),int(pos[1]))
+        cv.circle(grid,pos,3,(0,255,0),-1)
+        cv.putText(grid,key,pos,cv.FONT_HERSHEY_COMPLEX_SMALL,2,(255,255,255),2)    
+    return grid
+
+def print_mission(task,req=''):
+    print_result('mission_callback', ct.CYAN)
+    req = 'BLANK' if req == '' else req
+    print("task is " + ct.UNDERLINE + task + ct.DEFAULT +
+          " and req is " + ct.UNDERLINE + req + ct.DEFAULT)

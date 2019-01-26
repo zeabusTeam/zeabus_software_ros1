@@ -1,4 +1,11 @@
 #!/usr/bin/python2.7
+"""
+    File name: drum_v2.py
+    Author: AyumiizZ
+    Python Version: 2.7
+    About: code for finding drum
+    Rewrite: kam7411
+"""
 import rospy
 import numpy as np
 import cv2 as cv

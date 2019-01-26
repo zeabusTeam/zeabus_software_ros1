@@ -14,7 +14,7 @@ from auto_exposure_hist import AutoExposure
 
 def auto_exposure_bottom():
     rospy.init_node('AutoExposureBottom')
-    AE = AutoExposure("/auto_exposure_hist_bottom",debug=True)
+    AE = AutoExposure("/auto_exposure_hist_bottom",debug=False)
     AE.run()
 
 if __name__=='__main__':

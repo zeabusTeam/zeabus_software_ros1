@@ -55,7 +55,7 @@ int main( int argv , char** argc ){
 	ph.param< std::string >("topic_imu" , topic_imu , "/sensor/imu/node");
 	ph.param< std::string >("topic_dvl" , topic_dvl , "/sensor/dvl/node");
 	ph.param< std::string >("topic_pressure" , topic_pressure , "/sensor/pressure/node");
-	ph.param< int >("frequency" , frequency , 100 );
+	ph.param< int >("frequency" , frequency , 60 );
 
 	double period = 1.0 / frequency ;
 
@@ -64,7 +64,11 @@ int main( int argv , char** argc ){
 	ros::Rate rate( frequency );
 
 	zeabus_library::Odometry message; // for send output
+	zeabus_library::Odometry previous_message;
 	zeabus_library::Point3 temp_linear_imu;
+	previous_message.velocity.linear.x = 0 ;
+	previous_message.velocity.linear.y = 0 ;
+	previous_message.velocity.linear.z = 0 ;
 
 	zeabus_library::localize::ListenIMUQuaternion listen_imu( &(message.pose.quaternion) 
 															, &(message.velocity.angular) 
@@ -101,11 +105,12 @@ int main( int argv , char** argc ){
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
-		adding_x = message.velocity.linear.x * period;
-		adding_y = message.velocity.linear.y * period;
+		adding_x = message.velocity.linear.x + previous_message.velocity.linear.x * period;
+		adding_x = message.velocity.linear.x + previous_message.velocity.linear.x * period;
 		if( adding_x > 0.001 || adding_x < -0.001 ) message.pose.position.x += adding_x;
 		if( adding_y > 0.001 || adding_y < -0.001 ) message.pose.position.y += adding_y;
 		tell_auv_state.publish( message );
+		previous_message.velocity.linear = message.velocity.linear;
 
 		#ifdef _PRINT_OUTPUT_
 			quaternion.set_quaternion( message.pose.quaternion );

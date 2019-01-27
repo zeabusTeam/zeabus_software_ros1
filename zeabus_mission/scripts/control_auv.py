@@ -86,6 +86,9 @@ class ControlAUV:
 	def set_name( self , name ):
 		self.name = name 
 
+	def wait_time( self , second ):
+		time.sleep( second )
+
 	def velocity( self , data_velocity): # please send in dictionary type
 		if( 'x' in data_velocity.keys() ):
 			self.velocity_data.linear.x = data_velocity['x']

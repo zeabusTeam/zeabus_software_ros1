@@ -36,14 +36,8 @@ add_message_files(
 )
 
 add_service_files(
-	DIRECTORY srv/zeabus_control
+	DIRECTORY srv/control
 	FILES
-	OnePoint.srv
-	TwoPoint.srv
-	GetTarget.srv
-	NumberService.srv
-	CheckPosition.srv
-	SurveyRequest.srv
 	
 )
 

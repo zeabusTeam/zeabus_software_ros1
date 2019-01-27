@@ -1,6 +1,0 @@
-float64 distance
-float64 max_force
-std_msgs/String axis
-std_msgs/String user
----
-bool success

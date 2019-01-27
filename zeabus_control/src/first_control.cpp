@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.2
+	version				:	1.0.3
 	status				:	USE
 
 	Namespace			:	-
@@ -82,6 +82,7 @@ int main( int argv , char** argc ){
 	clear_point3( current_position );
 
 	zeabus_library::Point3 diff_position; // for collecting error position
+	clear_point3( diff_position );
 
 	zeabus_library::Point3 target_position; // for collecting target position
 	clear_point3( target_position );

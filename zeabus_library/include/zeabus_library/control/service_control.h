@@ -23,6 +23,22 @@
 
 #include	<zeabus_library/Point4.h>
 
+#include	<zeabus_library/GetTwoPoint.h>
+
+#include	<zeabus_library/OneInt.h>
+
+#include	<zeabus_library/StrPoint.h>
+
+#include	<zeabus_library/rotation/quaternion.h>
+
+#include	<zeabus_library/TwoPoint.h>
+
+#include	<zeabus_library/GetTwoPoint.h>
+
+#include	<math.h>
+
+#include	<zeabus_library/euler.h>
+
 #ifndef _ZEABUS_LIBRARY_CONTROL_SERVICE_CONTROL_H__
 #define _ZEABUS_LIBRARY_CONTROL_SERVICE_CONTROL_H__
 
@@ -36,27 +52,53 @@ namespace control{
 			
 			ServiceControl( int* mode );	// single interger not array 
 
-			register_position( zeabus_library::Point3* current , zeabus_library::Point3* target);
-			register_euler( double* current , double* target );
-			register_quaternion( zeabus_library::Point4* current 
+			void register_position( zeabus_library::Point3* current 
+									, zeabus_library::Point3* target
+									, zeabus_library::Point3* diff);
+
+			void register_euler( double* current , double* target , double* diff );
+
+			void register_quaternion( zeabus_library::Point4* current 
 								, zeabus_library::Point4* target);
-			register_mode( int* mode );
 
-			
+			void register_mode( int* mode );
 
+			void register_ok_error( double* ok_error );
 
+			bool callback_relative_position( zeabus_library::TwoPoint::Request& request
+											,zeabus_library::TwoPoint::Response& response );
+	
+			bool callback_mode_control( zeabus_library::OneInt::Request& request 
+									,	zeabus_library::OneInt::Response& response );
+
+			bool callback_fix_point( zeabus_library::StrPoint::Request& request 
+									, zeabus_library::StrPoint::Response& response );
+
+			bool callback_check_position( zeabus_library::StrPoint::Request& request 
+									, zeabus_library::StrPoint::Response& response );
+
+			bool callback_get_target( zeabus_library::GetTwoPoint::Request& request 
+									, zeabus_library::GetTwoPoint::Response& response );
+
+		
 		protected:
 			
 			int* mode;
 
 			zeabus_lirary::Point3* current_position;
 			zeabus_lirary::Point3* target_position;
+			zeabus_lirary::Point3* diff_position;
 
-			zeabus_lirary::Point4* current_position;
-			zeabus_lirary::Point4* target_position;
+			zeabus_lirary::Point4* current_quaternion;
+			zeabus_lirary::Point4* target_quaternion;
+
+			zeabus_lirary::rotation::Quaternion quaternion;
 
 			double* current_euler;
 			double* target_euler;
+			double* diff_euler;
+			
+			double* ok_error;
 
 	};
 

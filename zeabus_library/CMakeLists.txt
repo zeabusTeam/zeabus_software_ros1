@@ -40,6 +40,7 @@ add_service_files(
 	GetTwoPoint.srv
 	OneInt.srv
 	StrPoint.srv
+	StrTwoPoint.srv
 	TwoPoint.srv	
 )
 
@@ -93,6 +94,7 @@ set( zeabus_library_localize_sources
 )
 
 set( zeabus_library_control_sources
+	src/control/service_control.cpp
 	src/control/listen_odometry.cpp	
 	src/control/listen_twist.cpp
 	src/control/pid.cpp	

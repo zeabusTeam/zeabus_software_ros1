@@ -19,10 +19,6 @@
 
 #include	<exception>
 
-#ifndef PI
-	#define	PI 3.14159265
-#endif
-
 #ifndef EPSILON
 	#define	EPSILON 1.0e-7
 #endif
@@ -33,6 +29,8 @@
 namespace zeabus_library{
 
 	namespace euler{
+
+		const static double PI = 3.14159265
 
 		// function for convert and bound 
 		void bound_domain( double& radian );

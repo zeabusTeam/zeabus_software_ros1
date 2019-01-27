@@ -29,6 +29,8 @@ from std_msgs.msg import String, Int64 , Float64
 
 class ControlAUV:
 
+	data_velocity = { 'x':0 , 'y':0 , 'z':0 , 'roll':0 , 'pitch':0 , 'yaw':0 }
+
 	def __init__( self , name_user = "" , want_init_node = False ):
 		
 		self.name = ""

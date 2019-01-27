@@ -1,13 +1,13 @@
 /*
 	File name			:	first_control.cpp
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , JAN 20
-	Date last modified	:	2018 , JAN 26
+	Date created		:	2019 , JAN 20
+	Date last modified	:	2019 , JAN ??
 	Purpose				:	For control system will give target velocity
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.3
+	version				:	1.2.0
 	status				:	USE
 
 	Namespace			:	-

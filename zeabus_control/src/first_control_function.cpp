@@ -1,14 +1,14 @@
 /*
 	File name			:	first_control_function.cpp
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , JAN 20
-	Date last modified	:	2018 , ??? ??
+	Date created		:	2019 , JAN 20
+	Date last modified	:	2019 , ??? ??
 	Purpose				:	For helping function
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.0.2
+	status				:	Testing
 
 	Namespace			:	-
 */

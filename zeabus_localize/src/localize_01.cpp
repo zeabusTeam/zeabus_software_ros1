@@ -106,7 +106,7 @@ int main( int argv , char** argc ){
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
-		messagep.velocity.linear.z = message.pose.position.z - previous_depth;
+		message.velocity.linear.z = message.pose.position.z - previous_depth;
 		adding_x = (message.velocity.linear.x + previous_message.velocity.linear.x) * period / 2;
 		adding_y = (message.velocity.linear.y + previous_message.velocity.linear.y) * period / 2;
 		if( adding_x > 0.001 || adding_x < -0.001 ) message.pose.position.x += adding_x;

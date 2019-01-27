@@ -36,9 +36,11 @@ add_message_files(
 )
 
 add_service_files(
-	DIRECTORY srv/control
 	FILES
-	
+	GetTwoPoint.srv
+	OneInt.srv
+	StrPoint.srv
+	TwoPoint.srv	
 )
 
 add_service_files(

@@ -66,7 +66,7 @@ namespace control{
 	bool ServiceControl::callback_mode_control( zeabus_library::OneInt::Request& request 
 									,	zeabus_library::OneInt::Response& response ){
 		*(this->mode) = request.data;
-		request.result = true;
+		response.result = true;
 		return true;
 	}
 
@@ -75,31 +75,31 @@ namespace control{
 		if( request.type == "z" ) this->target_position->z = request.data;
 		else if( request.type == "yaw" ){
 			this->quaternion.set_quaternion( 0 , 0 , request.data );
-			this->target_quaternion->w = this->quaternion->w;
-			this->target_quaternion->x = this->quaternion->x;
-			this->target_quaternion->y = this->quaternion->y;
-			this->target_quaternion->z = this->quaternion->z;
+			this->target_quaternion->w = *(this->quaternion.w);
+			this->target_quaternion->x = *(this->quaternion.x);
+			this->target_quaternion->y = *(this->quaternion.y);
+			this->target_quaternion->z = *(this->quaternion.z);
 		}
 		else if( request.type == "+yaw" ){
 			this->quaternion.set_quaternion( 0 , 0 , request.data + target_euler[2] );
-			this->target_quaternion->w = this->quaternion->w;
-			this->target_quaternion->x = this->quaternion->x;
-			this->target_quaternion->y = this->quaternion->y;
-			this->target_quaternion->z = this->quaternion->z;
+			this->target_quaternion->w = *(this->quaternion.w);
+			this->target_quaternion->x = *(this->quaternion.x);
+			this->target_quaternion->y = *(this->quaternion.y);
+			this->target_quaternion->z = *(this->quaternion.z);
 		}
-		request.result = true;
+		response.result = true;
 		return true;
 	}
 
 	bool ServiceControl::callback_check_position( zeabus_library::StrPoint::Request& request 
 									, zeabus_library::StrPoint::Response& response ){
 		if( request.type == "z" ){
-			if( fabs( diff_position.z ) <= request.data + this->ok_error[2] ) 
+			if( fabs( diff_position->z ) <= request.data + this->ok_error[2] ) 
 				response.result = true;
 			else response.result = false;
 		}
 		else if( request.type == "xy" ){
-			double diff = sqrt( pow( diff_position.x , 2 ) + pow( diff_position.y , 2 ) );
+			double diff = sqrt( pow( diff_position->x , 2 ) + pow( diff_position->y , 2 ) );
 			double ok_diff = sqrt( pow( ok_error[0] , 2 ) + pow( ok_error[1] , 2 ) );
 			if( fabs( diff ) <= request.data + ok_diff ) response.result = true;
 			else response.result = false;
@@ -108,18 +108,18 @@ namespace control{
 			if( fabs( diff_euler[2] ) <= request.data + ok_error[5] ) response.result = true;
 			else response.result = false;
 		}
-		else response.response = false;
+		else response.result = false;
 		return true;
 	}
 
 	bool ServiceControl::callback_get_target( zeabus_library::GetTwoPoint::Request& request 
 									, zeabus_library::GetTwoPoint::Response& response ){
 		if( request.type == "xy" ){
-			response.x = target_position.x;
-			response.y = target_position.y;
+			response.x = target_position->x;
+			response.y = target_position->y;
 		}
 		else if( request.type == "z" ){
-			response.x = target_position.z;
+			response.x = target_position->z;
 		}
 		else if( request.type == "yaw" ){
 			response.x = target_euler[2];

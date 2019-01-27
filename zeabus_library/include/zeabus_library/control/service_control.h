@@ -85,14 +85,14 @@ namespace control{
 			
 			int* mode;
 
-			zeabus_lirary::Point3* current_position;
-			zeabus_lirary::Point3* target_position;
-			zeabus_lirary::Point3* diff_position;
+			zeabus_library::Point3* current_position;
+			zeabus_library::Point3* target_position;
+			zeabus_library::Point3* diff_position;
 
-			zeabus_lirary::Point4* current_quaternion;
-			zeabus_lirary::Point4* target_quaternion;
+			zeabus_library::Point4* current_quaternion;
+			zeabus_library::Point4* target_quaternion;
 
-			zeabus_lirary::rotation::Quaternion quaternion;
+			zeabus_library::rotation::Quaternion quaternion;
 
 			double* current_euler;
 			double* target_euler;

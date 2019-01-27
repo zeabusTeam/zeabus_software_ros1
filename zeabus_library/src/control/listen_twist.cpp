@@ -30,6 +30,12 @@ namespace control{
 		this->constant = number;
 	}
 
+	void ListenTwist::register_all( zeabus_library::Point3* linear 
+									, zeabus_library::Point3* angular){
+		this->register_linear( linear );
+		this->register_angular( angular );
+	}
+
 	void ListenTwist::register_linear( zeabus_library::Point3* variable ){
 		this->linear = variable;
 	}

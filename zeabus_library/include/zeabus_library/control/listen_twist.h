@@ -37,6 +37,8 @@ namespace control{
 
 			void set_constant( int number );			
 
+			void register_all( zeabus_library::Point3* linear , zeabus_library::Point3* angular);
+
 			void register_linear( zeabus_library::Point3* variable );
 
 			void register_angular( zeabus_library::Point3* variable );

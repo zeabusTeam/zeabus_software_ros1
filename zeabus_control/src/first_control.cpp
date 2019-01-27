@@ -79,39 +79,42 @@ int main( int argv , char** argc ){
 	int count_velocity[6] = { 0 , 0 , 0 , 0 , 0 , 0 };
 
 	zeabus_library::Point3 current_position; // for collection current position		
+	clear_point3( current_position );
+
 	zeabus_library::Point3 diff_position; // for collecting error position
+
 	zeabus_library::Point3 target_position; // for collecting target position
+	clear_point3( target_position );
+
 	zeabus_library::Point3 temporary_position; // for collecting linear position for velocity
+	clear_point3( temporary_position );
+
 	zeabus_library::Point3 current_velocity; // for collecting linear velocity form localize
 	zeabus_library::Point3 current_gyroscope; // for collecting angular velocity form localize
 	zeabus_library::LinearEquation line;
-	clear_point3( current_position );
-	clear_point3( target_position );
-	clear_point3( temporary_position );
 
 	zeabus_library::rotation::RotationHandle rh; // rotation handle
-	zeabus_library::Point4 current_quaternion;
-	zeabus_library::Point4 target_quaternion;
+
+	zeabus_library::Point4 current_quaternion; 
+	clear_point4( current_quaternion );
+
+	zeabus_library::Point4 target_quaternion; 
+	clear_point4( target_quaternion );
+
 	double current_euler[3] = { 0 , 0 , 0 };
 	double target_euler[3] = { 0 , 0 , 0 };
 	double diff_euler[3] = { 0 , 0 , 0 };
-	clear_point4( current_quaternion );
-	clear_point4( target_quaternion );
 
 	zeabus_library::control::ListenOdometry listen_odometry;
-	listen_odometry.register_linear_position( &current_position );
-	listen_odometry.register_quaternion( &current_quaternion );
-	listen_odometry.register_target_position( &target_position );
-	listen_odometry.register_target_quaternion( &target_quaternion );
-	listen_odometry.register_linear_velocity( &current_velocity );
-	listen_odometry.register_gyroscope( &current_gyroscope );
+	listen_odometry.register_all(&current_position , &current_quaternion , &current_velocity
+			,&current_gyroscope , &target_position , &target_quaternion );
 
 	zeabus_library::control::ListenTwist listen_twist( count_velocity );
 	zeabus_library::Point3 target_velocity;
 	zeabus_library::Point3 target_gyroscope;
-	listen_twist.register_linear( &target_velocity );
-	listen_twist.register_angular( &target_gyroscope );
+	listen_twist.register_all( &target_velocity ,  &target_gyroscope );
 	listen_twist.set_constant( constant_value );
+
 	clear_point3( target_velocity );
 	clear_point3( target_gyroscope );
 
@@ -138,9 +141,10 @@ int main( int argv , char** argc ){
 		// for find diff euler
 		rh.set_start_frame( current_quaternion ); 
 		rh.set_target_frame( target_quaternion );
+		rh.start_frame.get_RPY( current_euler[0] , current_euler[1] , current_euler[2] );
 		rh.target_frame.get_RPY( target_euler[0] , target_euler[1] , target_euler[2] );
-		rh.update_rotation();
 		rh.get_RPY( diff_euler[0] , diff_euler[1] , diff_euler[2] ); // start go to target
+		rh.update_rotation();
 		rh.update_rotation();
 
 		if( mode_control == 0 ){
@@ -212,7 +216,6 @@ int main( int argv , char** argc ){
 		tell_target.publish( message );
 		#ifdef _PRINT_DATA_
 			zeabus_library::clear_screen();
-			rh.start_frame.get_RPY( current_euler[0] , current_euler[1] , current_euler[2] );
 			printf("current_position   : %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf  %8.3lf\n\n"
 						, current_position.x , current_position.y , current_position.z 
 						, current_euler[0] , current_euler[1] , current_euler[2] );

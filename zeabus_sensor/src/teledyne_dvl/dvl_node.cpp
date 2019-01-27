@@ -29,6 +29,10 @@
 
 #include	<zeabus_library/general.h>
 
+#include	<zeabus_library/euler.h>
+
+namespace euler_ = zeabus_library::euler;
+
 #define _DEBUG_JUMP_VALUE_
 
 int main( int argc , char** argv ){
@@ -75,7 +79,7 @@ int main( int argc , char** argv ){
 	receive_matrix.resize( 3 , 1 );
 	result_matrix.resize( 3 , 1 );
 	previous_matrix.resize( 3 , 1 );
-	rh.set_start_frame( PI , 0 , 0 );
+	rh.set_start_frame( euler_::PI , 0 , 0 );
 	rh.set_target_frame( 0 , 0 , 0 );
 	
 /////////////////////////////////////-- ROS SYSTEM --///////////////////////////////////////////

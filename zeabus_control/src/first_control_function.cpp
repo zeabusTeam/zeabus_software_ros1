@@ -27,6 +27,8 @@
 
 #include	<zeabus_library/Point4.h>
 
+namespace euler_ = zeabus_library::euler;
+
 void clear_point4( zeabus_library::Point4& variable ){
 	variable.w = 1;
 	variable.x = 0;
@@ -42,13 +44,9 @@ void clear_point3( zeabus_library::Point3& variable ){
 
 void next_point_xy( double& yaw , double& x0 , double& y0 , double& x1 , double& y1 
 						, double distance_x , double distance_y ){
-	x1 = x0 
-		+ distance_x*zeabus_library::euler::cos( yaw ) 
-		+ distance_y*zeabus_library::euler::cos( yaw + PI );
+	x1 = x0 + distance_x*cos( yaw ) + distance_y*cos( yaw + euler_::PI );
 	
-	y1 = y0
-		+ distance_x*zeabus_library::euler::sin( yaw )
-		+ distance_y*zeabus_library::euler::sin( yaw + PI );  
+	y1 = y0 + distance_x*sin( yaw ) + distance_y*sin( yaw + euler_::PI );  
 }
 
 double assign_velocity_xy( double error ){

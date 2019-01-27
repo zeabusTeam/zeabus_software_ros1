@@ -156,15 +156,22 @@ int main( int argv , char** argc ){
 
 					temp_message.linear.y = target_velocity.x * sin( target_euler[2] )
 									+ target_velocity.y * sin( target_euler[2] + euler_::PI );
-
+					#ifdef _DEBUG_ORDER_
+						printf("BEFORE CALCULATE NEXT POINT\n");
+					#endif
 					next_point_xy( target_euler[2] , current_position.x , current_position.y
 								, temporary_position.x , temporary_position.y 
-								, copysign( target_velocity.x * 10 , target_velocity.x ) 
-								, copysign( target_velocity.y * 10 , target_velocity.y ) );	 
+								, target_velocity.x * 10 , target_velocity.y * 10  );	
+					#ifdef _DEBUG_ORDER_
+						printf("BEFORE CALCULATE SET POINT\n");
+					#endif 
 					line.set_point( current_position.x , current_position.y 
 									, temporary_position.x , temporary_position.y );
 					line.update();	
 				}
+				#ifdef _DEBUG_ORDER_
+					printf("After temp_bool in PLAN XY\n");
+				#endif
 				line.distance_split( current_position.x , current_position.y
 									, diff_position.x , diff_position.y 
 									, target_position.x , target_position.y );

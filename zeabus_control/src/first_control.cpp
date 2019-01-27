@@ -49,7 +49,8 @@
 
 #define _PRINT_DATA_
 //#define _PRINT_QUATERNION_
-//#define _DEBUG_ORDER_
+
+#define _DEBUG_ORDER_
 
 int main( int argv , char** argc ){
 

@@ -24,7 +24,7 @@
 #endif
 
 #ifndef EPSILON
-	#define	EPSILON 1.0e-7
+	#define	EPSILON 1.0e-3
 #endif
 
 #ifndef _ZEABUS_LIBRARY_GENERAL_H__

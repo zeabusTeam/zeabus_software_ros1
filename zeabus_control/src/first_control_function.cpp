@@ -67,6 +67,6 @@ double assign_veloity_z( double error ){
 double assign_gyroscope_z( double error ){
 	double magnitude = zeabus_library::abs( error );
 	if( magnitude < 0.1 ) return 0;
-	else if( magnitude < 1 ) return copysign( 0.15 , error );
-	else return copysign( 0.3 , error );
+	else if( magnitude < 0.5 ) return copysign( 0.2 , error );
+	else return copysign( 0.4 , error );
 }

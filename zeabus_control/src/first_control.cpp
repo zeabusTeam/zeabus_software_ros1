@@ -29,6 +29,8 @@
 
 #include	<zeabus_library/convert/Point3.h>
 
+#include	<zeabus_library/control/service_control.h>
+
 #include	<zeabus_library/control/listen_odometry.h>
 
 #include	<zeabus_library/control/listen_twist.h>
@@ -125,6 +127,13 @@ int main( int argv , char** argc ){
 	bool temp_bool = false;
 	double temp_distance = 0;
 
+	zeabus_library::control::ServiceControl service( &mode_control );
+	service.register_position( &current_position , &target_position , &diff_position );
+	service.register_euler( current_euler , target_euler , diff_euler );
+	service.register_quaternion( &current_quaternion , &target_quaternion );
+	double ok_error[6] = { 0.05 , 0.05 , 0.1 , 0.05 , 0.05 , 0.05};
+	service.register_ok_error( ok_error );
+
 //////////////////////////////////////-- ROS SYSTEM --///////////////////////////////////////////
 	ros::Subscriber sub_state = nh.subscribe( topic_state , 1 
 								, &zeabus_library::control::ListenOdometry::callback
@@ -135,6 +144,31 @@ int main( int argv , char** argc ){
 								, &listen_twist );
 
 	ros::Publisher tell_target = nh.advertise< zeabus_library::Twist >( topic_output , 1 );
+
+	ros::ServiceServer service_distance = 
+		nh.advertiseService( "/control/relative_xy"
+						, &zeabus_library::control::ServiceControl::callback_relative_position
+						, &service );
+
+	ros::ServiceServer service_mode = 
+		nh.advertiseService( "/contol/mode"
+						, &zeabus_library::control::ServiceControl::callback_mode_control
+						, &service );
+
+	ros::ServiceServer service_fix_point = 
+		nh.advertiseService( "/control/fix_point"
+						, &zeabus_library::control::ServiceControl::callback_fix_point 
+						, &service );
+
+	ros::ServiceServer service_check_position = 
+		nh.advertiseService( "/control/check_position"
+						, &zeabus_library::control::ServiceControl::callback_check_position
+						, &service );
+
+	ros::ServiceServer service_get_target = 
+		nh.advertiseService( "/control/get_target"
+						, &zeabus_library::control::ServiceControl::callback_get_target 
+						, &service );
 
 	while( nh.ok() ){
 		rate.sleep();

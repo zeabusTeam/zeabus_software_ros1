@@ -2,12 +2,12 @@
 	File name			:	dvl_port.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2019 , JAN 12
-	Date last modified	:	2019 , JAN 18
+	Date last modified	:	2019 , JAN 27
 	Purpose				:	This is file to use read connect ros and DVL
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Maintainance
 
 	Namespace			:	None
@@ -136,6 +136,10 @@ int main( int argc , char ** argv ){
 			}
 			else{
 				printf( "<-------- DVL BAD DATA ----------->\n\n");
+				data_ros.x = 0;
+				data_ros.y = 0;
+				data_ros.z = 0;
+				tell_dvl.publish( data_ros );
 			}
 		}	
 		

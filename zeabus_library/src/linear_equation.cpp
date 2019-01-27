@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	product
 
 	Namespace			:	zeabus_library
@@ -77,4 +77,33 @@ namespace zeabus_library{
 			printf("END LinearEquation::distance_split\n");
 		#endif
 	}
+
+	void LinearEquation::distance_split( double x , double y , double& ans_x , double& ans_y 
+			, double& cut_x , double& cut_y ){
+		#ifdef _DEBUG_ORDERED_
+			printf("BEGIN LinearEquation::distance_split and get cut point\n");
+		#endif
+		double temp_M = -1.0 * this->M;
+		double temp_C = y - ( temp_M * x );
+		this->temp_matrix( 0 , 0 ) = temp_M; // -1.0 * this->M
+		this->temp_matrix( 1 , 0 ) = this->M; // this->M
+		this->temp_matrix( 0 , 1 ) = 1;
+		this->temp_matrix( 1 , 1 ) = 1;
+		// use Cramers Rule -> A X = D
+		double det_A = zeabus_library::matrix::det( this->temp_matrix );
+		this->temp_matrix( 0 , 0 ) = this->C;
+		this->temp_matrix( 1 , 0 ) = temp_C;
+		cut_x = zeabus_library::matrix::det( this->temp_matrix ) / det_A;
+		this->temp_matrix( 0 , 0 ) = temp_M; // -1.0 * this->M
+		this->temp_matrix( 1 , 0 ) = this->M; // this->M
+		this->temp_matrix( 0 , 1 ) = this->C;
+		this->temp_matrix( 1 , 0 ) = temp_C;
+		cut_y = zeabus_library::matrix::det( this->temp_matrix ) / det_A;
+		ans_x = cut_x - x ;
+		ans_y = cut_y - y ;
+		#ifdef _DEBUG_ORDERED_
+			printf("END LinearEquation::distance_split\n");
+		#endif
+	}
+
 }

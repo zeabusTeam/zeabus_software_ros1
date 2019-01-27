@@ -43,14 +43,12 @@
 
 #include	"first_control_function.cpp"
 
-#ifndef PI
-	#define PI 3.14159265
-#endif
-
 #define _PRINT_DATA_
 //#define _PRINT_QUATERNION_
 
 #define _DEBUG_ORDER_
+
+using namespace _euler = zeabus_library::euler;
 
 int main( int argv , char** argc ){
 
@@ -146,66 +144,34 @@ int main( int argv , char** argc ){
 		rh.update_rotation();
 
 		if( mode_control == 0 ){
-			if( count_velocity[0] != 0 && count_velocity[1] != 0 ){
-				temp_bool = ( count_velocity[0] == constant_value);
+			#ifdef _DEBUG_ORDER_
+				printf("BEFORE PLAN XY\n");
+			#endif
+			if( count_velocity[0] > 0 || count_velocity[1] > 0 ){
+				temp_bool = (count_velocity[0] == constant_value) 
+							|| (count_velocity[1] == constant_value) ;
 				if( temp_bool ){
-					message.linear.x = target_velocity.x
-											* cos( target_euler[2] )
-										+ target_velocity.y
-											* cos( target_euler[2] + PI );
-					message.linear.y = target_velocity.x
-											* sin( target_euler[2] )
-										+ target_velocity.y
-											* sin( target_euler[2] + PI );
-				}
-				target_position.x = current_position.x;
-				target_position.y = current_position.y;
-				count_velocity[0]--;
-				count_velocity[1]--;
-			}
-			else if( count_velocity[0] != 0 ){
-				temp_bool = (count_velocity[0] == constant_value);
-				if( temp_bool ){
-					temp_message.linear.x = target_velocity.x 
-											* cos( target_euler[2] );
-					temp_message.linear.y = target_velocity.x
-											* sin( target_euler[2] );
+					temp_message.linear.x = target_velocity.x * cos( target_euler[2] )
+									+ target_velocity.y * cos( target_euler[2] + _euler::PI );
+
+					temp_message.linear.y = target_velocity.x * sin( target_euler[2] )
+									+ target_velocity.y * sin( target_euler[2] + _euler::PI );
+
 					next_point_xy( target_euler[2] , current_position.x , current_position.y
 								, temporary_position.x , temporary_position.y 
-								, copysign( 20 , target_velocity.x ) , 0 );	 
+								, copysign( target_velocity.x * 10 , target_velocity.x ) 
+								, copysign( target_velocity.y * 10 , target_velocity.y ) );	 
 					line.set_point( current_position.x , current_position.y 
 									, temporary_position.x , temporary_position.y );
 					line.update();	
 				}
 				line.distance_split( current_position.x , current_position.y
-									, diff_position.x , diff_position.y );
+									, diff_position.x , diff_position.y 
+									, target_position.x , target_position.y );
 				message.linear.x = temp_message.linear.x + assign_velocity_xy( diff_position.x);
 				message.linear.y = temp_message.linear.y + assign_velocity_xy( diff_position.y);
 				count_velocity[0]--;
-				target_position.x = current_position.x;
-				target_position.y = current_position.y;	
-			}
-			else if( count_velocity[1] != 0 ){
-				temp_bool = ( count_velocity[1] == constant_value );
-				if( temp_bool ){
-					temp_message.linear.x = target_velocity.y
-											* cos( target_euler[2] + PI );
-					temp_message.linear.y = target_velocity.y
-											* sin( target_euler[2] + PI );
-					next_point_xy( target_euler[2] , current_position.x , current_position.y
-								, temporary_position.x , temporary_position.y 
-								, 0 , copysign( 20 , target_velocity.x ) );	 
-					line.set_point( current_position.x , current_position.y 
-									, temporary_position.x , temporary_position.y );
-					line.update();	
-				}
-				line.distance_split( current_position.x , current_position.y
-									, diff_position.x , diff_position.y );
-				message.linear.x = temp_message.linear.x + assign_velocity_xy( diff_position.x);
-				message.linear.y = temp_message.linear.y + assign_velocity_xy( diff_position.y);
 				count_velocity[1]--;
-				target_position.x = current_position.x;
-				target_position.y = current_position.y;
 			}
 			else{
 				diff_position.x = target_position.x - current_position.x;
@@ -213,7 +179,9 @@ int main( int argv , char** argc ){
 				message.linear.x = assign_velocity_xy( diff_position.x );
 				message.linear.y = assign_velocity_xy( diff_position.y );
 			}
-
+			#ifdef _DEBUG_ORDER_
+				printf("BEFORE PLAN Z\n");
+			#endif
 			if( count_velocity[2] != 0 ){
 				message.linear.z = target_velocity.z;
 				target_position.z = current_position.z;
@@ -222,7 +190,9 @@ int main( int argv , char** argc ){
 			else{
 				diff_position.z = target_velocity.z - current_position.z;
 			}
-
+			#ifdef _DEBUG_ORDER_
+				printf("BEFORE PLAN YAW\n");
+			#endif
 			if( count_velocity[5] != 0 ){
 				message.angular.z = target_gyroscope.z;
 				target_quaternion = current_quaternion;

@@ -1,14 +1,14 @@
 /*
 	File name			:	linear_equation.h		
 	Author				:	Supasan Komonlit
-	Date created		:	2018 , JAN 24
-	Date last modified	:	2018 , ??? ??
+	Date created		:	2019 , JAN 24
+	Date last modified	:	2019 , JAN 27
 	Purpose				:	This file use for quation Ax + By + C = 0
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	0.5.0
-	status				:	Production
+	version				:	1.0.0
+	status				:	Using & Maintainance
 
 	Namespace			:	zeabus_library
 */
@@ -45,6 +45,8 @@ namespace zeabus_library{
 			void update();
 			double distance_point( double x , double y );
 			void distance_split( double x , double y , double& ans_x , double& ans_y); 
+			void distance_split( double x , double y , double& ans_x , double& ans_y
+								, double& cut_x , double& cut_y ); 
 
 		protected:
 			double x0;

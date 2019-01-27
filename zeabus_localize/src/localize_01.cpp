@@ -2,12 +2,12 @@
 	File name			:	localize_01.cpp
 	Author				:	Supasan Komonlit	
 	Date created		:	2019 , JAN 09
-	Date last modified	:	2019 , JAN 26
+	Date last modified	:	2019 , JAN 27
 	Purpose				:	For localize by DVL , IMU 1 , Pressure
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.2.2
+	version				:	1.2.3
 	status				:	Using
 
 	Namespace			:	None
@@ -85,6 +85,7 @@ int main( int argv , char** argc ){
 
 	double adding_x;
 	double adding_y;
+	double previous_depth = 0;
 
 ////////////////////////////////////-- ROS SYSTEM --/////////////////////////////////////////////
 	ros::Subscriber sub_imu = nh.subscribe( topic_imu , 1 
@@ -105,12 +106,14 @@ int main( int argv , char** argc ){
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
+		messagep.velocity.linear.z = message.pose.position.z - previous_depth;
 		adding_x = (message.velocity.linear.x + previous_message.velocity.linear.x) * period / 2;
 		adding_y = (message.velocity.linear.y + previous_message.velocity.linear.y) * period / 2;
 		if( adding_x > 0.001 || adding_x < -0.001 ) message.pose.position.x += adding_x;
 		if( adding_y > 0.001 || adding_y < -0.001 ) message.pose.position.y += adding_y;
 		tell_auv_state.publish( message );
 		previous_message.velocity.linear = message.velocity.linear;
+		previous_depth = message.pose.position.z;
 
 		#ifdef _PRINT_OUTPUT_
 			quaternion.set_quaternion( message.pose.quaternion );

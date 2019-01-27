@@ -7,7 +7,7 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.1.1
 	status				:	Maintainance
 
 	Namespace			:	zeabus_library/rotation
@@ -30,10 +30,6 @@
 #include	<zeabus_library/error_code.h>
 
 #include	<zeabus_library/Point4.h>
-
-#ifndef PI
-	#define	PI 3.14159265
-#endif
 
 #ifndef EPSILON
 	#define	EPSILON 1.0e-7

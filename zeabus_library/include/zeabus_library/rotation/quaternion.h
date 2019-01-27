@@ -2,12 +2,12 @@
 	File name			:	quaternion.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 20
-	Date last modified	:	2018 , DEC 26
+	Date last modified	:	2019 , JAN 27
 	Purpose				:	Quaternion structure in form w x y z or matrix of boost
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.0.1
 	status				:	Use & Maintain
 
 	Namespace			:	zeabus_library/rotation
@@ -28,10 +28,6 @@
 #include	<zeabus_library/error_code.h>
 
 #include	<zeabus_library/Point4.h>
-
-#ifndef PI
-	#define		PI 3.14159265
-#endif
 
 #ifndef _ZEABUS_LIBRARY_QUATERNION_H__
 #define _ZEABUS_LIBRARY_QUATERNION_H__

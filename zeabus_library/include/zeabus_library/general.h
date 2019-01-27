@@ -19,10 +19,6 @@
 
 #include	<math.h>
 
-#ifndef PI
-	#define	PI 3.14159265
-#endif
-
 #ifndef EPSILON
 	#define	EPSILON 1.0e-3
 #endif

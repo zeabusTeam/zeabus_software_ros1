@@ -2,12 +2,12 @@
 	File name			:	quaternion.cpp	
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , DEC 20
-	Date last modified	:	2018 , DEC 27
+	Date last modified	:	2019 , JAN 27
 	Purpose				:	source code of structure quaternion
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.1.1
 	status				:	Using & Maintain
 
 	Namespace			:	zeabus_library
@@ -17,6 +17,9 @@
 
 //#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
 //#define _DEBUG_VALUE_INPUT_MATH_H_
+
+namespace euler_ = zeabus_library::euler;
+
 namespace zeabus_library{
 
 namespace rotation{

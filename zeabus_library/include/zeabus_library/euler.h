@@ -30,7 +30,7 @@ namespace zeabus_library{
 
 	namespace euler{
 
-		const static double PI = 3.14159265
+		const static double PI = 3.14159265;
 
 		// function for convert and bound 
 		void bound_domain( double& radian );

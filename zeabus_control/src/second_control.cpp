@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.1.1
 	status				:	Production
 
 	Namespace			:	-
@@ -42,7 +42,7 @@
 
 int main( int argv , char** argc ){
 
-	double ok_error[6] = { 0.01 , 0.01 , 0.05 , 0.02 , 0.02 , 0.02};
+	double ok_error[6] = { 0.01 , 0.01 , 0.1 , 0.02 , 0.02 , 0.02};
 	double limit_pid[6] = { 1 , 1 , 3 , 1 , 1 , 1};
 
 	ros::init( argv , argc , "second_control");

@@ -32,7 +32,7 @@ namespace localize{
 	}
 
 	void ListenPressureNav::callback( const nav_msgs::Odometry& message ){
-		*(this->depth) = message.pose.pose.position.z;
+		*(this->depth) = -1*message.pose.pose.position.z;
 		#ifdef _TEST_CALLBACK_ 
 			printf("location of variable in callback pressure is : %x\n" , this->depth );
 		#endif

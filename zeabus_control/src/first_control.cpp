@@ -198,9 +198,16 @@ int main( int argv , char** argc ){
 					#ifdef _DEBUG_ORDER_
 						printf("BEFORE CALCULATE NEXT POINT\n");
 					#endif
-					next_point_xy( target_euler[2] , current_position.x , current_position.y
+					if( count_velocity[0] == constant_value ){
+						next_point_xy( target_euler[2] , current_position.x , current_position.y
 								, temporary_position.x , temporary_position.y 
-								, target_velocity.x * 10 , target_velocity.y * 10  );	
+								, target_velocity.x , 0   );	
+					}
+					else{
+						next_point_xy( target_euler[2] , current_position.x , current_position.y
+								, temporary_position.x , temporary_position.y 
+								, 0 , target_velocity.y  );	
+					}
 					#ifdef _DEBUG_ORDER_
 						printf("BEFORE CALCULATE SET POINT\n");
 					#endif 
@@ -212,10 +219,11 @@ int main( int argv , char** argc ){
 					printf("After temp_bool in PLAN XY\n");
 				#endif
 				line.distance_split( current_position.x , current_position.y
-									, diff_position.x , diff_position.y 
-									, target_position.x , target_position.y );
+									, diff_position.x , diff_position.y); 
 				message.linear.x = temp_message.linear.x + assign_velocity_xy( diff_position.x);
 				message.linear.y = temp_message.linear.y + assign_velocity_xy( diff_position.y);
+				target_position.x = current_position.x;
+				target_position.y = current_position.y;
 				count_velocity[0]--;
 				count_velocity[1]--;
 			}
@@ -234,7 +242,8 @@ int main( int argv , char** argc ){
 				count_velocity[2]--;
 			}
 			else{
-				diff_position.z = target_velocity.z - current_position.z;
+				diff_position.z = target_position.z - current_position.z;
+				message.linear.z = assign_veloity_z( diff_position.z );
 			}
 			#ifdef _DEBUG_ORDER_
 				printf("BEFORE PLAN YAW\n");

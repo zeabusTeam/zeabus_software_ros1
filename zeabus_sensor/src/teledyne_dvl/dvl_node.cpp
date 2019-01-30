@@ -7,7 +7,7 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.1.1
 	status				:	Maintain
 
 	Namespace			:	None
@@ -34,6 +34,7 @@
 namespace euler_ = zeabus_library::euler;
 
 #define _DEBUG_JUMP_VALUE_
+//#define _PRINT_DEBUG_
 
 int main( int argc , char** argv ){
 
@@ -106,21 +107,14 @@ int main( int argc , char** argv ){
 		rh.set_target_frame( data_quaternion );
 		zeabus_library::convert::Point3_to_matrix( data_dvl , receive_matrix );
 
-		if( zeabus_library::abs( receive_matrix( 0 , 0 ) ) < 0.01 ) 
-			receive_matrix( 0 , 0 ) = previous_matrix( 0 , 0 );
-		if( zeabus_library::abs( receive_matrix( 1 , 0 ) ) < 0.01 ) 
-			receive_matrix( 1 , 0 ) = previous_matrix( 1 , 0 );
-		if( zeabus_library::abs( receive_matrix( 2 , 0 ) ) < 0.01 ) 
-			receive_matrix( 2 , 0 ) = previous_matrix( 2 , 0 );
-		
 		zeabus_library::convert::Point3_to_matrix( data_dvl , previous_matrix );
-		#ifdef _DEBUG_JUMP_VALUE_
+		#ifdef _PRINT_DEBUG_
 			printf("Receive value %8.3lf\t%8.3lf\n" , data_dvl.x , data_dvl.y );
 		#endif
 		rh.target_rotation( receive_matrix , result_matrix );
 		zeabus_library::convert::matrix_to_Point3( result_matrix , data_dvl );
 		tell_dvl.publish( data_dvl );
-		#ifdef _DEBUG_JUMP_VALUE_
+		#ifdef _PRINT_DEBUG_
 			printf("send value %8.3lf\t%8.3lf\n\n\n" , data_dvl.x , data_dvl.y );
 		#endif
 

@@ -106,14 +106,11 @@ int main( int argv , char** argc ){
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
-		message.velocity.linear.z = message.pose.position.z - previous_depth;
 		adding_x = (message.velocity.linear.x + previous_message.velocity.linear.x) * period / 2;
 		adding_y = (message.velocity.linear.y + previous_message.velocity.linear.y) * period / 2;
-		if( adding_x > 0.001 || adding_x < -0.001 ) message.pose.position.x += adding_x;
-		if( adding_y > 0.001 || adding_y < -0.001 ) message.pose.position.y += adding_y;
+		if( adding_x > 0.0005 || adding_x < -0.0005 ) message.pose.position.x += adding_x;
+		if( adding_y > 0.0005 || adding_y < -0.0005 ) message.pose.position.y += adding_y;
 		tell_auv_state.publish( message );
-		previous_message.velocity.linear = message.velocity.linear;
-		previous_depth = message.pose.position.z;
 
 		#ifdef _PRINT_OUTPUT_
 			quaternion.set_quaternion( message.pose.quaternion );

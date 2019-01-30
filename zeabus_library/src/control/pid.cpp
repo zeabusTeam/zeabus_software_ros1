@@ -62,13 +62,13 @@ namespace control{
 
 	void PID::calculate( double error , double& result ){
 		if( this->first_time ){
-			this->sum = copysign( this->offset , error );
+			this->sum = this->offset;
 			this->previous_error = error;
 			result = this->sum;
 			this->first_time = false;
 		}
 		else{
-			this->sum += ( error * this->i ) * this->period
+			this->sum += ( ( error * this->i ) );
 					+ ( error - this->previous_error) / this->period * this->d;
 
 			if( zeabus_library::abs( this->sum ) > this->limit )

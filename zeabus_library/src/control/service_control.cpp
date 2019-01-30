@@ -55,9 +55,9 @@ namespace control{
 
 	bool ServiceControl::callback_relative_position( zeabus_library::TwoPoint::Request& request
 											,zeabus_library::TwoPoint::Response& response ){
-		this->target_position->x = request.x * cos( this->target_euler[2] )
+		this->target_position->x += request.x * cos( this->target_euler[2] )
 								+ request.y * cos( this->target_euler[2] + euler_::PI );
-		this->target_position->y = request.x * sin( this->target_euler[2] )
+		this->target_position->y += request.x * sin( this->target_euler[2] )
 								+ request.y * sin( this->target_euler[2] + euler_::PI );
 		response.result = true;
 		return true;	

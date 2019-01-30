@@ -10,19 +10,19 @@
 
 <launch>
 
-	<node name="imu_node" output="log" pkg="zeabus_sensor" type="imu_node">
+	<node name="imu_node" output="screen" pkg="zeabus_sensor" type="imu_node">
 		<param name="topic_input_node_imu" type="str" value="/sensor/imu/port"/>
 		<param name="topic_output_node_imu" type="str" value="/sensor/imu/node"/>
 		<param name="frequency_imu" type="int" value="50"/>
 	</node>
 
-	<node name="dvl_node" output="log" pkg="zeabus_sensor" type="dvl_node">
+	<node name="dvl_node" output="screen" pkg="zeabus_sensor" type="dvl_node">
 		<param name="topic_input_node_dvl" type="str" value="/sensor/dvl/port"/>
 		<param name="topic_output_node_dvl" type="str" value="/sensor/dvl/node"/>
 		<param name="topic_imu" type="str" value="/sensor/imu/node"/>
-		<param name="frequency" type="int" value="100"/>
+		<param name="frequency" type="int" value="50"/>
 	</node>
 
-	<node name="preesure_filter" output="log" pkg="zeabus_sensor" type="pressure_filter.py"/>
+	<node name="preesure_filter" output="screen" pkg="zeabus_sensor" type="pressure_filter.py"/>
 	
 </launch>

@@ -55,6 +55,7 @@ namespace control{
 		if( first_time ){
 			*( this->target_quaternion ) = message.pose.quaternion;
 			*( this->target_linear_position ) = message.pose.position;
+			this->target_linear_position->z = 1.5;
 			first_time = false;
 		}
 	}

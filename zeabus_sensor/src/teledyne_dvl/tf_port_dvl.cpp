@@ -36,8 +36,8 @@
 #define _COLLECTING_DATA_
 #define _DEBUG_CODE_
 
-#define _PUBLISH_DATA_
-#define _PUBLISH_STRING_
+//#define _PUBLISH_DATA_
+//#define _PUBLISH_STRING_
 
 #ifndef PI
 	#define PI 3.14159265

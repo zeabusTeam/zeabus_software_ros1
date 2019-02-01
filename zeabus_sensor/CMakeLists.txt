@@ -48,3 +48,6 @@ add_executable( tf_port_dvl src/teledyne_dvl/tf_port_dvl.cpp )
 add_dependencies( tf_port_dvl ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries( tf_port_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
 
+add_executable( tf_robot_frame src/tf_robot_frame.cpp )
+add_dependencies( tf_robot_frame ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( tf_robot_frame ${catkin_LIBRARIES} ${boost_LIBRARIES})

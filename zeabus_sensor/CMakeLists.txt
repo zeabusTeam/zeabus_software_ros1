@@ -2,9 +2,12 @@ cmake_minimum_required(VERSION 2.8.3)
 project(zeabus_sensor)
 
 find_package(catkin REQUIRED COMPONENTS
+	tf
 	roscpp
 	sensor_msgs
+	geometry_msgs
 	zeabus_library
+	zeabus_static
 )
 
 find_package(Boost REQUIRED COMPONENTS system chrono)
@@ -12,7 +15,7 @@ find_package(Boost REQUIRED COMPONENTS system chrono)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES zeabus_sensor  
-  CATKIN_DEPENDS roscpp  zeabus_library sensor_msgs
+  CATKIN_DEPENDS roscpp  zeabus_library sensor_msgs tf geometry_msgs zeabus_static
   DEPENDS Boost 
 )
 
@@ -33,3 +36,10 @@ target_link_libraries( dvl_port ${catkin_LIBRARIES} ${boost_LIBRARIES})
 add_executable( dvl_node src/teledyne_dvl/dvl_node.cpp )
 add_dependencies( dvl_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries( dvl_node ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+# ------------------------------------- TF FILE ------------------------------------------------
+
+add_executable( tf_port_imu src/inertial_measurement_unit/tf_port_imu.cpp )
+add_dependencies( tf_port_imu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( tf_port_imu ${catkin_LIBRARIES} ${boost_LIBRARIES})
+

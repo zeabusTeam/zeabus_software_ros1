@@ -24,7 +24,7 @@ namespace convert{
 	}
 
 	tf::Quaternion tf_Quaternion( geometry_msgs::Quaternion& data){
-		return tf::Quaternion( data.x , data.y , data.z , data.z );
+		return tf::Quaternion( data.x , data.y , data.z , data.w );
 	}
 
 }

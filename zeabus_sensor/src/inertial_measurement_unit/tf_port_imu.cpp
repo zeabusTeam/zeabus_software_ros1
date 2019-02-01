@@ -26,8 +26,9 @@
 
 #include	<geometry_msgs/QuaternionStamped.h>
 
-//#define	_DEBUG_SPILT_DATA_
-#define _TYPE_SENSOR_MSGS_
+//#define	_DEBUG_SPILT_DATA_ // For debug about get value each part of packet
+
+//#define _PUBLISH_DATA_ 
 
 #ifndef PI
 	#define PI 3.14159265
@@ -47,11 +48,14 @@ int main( int argv , char** argc ){
 	ros::NodeHandle nh(""); // Handle for manage about this file in ros system
 
 ////////////////////////////////////-- PARAMETER PART --/////////////////////////////////////////
-	std::string topic_quaternion;
-	std::string port_name;
+	std::string topic_quaternion; // send only quaterion frame imu
+	std::string port_name; 
 	std::string frame_id_velocity; // for collect angular velocity
 	std::string frame_id_acceleration; // for collect linear acceleration
-	std::string frame_id_quaternion;
+	std::string frame_id_quaternion; 
+
+	std::string topic_sensor; // for case you want to publish data
+	
 	double euler_ZYX[3] = { 0 , 0 , 0 };
 	int frequency;
 
@@ -67,7 +71,9 @@ int main( int argv , char** argc ){
 	ph.param< std::string >( "name_port_imu" , port_name 
 								, "/dev/microstrain/3dm_gx5_45_0000__6251.65901");
 
-	ph.param< std::string >( "topic_quaternion" , topic_quaternion , "/sensor/quaternion");
+	ph.param< std::string >( "topic_quaternion" , topic_quaternion , "/sensor/imu/quaternion");
+
+	ph.param< std::string >( "topic_publish" , topic_sensor , "/sensor/imu/port");
 
 	
 	ph.param< double >( "offset_roll" , euler_ZYX[0] , 0.0 );
@@ -101,6 +107,9 @@ int main( int argv , char** argc ){
 	QS.header.frame_id = frame_id_quaternion;
 
 	ros::Publisher pub_quaternion = ph.advertise< geometry_msgs::QuaternionStamped >( 
+		topic_quaternion , 1 );
+
+	ros::Publisher pub_sensor = ph.advertise< sensor_msgs::Imu >( 
 		topic_quaternion , 1 );
 
 
@@ -175,11 +184,8 @@ int main( int argv , char** argc ){
 						printf("Position %d Accelerometer--> %2X\n" , run, data_stream[run] );
 					#endif
 					run += 1;
-					#ifdef _TYPE_SENSOR_MSGS_
-						zeabus_library::convert::uint8_t_to_Vector3( 
-															sensor.linear_acceleration
+					zeabus_library::convert::uint8_t_to_Vector3( sensor.linear_acceleration
 															, data_stream , run );
-					#endif
 					run += 12 ;
 				}
 				else if( data_stream[run] == DataIMU::SCALED_GYRO_VECTOR ){
@@ -190,7 +196,6 @@ int main( int argv , char** argc ){
 
 					zeabus_library::convert::uint8_t_to_Vector3( sensor.angular_velocity
 															, data_stream , run );
-
 					run += 12 ;
 				}
 				else if( data_stream[ run ] == DataIMU::CF_QUATERNION ){
@@ -198,7 +203,6 @@ int main( int argv , char** argc ){
 						printf("Position %d QUATERNION --> %2X\n" ,run ,data_stream[run]);
 					#endif
 					run += 1;
-
 					zeabus_library::convert::uint8_t_to_Quaternion( sensor.orientation
 															, data_stream , run );
 					run += 16;
@@ -217,7 +221,10 @@ int main( int argv , char** argc ){
 												, sensor.angular_velocity.y
 												, sensor.angular_velocity.z ) );
 			time = ros::Time::now();
-			
+			#ifdef _PUBLISH_DATA_
+				sensor.header.stampe = time;
+				pub_sensor.publish( sensor );
+			#endif
 			QS.header.stamp = time;
 			QS.quaternion = sensor.orientation;
 			pub_quaternion.publish( QS );

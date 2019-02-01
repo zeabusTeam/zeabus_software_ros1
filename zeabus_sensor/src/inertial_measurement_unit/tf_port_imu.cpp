@@ -7,8 +7,8 @@
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
-	status				:	Production
+	version				:	1.1.0
+	status				:	Maintainance
 
 	Namespace			:	None
 */

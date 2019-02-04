@@ -30,6 +30,8 @@
 
 //#define _PUBLISH_DATA_ 
 
+#define _TEST_VALUE_
+
 #ifndef PI
 	#define PI 3.14159265
 #endif
@@ -76,11 +78,11 @@ int main( int argv , char** argc ){
 	ph.param< std::string >( "topic_publish" , topic_sensor , "/sensor/imu/port");
 
 	
-	ph.param< double >( "offset_roll" , euler_ZYX[0] , 0.0 );
-	ph.param< double >( "offset_pitch" , euler_ZYX[1] , 0.0 );
-	ph.param< double >( "offset_yaw" , euler_ZYX[2] , PI/2 ) ;
+	ph.param< double >( "rotation_roll" , euler_ZYX[0] , 0.0 );
+	ph.param< double >( "rotation_pitch" , euler_ZYX[1] , 0.0 );
+	ph.param< double >( "rotation_yaw" , euler_ZYX[2] , 0.0 ) ;
 
-	ph.param< int >("frequency_imu" , frequency , 100 );
+	ph.param< int >("frequency_imu" , frequency , 50 );
 
 ///////////////////////////////////////-- TF PART --/////////////////////////////////////////////
 
@@ -220,6 +222,10 @@ int main( int argv , char** argc ){
 			transform_velocity.setOrigin( tf::Vector3(sensor.angular_velocity.x
 												, sensor.angular_velocity.y
 												, sensor.angular_velocity.z ) );
+			#ifdef _TEST_VALUE_
+				transform_acceleration.setOrigin( tf::Vector3( 0 , 0 , 1 ) );
+			#endif
+
 			time = ros::Time::now();
 			#ifdef _PUBLISH_DATA_
 				sensor.header.stampe = time;
@@ -230,8 +236,8 @@ int main( int argv , char** argc ){
 			pub_quaternion.publish( QS );
 			broadcast_acceleration.sendTransform( tf::StampedTransform( transform_acceleration
 				, time , "robot" , frame_id_acceleration ) );
-			broadcast_velocity.sendTransform( tf::StampedTransform( transform_velocity 
-				, time , "robot" , frame_id_velocity ) );	
+//			broadcast_velocity.sendTransform( tf::StampedTransform( transform_velocity 
+//				, time , "robot" , frame_id_velocity ) );	
 			
 		}
 

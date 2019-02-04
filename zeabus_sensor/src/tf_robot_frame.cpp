@@ -24,6 +24,8 @@
 
 #include	<geometry_msgs/QuaternionStamped.h>
 
+#define _DEBUG_ORDER_
+
 class ListenQuaternionStamped{
 
 	public: 
@@ -36,6 +38,9 @@ class ListenQuaternionStamped{
 		void callback( const geometry_msgs::QuaternionStamped& message ){
 			*(this->received) = true;
 			*(this->data) = message;
+			#ifdef _DEBUG_ORDER_
+				printf("Callback listen\n");
+			#endif
 		}
 
 		bool* received;
@@ -67,7 +72,7 @@ int main( int argc , char** argv ){
 	double offset_euler[3] = { 0 , 0 , 0 };
 
 	ph.param< int >("frequency" , frequency , 100 );
-	ph.param< double >("offset_quaternion_01_Z" , offset_euler[2] , 0.0 );
+	ph.param< double >("offset_quaternion_01_Z" , offset_euler[2] , 1.57 );
 	ph.param< double >("offset_quaternion_01_Y" , offset_euler[1] , 0.0 );
 	ph.param< double >("offset_quaternion_01_X" , offset_euler[0] , 0.0 );
 
@@ -93,6 +98,8 @@ int main( int argc , char** argv ){
 
 	tf::Quaternion tf_rotation;
 	tf_rotation.setEulerZYX( offset_euler[2] , offset_euler[1] , offset_euler[0] );
+
+	temp_quaternion.setEulerZYX( 0 , 0 , 0 ); 
 	
 	tf::Transform transform_rotation;
 	transform_rotation.setOrigin( tf::Vector3(  zero , zero , zero ) );
@@ -105,13 +112,20 @@ int main( int argc , char** argv ){
 		if( received_01 ){
 			tf_quaternion.setValue( QS_01.quaternion.x , QS_01.quaternion.y
 											,	QS_01.quaternion.z , QS_01.quaternion.w );
+			
+			//tf_rotation*=temp_quaternion;
+			temp_quaternion*=tf_rotation;
 
-			transform_rotation.setRotation( tf_quaternion*=tf_rotation );
+			transform_rotation.setRotation( temp_quaternion );
 
 			broadcast_rotation.sendTransform( tf::StampedTransform( transform_rotation 
 				, QS_01.header.stamp , "world" , "robot" ) );
 
 			received_01 = false;
+
+			#ifdef _DEBUG_ORDER_
+				printf("CHANGE ROTATION TF\n\n");
+			#endif
 		}
 	}
 

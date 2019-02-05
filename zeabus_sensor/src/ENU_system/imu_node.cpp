@@ -31,6 +31,8 @@
 	#define PI 3.14159265
 #endif
 
+#define		_ECHO_RAW_VALUE_
+
 typedef double tfScalar;
 
 namespace Asio = boost::asio;
@@ -45,14 +47,21 @@ int main( int argv , char** argc ){
 	ros::NodeHandle nh(""); // Handle for manage about this file in ros system
 
 //=================================> PARAMETER PART
+	std::string topic_raw_value;		// use topic publish raw value from imu for debug
+	std::string topic_rotation_value;	// use topic publish value after rotation 
 
-	std::string port_name; 
-	int frequency;
+	std::string frame_id;				// this will add type _01 for linear acceleration
+										//                    _02 for angular velocity
+										// for use in tf system
 
+	ph.param< std::string >( "imu_")
+
+	std::string port_name;				// Hardware part
+	int frequency;						// frequency will affect to set up hardware
 	ph.param< std::string >( "name_port_imu" , port_name 
 								, "/dev/microstrain/3dm_gx5_45_0000__6251.65901");
-
 	ph.param< int >("frequency_imu" , frequency , 50 );
+
 
 //=================================> ROS OPERATING PART
 

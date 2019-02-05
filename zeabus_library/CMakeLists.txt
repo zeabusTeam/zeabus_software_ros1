@@ -2,16 +2,15 @@ cmake_minimum_required(VERSION 2.8.3)
 project(zeabus_library)
 
 find_package( catkin REQUIRED COMPONENTS
+  tf
   roscpp
+  roslib
   std_msgs
   geometry_msgs
   message_generation
-  roslib
 )
 
-find_package( Boost REQUIRED COMPONENTS
-
-)
+find_package( Boost REQUIRED COMPONENTS )
 
 add_message_files(
 	FILES
@@ -64,7 +63,7 @@ generate_messages( DEPENDENCIES std_msgs geometry_msgs)
 catkin_package(
 	INCLUDE_DIRS include
 	LIBRARIES zeabus_library
-	CATKIN_DEPENDS roscpp message_runtime std_msgs
+	CATKIN_DEPENDS roscpp message_runtime std_msgs tf
 	DEPENDS Boost
 )
 
@@ -131,7 +130,12 @@ set( zeabus_library_sources
 	src/linear_equation.cpp
 )
 
+set( zeabus_library_tf_sources
+	src/tf_handle/quaternion.cpp
+)
+
 add_library( zeabus_library			STATIC		${zeabus_library_sources} 
+												${zeabus_library_tf_sources}
 												${zeabus_library_sensor_sources}
 												${zeabus_library_convert_sources}
 												${zeabus_library_control_sources}
@@ -156,3 +160,6 @@ target_link_libraries( test_color_text ${catkin_LIBRARIES} zeabus_library)
 
 add_executable( test_rotation_handle src_test/test_rotation_handle.cpp)
 target_link_libraries( test_rotation_handle ${catkin_LIBRARIES} zeabus_library)
+
+add_executable( test_tf_quaternion src_test/test_tf_quaternion.cpp)
+target_link_libraries( test_tf_quaternion ${catkin_LIBRARIES} zeabus_library)

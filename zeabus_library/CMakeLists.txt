@@ -6,6 +6,7 @@ find_package( catkin REQUIRED COMPONENTS
   roscpp
   roslib
   std_msgs
+  sensor_msgs
   geometry_msgs
   message_generation
 )
@@ -116,6 +117,10 @@ set( zeabus_library_sensor_sources
 	src/sensor/listen_IMUQuaternion.cpp
 )
 
+set( zeabus_library_subscriber_sources
+	src/subscriber/SubImu.cpp
+)
+
 set( zeabus_library_sources
 	src/capture_time.cpp
 	src/matrix.cpp
@@ -140,7 +145,8 @@ add_library( zeabus_library			STATIC		${zeabus_library_sources}
 												${zeabus_library_convert_sources}
 												${zeabus_library_control_sources}
 												${zeabus_library_localize_sources}
-												${zeabus_library_rotation_sources} )
+												${zeabus_library_rotation_sources} 
+												${zeabus_library_subscriber_sources} )
 add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}
 												${catkin_EXPORTED_TARGETS} )
 target_link_libraries( zeabus_library			${catkin_LIBRARIES} ${Boost_LIBRARIES})

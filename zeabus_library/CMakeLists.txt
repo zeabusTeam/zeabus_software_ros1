@@ -136,7 +136,7 @@ set( zeabus_library_sources
 )
 
 set( zeabus_library_tf_sources
-	src/tf_handle/quaternion.cpp
+	src/tf_handle/tf_quaternion.cpp
 )
 
 add_library( zeabus_library			STATIC		${zeabus_library_sources} 

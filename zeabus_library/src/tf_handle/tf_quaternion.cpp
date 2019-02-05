@@ -1,5 +1,5 @@
 /*
-	File name			:	quaternion.cpp		
+	File name			:	tf_quaternion.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , FEB 05
 	Date last modified	:	2018 , ??? ??
@@ -13,7 +13,7 @@
 	Namespace			:	zeabus_library::tf_handle
 */
 
-#include	<zeabus_library/tf_handle/quaternion.h>
+#include	<zeabus_library/tf_handle/tf_quaternion.h>
 
 namespace zeabus_library{
 

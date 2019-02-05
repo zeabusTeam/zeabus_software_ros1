@@ -22,32 +22,38 @@ catkin_package(
 
 include_directories( include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
-add_executable( imu_port src/inertial_measurement_unit/imu_port.cpp )
-add_dependencies( imu_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries( imu_port ${catkin_LIBRARIES} ${boost_LIBRARIES})
+#add_executable( imu_port src/inertial_measurement_unit/imu_port.cpp )
+#add_dependencies( imu_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( imu_port ${catkin_LIBRARIES} ${boost_LIBRARIES})
 
-add_executable( imu_node src/inertial_measurement_unit/imu_node.cpp )
-add_dependencies( imu_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries( imu_node ${catkin_LIBRARIES} ${boost_LIBRARIES})
+#add_executable( imu_node src/inertial_measurement_unit/imu_node.cpp )
+#add_dependencies( imu_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( imu_node ${catkin_LIBRARIES} ${boost_LIBRARIES})
 
-add_executable( dvl_port src/teledyne_dvl/dvl_port.cpp )
-add_dependencies( dvl_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries( dvl_port ${catkin_LIBRARIES} ${boost_LIBRARIES})
+#add_executable( dvl_port src/teledyne_dvl/dvl_port.cpp )
+#add_dependencies( dvl_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( dvl_port ${catkin_LIBRARIES} ${boost_LIBRARIES})
 
-add_executable( dvl_node src/teledyne_dvl/dvl_node.cpp )
-add_dependencies( dvl_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries( dvl_node ${catkin_LIBRARIES} ${boost_LIBRARIES})
+#add_executable( dvl_node src/teledyne_dvl/dvl_node.cpp )
+#add_dependencies( dvl_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( dvl_node ${catkin_LIBRARIES} ${boost_LIBRARIES})
 
 # ------------------------------------- TF FILE ------------------------------------------------
 
-add_executable( tf_port_imu src/inertial_measurement_unit/tf_port_imu.cpp )
-add_dependencies( tf_port_imu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries( tf_port_imu ${catkin_LIBRARIES} ${boost_LIBRARIES})
+#add_executable( tf_port_imu src/inertial_measurement_unit/tf_port_imu.cpp )
+#add_dependencies( tf_port_imu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( tf_port_imu ${catkin_LIBRARIES} ${boost_LIBRARIES})
 
-add_executable( tf_port_dvl src/teledyne_dvl/tf_port_dvl.cpp )
-add_dependencies( tf_port_dvl ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries( tf_port_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
+#add_executable( tf_port_dvl src/teledyne_dvl/tf_port_dvl.cpp )
+#add_dependencies( tf_port_dvl ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( tf_port_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
 
-add_executable( tf_robot_frame src/tf_robot_frame.cpp )
-add_dependencies( tf_robot_frame ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries( tf_robot_frame ${catkin_LIBRARIES} ${boost_LIBRARIES})
+#add_executable( tf_robot_frame src/tf_robot_frame.cpp )
+#add_dependencies( tf_robot_frame ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( tf_robot_frame ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+# ----------------------------------- LAST GROUP -----------------------------------------------
+add_executable( tf_imu src/imu.cpp )
+add_dependencies( tf_imu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( tf_imu ${catkin_LIBRARIES} ${boost_LIBRARIES})
+

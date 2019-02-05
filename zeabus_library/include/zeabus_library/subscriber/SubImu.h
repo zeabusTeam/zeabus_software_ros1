@@ -34,7 +34,7 @@ namespace subscriber{
 		public:	
 			SubImu( sensor_msgs::Imu* data );
 
-			void register_Imu( sensor_msgs::Imu* data );
+			void register_data( sensor_msgs::Imu* data );
 
 			void callback( const sensor_msgs::Imu& message );
 

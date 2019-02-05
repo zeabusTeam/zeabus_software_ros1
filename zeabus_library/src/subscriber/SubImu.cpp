@@ -21,10 +21,10 @@ namespace zeabus_library{
 namespace subscriber{
 
 	SubImu::SubImu( sensor_msgs::Imu* data ){
-		this->register_Imu(data);
+		this->register_data(data);
 	}
 
-	void SubImu::register_Imu( sensor_msgs::Imu* data ){
+	void SubImu::register_data( sensor_msgs::Imu* data ){
 		this->data = data;
 	}
 

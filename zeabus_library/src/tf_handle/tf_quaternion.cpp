@@ -19,22 +19,22 @@ namespace zeabus_library{
 
 namespace tf_handle{
 
-	TF_Quaternion::TF_Quaternion() : Quaternion(){}
+	TFQuaternion::TFQuaternion() : Quaternion(){}
 
-	TF_Quaternion::TF_Quaternion( const tfScalar& x , const tfScalar&y , const tfScalar& z 
+	TFQuaternion::TFQuaternion( const tfScalar& x , const tfScalar&y , const tfScalar& z 
 					, const tfScalar& w ): Quaternion( x , y , z , w ){}
 
-	TF_Quaternion::TF_Quaternion( const tf::Vector3 &axis , const tfScalar& angle ) : 
+	TFQuaternion::TFQuaternion( const tf::Vector3 &axis , const tfScalar& angle ) : 
 					Quaternion( axis , angle ){}
 
-	TF_Quaternion::TF_Quaternion( const tfScalar& yaw , const tfScalar& pitch 
+	TFQuaternion::TFQuaternion( const tfScalar& yaw , const tfScalar& pitch 
 					, const tfScalar& roll) : Quaternion( yaw , pitch , roll ){}
 
-	void TF_Quaternion::get_RPY( double& roll , double& pitch , double& yaw ){
+	void TFQuaternion::get_RPY( double& roll , double& pitch , double& yaw ){
 		tf::Matrix3x3( *this ).getRPY( roll , pitch , yaw );
 	}
 
-	double* TF_Quaternion::rotation( double* problem ){
+	double* TFQuaternion::rotation( double* problem ){
 		tf::Quaternion data( problem[0] , problem[1] , problem[2] , 0 );
 		data = (*this) * data;
 		data *= this->inverse();
@@ -44,7 +44,7 @@ namespace tf_handle{
 		return this->temp_double;
 	}
 			
-	void TF_Quaternion::rotation( double& x , double& y , double& z ){
+	void TFQuaternion::rotation( double& x , double& y , double& z ){
 		tf::Quaternion data( x , y , z , 0 );
 		data = (*this) * data;
 		data *= this->inverse();

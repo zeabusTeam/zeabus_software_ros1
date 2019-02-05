@@ -30,14 +30,14 @@ namespace zeabus_library{
 
 namespace tf_handle{
 
-	class TF_Quaternion : public tf::Quaternion{
+	class TFQuaternion : public tf::Quaternion{
 
 		public:
-			TF_Quaternion();
-			TF_Quaternion( const tfScalar& x , const tfScalar&y 
+			TFQuaternion();
+			TFQuaternion( const tfScalar& x , const tfScalar&y 
 							, const tfScalar& z , const tfScalar& w );
-			TF_Quaternion( const tf::Vector3 &axis , const tfScalar& angle );
-			TF_Quaternion( const tfScalar& yaw , const tfScalar& pitch , const tfScalar& roll);
+			TFQuaternion( const tf::Vector3 &axis , const tfScalar& angle );
+			TFQuaternion( const tfScalar& yaw , const tfScalar& pitch , const tfScalar& roll);
 
 			void get_RPY( double& roll , double& pitch , double& yaw );
 

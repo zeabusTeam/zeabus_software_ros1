@@ -57,3 +57,7 @@ add_executable( tf_imu src/imu.cpp )
 add_dependencies( tf_imu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries( tf_imu ${catkin_LIBRARIES} ${boost_LIBRARIES})
 
+add_executable( tf_dvl src/dvl.cpp )
+add_dependencies( tf_dvl ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( tf_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
+

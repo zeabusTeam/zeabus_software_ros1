@@ -72,6 +72,8 @@ int main( int argv , char** argc ){
 	ph.param< double >( "translation_z" , offset_translation[2] , 0.0 );
 
 	ph.param< int >("frequency_imu" , frequency , 50 );
+	ph.param< std::string >( "port_imu", port_name
+			, "/dev/microstrain/3dm_gx5_45_0000__6251.65901");
 
 //=====================> TRANSFORM PART
 
@@ -172,7 +174,9 @@ int main( int argv , char** argc ){
 //=====================> LOOP ROS SYSTEM
 	while( ph.ok() ){
 		rate.sleep();
+
 #ifndef _TEST_CONNECTION_
+
 		imu.read_data_stream( data_stream , result );
 		if( result ){
 			for( int run = 4 ; run < data_stream.size() ; ){
@@ -217,12 +221,16 @@ int main( int argv , char** argc ){
 			broadcaster.sendTransform( 
 					tf::StampedTransform( transform , time , "robot" , frame_id ) );			
 		}
+
 #else
+
 		ros::spinOnce();
 		time = ros::Time::now();
 		sensor.header.stamp = time;
+		sensor.header.frame_id = frame_id;
 		pub_sensor.publish( sensor );
 		broadcaster.sendTransform( tf::StampedTransform( transform, time, "robot", frame_id) );	
+
 #endif
 
 	}	

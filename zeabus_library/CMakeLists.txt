@@ -6,6 +6,7 @@ find_package( catkin REQUIRED COMPONENTS
   roscpp
   roslib
   std_msgs
+  nav_msgs
   sensor_msgs
   geometry_msgs
   message_generation
@@ -119,6 +120,7 @@ set( zeabus_library_sensor_sources
 
 set( zeabus_library_subscriber_sources
 	src/subscriber/SubImu.cpp
+	src/subscriber/SubOdometry.cpp
 	src/subscriber/SubTwistWithCovarianceStamped.cpp
 )
 

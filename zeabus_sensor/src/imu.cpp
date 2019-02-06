@@ -47,6 +47,7 @@ int main( int argv , char** argc ){
 
 	std::string publish_topic;
 	std::string frame_id;
+	std::string parent_frame;
 #ifdef _TEST_CONNECTION_ 
 	std::string subscribe_topic;
 #endif
@@ -63,6 +64,7 @@ int main( int argv , char** argc ){
 	ph.param< std::string >( "subscribe_topic" , subscribe_topic , "/test/imu");
 #endif
 	ph.param< std::string >( "frame_id" ,  frame_id , "imu");
+	ph.param< std::string >( "parent_frame" ,  parent_frame , "robot");
 
 	ph.param< double >( "rotation_x" , offset_rotation[0] , 0.0 ); // roll
 	ph.param< double >( "rotation_y" , offset_rotation[1] , 0.0 ); // pitch
@@ -219,7 +221,7 @@ int main( int argv , char** argc ){
 			sensor.header.stamp = time;
 			pub_sensor.publish( sensor );
 			broadcaster.sendTransform( 
-					tf::StampedTransform( transform , time , "robot" , frame_id ) );			
+					tf::StampedTransform( transform , time , parent_frame , frame_id ) );
 		}
 
 #else
@@ -229,7 +231,8 @@ int main( int argv , char** argc ){
 		sensor.header.stamp = time;
 		sensor.header.frame_id = frame_id;
 		pub_sensor.publish( sensor );
-		broadcaster.sendTransform( tf::StampedTransform( transform, time, "robot", frame_id) );	
+		broadcaster.sendTransform( 
+				tf::StampedTransform( transform, time, parent_frame, frame_id) );	
 
 #endif
 

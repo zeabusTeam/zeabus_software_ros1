@@ -58,7 +58,7 @@ int main( int argc , char ** argv ){
 	std::string port_name =  "/dev/usb2serial/ftdi_FT2VR5PM_02";
 	std::string publish_topic;
 	std::string frame_id;
-	std::string parent_frame;
+	std::string parent_id;
 #ifdef _TEST_CONNECTION_
 	std::string subscribe_topic;
 #endif
@@ -78,7 +78,7 @@ int main( int argc , char ** argv ){
 	ph.param< std::string >("raw_topic", raw_topic , "/test/dvl");
 #endif
 	ph.param< std::string >("frame_id" , frame_id , "dvl");
-	ph.param< std::string >("parent_frame" , parent_frame , "robot");
+	ph.param< std::string >("parent_id" , parent_id , "robot");
 
 	ph.param< double >( "rotation_x" , offset_rotation[0] , 0.0 ); // roll
 	ph.param< double >( "rotation_y" , offset_rotation[1] , 0.0 ); // pitch
@@ -216,7 +216,7 @@ int main( int argc , char ** argv ){
 				sensor.heading.stamp = time;
 				pub_sensor.publish( sensor );
 				broadcaster.sendTransform(
-						tf::StampedTransform( transform , time , parent_frame , frame_id ) );
+						tf::StampedTransform( transform , time , parent_id , frame_id ) );
 			}
 			else{
 				printf( "<-------- DVL BAD DATA ----------->\n\n");
@@ -227,8 +227,7 @@ int main( int argc , char ** argv ){
 		sensor.header.stamp = time;
 		sensor.header.frame_id = frame_id;
 		pub_sensor.publish( sensor );
-		broadcaster.sendTransform( 
-				tf::StampedTransform( transform, time, parent_frame, frame_id ) );
+		broadcaster.sendTransform( tf::StampedTransform( transform, time, parent_id, frame_id ));
 		
 #endif	
 		

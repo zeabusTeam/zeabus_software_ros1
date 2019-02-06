@@ -61,3 +61,7 @@ add_executable( tf_dvl src/dvl.cpp )
 add_dependencies( tf_dvl ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries( tf_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
 
+add_executable( tf_robot src/robot.cpp )
+add_dependencies( tf_robot ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( tf_robot ${catkin_LIBRARIES} ${boost_LIBRARIES})
+

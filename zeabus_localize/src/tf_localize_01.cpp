@@ -28,6 +28,8 @@
 #include	<zeabus_library/subscriber/SubOdometry.h>
 #include	<zeabus_library/subscriber/SubTwistWithCovarianceStamped.h>
 
+#define _LOOK_ROTATION_
+
 int main( int argv , char** argc ){
 
 	ros::init( argv , argc , "localize" );
@@ -66,6 +68,7 @@ int main( int argv , char** argc ){
 			listener.lookupTransform( frame_id , id_imu , ros::Time(0) , transform );
 			zeabus_library::normal_green( " SUCCESS\n");
 			success = true;
+			imu_quaternion = transform.getRotation();
 			break;
 		}
 		catch( tf::TransformException &ex) {
@@ -77,8 +80,35 @@ int main( int argv , char** argc ){
 			continue;
 		}
 	}
-
 	if( ! success ) return -1;	
+
+	printf( "Waiting receive rotation dvl -> world ====> ");
+	success = false;
+	while( nh.ok() ){
+		try{
+			listener.lookupTransform( frame_id , id_imu , ros::Time(0) , transform );
+			zeabus_library::normal_green( " SUCCESS\n");
+			success = true;
+			dvl_quaternion = transform.getRotation();
+			break;
+		}
+		catch( tf::TransformException &ex) {
+			zeabus_library::bold_red( ex.what() );
+			printf("\n");
+			printf("\tWaiting --");
+			ros::Duration(1.0).sleep();
+			printf(" -- try again ====>");
+			continue;
+		}
+	}
+	if( ! success ) return -1;	
+
+#ifdef _LOOK_ROTATION_
+	printf("imu_quaternion : [%8.3lf%8.3lf%8.3lf%8.3lf]" , imu_quaternion.x() 
+			, imu_quaternion.y() , imu_quaternion.z() , imu_quaternion.w() );
+	printf("dvl_quaternion : [%8.3lf%8.3lf%8.3lf%8.3lf]" , dvl_quaternion.x() 
+			, dvl_quaternion.y() , dvl_quaternion.z() , dvl_quaternion.w() );
+#endif
 
 
 }

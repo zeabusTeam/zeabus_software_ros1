@@ -73,7 +73,7 @@ int main( int argv , char** argc ){
 	ph.param< double >( "translation_y" , offset_translation[1] , 0.0 );
 	ph.param< double >( "translation_z" , offset_translation[2] , 0.0 );
 
-	ph.param< int >("frequency_imu" , frequency , 50 );
+	ph.param< int >("frequency" , frequency , 50 );
 	ph.param< std::string >( "port_imu", port_name
 			, "/dev/microstrain/3dm_gx5_45_0000__6251.65901");
 
@@ -83,6 +83,7 @@ int main( int argv , char** argc ){
 	
 	zeabus_library::tf_handle::TFQuaternion tf_quaternion;
 	tf_quaternion.setEulerZYX( offset_rotation[2] , offset_rotation[1] , offset_rotation[0] );
+	tf_quaternion.normalize();
 
 	tf::Transform transform;
 	transform.setOrigin( 
@@ -225,14 +226,12 @@ int main( int argv , char** argc ){
 		}
 
 #else
-
 		ros::spinOnce();
 		time = ros::Time::now();
 		sensor.header.stamp = time;
 		sensor.header.frame_id = frame_id;
 		pub_sensor.publish( sensor );
 		broadcaster.sendTransform( tf::StampedTransform( transform, time, parent_id, frame_id ));
-
 #endif
 
 	}	

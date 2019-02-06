@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<!--
+		Detail of this purpose
+			01. Open IMU 1 component
+			02. Open DVL 1 component
+			03.	Open Robot Node 1 robot
+			04. This file all use TF & Broadcaster to init frame and send alwats
+-->
+
+<launch>
+
+	<arg name="dvl_serialport" default="/dev/usb2serial/ftdi_FT2VR5PM_02"/>
+	<arg name="microstrain_serial" default="/dev/microstrain/3dm_gx5_45_0000__6251.65903"/>
+	<arg name="robot_frame" default="robot"/>
+	<arg name="PI" default="3.14159265"/>
+	<arg name="HalfPI" default="1.570796325"/>
+	<arg name="NegateHalfPI" default="-1.570796325"/>
+
+	<node name="imu" output="screen" pkg="zeabus_sensor" type="tf_imu">
+		<param name="port_imu" value="$(arg microstrain_serial)"/>
+		<param name="publish_topic" type="str" value="/sensor/imu"/>
+		<param name="subscribe_topic" type="str" value="/test/imu"/>
+		<param name="parent_id" type="str" value="$(arg robot_frame)"/>
+		<param name="frame_id" type="str" value="imu"/>
+		<param name="rotation_x" type="double" value="$(arg PI)"/>
+		<param name="rotation_y" type="double" value="0.0"/>
+		<param name="rotation_z" type="double" value="$(arg HalfPI)"/>
+		<param name="translation_x" type="double" value="0.0"/>
+		<param name="translation_y" type="double" value="0.0"/>
+		<param name="translation_z" type="double" value="0.0"/>
+		<param name="frequency" type="int" value="50"/>
+	</node>
+
+	<node name="dvl" output="screen" pkg="zeabus_sensor" type="tf_dvl">
+		<param name="port_dvl" value="$(arg microstrain_serial)"/>
+		<param name="publish_topic" type="str" value="/sensor/dvl"/>
+		<param name="subscribe_topic" type="str" value="/test/dvl"/>
+		<param name="parent_id" type="str" value="$(arg robot_frame)"/>
+		<param name="frame_id" type="str" value="dvl"/>
+		<param name="rotation_x" type="double" value="0.0"/>
+		<param name="rotation_y" type="double" value="0.0"/>
+		<param name="rotation_z" type="double" value="0.0"/>
+		<param name="translation_x" type="double" value="0.0"/>
+		<param name="translation_y" type="double" value="0.0"/>
+		<param name="translation_z" type="double" value="0.0"/>
+		<param name="raw_topic" type="str" value="/raw/dvl"/>
+	</node>
+
+	<node name="robot" output="screen" pkg="zeabus_sensor" type="tf_robot">
+		<param name="parent_id" type="str" value="world"/>
+		<param name="frame_id" type="str" value="$(arg robot_frame)"/>
+		<param name="rotation_x" type="double" value="0.0"/>
+		<param name="rotation_y" type="double" value="0.0"/>
+		<param name="rotation_z" type="double" value="$(arg HalfPI)"/>
+		<param name="translation_x" type="double" value="0.0"/>
+		<param name="translation_y" type="double" value="0.0"/>
+		<param name="translation_z" type="double" value="0.0"/>
+	</node>
+
+</launch>

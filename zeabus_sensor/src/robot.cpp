@@ -57,10 +57,10 @@ int main( int argv , char** argc ){
 	
 	zeabus_library::tf_handle::TFQuaternion tf_quaternion;
 	tf_quaternion.setEulerZYX( offset_rotation[2] , offset_rotation[1] , offset_rotation[0] );
+	tf_quaternion.normalize();
 
 	tf::Transform transform;
-	transform.setOrigin( 
-			tf::Vector3( offset_translation[0] , offset_translation[1] , offset_rotation[2]) );
+	transform.setRotation( tf_quaternion );
 
 //====================> SET UP ROS SYSTEM
 	ros::Time time;

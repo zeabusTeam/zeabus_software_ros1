@@ -40,7 +40,10 @@
 
 #include	<geometry_msgs/TwistWithCovarianceStamped.h>
 
-#define _COLLECTING_DATA_
+#ifndef _TEST_CONNECTION_
+	#define _COLLECTING_DATA_
+#endif
+
 #define _DEBUG_CODE_
 
 #ifndef _TEST_CONNECTION_
@@ -75,7 +78,7 @@ int main( int argc , char ** argv ){
 	ph.param< std::string >("subscribe_topic", subscribe_topic , "/test/dvl");
 #endif
 #ifdef _PUBLISH_RAW_DATA_
-	ph.param< std::string >("raw_topic", raw_topic , "/test/dvl");
+	ph.param< std::string >("raw_topic", raw_topic , "/raw/dvl");
 #endif
 	ph.param< std::string >("frame_id" , frame_id , "dvl");
 	ph.param< std::string >("parent_id" , parent_id , "robot");
@@ -93,6 +96,7 @@ int main( int argc , char ** argv ){
 
 	zeabus_library::tf_handle::TFQuaternion tf_quaternion;
 	tf_quaternion.setEulerZYX( offset_rotation[2] , offset_rotation[1] , offset_rotation[0] );
+	tf_quaternion.normalize();
 
 	tf::Transform transform;
 	transform.setOrigin( 
@@ -119,6 +123,8 @@ int main( int argc , char ** argv ){
 			, &zeabus_library::subscriber::SubTwistWithCovarianceStamped::callback
 			, &listener );
 #endif
+
+	ros::Rate rate(100);
 
 //====================> OTHER
 
@@ -223,12 +229,14 @@ int main( int argc , char ** argv ){
 			}
 		}
 #else
+		rate.sleep();
 		ros::spinOnce();
+		time = ros::Time::now();
 		sensor.header.stamp = time;
 		sensor.header.frame_id = frame_id;
 		pub_sensor.publish( sensor );
 		broadcaster.sendTransform( tf::StampedTransform( transform, time, parent_id, frame_id ));
-		
+
 #endif	
 		
 	}

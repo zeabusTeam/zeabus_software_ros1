@@ -45,6 +45,8 @@ namespace tf_handle{
 			
 			void rotation( double& x , double& y , double& z );
 
+			void operator=( tf::Quaternion q);
+
 		private:
 			double temp_double[3];
 

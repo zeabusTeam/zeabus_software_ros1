@@ -53,6 +53,11 @@ namespace tf_handle{
 		z = data.z();
 	}
 
+	void TFQuaternion::operator=( tf::Quaternion q){
+		tf::Matrix3x3( q ).getRPY( temp_double[0] , temp_double[1] , temp_double[2] );
+		this->setEulerZYX( temp_double[2] , temp_double[1] , temp_double[0] );
+	}
+
 
 }
 

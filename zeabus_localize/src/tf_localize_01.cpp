@@ -63,7 +63,7 @@ int main( int argv , char** argc ){
 	tf::StampedTransform transform; // for receive data form listener
 
 	printf( "Waiting receive rotation imu -> world ====> ");
-	while( nh.ok() ){
+	while( nh.ok() && (!success) ){
 		try{
 			listener.lookupTransform( frame_id , id_imu , ros::Time(0) , transform );
 			zeabus_library::normal_green( " SUCCESS\n");
@@ -84,9 +84,9 @@ int main( int argv , char** argc ){
 
 	printf( "Waiting receive rotation dvl -> world ====> ");
 	success = false;
-	while( nh.ok() ){
+	while( nh.ok() && (!success)){
 		try{
-			listener.lookupTransform( frame_id , id_imu , ros::Time(0) , transform );
+			listener.lookupTransform( frame_id , id_dvl , ros::Time(0) , transform );
 			zeabus_library::normal_green( " SUCCESS\n");
 			success = true;
 			dvl_quaternion = transform.getRotation();
@@ -104,9 +104,9 @@ int main( int argv , char** argc ){
 	if( ! success ) return -1;	
 
 #ifdef _LOOK_ROTATION_
-	printf("imu_quaternion : [%8.3lf%8.3lf%8.3lf%8.3lf]" , imu_quaternion.x() 
+	printf("imu_quaternion : [%8.3lf%8.3lf%8.3lf%8.3lf]\n" , imu_quaternion.x() 
 			, imu_quaternion.y() , imu_quaternion.z() , imu_quaternion.w() );
-	printf("dvl_quaternion : [%8.3lf%8.3lf%8.3lf%8.3lf]" , dvl_quaternion.x() 
+	printf("dvl_quaternion : [%8.3lf%8.3lf%8.3lf%8.3lf]\n" , dvl_quaternion.x() 
 			, dvl_quaternion.y() , dvl_quaternion.z() , dvl_quaternion.w() );
 #endif
 

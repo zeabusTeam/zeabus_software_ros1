@@ -25,7 +25,7 @@
 		<param name="frame_id" type="str" value="imu"/>
 		<param name="rotation_x" type="double" value="$(arg PI)"/>
 		<param name="rotation_y" type="double" value="0.0"/>
-		<param name="rotation_z" type="double" value="$(arg HalfPI)"/>
+		<param name="rotation_z" type="double" value="$(arg NegateHalfPI)"/>
 		<param name="translation_x" type="double" value="0.0"/>
 		<param name="translation_y" type="double" value="0.0"/>
 		<param name="translation_z" type="double" value="0.0"/>
@@ -52,7 +52,7 @@
 		<param name="frame_id" type="str" value="$(arg robot_frame)"/>
 		<param name="rotation_x" type="double" value="0.0"/>
 		<param name="rotation_y" type="double" value="0.0"/>
-		<param name="rotation_z" type="double" value="$(arg HalfPI)"/>
+		<param name="rotation_z" type="double" value="$(arg NegateHalfPI)"/>
 		<param name="translation_x" type="double" value="0.0"/>
 		<param name="translation_y" type="double" value="0.0"/>
 		<param name="translation_z" type="double" value="0.0"/>

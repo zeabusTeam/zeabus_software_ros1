@@ -22,8 +22,8 @@
 
 #include	<nav_msgs/Odometry.h>
 
-#ifndef _ZEABUS_LIBRARY_SUBSCRIBER_SEBIMU_H__
-#define _ZEABUS_LIBRARY_SUBSCRIBER_SEBIMU_H__
+#ifndef _ZEABUS_LIBRARY_SUBSCRIBER_SEBODOMETRY_H__
+#define _ZEABUS_LIBRARY_SUBSCRIBER_SEBODOMETRY_H__
 
 namespace zeabus_library{
 

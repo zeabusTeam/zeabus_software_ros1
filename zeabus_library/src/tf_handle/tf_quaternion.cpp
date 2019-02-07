@@ -58,7 +58,30 @@ namespace tf_handle{
 		this->setEulerZYX( temp_double[2] , temp_double[1] , temp_double[0] );
 	}
 
+	geometry_msgs::Vector3 TFQuaternion::rotation( geometry_msgs::Vector3 problem ){
+		this->temp_vector3.x = problem.x;
+		this->temp_vector3.y = problem.y;
+		this->temp_vector3.z = problem.z;
+		this->rotation( this->temp_vector3.x , this->temp_vector3.y , this->temp_vector3.z );
+		return this->temp_vector3;
+	}
 
+	void TFQuaternion::print_quaternion(){
+		printf("%10.4lf%10.4lf%10.4lf%10.4lf" , this->x() , this->y() , this->z() , this->w() );
+	}
+			
+	void TFQuaternion::print_radian(){
+		this->get_RPY( this->temp_double[0] , this->temp_double[1] , this->temp_double[2] );	
+		printf("%10.4lf%10.4lf%10.4lf" , this->temp_double[0] , this->temp_double[1] 
+				, this->temp_double[2] );
+	}
+			
+	void TFQuaternion::print_degree(){
+		this->get_RPY( this->temp_double[0] , this->temp_double[1] , this->temp_double[2] );	
+		printf("%10.4lf%10.4lf%10.4lf" , this->temp_double[0] / PI * 180 
+				, this->temp_double[1] / PI * 180 , this->temp_double[2] / PI * 180 );
+
+	}
 }
 
 }

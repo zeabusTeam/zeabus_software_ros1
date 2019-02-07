@@ -15,6 +15,10 @@
 
 #include	<tf/transform_broadcaster.h>
 
+#include	<geometry_msgs/Vector3.h>
+
+#include	<geometry_msgs/Quaternion.h>
+
 #include	<stdio.h>
 
 #include	<iostream>
@@ -42,13 +46,20 @@ namespace tf_handle{
 			void get_RPY( double& roll , double& pitch , double& yaw );
 
 			double* rotation( double* problem );
-			
+
+			geometry_msgs::Vector3 rotation( geometry_msgs::Vector3 problem );
+						
 			void rotation( double& x , double& y , double& z );
 
 			void operator=( tf::Quaternion q);
 
+			void print_quaternion();
+			void print_radian();
+			void print_degree();
+
 		private:
 			double temp_double[3];
+			geometry_msgs::Vector3 temp_vector3;
 
 	};
 

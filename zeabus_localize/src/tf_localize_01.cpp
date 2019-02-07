@@ -231,7 +231,21 @@ int main( int argv , char** argc ){
 			zeabus_library::clear_screen();
 		#endif	
 		#ifdef _PRINT_ALL_QUATERNION_
-			
+			printf("IMU->WORLD     :\n");
+			imu_quaternion.print_quaternion(); printf("\n");
+			imu_quaternion.print_radian(); printf("\n"); 	
+			printf("IMU->ROBOT     :\n");
+			imu_quaternion_robot.print_quaternion(); printf("\n");
+			imu_quaternion_robot.print_radian(); printf("\n");
+			printf("DVL->WORLD     :\n");
+			dvl_quaternion.print_quaternion(); printf("\n");
+			dvl_quaternion.print_radian(); printf("\n");
+			printf("RECEIVE        :\n");
+			receive_quaternion.print_quaternion(); printf("\n");
+			receive_quaternion.print_radian(); printf("\n");
+			printf("STATE          :\n");
+			state_quaternion.print_quaternion(); printf("\n");
+			state_quaternion.print_radian(); printf("\n");
 		#endif	
 	}
 

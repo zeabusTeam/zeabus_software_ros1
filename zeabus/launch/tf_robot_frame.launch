@@ -56,6 +56,7 @@
 		<param name="translation_x" type="double" value="0.0"/>
 		<param name="translation_y" type="double" value="0.0"/>
 		<param name="translation_z" type="double" value="0.0"/>
+		<param name="subscribe_topic" type="str" value="/localize/state"/>
 	</node>
 
 </launch>

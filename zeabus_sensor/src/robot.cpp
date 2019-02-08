@@ -41,7 +41,7 @@ int main( int argv , char** argc ){
 
 	ph.param< std::string >( "frame_id" , frame_id , "robot");
 	ph.param< std::string >( "parent_id" , parent_id , "world");
-	ph.param< std::string >( "subscribe_topic" , subscribe_topic , "/sensor/robot");
+	ph.param< std::string >( "subscribe_topic" , subscribe_topic , "/localize/state");
 
 	ph.param< double >( "rotation_x" , offset_rotation[0] , 0.0 ); // roll
 	ph.param< double >( "rotation_y" , offset_rotation[1] , 0.0 ); // pitch

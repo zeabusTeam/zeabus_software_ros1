@@ -104,7 +104,7 @@ int main( int argv , char** argc ){
 
 #ifdef _TEST_CONNECTION_
 	sensor_msgs::Imu receive_sensor;
-	zeabus_library::subscriber::SubImu listener( &receive_sensor );
+	zeabus_library::subscriber::SubImu listener( &sensor );
 	ros::Subscriber sub_sensor = nh.subscribe( subscribe_topic , 1 
 			, &zeabus_library::subscriber::SubImu::callback
 			, &listener );

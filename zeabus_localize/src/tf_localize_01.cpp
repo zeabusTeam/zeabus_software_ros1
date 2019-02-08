@@ -117,7 +117,7 @@ int main( int argv , char** argc ){
 	success = false;
 	while( nh.ok() && (!success)){
 		try{
-			listener.lookupTransform( id_robot , id_dvl , ros::Time(0) , transform );
+			listener.lookupTransform( id_robot , id_imu , ros::Time(0) , transform );
 			zeabus_library::normal_green( " SUCCESS\n");
 			success = true;
 			imu_quaternion_robot = transform.getRotation();

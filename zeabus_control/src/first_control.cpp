@@ -12,6 +12,7 @@
 
 	Namespace			:	-
 */
+//===============>
 
 #include	<stdio.h>
 
@@ -25,13 +26,11 @@
 
 #include	<zeabus_library/rotation/rotation_handle.h>
 
-#include	<zeabus_library/Odometry.h>
-
 #include	<zeabus_library/convert/Point3.h>
 
 #include	<zeabus_library/control/service_control.h>
 
-#include	<zeabus_library/control/listen_odometry.h>
+#include	<zeabus_library/subscriber/SubOdometry.h>
 
 #include	<zeabus_library/control/listen_twist.h>
 
@@ -72,60 +71,26 @@ int main( int argv , char** argc ){
 	ph.param< int >("frequency" , frequency , 50 );
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-	ros::Rate rate( frequency );
-
-	zeabus_library::Twist message; // for send target velocity to node second_control
-	clear_point3( message.linear);
-	clear_point3( message.angular);
-	zeabus_library::Twist temp_message; 
-	int count_velocity[6] = { 0 , 0 , 0 , 0 , 0 , 0 };
-
-	zeabus_library::Point3 current_position; // for collection current position		
-	clear_point3( current_position );
-
-	zeabus_library::Point3 diff_position; // for collecting error position
-	clear_point3( diff_position );
-
-	zeabus_library::Point3 target_position; // for collecting target position
-	clear_point3( target_position );
-
-	zeabus_library::Point3 temporary_position; // for collecting linear position for velocity
-	clear_point3( temporary_position );
-
-	zeabus_library::Point3 current_velocity; // for collecting linear velocity form localize
-	zeabus_library::Point3 current_gyroscope; // for collecting angular velocity form localize
-	zeabus_library::LinearEquation line;
-
-	zeabus_library::rotation::RotationHandle rh; // rotation handle
-
-	zeabus_library::Point4 current_quaternion; 
-	clear_point4( current_quaternion );
-
-	zeabus_library::Point4 target_quaternion; 
-	clear_point4( target_quaternion );
-
-	double current_euler[3] = { 0 , 0 , 0 };
-	double target_euler[3] = { 0 , 0 , 0 };
-	double diff_euler[3] = { 0 , 0 , 0 };
-
-	zeabus_library::control::ListenOdometry listen_odometry;
-	listen_odometry.register_all(&current_position , &current_quaternion , &current_velocity
-			,&current_gyroscope , &target_position , &target_quaternion );
-
-	zeabus_library::control::ListenTwist listen_twist( count_velocity );
-	zeabus_library::Point3 target_velocity;
-	zeabus_library::Point3 target_gyroscope;
-	listen_twist.register_all( &target_velocity ,  &target_gyroscope );
-	listen_twist.set_constant( constant_value );
-
-	clear_point3( target_velocity );
-	clear_point3( target_gyroscope );
-
 	int mode_control = 0;	//  mode control is consider by roll and pitch
 							//	mode 0 is roll & pitch normal is 0
 	
 	bool temp_bool = false;
 	double temp_distance = 0;
+
+	nav_msgs::Odometry current_state;
+	nav_msgs::Odometry target_state;
+	nav_msgs::Odometry temp_state;
+
+	zeabus_library::subscriber::SubOdometry listen_odometry( &current_state );
+	int received = 0 ;
+	bool first_time_received = false;
+	listen_odometry.register_ttl( &received , 1 ); 
+
+	int received_velocity[6] = { 0  , 0 , 0 , 0 , 0 , 0};
+	zeabus_library::Twist target_velocity;
+	zeabus_library::control::ListenTwist listen_velocity( received_velocity );
+	listen_velocity.set_constant( 20 );
+		
 
 	zeabus_library::control::ServiceControl service( &mode_control );
 	service.register_position( &current_position , &target_position , &diff_position );
@@ -136,7 +101,7 @@ int main( int argv , char** argc ){
 
 //////////////////////////////////////-- ROS SYSTEM --///////////////////////////////////////////
 	ros::Subscriber sub_state = nh.subscribe( topic_state , 1 
-								, &zeabus_library::control::ListenOdometry::callback
+								, &zeabus_library::subscriber::SubOdometry::callback_ttl
 								, &listen_odometry );
 
 	ros::Subscriber sub_target = nh.subscribe( topic_twist , 1
@@ -183,56 +148,6 @@ int main( int argv , char** argc ){
 		rh.update_rotation();
 
 		if( mode_control == 0 ){
-			#ifdef _DEBUG_ORDER_
-				printf("BEFORE PLAN XY\n");
-			#endif
-			if( count_velocity[0] > 0 || count_velocity[1] > 0 ){
-				temp_bool = (count_velocity[0] == constant_value) 
-							|| (count_velocity[1] == constant_value) ;
-				if( temp_bool ){
-					temp_message.linear.x = target_velocity.x * cos( target_euler[2] )
-									+ target_velocity.y * cos( target_euler[2] + euler_::PI );
-
-					temp_message.linear.y = target_velocity.x * sin( target_euler[2] )
-									+ target_velocity.y * sin( target_euler[2] + euler_::PI );
-					#ifdef _DEBUG_ORDER_
-						printf("BEFORE CALCULATE NEXT POINT\n");
-					#endif
-					if( count_velocity[0] == constant_value ){
-						next_point_xy( target_euler[2] , current_position.x , current_position.y
-								, temporary_position.x , temporary_position.y 
-								, target_velocity.x , 0   );	
-					}
-					else{
-						next_point_xy( target_euler[2] , current_position.x , current_position.y
-								, temporary_position.x , temporary_position.y 
-								, 0 , target_velocity.y  );	
-					}
-					#ifdef _DEBUG_ORDER_
-						printf("BEFORE CALCULATE SET POINT\n");
-					#endif 
-					line.set_point( current_position.x , current_position.y 
-									, temporary_position.x , temporary_position.y );
-					line.update();	
-				}
-				#ifdef _DEBUG_ORDER_
-					printf("After temp_bool in PLAN XY\n");
-				#endif
-				line.distance_split( current_position.x , current_position.y
-									, diff_position.x , diff_position.y); 
-				message.linear.x = temp_message.linear.x + assign_velocity_xy( diff_position.x);
-				message.linear.y = temp_message.linear.y + assign_velocity_xy( diff_position.y);
-				target_position.x = current_position.x;
-				target_position.y = current_position.y;
-				count_velocity[0]--;
-				count_velocity[1]--;
-			}
-			else{
-				diff_position.x = target_position.x - current_position.x;
-				diff_position.y = target_position.y - current_position.y;
-				message.linear.x = assign_velocity_xy( diff_position.x );
-				message.linear.y = assign_velocity_xy( diff_position.y );
-			}
 			#ifdef _DEBUG_ORDER_
 				printf("BEFORE PLAN Z\n");
 			#endif

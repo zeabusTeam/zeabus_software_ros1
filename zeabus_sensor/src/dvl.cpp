@@ -14,7 +14,7 @@
 */
 //====================>
 
-#define _TEST_CONNECTION_ // If define this line. This code willn't connect dvl hardware
+//#define _TEST_CONNECTION_ // If define this line. This code willn't connect dvl hardware
 
 #include	<ros/ros.h>
 
@@ -117,8 +117,7 @@ int main( int argc , char ** argv ){
 #endif
 
 #ifdef _TEST_CONNECTION_
-	geometry_msgs::TwistWithCovarianceStamped receive_sensor;
-	zeabus_library::subscriber::SubTwistWithCovarianceStamped listener( &receive_sensor );
+	zeabus_library::subscriber::SubTwistWithCovarianceStamped listener( &sensor );
 	ros::Subscriber sub_sensor = nh.subscribe( subscribe_topic , 1 
 			, &zeabus_library::subscriber::SubTwistWithCovarianceStamped::callback
 			, &listener );
@@ -219,7 +218,7 @@ int main( int argc , char ** argv ){
 				sensor.twist.twist.linear.y = temp_y;
 				sensor.twist.twist.linear.z = temp_z;
 				time = ros::Time::now();	
-				sensor.heading.stamp = time;
+				sensor.header.stamp = time;
 				pub_sensor.publish( sensor );
 				broadcaster.sendTransform(
 						tf::StampedTransform( transform , time , parent_id , frame_id ) );

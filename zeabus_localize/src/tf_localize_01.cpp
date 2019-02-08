@@ -68,6 +68,9 @@ int main( int argv , char** argc ){
 	zeabus_library::tf_handle::TFQuaternion imu_quaternion_robot;
 	zeabus_library::tf_handle::TFQuaternion imu_quaternion;
 	zeabus_library::tf_handle::TFQuaternion dvl_quaternion;
+	double specific_euler[3] = { PI , 0 , 0 };
+	zeabus_library::tf_handle::TFQuaternion special_quaternion(
+			specific_euler[0] , specific_euler[1] , specific_euler[2] ); 
 	
 	tf::TransformListener listener; // variable for listen about transform
 	tf::StampedTransform transform; // for receive data form listener
@@ -168,7 +171,7 @@ int main( int argv , char** argc ){
 	ros::Publisher pub_state = nh.advertise< nav_msgs::Odometry >( publish_topic , 1 );
 
 	ros::Rate rate( frequency );
-	double period_time = 1/frequency;
+	double period_time = 1.0/frequency;
 
 	// collect quaternion of robot in world frame <current quaternion>
 	zeabus_library::tf_handle::TFQuaternion state_quaternion;
@@ -193,7 +196,7 @@ int main( int argv , char** argc ){
 			receive_quaternion = zeabus_library::tf_handle::TFQuaternion( imu_data.orientation.x
 					, imu_data.orientation.y , imu_data.orientation.z , imu_data.orientation.w );
 			received_imu = 0;
-			state_quaternion = imu_quaternion * receive_quaternion;
+			state_quaternion = imu_quaternion_robot * receive_quaternion;
 			setup_state_quaternion = true;
 			// set up quaternion of current robot
 			state.pose.pose.orientation.x = state_quaternion.x();
@@ -203,9 +206,13 @@ int main( int argv , char** argc ){
 			// set up angular twist of current robot
 			state.twist.twist.angular = imu_quaternion_robot.rotation(imu_data.angular_velocity);
 		}
-		if( received_dvl && setup_state_quaternion ){
-			state.twist.twist.linear = state_quaternion.rotation( 
-					dvl_quaternion.rotation( dvl_data.twist.twist.linear ) );
+//		if( received_dvl && setup_state_quaternion ){
+		if( true ){
+//			state.twist.twist.linear = state_quaternion.rotation( 
+//					dvl_quaternion.rotation( dvl_data.twist.twist.linear ) );
+//			state.twist.twist.linear = dvl_quaternion.rotation( dvl_data.twist.twist.linear );
+			state.twist.twist.linear = special_quaternion.rotation(state_quaternion.rotation( 
+					dvl_quaternion.rotation( dvl_data.twist.twist.linear ) )) ;
 			state.twist.twist.linear.x /= 1000;
 			state.twist.twist.linear.y /= 1000;
 			state.twist.twist.linear.z /= 1000;
@@ -234,18 +241,27 @@ int main( int argv , char** argc ){
 			printf("IMU->WORLD     :\n");
 			imu_quaternion.print_quaternion(); printf("\n");
 			imu_quaternion.print_radian(); printf("\n"); 	
+			imu_quaternion.print_degree(); printf("\n"); 	
 			printf("IMU->ROBOT     :\n");
 			imu_quaternion_robot.print_quaternion(); printf("\n");
 			imu_quaternion_robot.print_radian(); printf("\n");
+			imu_quaternion_robot.print_degree(); printf("\n");
 			printf("DVL->WORLD     :\n");
 			dvl_quaternion.print_quaternion(); printf("\n");
 			dvl_quaternion.print_radian(); printf("\n");
+			dvl_quaternion.print_degree(); printf("\n");
 			printf("RECEIVE        :\n");
 			receive_quaternion.print_quaternion(); printf("\n");
 			receive_quaternion.print_radian(); printf("\n");
+			receive_quaternion.print_degree(); printf("\n");
 			printf("STATE          :\n");
 			state_quaternion.print_quaternion(); printf("\n");
 			state_quaternion.print_radian(); printf("\n");
+			state_quaternion.print_degree(); printf("\n");
+			printf("SPECIFIC       :\n");
+			special_quaternion.print_quaternion(); printf("\n");
+			special_quaternion.print_radian(); printf("\n");
+			special_quaternion.print_degree(); printf("\n");
 		#endif
 		#ifdef _PRINT_CHECK_DATA_
 			printf("PRESENT STATE OF ROBOT\n");

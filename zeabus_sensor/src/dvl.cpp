@@ -136,7 +136,7 @@ int main( int argc , char ** argv ){
 
 //====================> CONNECTION TO DVL
 #ifndef _TEST_CONNECTION_
-	zeabus_library::sensor::StringPort serial_port( port_name ) ;
+	zeabus_library::sensor::StringPort serial_port( "/dev/usb2serial/ftdi_FT2VR5PM_02");
 
 	bool result;
 	std::string message;
@@ -225,6 +225,9 @@ int main( int argc , char ** argv ){
 			}
 			else{
 				printf( "<-------- DVL BAD DATA ----------->\n\n");
+				time = ros::Time::now();	
+				broadcaster.sendTransform(
+						tf::StampedTransform( transform , time , parent_id , frame_id ) );
 			}
 		}
 #else

@@ -75,7 +75,7 @@ int main( int argv , char** argc ){
 
 	ph.param< int >("frequency" , frequency , 50 );
 	ph.param< std::string >( "port_imu", port_name
-			, "/dev/microstrain/3dm_gx5_45_0000__6251.65901");
+			, "/dev/microstrain/3dm_gx5_45_0000__6251.65903");
 
 //=====================> TRANSFORM PART
 

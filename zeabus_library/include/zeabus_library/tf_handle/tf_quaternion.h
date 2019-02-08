@@ -41,6 +41,7 @@ namespace tf_handle{
 			TFQuaternion( const tfScalar& x , const tfScalar&y 
 							, const tfScalar& z , const tfScalar& w );
 			TFQuaternion( const tf::Vector3 &axis , const tfScalar& angle );
+			TFQuaternion( const geometry_msgs::Quaternion& quaternion );
 			TFQuaternion( const tfScalar& yaw , const tfScalar& pitch , const tfScalar& roll);
 
 			void get_RPY( double& roll , double& pitch , double& yaw );

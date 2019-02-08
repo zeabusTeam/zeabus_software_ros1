@@ -22,13 +22,16 @@ namespace tf_handle{
 	TFQuaternion::TFQuaternion() : Quaternion(){}
 
 	TFQuaternion::TFQuaternion( const tfScalar& x , const tfScalar&y , const tfScalar& z 
-					, const tfScalar& w ): Quaternion( x , y , z , w ){}
+			, const tfScalar& w ): Quaternion( x , y , z , w ){}
+
+	TFQuaternion::TFQuaternion( const geometry_msgs::Quaternion& quaternion ) :
+			Quaternion( quaternion.x , quaternion.y , quaternion.z , quaternion.w );
 
 	TFQuaternion::TFQuaternion( const tf::Vector3 &axis , const tfScalar& angle ) : 
-					Quaternion( axis , angle ){}
+			Quaternion( axis , angle ){}
 
 	TFQuaternion::TFQuaternion( const tfScalar& yaw , const tfScalar& pitch 
-					, const tfScalar& roll) : Quaternion( yaw , pitch , roll ){}
+			, const tfScalar& roll) : Quaternion( yaw , pitch , roll ){}
 
 	void TFQuaternion::get_RPY( double& roll , double& pitch , double& yaw ){
 		tf::Matrix3x3( *this ).getRPY( roll , pitch , yaw );

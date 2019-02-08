@@ -16,6 +16,8 @@
 
 //#define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
 
+#define	NED_TO_ENU
+
 #include	<ros/ros.h>
 
 #include	<sensor_msgs/Imu.h>
@@ -28,6 +30,7 @@
 #include	<zeabus_library/tf_handle/tf_quaternion.h>
 
 #include	<zeabus_library/subscriber/SubImu.h>
+
 
 //#define	_DEBUG_SPILT_DATA_ // For debug about get value each part of packet
 
@@ -103,7 +106,6 @@ int main( int argv , char** argc ){
 	ros::Publisher pub_sensor = nh.advertise< sensor_msgs::Imu >( publish_topic , 1 );
 
 #ifdef _TEST_CONNECTION_
-	sensor_msgs::Imu receive_sensor;
 	zeabus_library::subscriber::SubImu listener( &sensor );
 	ros::Subscriber sub_sensor = nh.subscribe( subscribe_topic , 1 
 			, &zeabus_library::subscriber::SubImu::callback
@@ -218,6 +220,20 @@ int main( int argv , char** argc ){
 					run += 1;
 				}
 			}
+			#ifdef NED_TO_ENU
+				zeabus_library::tf_handle::TFQuaternion temp_quaternion( sensor.orientation.x
+						, sensor.orientation.y , sensor.orientation.z , sensor.orientation.w );
+				double roll , pitch , yaw ;
+				temp_quaternion.get_RPY( roll,  pitch , yaw);
+				roll += PI;
+				if( roll < -1*PI ) roll += (2*PI);
+				else if( roll > PI ) roll -= (2*PI);
+				temp_quaternion.setEulerZYX( yaw , pitch , roll );
+				sensor.orientation.x = temp_quaternion.x();
+				sensor.orientation.y = temp_quaternion.y();
+				sensor.orientation.z = temp_quaternion.z();
+				sensor.orientation.w = temp_quaternion.w();
+			#endif
 			time = ros::Time::now();
 			sensor.header.stamp = time;
 			pub_sensor.publish( sensor );

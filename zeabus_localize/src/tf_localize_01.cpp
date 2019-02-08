@@ -246,6 +246,17 @@ int main( int argv , char** argc ){
 			printf("STATE          :\n");
 			state_quaternion.print_quaternion(); printf("\n");
 			state_quaternion.print_radian(); printf("\n");
+		#endif
+		#ifdef _PRINT_CHECK_DATA_
+			printf("PRESENT STATE OF ROBOT\n");
+			printf("\nPOSITION       :%10.4lf%10.4lf%10.4lf\n" , state.pose.pose.position.x
+					, state.pose.pose.position.y , state.pose.pose.position.z );
+			printf("\nADDING DATA    :%10.4lf%10.4lf\n" , adding_x , adding_y );
+			printf("\nVELOCITY LINEAR:%10.4lf%10.4lf%10.4lf\n" , state.twist.twist.linear.x 
+					, state.twist.twist.linear.y , state.twist.twist.linear.z );
+			printf("\nRoll Pitch YAW :"); state_quaternion.print_radian(); printf("\n");
+			printf("\nVELOCITY RAD   :%10.4lf%10.4lf%10.4lf\n", state.twist.twist.angular.x
+					, state.twist.twist.angular.y , state.twist.twist.angular.z );
 		#endif	
 	}
 

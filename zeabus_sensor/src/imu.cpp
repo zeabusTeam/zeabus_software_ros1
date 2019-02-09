@@ -14,7 +14,7 @@
 */
 //=====================>
 
-//#define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
+#define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
 
 #define	NED_TO_ENU
 
@@ -113,9 +113,15 @@ int main( int argv , char** argc ){
 
 #ifdef _TEST_CONNECTION_
 	zeabus_library::subscriber::SubImu listener( &sensor );
+	int received = 1;
+	listener.register_ttl( &received , 1 );
 	ros::Subscriber sub_sensor = nh.subscribe( subscribe_topic , 1 
-			, &zeabus_library::subscriber::SubImu::callback
+			, &zeabus_library::subscriber::SubImu::callback_ttl
 			, &listener );
+	sensor.orientation.x = 0;
+	sensor.orientation.y = 0;
+	sensor.orientation.z = 0;
+	sensor.orientation.w = 1;
 #endif
 
 #ifndef _TEST_CONNECTION_
@@ -251,7 +257,26 @@ int main( int argv , char** argc ){
 		}
 
 #else
+		rate.sleep();
 		ros::spinOnce();
+		if( use_offset && received ){
+			zeabus_library::tf_handle::TFQuaternion temp_quaternion( sensor.orientation.x
+					, sensor.orientation.y , sensor.orientation.z , sensor.orientation.w );
+			double roll , pitch , yaw ;
+			temp_quaternion.get_RPY( roll,  pitch , yaw);
+			roll += offset_value[0];
+			pitch += offset_value[1];
+			yaw += offset_value[2];
+			zeabus_library::tf_handle::edit_value( roll );
+			zeabus_library::tf_handle::edit_value( pitch );
+			zeabus_library::tf_handle::edit_value( yaw );
+			temp_quaternion.setEulerZYX( yaw , pitch , roll );
+			sensor.orientation.x = temp_quaternion.x();
+			sensor.orientation.y = temp_quaternion.y();
+			sensor.orientation.z = temp_quaternion.z();
+			sensor.orientation.w = temp_quaternion.w();
+			received = 0;
+		}
 		time = ros::Time::now();
 		sensor.header.stamp = time;
 		sensor.header.frame_id = frame_id;

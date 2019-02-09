@@ -54,6 +54,8 @@ namespace tf_handle{
 						
 			void rotation( double& x , double& y , double& z );
 
+			geometry_msgs::Quaternion get_quaternion();
+
 			void operator=( tf::Quaternion q);
 
 			void print_quaternion();

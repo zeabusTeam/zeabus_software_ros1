@@ -69,6 +69,15 @@ namespace tf_handle{
 		return this->temp_vector3;
 	}
 
+	geometry_msgs::Quaternion TFQuaternion::get_quaternion(){
+		geometry_msgs::Quaternion temp_quaternion;
+		temp_quaternion.w = this->w();
+		temp_quaternion.x = this->x();
+		temp_quaternion.y = this->y();
+		temp_quaternion.z = this->z();
+		return temp_quaternion;
+	}
+
 	void TFQuaternion::print_quaternion(){
 		printf("%10.4lf%10.4lf%10.4lf%10.4lf" , this->x() , this->y() , this->z() , this->w() );
 	}
@@ -83,7 +92,6 @@ namespace tf_handle{
 		this->get_RPY( this->temp_double[0] , this->temp_double[1] , this->temp_double[2] );	
 		printf("%10.4lf%10.4lf%10.4lf" , this->temp_double[0] / PI * 180 
 				, this->temp_double[1] / PI * 180 , this->temp_double[2] / PI * 180 );
-
 	}
 
 	void edit_value( double& problem){

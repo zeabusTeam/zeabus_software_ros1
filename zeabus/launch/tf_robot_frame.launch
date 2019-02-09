@@ -36,7 +36,7 @@
 		<param name="use_offset" type="bool" value="true"/>
 		<param name="offset_roll" type="double" value="$(arg PI)"/>
 		<param name="offset_pitch" type="double" value="0.0"/>
-		<param name="offset_yaw" type="double" value="0.0"/>
+		<param name="offset_yaw" type="double" value="$(arg HalfPI)"/>
 		<param name="frequency" type="int" value="50"/>
 	</node>
 

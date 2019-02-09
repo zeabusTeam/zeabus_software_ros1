@@ -23,6 +23,8 @@
 
 #include	<iostream>
 
+#include	<math.h>
+
 #ifndef PI
 	#define	PI 3.14159265
 #endif
@@ -64,6 +66,7 @@ namespace tf_handle{
 
 	};
 
+	void edit_value( double& problem );
 
 }
 

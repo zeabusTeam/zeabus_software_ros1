@@ -25,7 +25,7 @@ namespace tf_handle{
 			, const tfScalar& w ): Quaternion( x , y , z , w ){}
 
 	TFQuaternion::TFQuaternion( const geometry_msgs::Quaternion& quaternion ) :
-			Quaternion( quaternion.x , quaternion.y , quaternion.z , quaternion.w );
+			Quaternion( quaternion.x , quaternion.y , quaternion.z , quaternion.w ){}
 
 	TFQuaternion::TFQuaternion( const tf::Vector3 &axis , const tfScalar& angle ) : 
 			Quaternion( axis , angle ){}
@@ -84,6 +84,13 @@ namespace tf_handle{
 		printf("%10.4lf%10.4lf%10.4lf" , this->temp_double[0] / PI * 180 
 				, this->temp_double[1] / PI * 180 , this->temp_double[2] / PI * 180 );
 
+	}
+
+	void edit_value( double& problem){
+		for( ; fabs(problem) > PI ; ){
+			if( problem < 0 ) problem += ( 2*PI );
+			else problem += (-2*PI);
+		}
 	}
 }
 

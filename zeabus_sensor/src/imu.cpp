@@ -57,6 +57,8 @@ int main( int argv , char** argc ){
 
 	double offset_rotation[3];
 	double offset_translation[3];
+	double offset_value[3];
+	bool use_offset;
 	
 
 	std::string port_name; 
@@ -75,6 +77,10 @@ int main( int argv , char** argc ){
 	ph.param< double >( "translation_x" , offset_translation[0] , 0.0 );
 	ph.param< double >( "translation_y" , offset_translation[1] , 0.0 );
 	ph.param< double >( "translation_z" , offset_translation[2] , 0.0 );
+	ph.param< bool >( "use_offset" , use_offset , false );
+	ph.param< double >( "offset_roll" , offset_value[0] , 0.0 );
+	ph.param< double >( "offset_pitch" , offset_value[1] , 0.0 );
+	ph.param< double >( "offset_yaw" , offset_value[2] , 0.0 );
 
 	ph.param< int >("frequency" , frequency , 50 );
 	ph.param< std::string >( "port_imu", port_name
@@ -220,20 +226,23 @@ int main( int argv , char** argc ){
 					run += 1;
 				}
 			}
-			#ifdef NED_TO_ENU
+			if( use_offset ){
 				zeabus_library::tf_handle::TFQuaternion temp_quaternion( sensor.orientation.x
 						, sensor.orientation.y , sensor.orientation.z , sensor.orientation.w );
 				double roll , pitch , yaw ;
 				temp_quaternion.get_RPY( roll,  pitch , yaw);
-				roll += PI;
-				if( roll < -1*PI ) roll += (2*PI);
-				else if( roll > PI ) roll -= (2*PI);
+				roll += offset_value[0];
+				pitch += offset_value[1];
+				yaw += offset_value[2];
+				zeabus_library::tf_handle::edit_value( roll );
+				zeabus_library::tf_handle::edit_value( pitch );
+				zeabus_library::tf_handle::edit_value( yaw );
 				temp_quaternion.setEulerZYX( yaw , pitch , roll );
 				sensor.orientation.x = temp_quaternion.x();
 				sensor.orientation.y = temp_quaternion.y();
 				sensor.orientation.z = temp_quaternion.z();
 				sensor.orientation.w = temp_quaternion.w();
-			#endif
+			}
 			time = ros::Time::now();
 			sensor.header.stamp = time;
 			pub_sensor.publish( sensor );

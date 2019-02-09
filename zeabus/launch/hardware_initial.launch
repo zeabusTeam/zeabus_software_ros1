@@ -2,7 +2,11 @@
 
 <launch>
 
-	<include file="$(find zeabus_elec_ros_hardware_interface)/launch/hardware_interface.launch"/>
+	<arg name="atm_pressure_arg" value="14.8717"/>
+	<arg name="depth_offset" value="0"/>
+
+	<include file="$(find zeabus_elec_ros_hardware_interface)/launch/hardware_interface.launch"
+			pass_all_args="true"/>
 	
 	<include file="$(find hg_ros_pololu)/launch/maestro8.launch"/>
 

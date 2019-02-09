@@ -44,9 +44,9 @@ int main( int argv , char** argc ){
 	ros::NodeHandle nh("");
 
 //====================> PARAMETER PART
-	std::string publish_topic, frame_id , id_robot;
-	std::string topic_imu , id_imu;
-	std::string topic_dvl , id_dvl;
+	std::string publish_topic, frame_id , robot_id;
+	std::string topic_imu , imu_id;
+	std::string topic_dvl , dvl_id;
 	std::string topic_pressure;
 	int frequency;
 	double aborted_value;
@@ -54,10 +54,10 @@ int main( int argv , char** argc ){
 	ph.param< std::string >("publish_topic" , publish_topic , "/localize/state");
 	ph.param< std::string >("topic_imu" , topic_imu , "/sensor/imu");
 	ph.param< std::string >("topic_dvl" , topic_dvl , "/sensor/dvl");
-	ph.param< std::string >("topic_pressure" , topic_pressure , "/sensor/pressure/node");
-	ph.param< std::string >("id_imu" , id_imu , "imu");
-	ph.param< std::string >("id_dvl" , id_dvl , "dvl");
-	ph.param< std::string >("id_robot" , id_robot , "robot");
+	ph.param< std::string >("topic_pressure" , topic_pressure , "/sensor/pressure");
+	ph.param< std::string >("imu_id" , imu_id , "imu");
+	ph.param< std::string >("dvl_id" , dvl_id , "dvl");
+	ph.param< std::string >("robot_id" , robot_id , "robot");
 	ph.param< std::string >("frame_id" , frame_id , "world");
 	ph.param< int >("frequency" , frequency , 50 );
 	ph.param< double >("aborted" , aborted_value , 0.0005);
@@ -65,23 +65,20 @@ int main( int argv , char** argc ){
 //====================> TRANSFORMATION PART
 	bool success = false;
 
-	zeabus_library::tf_handle::TFQuaternion imu_quaternion_robot;
-	zeabus_library::tf_handle::TFQuaternion imu_quaternion;
-	zeabus_library::tf_handle::TFQuaternion dvl_quaternion;
-	double specific_euler[3] = { PI , 0 , 0 };
-	zeabus_library::tf_handle::TFQuaternion special_quaternion(
-			specific_euler[0] , specific_euler[1] , specific_euler[2] ); 
+	zeabus_library::tf_handle::TFQuaternion dvl_rotation_robot;
+	zeabus_library::tf_handle::TFQuaternion imu_rotation_robot;
+	zeabus_library::tf_handle::TFQuaternion robot_rotation_world;
 	
 	tf::TransformListener listener; // variable for listen about transform
 	tf::StampedTransform transform; // for receive data form listener
 
-	printf( "Waiting receive rotation imu -> world ====> ");
+	printf( "Waiting receive rotation imu -> robot ====> ");
 	while( nh.ok() && (!success) ){
 		try{
-			listener.lookupTransform( frame_id , id_imu , ros::Time(0) , transform );
+			listener.lookupTransform( robot_id , imu_id , ros::Time(0) , transform );
 			zeabus_library::normal_green( " SUCCESS\n");
 			success = true;
-			imu_quaternion = transform.getRotation();
+			imu_rotation_robot = transform.getRotation();
 			break;
 		}
 		catch( tf::TransformException &ex) {
@@ -95,14 +92,14 @@ int main( int argv , char** argc ){
 	}
 	if( ! success ) return -1;	
 
-	printf( "Waiting receive rotation dvl -> world ====> ");
+	printf( "Waiting receive rotation dvl -> robot ====> ");
 	success = false;
 	while( nh.ok() && (!success)){
 		try{
-			listener.lookupTransform( frame_id , id_dvl , ros::Time(0) , transform );
+			listener.lookupTransform( frame_id , dvl_id , ros::Time(0) , transform );
 			zeabus_library::normal_green( " SUCCESS\n");
 			success = true;
-			dvl_quaternion = transform.getRotation();
+			dvl_rotation_robot = transform.getRotation();
 			break;
 		}
 		catch( tf::TransformException &ex) {
@@ -116,14 +113,14 @@ int main( int argv , char** argc ){
 	}
 	if( ! success ) return -1;	
 
-	printf( "Waiting receive rotation imu -> robot ====> ");
+	printf( "Waiting receive rotation robot -> world ====> ");
 	success = false;
 	while( nh.ok() && (!success)){
 		try{
-			listener.lookupTransform( id_robot , id_imu , ros::Time(0) , transform );
+			listener.lookupTransform( frame_id , robot_id , ros::Time(0) , transform );
 			zeabus_library::normal_green( " SUCCESS\n");
 			success = true;
-			imu_quaternion_robot = transform.getRotation();
+			robot_rotation_world = transform.getRotation();
 			break;
 		}
 		catch( tf::TransformException &ex) {
@@ -137,10 +134,9 @@ int main( int argv , char** argc ){
 	}
 	if( ! success ) return -1;	
 #ifdef _LOOK_ROTATION_
-	printf("imu_quaternion : [%8.3lf%8.3lf%8.3lf%8.3lf]\n" , imu_quaternion.x() 
-			, imu_quaternion.y() , imu_quaternion.z() , imu_quaternion.w() );
-	printf("dvl_quaternion : [%8.3lf%8.3lf%8.3lf%8.3lf]\n" , dvl_quaternion.x() 
-			, dvl_quaternion.y() , dvl_quaternion.z() , dvl_quaternion.w() );
+	printf("IMU -> ROBOT   : "); imu_rotation_robot.print_radian(); printf("\n");
+	printf("ROBOT -> WORLD : "); robot_rotation_world.print_radian(); printf("\n");
+	printf("DVL -> ROBOT   : "); dvl_rotation_robot.print_radian(); printf("\n");
 #endif
 
 //====================> SET UP ROS OPERATING SYSTEM
@@ -173,11 +169,6 @@ int main( int argv , char** argc ){
 	ros::Rate rate( frequency );
 	double period_time = 1.0/frequency;
 
-	// collect quaternion of robot in world frame <current quaternion>
-	zeabus_library::tf_handle::TFQuaternion state_quaternion;
-	// collect quaternion of imu in world rame
-	zeabus_library::tf_handle::TFQuaternion receive_quaternion;
-
 //====================> Loop in ROS Oeprate
 	state.pose.pose.position.x = 0;
 	state.pose.pose.position.y = 0;
@@ -193,31 +184,8 @@ int main( int argv , char** argc ){
 		ros::spinOnce();
 		//====================> Check call back and get value
 		if( received_imu ){
-			receive_quaternion = zeabus_library::tf_handle::TFQuaternion( imu_data.orientation.x
-					, imu_data.orientation.y , imu_data.orientation.z , imu_data.orientation.w );
+			state.twist.twist.angular = imu_rotation_robot.rotation( imu_data.angular_velocity );
 			received_imu = 0;
-			state_quaternion = imu_quaternion_robot * receive_quaternion;
-			setup_state_quaternion = true;
-			// set up quaternion of current robot
-			state.pose.pose.orientation.x = state_quaternion.x();
-			state.pose.pose.orientation.y = state_quaternion.y();
-			state.pose.pose.orientation.z = state_quaternion.z();
-			state.pose.pose.orientation.w = state_quaternion.w();
-			// set up angular twist of current robot
-			state.twist.twist.angular = imu_quaternion_robot.rotation(imu_data.angular_velocity);
-		}
-//		if( received_dvl && setup_state_quaternion ){
-		if( true ){
-//			state.twist.twist.linear = state_quaternion.rotation( 
-//					dvl_quaternion.rotation( dvl_data.twist.twist.linear ) );
-//			state.twist.twist.linear = dvl_quaternion.rotation( dvl_data.twist.twist.linear );
-			state.twist.twist.linear = special_quaternion.rotation(state_quaternion.rotation( 
-					dvl_quaternion.rotation( dvl_data.twist.twist.linear ) )) ;
-			state.twist.twist.linear.x /= 1000;
-			state.twist.twist.linear.y /= 1000;
-			state.twist.twist.linear.z /= 1000;
-			received_dvl = 0;
-			// get data linear twist in world frame already can localize now
 		}
 		if( received_pressure ){
 			state.pose.pose.position.z = pressure_data.pose.pose.position.z;
@@ -226,6 +194,11 @@ int main( int argv , char** argc ){
 		//	Now we have quaternion for rotation 2 part
 		//		part 1 is rotation about frame to world frame
 		//		part 2 is rotation about yaw to axis yaw	
+		listener.lookupTransform( frame_id , robot_id , ros::Time(0) , transform );
+		robot_rotation_world = transform.getRotation();
+		state.twist.twist.linear = robot_rotation_world.rotation( 
+				dvl_rotation_robot.rotation( dvl_data.twist.twist.linear ) );
+		state.pose.pose.orientation = robot_rotation_world.get_quaternion();
 		adding_x = state.twist.twist.linear.x * period_time;
 		adding_y = state.twist.twist.linear.y * period_time;
 		if( fabs(adding_x) > aborted_value ) state.pose.pose.position.x += adding_x;
@@ -238,30 +211,9 @@ int main( int argv , char** argc ){
 			zeabus_library::clear_screen();
 		#endif	
 		#ifdef _PRINT_ALL_QUATERNION_
-			printf("IMU->WORLD     :\n");
-			imu_quaternion.print_quaternion(); printf("\n");
-			imu_quaternion.print_radian(); printf("\n"); 	
-			imu_quaternion.print_degree(); printf("\n"); 	
-			printf("IMU->ROBOT     :\n");
-			imu_quaternion_robot.print_quaternion(); printf("\n");
-			imu_quaternion_robot.print_radian(); printf("\n");
-			imu_quaternion_robot.print_degree(); printf("\n");
-			printf("DVL->WORLD     :\n");
-			dvl_quaternion.print_quaternion(); printf("\n");
-			dvl_quaternion.print_radian(); printf("\n");
-			dvl_quaternion.print_degree(); printf("\n");
-			printf("RECEIVE        :\n");
-			receive_quaternion.print_quaternion(); printf("\n");
-			receive_quaternion.print_radian(); printf("\n");
-			receive_quaternion.print_degree(); printf("\n");
-			printf("STATE          :\n");
-			state_quaternion.print_quaternion(); printf("\n");
-			state_quaternion.print_radian(); printf("\n");
-			state_quaternion.print_degree(); printf("\n");
-			printf("SPECIFIC       :\n");
-			special_quaternion.print_quaternion(); printf("\n");
-			special_quaternion.print_radian(); printf("\n");
-			special_quaternion.print_degree(); printf("\n");
+			printf("IMU->ROBOT       :"); imu_rotation_robot.print_radian(); printf("\n"); 
+			printf("DVL->ROBOT       :"); dvl_rotation_robot.print_radian(); printf("\n"); 
+			printf("ROBOT->WORLD     :"); robot_rotation_world.print_radian(); printf("\n"); 
 		#endif
 		#ifdef _PRINT_CHECK_DATA_
 			printf("PRESENT STATE OF ROBOT\n");
@@ -270,7 +222,7 @@ int main( int argv , char** argc ){
 			printf("\nADDING DATA    :%10.4lf%10.4lf\n" , adding_x , adding_y );
 			printf("\nVELOCITY LINEAR:%10.4lf%10.4lf%10.4lf\n" , state.twist.twist.linear.x 
 					, state.twist.twist.linear.y , state.twist.twist.linear.z );
-			printf("\nRoll Pitch YAW :"); state_quaternion.print_radian(); printf("\n");
+			printf("\nRoll Pitch YAW :"); robot_rotation_world.print_radian(); printf("\n");
 			printf("\nVELOCITY RAD   :%10.4lf%10.4lf%10.4lf\n", state.twist.twist.angular.x
 					, state.twist.twist.angular.y , state.twist.twist.angular.z );
 		#endif	

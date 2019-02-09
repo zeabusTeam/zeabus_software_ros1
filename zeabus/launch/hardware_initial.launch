@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<include file="$(find zeabus_elec_ros_hardware_interface)/launch/hardware_interface.launch"/>
+	
+	<include file="$(find hg_ros_pololu)/launch/maestro8.launch"/>
+
+
+</launch>

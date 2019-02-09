@@ -63,4 +63,6 @@
 		<param name="subscribe_state" type="str" value="/localize/state"/>
 		<param name="publish_topic" type="str" value="/sensor/robot"/>
 	</node>
+	
+	<node name="preesure_filter" output="screen" pkg="zeabus_sensor" type="pressure_filter.py"/>
 </launch>

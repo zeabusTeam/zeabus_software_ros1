@@ -4,11 +4,12 @@
 
 	<node name="localize" output="screen" pkg="zeabus_localize" type="tf_localize_01">
 		<param name="publish_topic" type="str" value="/localize/state"/>
-		<param name="topic_imu" type="str" value="/sensor/imu"/>
-		<param name="topic_dvl" type="str" value="/sensor/dvl"/>
-		<param name="id_imu" type="str" value="imu"/>
-		<param name="id_dvl" type="str" value="dvl"/>
-		<param name="id_robot" type="str" value="robot"/>
+		<param name="imu_topic" type="str" value="/sensor/imu"/>
+		<param name="dvl_topic" type="str" value="/sensor/dvl"/>
+		<param name="pressure_topic" type="str" value="/sensor/pressure">
+		<param name="imu_id" type="str" value="imu"/>
+		<param name="dvl_id" type="str" value="dvl"/>
+		<param name="robot_id" type="str" value="robot"/>
 		<param name="frame_id" type="str" value="world"/>
 		<param name="frequency" type="int" value="50"/>
 		<param name="aborted" type="double" value="0.001"/>

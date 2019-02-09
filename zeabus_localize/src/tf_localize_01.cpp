@@ -45,16 +45,16 @@ int main( int argv , char** argc ){
 
 //====================> PARAMETER PART
 	std::string publish_topic, frame_id , robot_id;
-	std::string topic_imu , imu_id;
-	std::string topic_dvl , dvl_id;
-	std::string topic_pressure;
+	std::string imu_topic , imu_id;
+	std::string dvl_topic , dvl_id;
+	std::string pressure_topic;
 	int frequency;
 	double aborted_value;
 
 	ph.param< std::string >("publish_topic" , publish_topic , "/localize/state");
-	ph.param< std::string >("topic_imu" , topic_imu , "/sensor/imu");
-	ph.param< std::string >("topic_dvl" , topic_dvl , "/sensor/dvl");
-	ph.param< std::string >("topic_pressure" , topic_pressure , "/sensor/pressure");
+	ph.param< std::string >("imu_topic" , imu_topic , "/sensor/imu");
+	ph.param< std::string >("dvl_topic" , dvl_topic , "/sensor/dvl");
+	ph.param< std::string >("pressure_topic" , pressure_topic , "/sensor/pressure");
 	ph.param< std::string >("imu_id" , imu_id , "imu");
 	ph.param< std::string >("dvl_id" , dvl_id , "dvl");
 	ph.param< std::string >("robot_id" , robot_id , "robot");
@@ -154,13 +154,13 @@ int main( int argv , char** argc ){
 	listener_imu.register_ttl( &received_imu , 1 );
 	listener_pressure.register_ttl( &received_pressure , 1 );
 	state.header.frame_id = frame_id;
-	ros::Subscriber sub_dvl = nh.subscribe( topic_dvl , 1 
+	ros::Subscriber sub_dvl = nh.subscribe( dvl_topic , 1 
 			, &zeabus_library::subscriber::SubTwistWithCovarianceStamped::callback_ttl
 			, &listener_dvl );
-	ros::Subscriber sub_imu = nh.subscribe( topic_imu , 1 
+	ros::Subscriber sub_imu = nh.subscribe( imu_topic , 1 
 			, &zeabus_library::subscriber::SubImu::callback_ttl
 			, &listener_imu );
-	ros::Subscriber sub_pressure = nh.subscribe( topic_pressure , 1 
+	ros::Subscriber sub_pressure = nh.subscribe( pressure_topic , 1 
 			, &zeabus_library::subscriber::SubOdometry::callback_ttl
 			, &listener_pressure );
 

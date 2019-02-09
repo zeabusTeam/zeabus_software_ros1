@@ -116,9 +116,5 @@ int main( int argv , char** argc ){
 				, current_state.pose.pose.position.y , current_state.pose.pose.position.z ) );
 		broadcaster.sendTransform( tf::StampedTransform( transform, time, parent_id, frame_id ));
 	}
-//====================>
-//====================>
-
-
 
 }

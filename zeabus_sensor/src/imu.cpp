@@ -2,7 +2,7 @@
 	File name			:	imu.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , FEB 06
-	Date last modified	:	2018 , FEB 06
+	Date last modified	:	2018 , FEB 09
 	Purpose				:	Connection between IMU with ROS system
 
 	Maintainer			:	Supasan Komonlit

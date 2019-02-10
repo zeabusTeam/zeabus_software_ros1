@@ -121,6 +121,7 @@ set( zeabus_library_sensor_sources
 set( zeabus_library_subscriber_sources
 	src/subscriber/SubImu.cpp
 	src/subscriber/SubOdometry.cpp
+	src/subscriber/SubTwistStamped.cpp
 	src/subscriber/SubTwistWithCovarianceStamped.cpp
 )
 

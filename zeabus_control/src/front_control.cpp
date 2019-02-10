@@ -69,6 +69,11 @@ int main( int argv , char** argc ){
 //====================> SETUP VARIABLE
 	bool fix_velocity[6] = { 0, 0, 0, 0, 0, 0}; // for manage by service  
 	double value_fix_velocity[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0 }; // use with fix_velocity
+	double temp_euler[3];
+
+	zeabus_library::tf_handle::TFQuaternion current_quaternion;
+	zeabus_library::tf_handle::TFQuaternion target_quaternion;
+	zeabus_library::tf_handle::TFQuaternion diff_quaternion;
 
 	nav_msgs::Odometry current_state;
 	nav_msgs::Odometry target_state; target_state.header.frame_id = target_id;
@@ -109,11 +114,30 @@ int main( int argv , char** argc ){
 		rate.sleep();
 		ros::spinOnce();
 		if( start_up ){
-
+			if( received_state ){
+				tf_quaternion = current_state.pose.pose.orientation;
+				tf_quaternion.get_RPY( temp_euler[0] , temp_euler[1] , temp_euler[3] );
+				temp_euler[0] = 0.0;
+				temp_euler[1] = 0.0;
+				tf_quaternion.setEulerZYX( temp_euler[2] , temp_euler[1] , temp_euler[0] );
+				current_state.pose.pose.orientation = tf_quaternion.get_quaternion();
+				target_state = current_state;
+				listener_state = current_state;
+				start_up = false;
+				received_state = 0;				
+			}
+			else{
+				zeabus_library::normal_red("Warning can't receive current_state\n");		
+			}
 		}
-		else{
-
-		}	
+		else{ // equation diff_quaternion * current_quaternion = target_quaternion
+			
+			received_state--;
+			if( received_state < aborted_control ){
+				received_state = 0;
+				start_up = false;
+			}
+		}
 	}
 
 }

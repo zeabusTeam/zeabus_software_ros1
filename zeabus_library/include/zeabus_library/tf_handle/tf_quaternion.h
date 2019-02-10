@@ -57,6 +57,7 @@ namespace tf_handle{
 			geometry_msgs::Quaternion get_quaternion();
 
 			void operator=( tf::Quaternion q);
+			void operator=( geometry_msgs::Quaternion q);
 
 			void print_quaternion();
 			void print_radian();

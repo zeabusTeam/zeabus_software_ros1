@@ -61,6 +61,12 @@ namespace tf_handle{
 		this->setEulerZYX( temp_double[2] , temp_double[1] , temp_double[0] );
 	}
 
+	void TFQuaternion::operator=( geometry_msgs::Quaternion q){
+		tf::Matrix3x3( tf::Quaternion( q.x , q.y , q.z , q.w ) ).getRPY( 
+				temp_double[0] , temp_double[1] , temp_double[2] );
+		this->setEulerZYX( temp_double[2] , temp_double[1] , temp_double[0] );
+	}
+
 	geometry_msgs::Vector3 TFQuaternion::rotation( geometry_msgs::Vector3 problem ){
 		this->temp_vector3.x = problem.x;
 		this->temp_vector3.y = problem.y;

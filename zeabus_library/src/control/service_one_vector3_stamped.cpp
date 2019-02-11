@@ -78,8 +78,13 @@ namespace control{
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->temp_vector3 = this->target_quaternion->rotation( request.data );
+		double temp_x = this->temp_vector3.x * 10 + this->target_state.pose.pose.position.x;
+		double temp_y = this->temp_vector3.y * 10 + this->target_state.pose.pose.position.y;
 		this->equation->set_point( this->target_state.pose.pose.position.x
-								, this->target_state.pose.pose.position.y )
+								, this->target_state.pose.pose.position.y 
+								, this->temp_vector3.x * 10 
+								, this->temp_vector3.y * 10 );
+		this->linear_state.pose.pose.position.x = this->target_state.pose.pose.position.x + 
 		response.result = true;
 	}
 

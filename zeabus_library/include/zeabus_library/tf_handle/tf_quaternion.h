@@ -69,7 +69,7 @@ namespace tf_handle{
 
 	};
 
-	void edit_value( double& problem );
+	void edit_value( double& problem ); // make value -PI<= x <= PI
 
 }
 

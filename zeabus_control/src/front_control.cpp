@@ -29,7 +29,10 @@
 #include	<zeabus_library/subscriber/SubOdometry.h>
 #include	<zeabus_library/subscriber/SubTwistStamped.h>
 
-#include	<zeabus_library/tf_handle/TFQuaternion.h>
+#include	<zeabus_library/tf_handle/tf_quaternion.h>
+
+#include	<zeabus_library/control/service_one_vector3_stamped.h>
+#include	<zeabus_library/control/service_two_string_vector3_stamped.h>
 
 #ifdef	_LOOK_TRANSFORM_
 	#include	<tf/transform_broadcaster.h>
@@ -51,7 +54,7 @@ int main( int argv , char** argc ){
 	std::string linear_id;
 	std::string world_id;
 	int frequency;
-	int constant_tll;
+	int constant_ttl;
 	int aborted_control;
 
 	ph.param< std::string >("state_topic" , state_topic , "/localize/state" );
@@ -79,7 +82,7 @@ int main( int argv , char** argc ){
 	nav_msgs::Odometry target_state; target_state.header.frame_id = target_id;
 
 	nav_msgs::Odometry linear_state; linear_state.header.frame_id = linear_id;
-	zeabus_library::LinearEquation linear_handle; // Available only 2-D plan
+	zeabus_library::LinearEquation lh; // Available only 2-D plan -- linear_handle
 
 	geometry_msgs::TwistStamped control_twist; // output send to back_control
 	geometry_msgs::TwistStamped received_twist; // receive twist from mission/twist
@@ -90,22 +93,38 @@ int main( int argv , char** argc ){
 	static tf::TransformBroadcaster broadcaster;
 
 	zeabus_library::tf_handle::TFQuaternion tf_quaternion;
-	tf::transform target_transform;
-	tf::transform linear_transform;
+	tf::Transform target_transform;
+	tf::Transform linear_transform;
 #endif
 		
 //====================> SETUP ROS SYSTEM
 	ros::Rate rate( frequency );
 
-	zeabus_library::subscriber::SubOdometry listener_state( &current_state );
-	bool start_up = true; int receive_state = 0; 
-	listener_state.register_ttl( &receive_state , 1 );
-	ros::Subscriber sub_state = nh.subscribe( state_topic , 1 
-			,&zeabus_library::subscribe::SubOdometry::callback_ttl , &listener_state );
+	zeabus_library::control::ServiceOneVector3Stamped service_one;
+	zeabus_library::control::ServiceTwoStringVector3Stamped service_two;
 
-	zeabus_library::subscribe::SubTwistStamped listerner_twist( &received_twist );
+	service_one.register_all_state( &current_state , &target_state , &linear_state );
+	service_one.register_equation( &lh );
+	service_one.register_velocity( fix_velocity , value_fix_velocity );
+	service_one.register_all_quaternion( &current_quaternion , &target_quaternion
+			, &diff_quaternion );
+
+	service_two.register_current( &target_state );
+	service_two.register_target( &target_state );
+	service_two.register_velocity( fix_velocity , value_fix_velocity );
+	service_two.register_all_quaternion( &current_quaternion , &target_quaternion
+			, &diff_quaternion );
+
+	zeabus_library::subscriber::SubOdometry listener_state( &current_state );
+	bool start_up = true; int received_state = 0; 
+	listener_state.register_ttl( &received_state , 1 );
+	ros::Subscriber sub_state = nh.subscribe( state_topic , 1 
+			,&zeabus_library::subscriber::SubOdometry::callback_ttl , &listener_state );
+
+	zeabus_library::subscriber::SubTwistStamped listerner_twist( &received_twist );
 	listerner_twist.register_ttl( received_target_twist , 15 );
-	ros::Subscriber sub_twist = nh.subscribe( twist_topic , 1 );
+	ros::Subscriber sub_twist = nh.subscribe( twist_topic , 1 
+			,&zeabus_library::subscriber::SubTwistStamped::callback_ttl , &listerner_twist );
 
 	ros::Publisher tell_target = nh.advertise< geometry_msgs::TwistStamped>( target_topic , 1);
 
@@ -122,7 +141,7 @@ int main( int argv , char** argc ){
 				tf_quaternion.setEulerZYX( temp_euler[2] , temp_euler[1] , temp_euler[0] );
 				current_state.pose.pose.orientation = tf_quaternion.get_quaternion();
 				target_state = current_state;
-				listener_state = current_state;
+				linear_state = current_state;
 				start_up = false;
 				received_state = 0;				
 			}
@@ -130,8 +149,7 @@ int main( int argv , char** argc ){
 				zeabus_library::normal_red("Warning can't receive current_state\n");		
 			}
 		}
-		else{ // equation diff_quaternion * current_quaternion = target_quaternion
-			
+		else{ // equation diff_quaternion * current_quaternion = target_quaternion			
 			received_state--;
 			if( received_state < aborted_control ){
 				received_state = 0;

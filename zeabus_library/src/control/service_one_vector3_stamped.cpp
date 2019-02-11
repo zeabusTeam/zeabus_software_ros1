@@ -96,22 +96,16 @@ namespace control{
 	void ServiceOneVector3Stamped::callback_velocity_z(
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
-		if(fabs( response.data.z < EPSILON ) ) this->fix_velocity[2] = 0;
-		else{
-			this->fix_velocity[2] = 1;
-			this->value_velocity[2] = request.data.z;
-		} 
+		this->fix_velocity[2] = true;
+		this->value_velocity[2] = request.data.z;
 		response.result = true;
 	}
 
 	void ServiceOneVector3Stamped::callback_velocity_yaw(
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
-		if(fabs( response.data.z < EPSILON ) ) this->fix_velocity[2] = 0;
-		else{
-			this->fix_velocity[5] = 1;
-			this->value_velocity[5] = request.data.z;
-		}
+		this->fix_velocity[5] = true;
+		this->value_velocity[5] = request.data.z;
 		response.result = true;
 	}
 

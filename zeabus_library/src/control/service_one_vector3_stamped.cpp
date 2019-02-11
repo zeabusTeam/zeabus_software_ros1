@@ -14,7 +14,7 @@
 */
 //===============>
 
-#include	<zeabus_library/control/service_one_vecctor3_stamped.h>
+#include	<zeabus_library/control/service_one_vector3_stamped.h>
 
 namespace zeabus_library{
 
@@ -25,15 +25,15 @@ namespace control{
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->temp_vector3 = this->target_quaternion->rotation( request.data );
-		this->target_state.pose.pose.position.x += this->temp_vector3.x;	
-		this->target_state.pose.pose.position.y += this->temp_vector3.y;
+		this->target_state->pose.pose.position.x += this->temp_vector3.x;	
+		this->target_state->pose.pose.position.y += this->temp_vector3.y;
 		response.result = true;	
 	}
 
 	void ServiceOneVector3Stamped::callback_relative_z(
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
-		this->target_state.z += request.data.z;
+		this->target_state->pose.pose.position.z += request.data.z;
 		response.result = true;
 	}
 
@@ -46,10 +46,10 @@ namespace control{
 		zeabus_library::tf_handle::edit_value( this->temp_double[2] );
 		this->target_quaternion->setEulerZYX( this->temp_double[2] , this->temp_double[1]
 				, this->temp_double[0] );
-		this->target_state.pose.pose.orientation.x = this->target_quaternion.x();
-		this->target_state.pose.pose.orientation.y = this->target_quaternion.y();
-		this->target_state.pose.pose.orientation.w = this->target_quaternion.w();
-		this->target_state.pose.pose.orientation.z = this->target_quaternion.z();
+		this->target_state->pose.pose.orientation.x = this->target_quaternion->x();
+		this->target_state->pose.pose.orientation.y = this->target_quaternion->y();
+		this->target_state->pose.pose.orientation.w = this->target_quaternion->w();
+		this->target_state->pose.pose.orientation.z = this->target_quaternion->z();
 		response.result = true;	
 	}
 
@@ -58,19 +58,19 @@ namespace control{
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->target_quaternion->get_RPY( this->temp_double[0] , this->temp_double[1] 
 				, this->temp_double[2] );
-		this->target_quaternion->setEulerZYX( response.data.z , this->temp_double[1]
+		this->target_quaternion->setEulerZYX( request.data.z , this->temp_double[1]
 				, this->temp_double[0] );
-		this->target_state.pose.pose.orientation.x = this->target_quaternion.x();
-		this->target_state.pose.pose.orientation.y = this->target_quaternion.y();
-		this->target_state.pose.pose.orientation.w = this->target_quaternion.w();
-		this->target_state.pose.pose.orientation.z = this->target_quaternion.z();
+		this->target_state->pose.pose.orientation.x = this->target_quaternion->x();
+		this->target_state->pose.pose.orientation.y = this->target_quaternion->y();
+		this->target_state->pose.pose.orientation.w = this->target_quaternion->w();
+		this->target_state->pose.pose.orientation.z = this->target_quaternion->z();
 		response.result = true;
 	}
 
 	void ServiceOneVector3Stamped::callback_fix_z(
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
-		this->target_state.pose.pose.position.z = response.data.z;
+		this->target_state->pose.pose.position.z = request.data.z;
 		response.result = true;
 	}
 
@@ -80,14 +80,14 @@ namespace control{
 		this->temp_vector3 = this->target_quaternion->rotation( request.data );
 		this->value_velocity[0] = this->temp_vector3.x;
 		this->value_velocity[1] = this->temp_vector3.y;
-		this->linear_state.pose.pose.position.x = this->target_state.pose.pose.position.x +
+		this->linear_state->pose.pose.position.x = this->target_state->pose.pose.position.x +
 				this->temp_vector3.x * 10 ;
-		this->linear_state.pose.pose.position.y = this->target_state.pose.pose.position.y +
+		this->linear_state->pose.pose.position.y = this->target_state->pose.pose.position.y +
 				this->temp_vector3.y * 10 ;
-		this->equation->set_point( this->target_state.pose.pose.position.x
-								, this->target_state.pose.pose.position.y 
-								, this->linear_state.pose.pose.position.x
-								, this->linear_state.pose.pose.position.y); 
+		this->equation->set_point( this->target_state->pose.pose.position.x
+								, this->target_state->pose.pose.position.y 
+								, this->linear_state->pose.pose.position.x
+								, this->linear_state->pose.pose.position.y); 
 		this->fix_velocity[0] = true;
 		this->fix_velocity[1] = true;	
 		response.result = true;
@@ -112,7 +112,7 @@ namespace control{
 //===============> BASIC FUNCTION OF CLASS
 
 	ServiceOneVector3Stamped::ServiceOneVector3Stamped(){
-		this->temp_double = new double[3] {0 , 0 , 0 };
+		for( int run = 0 ; run < 3 ; run ++) this->temp_double[run] = 0; 
 	};
 
 	void ServiceOneVector3Stamped::register_all_state( nav_msgs::Odometry* data_current
@@ -148,7 +148,7 @@ namespace control{
 		this->value_velocity = data_velocity;
 	}
 
-	void ServiceOneVector3Stamped::register_equation( zeabus_library::LibearEquation* data ){
+	void ServiceOneVector3Stamped::register_equation( zeabus_library::LinearEquation* data ){
 		this->equation = data;
 	}
 

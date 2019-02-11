@@ -52,22 +52,22 @@ namespace control{
 			zeabus_library::TwoStringVector3Stamped::Response& response ){
 		response.result = false;
 		if( request.type == "xy" ){
-			this->temp_vector3 = current_quaternion.rotation( request.adding );
-			if( ( fabs( this->current_state.pose.pose.position.x - 
-					this->target_state.pose.pose.position.x) < this->temp_vector3.x ) && 
-					(fabs( this->current_state.pose.pose.position.y -
-							this->target_state.pose.pose.position.y ) < this->temp_vector3.y ) ){
+			this->temp_vector3 = current_quaternion->rotation( request.adding );
+			if( ( fabs( this->current_state->pose.pose.position.x - 
+					this->target_state->pose.pose.position.x) < this->temp_vector3.x ) && 
+					(fabs( this->current_state->pose.pose.position.y -
+							this->target_state->pose.pose.position.y ) < this->temp_vector3.y)){
 				response.result = true;
 			}
 		}
 		else if( request.type == "z" ){
-			if(  fabs( this->current_state.pose.pose.position.z 
-					- this->target_state.pose.pose.position.z) < request.adding.z ){
+			if(  fabs( this->current_state->pose.pose.position.z 
+					- this->target_state->pose.pose.position.z) < request.adding.z ){
 				response.result = true;
 			}	
 		}
 		else if( request.type == "yaw" ){
-			this->diff_quaternion.get_RPY( this->temp_double[0] , this->temp_double[1] 
+			this->diff_quaternion->get_RPY( this->temp_double[0] , this->temp_double[1] 
 					, this->temp_double[2] );
 			if( fabs( this->temp_double[2] ) < request.adding.z ) response.result = true;
 			else response.result = false;
@@ -79,26 +79,27 @@ namespace control{
 			zeabus_library::TwoStringVector3Stamped::Request& request,
 			zeabus_library::TwoStringVector3Stamped::Response& response ){
 		if( request.type == "xy" ){
-			this->target_state.pose.pose.position.x = this->current_state.pose.pose.position.x;
-			this->target_state.pose.pose.position.y = this->current_state.pose.pose.position.y;
+			this->target_state->pose.pose.position.x = this->current_state->pose.pose.position.x;
+			this->target_state->pose.pose.position.y = this->current_state->pose.pose.position.y;
 			response.result = true;
 		}
 		else if( request.type == "z"){
-			this->target_state.pose.pose.position.z = this->current_state.pose.pose.position.z;
+			this->target_state->pose.pose.position.z = this->current_state->pose.pose.position.z;
 			response.result = true;
 		}
-		else if( reuqest.type == "yaw" ){
-			this->target_state.pose.pose.orientation = this->current_state.pose.pose.orientation;
+		else if( request.type == "yaw" ){
+			this->target_state->pose.pose.orientation = 
+					this->current_state->pose.pose.orientation;
 			response.result = true;
 		}
-		else response.resutl = false;
+		else response.result = false;
 	}
 
 
 //===============> SETUP CLASS PART
 
 	ServiceTwoStringVector3Stamped::ServiceTwoStringVector3Stamped(){
-		this->temp_double = new double[3] {0, 0 , 0};
+		for( int run = 0 ; run < 3 ; run ++) this->temp_double[run] = 0; 
 	}
 
 	void ServiceTwoStringVector3Stamped::register_current( nav_msgs::Odometry* current ){
@@ -106,7 +107,7 @@ namespace control{
 	}
 
 	void ServiceTwoStringVector3Stamped::register_target( nav_msgs::Odometry* target ){
-		this->target_state = current;
+		this->target_state = target;
 	}
 
 	void ServiceTwoStringVector3Stamped::register_received( int* data ){

@@ -22,9 +22,11 @@
 
 #include	<nav_msgs/Odometry.h>
 
-#include	<zeabus_library/tf_handle/TFQuaternion.h>
+#include	<geometry_msgs/Vector3.h>
 
-#include	<zeabus_library/TwoStringVecotr3Stamped.h>
+#include	<zeabus_library/tf_handle/tf_quaternion.h>
+
+#include	<zeabus_library/TwoStringVector3Stamped.h>
 
 #ifndef _ZEBAUS_LIBRARY_CONTROL_SERVICE_TWO_STRING_VECTOR3_STAMPED_H__
 #define _ZEBAUS_LIBRARY_CONTROL_SERVICE_TWO_STRING_VECTOR3_STAMPED_H__
@@ -36,7 +38,7 @@ namespace control{
 	class ServiceTwoStringVector3Stamped{
 
 		public:
-			ServiceTwoStringVector3Stamped():
+			ServiceTwoStringVector3Stamped();
 
 			void register_current( nav_msgs::Odometry* current );
 
@@ -52,24 +54,26 @@ namespace control{
 
 			void callback_reset_target( 
 					zeabus_library::TwoStringVector3Stamped::Request& request
-					, zeabus_library::TwoStringVecotr3Stamped::Response& response );
+					, zeabus_library::TwoStringVector3Stamped::Response& response );
 
 			void callback_check_position(
 					zeabus_library::TwoStringVector3Stamped::Request& request
-					, zeabus_library::TwoStringVecotr3Stamped::Response& response );
+					, zeabus_library::TwoStringVector3Stamped::Response& response );
 
 			void callback_reset_velocity(
 					zeabus_library::TwoStringVector3Stamped::Request& request
-					, zeabus_library::TwoStringVecotr3Stamped::Response&  response );
+					, zeabus_library::TwoStringVector3Stamped::Response&  response );
 
 		private:
 			int* received_reset;
-				
+
+			geometry_msgs::Vector3 temp_vector3;				
+
 			nav_msgs::Odometry* current_state;
 			nav_msgs::Odometry* target_state;
 
-			bool fix_velocity[6];
-			double value_velocity[6];
+			bool* fix_velocity;
+			double* value_velocity;
 
 			double temp_double[3];
 

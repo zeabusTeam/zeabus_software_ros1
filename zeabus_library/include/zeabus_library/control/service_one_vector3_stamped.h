@@ -26,7 +26,7 @@
 
 #include	<zeabus_library/linear_equation.h>
 
-#include	<zeabus_library/tf_handle/TFQuaternion.h>
+#include	<zeabus_library/tf_handle/tf_quaternion.h>
 
 #include	<zeabus_library/OneVector3Stamped.h>
 
@@ -66,25 +66,25 @@ namespace control{
 			void callback_relative_xy( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_relative_z( zeabus_library::OneVector3Stamped::Response& request
+			void callback_relative_z( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_relative_yaw( zeabus_library::OneVector3Stamped::Response& request
+			void callback_relative_yaw( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_fix_yaw( zeabus_library::OneVector3Stamped::Response& request
+			void callback_fix_yaw( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_fix_z( zeabus_library::OneVector3Stamped::Response& request
+			void callback_fix_z( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_velocity_xy( zeabus_library::OneVector3Stamped::Response& request
+			void callback_velocity_xy( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_velocity_z( zeabus_library::OneVector3Stamped::Response& request
+			void callback_velocity_z( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_velocity_yaw( zeabus_library::OneVector3Stamped::Response& request
+			void callback_velocity_yaw( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
 		private:
@@ -101,8 +101,8 @@ namespace control{
 			zeabus_library::tf_handle::TFQuaternion* target_quaternion;
 			zeabus_library::tf_handle::TFQuaternion* diff_quaternion;
 
-			bool fix_velocity[6];
-			double value_velocity[6];
+			bool* fix_velocity;
+			double* value_velocity;
 
 
 	};

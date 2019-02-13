@@ -21,7 +21,7 @@ namespace zeabus_library{
 namespace control{
 
 //===============> SERVICE FUNCTION
-	void ServiceOneVector3Stamped::callback_relative_xy( 
+	bool ServiceOneVector3Stamped::callback_relative_xy( 
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->temp_vector3 = this->target_quaternion->rotation( request.data );
@@ -30,14 +30,14 @@ namespace control{
 		response.result = true;	
 	}
 
-	void ServiceOneVector3Stamped::callback_relative_z(
+	bool ServiceOneVector3Stamped::callback_relative_z(
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->target_state->pose.pose.position.z += request.data.z;
 		response.result = true;
 	}
 
-	void ServiceOneVector3Stamped::callback_relative_yaw(
+	bool ServiceOneVector3Stamped::callback_relative_yaw(
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->target_quaternion->get_RPY( this->temp_double[0] , this->temp_double[1] 
@@ -53,7 +53,7 @@ namespace control{
 		response.result = true;	
 	}
 
-	void ServiceOneVector3Stamped::callback_fix_yaw( 
+	bool ServiceOneVector3Stamped::callback_fix_yaw( 
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->target_quaternion->get_RPY( this->temp_double[0] , this->temp_double[1] 
@@ -67,19 +67,21 @@ namespace control{
 		response.result = true;
 	}
 
-	void ServiceOneVector3Stamped::callback_fix_z(
+	bool ServiceOneVector3Stamped::callback_fix_z(
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->target_state->pose.pose.position.z = request.data.z;
 		response.result = true;
 	}
 
-	void ServiceOneVector3Stamped::callback_velocity_xy( 
+	bool ServiceOneVector3Stamped::callback_velocity_xy( 
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->temp_vector3 = this->target_quaternion->rotation( request.data );
 		this->value_velocity[0] = this->temp_vector3.x;
 		this->value_velocity[1] = this->temp_vector3.y;
+		this->save_state->pose.pose.position.x = this->target_state->pose.pose.position.x;
+		this->save_state->pose.pose.position.y = this->target_state->pose.pose.position.y;
 		this->linear_state->pose.pose.position.x = this->target_state->pose.pose.position.x +
 				this->temp_vector3.x * 10 ;
 		this->linear_state->pose.pose.position.y = this->target_state->pose.pose.position.y +
@@ -90,10 +92,13 @@ namespace control{
 								, this->linear_state->pose.pose.position.y); 
 		this->fix_velocity[0] = true;
 		this->fix_velocity[1] = true;	
+		this->equation->update();
+		this->linear_state->pose.pose.orientation = this->target_state->pose.pose.orientation;
+		this->save_state->pose.pose.orientation = this->target_state->pose.pose.orientation;
 		response.result = true;
 	}
 
-	void ServiceOneVector3Stamped::callback_velocity_z(
+	bool ServiceOneVector3Stamped::callback_velocity_z(
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->fix_velocity[2] = true;
@@ -101,7 +106,7 @@ namespace control{
 		response.result = true;
 	}
 
-	void ServiceOneVector3Stamped::callback_velocity_yaw(
+	bool ServiceOneVector3Stamped::callback_velocity_yaw(
 			zeabus_library::OneVector3Stamped::Request& request
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->fix_velocity[5] = true;
@@ -116,10 +121,12 @@ namespace control{
 	};
 
 	void ServiceOneVector3Stamped::register_all_state( nav_msgs::Odometry* data_current
-			, nav_msgs::Odometry* data_target , nav_msgs::Odometry* data_linear ){
+			, nav_msgs::Odometry* data_target , nav_msgs::Odometry* data_linear 
+			, nav_msgs::Odometry* data_save ){
 		this->register_current( data_current );
 		this->register_target( data_target );
 		this->register_linear( data_linear );
+		this->register_save( data_save);
 	}
 
 	void ServiceOneVector3Stamped::register_all_quaternion( 
@@ -141,6 +148,10 @@ namespace control{
 
 	void ServiceOneVector3Stamped::register_linear( nav_msgs::Odometry* data ){
 		this->linear_state = data;
+	}
+
+	void ServiceOneVector3Stamped::register_save( nav_msgs::Odometry* data ){
+		this->save_state = data;
 	}
 
 	void ServiceOneVector3Stamped::register_velocity( bool* data_fix , double* data_velocity ){

@@ -38,6 +38,7 @@ add_message_files(
 
 add_service_files(
 	FILES
+	ThreeOdometry.srv
 	OneVector3Stamped.srv
 	TwoStringVector3Stamped.srv
 )
@@ -57,7 +58,7 @@ add_service_files(
 	DelObject.srv
 )
 
-generate_messages( DEPENDENCIES std_msgs geometry_msgs)
+generate_messages( DEPENDENCIES std_msgs geometry_msgs nav_msgs)
 
 catkin_package(
 	INCLUDE_DIRS include

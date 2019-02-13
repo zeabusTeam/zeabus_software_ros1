@@ -52,15 +52,15 @@ namespace control{
 					, zeabus_library::tf_handle::TFQuaternion* data_target 
 					, zeabus_library::tf_handle::TFQuaternion* data_diff );
 
-			void callback_reset_target( 
+			bool callback_reset_target( 
 					zeabus_library::TwoStringVector3Stamped::Request& request
 					, zeabus_library::TwoStringVector3Stamped::Response& response );
 
-			void callback_check_position(
+			bool callback_check_position(
 					zeabus_library::TwoStringVector3Stamped::Request& request
 					, zeabus_library::TwoStringVector3Stamped::Response& response );
 
-			void callback_reset_velocity(
+			bool callback_reset_velocity(
 					zeabus_library::TwoStringVector3Stamped::Request& request
 					, zeabus_library::TwoStringVector3Stamped::Response&  response );
 

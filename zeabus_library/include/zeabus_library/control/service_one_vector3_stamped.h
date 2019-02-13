@@ -47,7 +47,8 @@ namespace control{
 			ServiceOneVector3Stamped();
 
 			void register_all_state( nav_msgs::Odometry* data_current 
-					, nav_msgs::Odometry* data_target , nav_msgs::Odometry* data_linear );
+					, nav_msgs::Odometry* data_target , nav_msgs::Odometry* data_linear 
+					, nav_msgs::Odometry* data_save);
 
 			void register_all_quaternion( zeabus_library::tf_handle::TFQuaternion* data_current
 					, zeabus_library::tf_handle::TFQuaternion* data_target 
@@ -59,38 +60,41 @@ namespace control{
 
 			void register_linear( nav_msgs::Odometry* data);
 
+			void register_save( nav_msgs::Odometry* data);
+
 			void register_equation( zeabus_library::LinearEquation* data);
 
 			void register_velocity( bool* data_fix , double* data_velocity );
 
-			void callback_relative_xy( zeabus_library::OneVector3Stamped::Request& request
+			bool callback_relative_xy( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_relative_z( zeabus_library::OneVector3Stamped::Request& request
+			bool callback_relative_z( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_relative_yaw( zeabus_library::OneVector3Stamped::Request& request
+			bool callback_relative_yaw( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_fix_yaw( zeabus_library::OneVector3Stamped::Request& request
+			bool callback_fix_yaw( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_fix_z( zeabus_library::OneVector3Stamped::Request& request
+			bool callback_fix_z( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_velocity_xy( zeabus_library::OneVector3Stamped::Request& request
+			bool callback_velocity_xy( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_velocity_z( zeabus_library::OneVector3Stamped::Request& request
+			bool callback_velocity_z( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
-			void callback_velocity_yaw( zeabus_library::OneVector3Stamped::Request& request
+			bool callback_velocity_yaw( zeabus_library::OneVector3Stamped::Request& request
 					, zeabus_library::OneVector3Stamped::Response& response );
 
 		private:
 			nav_msgs::Odometry* current_state;
 			nav_msgs::Odometry* target_state;
 			nav_msgs::Odometry* linear_state;
+			nav_msgs::Odometry* save_state;
 
 			geometry_msgs::Vector3 temp_vector3;
 			double temp_double[3];

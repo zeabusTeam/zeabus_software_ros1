@@ -21,7 +21,7 @@ namespace zeabus_library{
 namespace control{
 
 //===============> SERVICE CALLBACK PART
-	void ServiceTwoStringVector3Stamped::callback_reset_velocity(
+	bool ServiceTwoStringVector3Stamped::callback_reset_velocity(
 			zeabus_library::TwoStringVector3Stamped::Request& request,
 			zeabus_library::TwoStringVector3Stamped::Response& response ){
 		if( request.type == "xy"){
@@ -47,7 +47,7 @@ namespace control{
 		response.result = true; 
 	}
 
-	void ServiceTwoStringVector3Stamped::callback_check_position(
+	bool ServiceTwoStringVector3Stamped::callback_check_position(
 			zeabus_library::TwoStringVector3Stamped::Request& request,
 			zeabus_library::TwoStringVector3Stamped::Response& response ){
 		response.result = false;
@@ -75,7 +75,7 @@ namespace control{
 			
 	}
 
-	void ServiceTwoStringVector3Stamped::callback_reset_target(
+	bool ServiceTwoStringVector3Stamped::callback_reset_target(
 			zeabus_library::TwoStringVector3Stamped::Request& request,
 			zeabus_library::TwoStringVector3Stamped::Response& response ){
 		if( request.type == "xy" ){

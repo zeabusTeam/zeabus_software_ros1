@@ -96,6 +96,7 @@ set( zeabus_library_control_sources
 	src/control/pid.cpp	
 	src/control/service_one_vector3_stamped.cpp
 	src/control/service_two_string_vector3_stamped.cpp
+	src/control/service_three_odometry.cpp
 )
 
 set( zeabus_library_rotation_sources

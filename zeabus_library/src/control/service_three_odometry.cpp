@@ -24,7 +24,7 @@ namespace control{
 	bool ServiceThreeOdometry::callback_get_state( 
 			zeabus_library::ThreeOdometry::Request& request
 			, zeabus_library::ThreeOdometry::Response& response ){
-		if( request.type = "current") response.data = *( this->current_state );
+		if( request.type == "current") response.data = *( this->current_state );
 		else response.data = *( this->target_state );
 	}
 
@@ -33,7 +33,7 @@ namespace control{
 	ServiceThreeOdometry::ServiceThreeOdometry(){};
 
 	void ServiceThreeOdometry::register_all_state( nav_msgs::Odometry* data_current
-			, nav_msgs::Odometry* data_target ); 
+			, nav_msgs::Odometry* data_target ){ 
 		this->register_current( data_current );
 		this->register_target( data_target );
 	}

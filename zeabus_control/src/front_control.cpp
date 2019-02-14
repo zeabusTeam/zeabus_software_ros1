@@ -94,13 +94,18 @@ int main( int argv , char** argc ){
 
 	nav_msgs::Odometry current_state;
 	control_::clear_quaternion( current_state.pose.pose.orientation );
+	control_::clear_vector3( current_state.pose.pose.position );
 	nav_msgs::Odometry target_state; target_state.header.frame_id = target_id;
 	control_::clear_quaternion( target_state.pose.pose.orientation );
+	control_::clear_vector3( current_state.pose.pose.position );
 	nav_msgs::Odometry save_state; save_state.header.frame_id = save_id;
 	control_::clear_quaternion( save_state.pose.pose.orientation );
+	control_::clear_vector3( current_state.pose.pose.position );
 	nav_msgs::Odometry linear_state; linear_state.header.frame_id = linear_id;
 	control_::clear_quaternion( linear_state.pose.pose.orientation );
+	control_::clear_vector3( current_state.pose.pose.position );
 	zeabus_library::LinearEquation lh; // Available only 2-D plan -- linear_handle
+	lh.register_point(&current_state.pose.pose.position.x, &current_state.pose.pose.position.y );
 
 	geometry_msgs::TwistStamped control_twist; // output send to back_control
 	geometry_msgs::TwistStamped received_twist; // receive twist from mission/twist
@@ -235,16 +240,16 @@ int main( int argv , char** argc ){
 			}
 		//====================> PLAN XY
 			if( fix_velocity[0] && fix_velocity[1] ){
-				lh.distance_split( current_state.pose.pose.position.x 
-						, current_state.pose.pose.position.z , diff_point.x 
-						, diff_point.y , target_state.pose.pose.position.x 
-						, target_state.pose.pose.position.y );
+				lh.cut_point( current_state.pose.pose.position.x 
+						, current_state.pose.pose.position.z 
+						, target_state.pose.pose.position.x , target_state.pose.pose.position.y 
+						, diff_point.x , diff_point.y );
 
 				control_twist.twist.linear.x = value_fix_velocity[0] +
 						control_::velocity_xy( diff_point.x );
 	
 				control_twist.twist.linear.y = value_fix_velocity[1] +
-						control_::velocity_xy( diff_point.y );	
+						control_::velocity_xy( diff_point.y );
 			}
 			else if( received_target_twist[0] > 0 || received_target_twist[1] > 0 ){
 				received_target_twist[0]--;
@@ -298,6 +303,7 @@ int main( int argv , char** argc ){
 	diff_point.x = target_state.pose.pose.position.x - current_state.pose.pose.position.x;
 	diff_point.y = target_state.pose.pose.position.y - current_state.pose.pose.position.y;
 	diff_point.z = target_state.pose.pose.position.z - current_state.pose.pose.position.z;
+	zeabus_library::normal_yellow("LIST POSITION\n");
 	printf("CURRENT_POINT :%10.4lf%10.4lf%10.4lf\n" , current_state.pose.pose.position.x
 			, current_state.pose.pose.position.y , current_state.pose.pose.position.z );
 	printf("DIFF_POINT    :%10.4lf%10.4lf%10.4lf\n" ,diff_point.x ,diff_point.y ,diff_point.z );
@@ -305,8 +311,9 @@ int main( int argv , char** argc ){
 			, target_state.pose.pose.position.y , target_state.pose.pose.position.z );
 	printf("LINEAR_POINT  :%10.4lf%10.4lf%10.4lf\n" , linear_state.pose.pose.position.x
 			, linear_state.pose.pose.position.y , linear_state.pose.pose.position.z );
-	printf("SAVE_POINT    :%10.4lf%10.4lf%10.4lf\n" , save_state.pose.pose.position.x
+	printf("SAVE_POINT    :%10.4lf%10.4lf%10.4lf\n\n" , save_state.pose.pose.position.x
 			, save_state.pose.pose.position.y , save_state.pose.pose.position.z );
+	zeabus_library::normal_blue("LIST QUATERNION\n");
 	printf("CURRENT_Q_M   :%10.4lf%10.4lf%10.4lf%10.4lf\n" 
 			, current_state.pose.pose.orientation.x , current_state.pose.pose.orientation.y
 			, current_state.pose.pose.orientation.z , current_state.pose.pose.orientation.w );
@@ -316,12 +323,37 @@ int main( int argv , char** argc ){
 	printf("LINEAR_Q_M    :%10.4lf%10.4lf%10.4lf%10.4lf\n" 
 			, linear_state.pose.pose.orientation.x , linear_state.pose.pose.orientation.y
 			, linear_state.pose.pose.orientation.z , linear_state.pose.pose.orientation.w );
-	printf("SAVE_Q_M      :%10.4lf%10.4lf%10.4lf%10.4lf\n" 
+	printf("SAVE_Q_M      :%10.4lf%10.4lf%10.4lf%10.4lf\n\n" 
 			, save_state.pose.pose.orientation.x , save_state.pose.pose.orientation.y
 			, save_state.pose.pose.orientation.z , save_state.pose.pose.orientation.w );
+	zeabus_library::normal_magenta("LIST ROLL PITCH YAW\n");
 	printf("CURRENT_RPY   :"); current_quaternion.print_radian(); printf("\n");
 	printf("TARGET_RPY    :"); target_quaternion.print_radian(); printf("\n");
-	printf("DIFF_RPY      :"); diff_quaternion.print_radian(); printf("\n");
+	printf("DIFF_RPY      :"); diff_quaternion.print_radian(); printf("\n\n");
+	zeabus_library::normal_red("LIST ABOUT VELOCITY\n");
+	printf("CURRENT_VEL   :%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf\n"
+			, current_state.twist.twist.linear.x , current_state.twist.twist.linear.y
+			, current_state.twist.twist.linear.z , current_state.twist.twist.angular.x
+			, current_state.twist.twist.angular.y , current_state.twist.twist.angular.z );
+	printf("VALUE_RECEIVE :%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf\n"
+			, received_twist.twist.linear.x , received_twist.twist.linear.y
+			, received_twist.twist.linear.z , received_twist.twist.angular.x
+			, received_twist.twist.angular.y , received_twist.twist.angular.z );
+	printf("RECEIVED_VEL  :%10d%10d%10d%10d%10d%10d\n" 
+			, received_target_twist[0] , received_target_twist[1] , received_target_twist[2] 
+			, received_target_twist[3] , received_target_twist[4] , received_target_twist[5] );
+	printf("FIX_OR_NOT    :%10d%10d%10d%10d%10d%10d\n" , fix_velocity[0] , fix_velocity[1]
+			, fix_velocity[2] , fix_velocity[3] , fix_velocity[4] , fix_velocity[5] );
+	printf("FIX_VALUE     :%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf\n" , value_fix_velocity[0]
+			, value_fix_velocity[1] , value_fix_velocity[2] , value_fix_velocity[3]
+			, value_fix_velocity[4] , value_fix_velocity[5] );
+	printf("OUTPUT_VEL    :%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf\n" 
+			, control_twist.twist.linear.x , control_twist.twist.linear.y 
+			, control_twist.twist.linear.z , control_twist.twist.angular.x
+			, control_twist.twist.angular.y , control_twist.twist.angular.z	);
+	zeabus_library::bold_yellow("\nPRINT DATA LINEAR EQUATION\n");
+	lh.print_equation();
+		
 #endif
 #ifdef _LOOK_TRANSFORM_
 	linear_transform.setOrigin( tf::Vector3( linear_state.pose.pose.position.x

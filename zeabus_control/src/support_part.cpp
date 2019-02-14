@@ -33,6 +33,12 @@ namespace control{
 		data.w = 1 ;
 	}
 
+	template<typename vector3 >void clear_vector3( vector3& data ){
+		data.x = 0;
+		data.y = 0;
+		data.z = 0;
+	}
+
 }
 
 }

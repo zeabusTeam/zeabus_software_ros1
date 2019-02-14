@@ -86,8 +86,8 @@ namespace control{
 				this->temp_vector3.x * 10 ;
 		this->linear_state->pose.pose.position.y = this->target_state->pose.pose.position.y +
 				this->temp_vector3.y * 10 ;
-		this->equation->set_point( this->target_state->pose.pose.position.x
-								, this->target_state->pose.pose.position.y 
+		this->equation->set_point( this->save_state->pose.pose.position.x
+								, this->save_state->pose.pose.position.y 
 								, this->linear_state->pose.pose.position.x
 								, this->linear_state->pose.pose.position.y); 
 		this->fix_velocity[0] = true;

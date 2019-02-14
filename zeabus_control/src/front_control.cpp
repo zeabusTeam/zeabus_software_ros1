@@ -241,7 +241,7 @@ int main( int argv , char** argc ){
 		//====================> PLAN XY
 			if( fix_velocity[0] && fix_velocity[1] ){
 				lh.cut_point( current_state.pose.pose.position.x 
-						, current_state.pose.pose.position.z 
+						, current_state.pose.pose.position.y 
 						, target_state.pose.pose.position.x , target_state.pose.pose.position.y 
 						, diff_point.x , diff_point.y );
 

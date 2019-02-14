@@ -2,12 +2,12 @@
 	File name			:	linear_equation.cpp	
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , JAN 25
-	Date last modified	:	2018 , FEB 14
+	Date last modified	:	2018 , FEB 15
 	Purpose				:	This file use for equation Ax + By + C = 0
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.3.1
+	version				:	1.3.3
 	status				:	product
 
 	Namespace			:	zeabus_library
@@ -78,14 +78,14 @@ namespace zeabus_library{
 		this->D_2 = this->A_inverse * x + y;
 		if( this->type == 0 ){
 			cut_x = (this->D - D_2) / ( 2.0 * this->A );
-			cut_y = (this->D + D_2) / this->A ;
+			cut_y = (this->D + D_2) / 2 ;
 		}
 		else if( this->type == 1){
 			cut_x = x;
-			cut_y = this->save_y - y;
+			cut_y = this->save_y;
 		}
 		else{
-			cut_x = this->save_x - x;
+			cut_x = this->save_x;
 			cut_y = y;
 		}
 		#ifdef _DEBUG_DATA_

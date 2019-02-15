@@ -14,7 +14,7 @@
 */
 //=====================>
 
-#define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
+//#define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
 
 #define	NED_TO_ENU
 

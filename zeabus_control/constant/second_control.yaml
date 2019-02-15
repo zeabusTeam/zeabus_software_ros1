@@ -28,7 +28,7 @@ dictitems:
       p_roll_velocity: 0.0
       p_x_velocity: 1.0
       p_y_velocity: 1.0
-      p_yaw_velocity: 0.5
+      p_yaw_velocity: 0.6
       p_z_velocity: 2.0
       parameters: !!python/object/new:dynamic_reconfigure.encoding.Config
         state: []
@@ -52,7 +52,7 @@ dictitems:
   p_roll_velocity: 0.0
   p_x_velocity: 1.0
   p_y_velocity: 1.0
-  p_yaw_velocity: 0.5
+  p_yaw_velocity: 0.6
   p_z_velocity: 2.0
   pitch_offset: 0.0
   roll_offset: 0.0

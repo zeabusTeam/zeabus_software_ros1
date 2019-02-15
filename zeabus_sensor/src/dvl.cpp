@@ -14,7 +14,7 @@
 */
 //====================>
 
-#define _TEST_CONNECTION_ // If define this line. This code willn't connect dvl hardware
+//#define _TEST_CONNECTION_ // If define this line. This code willn't connect dvl hardware
 
 #include	<ros/ros.h>
 
@@ -89,7 +89,14 @@ int main( int argc , char ** argv ){
 	ph.param< double >( "translation_x" , offset_translation[0] , 0.0 );
 	ph.param< double >( "translation_y" , offset_translation[1] , 0.0 );
 	ph.param< double >( "translation_z" , offset_translation[2] , 0.0 );
-
+		
+	offset_translation[0] = 0;
+	offset_translation[1] = 0;
+	offset_translation[2] = 0;
+	offset_rotation[0] = 0;
+	offset_rotation[1] = 0;
+	offset_rotation[2] = 0;
+	
 //====================> TRANSFORM PART
 
 	static tf::TransformBroadcaster broadcaster;

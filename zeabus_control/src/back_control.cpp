@@ -41,7 +41,7 @@ int main( int argv , char** argc ){
 	double ok_error[6] = { 0.01 , 0.01 , 0.1 , 0.02 , 0.02 , 0.02};
 	double limit_pid[6] = { 1 , 1 , 1 , 1 , 1 , 1};
 
-	ros::init( argv , argc , "back_control");
+	ros::init( argv , argc , "second_control");
 
 	ros::NodeHandle nh("");
 	ros::NodeHandle ph("~");
@@ -94,7 +94,7 @@ int main( int argv , char** argc ){
 	tune_value.set_package_file( "zeabus_control" );
 	tune_value.set_directory_file( "constant" );
 	tune_value.set_name_file( "second_control" );
-	tune_value.set_node( "back_control" );
+	tune_value.set_node( "second_control" );
 
 	zeabus_library::control::PID pid[6];
 
@@ -121,23 +121,23 @@ int main( int argv , char** argc ){
 				target_twist.twist.linear.x - current_state.twist.twist.linear.x;
 		pid[0].calculate( diff_twist.twist.linear.x , temp_twist.twist.linear.x);
 
-		diff_twist.twist.linear.x = 
+		diff_twist.twist.linear.y = 
 				target_twist.twist.linear.y - current_state.twist.twist.linear.y;
 		pid[1].calculate( diff_twist.twist.linear.y , temp_twist.twist.linear.y);
 
-		diff_twist.twist.linear.x = 
+		diff_twist.twist.linear.z = 
 				target_twist.twist.linear.z - current_state.twist.twist.linear.z;
 		pid[2].calculate( diff_twist.twist.linear.z , temp_twist.twist.linear.z);
 
-		diff_twist.twist.linear.x = 
+		diff_twist.twist.angular.x = 
 				target_twist.twist.angular.x - current_state.twist.twist.angular.x;
 		pid[3].calculate( diff_twist.twist.angular.x , temp_twist.twist.angular.x);
 
-		diff_twist.twist.linear.x = 
+		diff_twist.twist.angular.y = 
 				target_twist.twist.angular.y - current_state.twist.twist.angular.y;
 		pid[4].calculate( diff_twist.twist.angular.y , temp_twist.twist.angular.y);
 
-		diff_twist.twist.linear.x = 
+		diff_twist.twist.angular.z = 
 				target_twist.twist.angular.z - current_state.twist.twist.angular.z;
 		pid[5].calculate( diff_twist.twist.angular.z , temp_twist.twist.angular.z);
 
@@ -158,6 +158,10 @@ int main( int argv , char** argc ){
 					, target_twist.twist.linear.x , target_twist.twist.linear.y 
 					, target_twist.twist.linear.z , target_twist.twist.angular.x 
 					, target_twist.twist.angular.y , target_twist.twist.angular.z );
+			printf("DIFF_TWIST       :%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf\n" 
+					, diff_twist.twist.linear.x , diff_twist.twist.linear.y 
+					, diff_twist.twist.linear.z , diff_twist.twist.angular.x 
+					, diff_twist.twist.angular.y , diff_twist.twist.angular.z );
 			printf("TEMP_TWIST       :%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf%10.4lf\n" 
 					, temp_twist.twist.linear.x , temp_twist.twist.linear.y 
 					, temp_twist.twist.linear.z , temp_twist.twist.angular.x 

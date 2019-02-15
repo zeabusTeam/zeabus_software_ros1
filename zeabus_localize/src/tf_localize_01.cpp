@@ -199,8 +199,10 @@ int main( int argv , char** argc ){
 		listener.lookupTransform( frame_id , robot_id , ros::Time(0) , transform );
 		robot_rotation_world = transform.getRotation();
 #ifndef _DEBUG_ROTATION_TWIST_
-		state.twist.twist.linear = robot_rotation_world.rotation( 
-				dvl_rotation_robot.rotation( dvl_data.twist.twist.linear ) );
+		state.twist.twist.linear = robot_rotation_world.rotation( dvl_data.twist.twist.linear );
+		state.twist.twist.linear.x /= 1000.0;
+		state.twist.twist.linear.y /= 1000.0;
+		state.twist.twist.linear.z /= 1000.0;
 #else
 		printf("ORIGIN TWIST     :%10.4lf%10.4lf%10.4lf\n" , dvl_data.twist.twist.linear.x
 				, dvl_data.twist.twist.linear.y , dvl_data.twist.twist.linear.z );
@@ -212,8 +214,8 @@ int main( int argv , char** argc ){
 				, state.twist.twist.linear.y , state.twist.twist.linear.z );
 #endif
 		state.pose.pose.orientation = robot_rotation_world.get_quaternion();
-		adding_x = state.twist.twist.linear.x * period_time;
-		adding_y = state.twist.twist.linear.y * period_time;
+		adding_x = state.twist.twist.linear.x * period_time ;
+		adding_y = state.twist.twist.linear.y * period_time ;
 		if( fabs(adding_x) > aborted_value ) state.pose.pose.position.x += adding_x;
 		if( fabs(adding_y) > aborted_value ) state.pose.pose.position.y += adding_y;
 

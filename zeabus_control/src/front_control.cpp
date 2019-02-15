@@ -297,6 +297,8 @@ int main( int argv , char** argc ){
 				diff_quaternion.get_RPY( temp_double[0] , temp_double[1] , temp_double[2] );
 				control_twist.twist.angular.z = control_::velocity_yaw(temp_double[2]);
 			}
+
+			tell_target.publish( control_twist );
 		}
 #ifdef _PRINT_DATA_
 	zeabus_library::clear_screen();

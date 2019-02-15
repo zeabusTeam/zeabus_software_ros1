@@ -16,7 +16,7 @@
 		<param name="roll_pitch" value="1"/>
 		<param name="roll_yaw" value="3"/>
 		<param name="depth_axis" value="4"/>
-		<param name="topic_joy" value="/zeabus/cmd_vel"/>
+		<param name="topic_joy" value="/control/force"/>
 	</node>
 	
 </launch>

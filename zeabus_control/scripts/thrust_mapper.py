@@ -18,7 +18,7 @@ class ThrustMapper:
     def __init__(self):
         rospy.init_node('Thrust_mapper')
         self.pwm_publisher = rospy.Publisher('/pwm', Pwm, queue_size=1)
-        rospy.Subscriber("/cmd_vel", Twist, self.torque_callback)
+        rospy.Subscriber("/control/force", TwistStamped, self.torque_callback)
 
         cos_45 = math.cos(math.radians(45))
         sin_45 = math.sin(math.radians(45))
@@ -78,8 +78,8 @@ class ThrustMapper:
         pwm_command = Pwm()
         pwm_command.pwm = [1500] * 8
 
-        force = np.array([message.linear.x, message.linear.y, message.linear.z,
-                      message.angular.x, message.angular.y, message.angular.z])
+        force = np.array([message.twist.linear.x, message.twist.linear.y, message.twist.linear.z,
+                      message.twist.angular.x, message.twist.angular.y, message.twist.angular.z])
 
         torque = np.matmul(self.direction_inverse.T,force.T)
        

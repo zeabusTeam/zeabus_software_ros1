@@ -16,7 +16,7 @@
 
 #define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
 
-#define	NED_TO_ENU
+#define		NED_TO_ENU
 
 #include	<ros/ros.h>
 
@@ -55,8 +55,6 @@ int main( int argv , char** argc ){
 	std::string subscribe_topic;
 #endif
 
-	double offset_rotation[3];
-	double offset_translation[3];
 	double offset_value[3];
 	bool use_offset;
 	
@@ -71,12 +69,6 @@ int main( int argv , char** argc ){
 	ph.param< std::string >( "frame_id" ,  frame_id , "imu");
 	ph.param< std::string >( "parent_id" ,  parent_id , "robot");
 
-	ph.param< double >( "rotation_x" , offset_rotation[0] , 0.0 ); // roll
-	ph.param< double >( "rotation_y" , offset_rotation[1] , 0.0 ); // pitch
-	ph.param< double >( "rotation_z" , offset_rotation[2] , 0.0 ); // yaw
-	ph.param< double >( "translation_x" , offset_translation[0] , 0.0 );
-	ph.param< double >( "translation_y" , offset_translation[1] , 0.0 );
-	ph.param< double >( "translation_z" , offset_translation[2] , 0.0 );
 	ph.param< bool >( "use_offset" , use_offset , false );
 	ph.param< double >( "offset_roll" , offset_value[0] , 0.0 );
 	ph.param< double >( "offset_pitch" , offset_value[1] , 0.0 );
@@ -85,19 +77,6 @@ int main( int argv , char** argc ){
 	ph.param< int >("frequency" , frequency , 50 );
 	ph.param< std::string >( "port_imu", port_name
 			, "/dev/microstrain/3dm_gx5_45_0000__6251.65903");
-
-//=====================> TRANSFORM PART
-
-	static tf::TransformBroadcaster broadcaster;
-	
-	zeabus_library::tf_handle::TFQuaternion tf_quaternion;
-	tf_quaternion.setRPY( offset_rotation[0] , offset_rotation[1] , offset_rotation[2] );
-	tf_quaternion.normalize();
-
-	tf::Transform transform;
-	transform.setOrigin( 
-			tf::Vector3( offset_translation[0] , offset_translation[1] , offset_rotation[2]) );
-	transform.setRotation( tf_quaternion );
 
 //=====================> SET UP ROS SYSTEM
 
@@ -252,8 +231,6 @@ int main( int argv , char** argc ){
 			time = ros::Time::now();
 			sensor.header.stamp = time;
 			pub_sensor.publish( sensor );
-			broadcaster.sendTransform( 
-					tf::StampedTransform( transform , time , parent_id , frame_id ) );
 		}
 
 #else

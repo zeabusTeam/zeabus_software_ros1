@@ -83,33 +83,6 @@ int main( int argc , char ** argv ){
 	ph.param< std::string >("frame_id" , frame_id , "dvl");
 	ph.param< std::string >("parent_id" , parent_id , "robot");
 
-	ph.param< double >( "rotation_x" , offset_rotation[0] , 0.0 ); // roll
-	ph.param< double >( "rotation_y" , offset_rotation[1] , 0.0 ); // pitch
-	ph.param< double >( "rotation_z" , offset_rotation[2] , 0.0 ); // yaw
-	ph.param< double >( "translation_x" , offset_translation[0] , 0.0 );
-	ph.param< double >( "translation_y" , offset_translation[1] , 0.0 );
-	ph.param< double >( "translation_z" , offset_translation[2] , 0.0 );
-		
-	offset_translation[0] = 0;
-	offset_translation[1] = 0;
-	offset_translation[2] = 0;
-	offset_rotation[0] = 0;
-	offset_rotation[1] = 0;
-	offset_rotation[2] = 0;
-	
-//====================> TRANSFORM PART
-
-	static tf::TransformBroadcaster broadcaster;
-
-	zeabus_library::tf_handle::TFQuaternion tf_quaternion;
-	tf_quaternion.setRPY( offset_rotation[0] , offset_rotation[1] , offset_rotation[1] );
-	tf_quaternion.normalize();
-
-	tf::Transform transform;
-	transform.setOrigin( 
-			tf::Vector3( offset_translation[0] , offset_translation[1] , offset_rotation[2]) );
-	transform.setRotation( tf_quaternion );
-
 //====================> SETUP ROS SYSTEM
 
 	geometry_msgs::TwistWithCovarianceStamped sensor;
@@ -227,14 +200,9 @@ int main( int argc , char ** argv ){
 				time = ros::Time::now();	
 				sensor.header.stamp = time;
 				pub_sensor.publish( sensor );
-				broadcaster.sendTransform(
-						tf::StampedTransform( transform , time , parent_id , frame_id ) );
 			}
 			else{
 				printf( "<-------- DVL BAD DATA ----------->\n\n");
-				time = ros::Time::now();	
-				broadcaster.sendTransform(
-						tf::StampedTransform( transform , time , parent_id , frame_id ) );
 			}
 		}
 #else
@@ -244,7 +212,6 @@ int main( int argc , char ** argv ){
 		sensor.header.stamp = time;
 		sensor.header.frame_id = frame_id;
 		pub_sensor.publish( sensor );
-		broadcaster.sendTransform( tf::StampedTransform( transform, time, parent_id, frame_id ));
 
 #endif	
 		

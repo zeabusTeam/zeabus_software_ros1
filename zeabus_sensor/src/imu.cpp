@@ -14,7 +14,7 @@
 */
 //=====================>
 
-//#define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
+#define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
 
 #define	NED_TO_ENU
 
@@ -91,7 +91,7 @@ int main( int argv , char** argc ){
 	static tf::TransformBroadcaster broadcaster;
 	
 	zeabus_library::tf_handle::TFQuaternion tf_quaternion;
-	tf_quaternion.setEulerZYX( offset_rotation[2] , offset_rotation[1] , offset_rotation[0] );
+	tf_quaternion.setRPY( offset_rotation[0] , offset_rotation[1] , offset_rotation[2] );
 	tf_quaternion.normalize();
 
 	tf::Transform transform;
@@ -243,7 +243,7 @@ int main( int argv , char** argc ){
 				zeabus_library::tf_handle::edit_value( roll );
 				zeabus_library::tf_handle::edit_value( pitch );
 				zeabus_library::tf_handle::edit_value( yaw );
-				temp_quaternion.setEulerZYX( yaw , pitch , roll );
+				temp_quaternion.setRPY( roll , pitch , yaw );
 				sensor.orientation.x = temp_quaternion.x();
 				sensor.orientation.y = temp_quaternion.y();
 				sensor.orientation.z = temp_quaternion.z();
@@ -270,7 +270,7 @@ int main( int argv , char** argc ){
 			zeabus_library::tf_handle::edit_value( roll );
 			zeabus_library::tf_handle::edit_value( pitch );
 			zeabus_library::tf_handle::edit_value( yaw );
-			temp_quaternion.setEulerZYX( yaw , pitch , roll );
+			temp_quaternion.setRPY( roll , pitch , yaw );
 			sensor.orientation.x = temp_quaternion.x();
 			sensor.orientation.y = temp_quaternion.y();
 			sensor.orientation.z = temp_quaternion.z();

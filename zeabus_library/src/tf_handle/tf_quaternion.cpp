@@ -31,7 +31,9 @@ namespace tf_handle{
 			Quaternion( axis , angle ){}
 
 	TFQuaternion::TFQuaternion( const tfScalar& yaw , const tfScalar& pitch 
-			, const tfScalar& roll) : Quaternion( yaw , pitch , roll ){}
+			, const tfScalar& roll) : Quaternion(){
+		this->setRPY( roll , pitch , yaw );
+	}
 
 	void TFQuaternion::get_RPY( double& roll , double& pitch , double& yaw ){
 		tf::Matrix3x3( *this ).getRPY( roll , pitch , yaw );
@@ -58,13 +60,13 @@ namespace tf_handle{
 
 	void TFQuaternion::operator=( tf::Quaternion q){
 		tf::Matrix3x3( q ).getRPY( temp_double[0] , temp_double[1] , temp_double[2] );
-		this->setEulerZYX( temp_double[2] , temp_double[1] , temp_double[0] );
+		this->setRPY( temp_double[0] , temp_double[1] , temp_double[2] );
 	}
 
 	void TFQuaternion::operator=( geometry_msgs::Quaternion q){
 		tf::Matrix3x3( tf::Quaternion( q.x , q.y , q.z , q.w ) ).getRPY( 
 				temp_double[0] , temp_double[1] , temp_double[2] );
-		this->setEulerZYX( temp_double[2] , temp_double[1] , temp_double[0] );
+		this->setRPY( temp_double[0] , temp_double[1] , temp_double[2] );
 	}
 
 	geometry_msgs::Vector3 TFQuaternion::rotation( geometry_msgs::Vector3 problem ){

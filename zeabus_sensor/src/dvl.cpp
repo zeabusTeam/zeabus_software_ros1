@@ -14,7 +14,7 @@
 */
 //====================>
 
-//#define _TEST_CONNECTION_ // If define this line. This code willn't connect dvl hardware
+#define _TEST_CONNECTION_ // If define this line. This code willn't connect dvl hardware
 
 #include	<ros/ros.h>
 
@@ -102,7 +102,7 @@ int main( int argc , char ** argv ){
 	static tf::TransformBroadcaster broadcaster;
 
 	zeabus_library::tf_handle::TFQuaternion tf_quaternion;
-	tf_quaternion.setEulerZYX( offset_rotation[2] , offset_rotation[1] , offset_rotation[0] );
+	tf_quaternion.setRPY( offset_rotation[0] , offset_rotation[1] , offset_rotation[1] );
 	tf_quaternion.normalize();
 
 	tf::Transform transform;

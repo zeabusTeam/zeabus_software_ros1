@@ -216,7 +216,7 @@ int main( int argv , char** argc ){
 				current_quaternion.get_RPY( temp_double[0] , temp_double[1] , temp_double[3] );
 				temp_double[0] = 0.0;
 				temp_double[1] = 0.0;
-				current_quaternion.setEulerZYX( temp_double[2] , zero , zero );
+				current_quaternion.setRPY( zero , zero , temp_double[2] );
 				current_state.pose.pose.orientation = current_quaternion.get_quaternion();
 				target_state = current_state;
 				linear_state = current_state;
@@ -283,14 +283,14 @@ int main( int argv , char** argc ){
 			if( fix_velocity[2] ){
 				current_quaternion.get_RPY( temp_double[0] , temp_double[1] , temp_double[2] );
 				control_twist.twist.angular.z = value_fix_velocity[5];
-				target_quaternion.setEulerZYX( temp_double[2] , zero , zero );
+				target_quaternion.setRPY( zero , zero , temp_double[2] );
 				target_state.pose.pose.orientation = target_quaternion.get_quaternion();
 			}
 			else if( received_target_twist[5] > 0 ){
 				received_target_twist[5]--;
 				control_twist.twist.angular.z = received_twist.twist.angular.z;
 				current_quaternion.get_RPY( temp_double[0] , temp_double[1] , temp_double[2] );
-				target_quaternion.setEulerZYX( temp_double[2] , zero , zero );
+				target_quaternion.setRPY( zero , zero , temp_double[2] );
 				target_state.pose.pose.orientation = target_quaternion.get_quaternion();
 			} 
 			else{

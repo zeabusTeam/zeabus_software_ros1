@@ -38,11 +38,9 @@ add_message_files(
 
 add_service_files(
 	FILES
-	GetTwoPoint.srv
-	OneInt.srv
-	StrPoint.srv
-	StrTwoPoint.srv
-	TwoPoint.srv	
+	ThreeOdometry.srv
+	OneVector3Stamped.srv
+	TwoStringVector3Stamped.srv
 )
 
 add_service_files(
@@ -60,7 +58,7 @@ add_service_files(
 	DelObject.srv
 )
 
-generate_messages( DEPENDENCIES std_msgs geometry_msgs)
+generate_messages( DEPENDENCIES std_msgs geometry_msgs nav_msgs)
 
 catkin_package(
 	INCLUDE_DIRS include
@@ -95,10 +93,10 @@ set( zeabus_library_localize_sources
 )
 
 set( zeabus_library_control_sources
-	src/control/service_control.cpp
-	src/control/listen_odometry.cpp	
-	src/control/listen_twist.cpp
 	src/control/pid.cpp	
+	src/control/service_one_vector3_stamped.cpp
+	src/control/service_two_string_vector3_stamped.cpp
+	src/control/service_three_odometry.cpp
 )
 
 set( zeabus_library_rotation_sources
@@ -121,6 +119,7 @@ set( zeabus_library_sensor_sources
 set( zeabus_library_subscriber_sources
 	src/subscriber/SubImu.cpp
 	src/subscriber/SubOdometry.cpp
+	src/subscriber/SubTwistStamped.cpp
 	src/subscriber/SubTwistWithCovarianceStamped.cpp
 )
 

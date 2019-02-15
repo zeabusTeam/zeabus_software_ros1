@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 queue = []
 #pub = rospy.Publisher("/barometer/data", Odometry, queue_size=1)
-pub = rospy.Publisher("/sensor/pressure/node", Odometry, queue_size=1)
+pub = rospy.Publisher("/sensor/pressure", Odometry, queue_size=1)
 # pub_float = rospy.Publisher("/baro/float64", Float64, queue_size=90)
 count = 0
 r = 0.05

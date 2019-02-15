@@ -23,6 +23,8 @@
 
 #include	<iostream>
 
+#include	<math.h>
+
 #ifndef PI
 	#define	PI 3.14159265
 #endif
@@ -41,6 +43,7 @@ namespace tf_handle{
 			TFQuaternion( const tfScalar& x , const tfScalar&y 
 							, const tfScalar& z , const tfScalar& w );
 			TFQuaternion( const tf::Vector3 &axis , const tfScalar& angle );
+			TFQuaternion( const geometry_msgs::Quaternion& quaternion );
 			TFQuaternion( const tfScalar& yaw , const tfScalar& pitch , const tfScalar& roll);
 
 			void get_RPY( double& roll , double& pitch , double& yaw );
@@ -51,7 +54,10 @@ namespace tf_handle{
 						
 			void rotation( double& x , double& y , double& z );
 
+			geometry_msgs::Quaternion get_quaternion();
+
 			void operator=( tf::Quaternion q);
+			void operator=( geometry_msgs::Quaternion q);
 
 			void print_quaternion();
 			void print_radian();
@@ -63,6 +69,7 @@ namespace tf_handle{
 
 	};
 
+	void edit_value( double& problem ); // make value -PI<= x <= PI
 
 }
 

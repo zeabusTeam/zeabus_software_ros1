@@ -46,6 +46,24 @@ namespace subscriber{
 		this->constant_ttl = number;
 	}
 
+	SubOdometryByTwistStamped::SubOdometryByTwistStamped( geometry_msgs::TwistStamped* data ) : 
+			SubOdometry( 0 ){
+		this->data = data;
+	}
+
+	void SubOdometryByTwistStamped::register_data( geometry_msgs::TwistStamped* data ){
+		this->data = data;
+	}
+
+	void SubOdometryByTwistStamped::callback( const nav_msgs::Odometry& message ){
+		this->data->twist = message.twist.twist;
+	}
+
+	void SubOdometryByTwistStamped::callback_ttl( const nav_msgs::Odometry& message ){
+		this->data->twist = message.twist.twist;
+		*(this->ttl) = this->constant_ttl;
+	}
+
 
 }
 

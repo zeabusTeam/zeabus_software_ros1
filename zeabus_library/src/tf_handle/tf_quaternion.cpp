@@ -22,13 +22,16 @@ namespace tf_handle{
 	TFQuaternion::TFQuaternion() : Quaternion(){}
 
 	TFQuaternion::TFQuaternion( const tfScalar& x , const tfScalar&y , const tfScalar& z 
-					, const tfScalar& w ): Quaternion( x , y , z , w ){}
+			, const tfScalar& w ): Quaternion( x , y , z , w ){}
+
+	TFQuaternion::TFQuaternion( const geometry_msgs::Quaternion& quaternion ) :
+			Quaternion( quaternion.x , quaternion.y , quaternion.z , quaternion.w ){}
 
 	TFQuaternion::TFQuaternion( const tf::Vector3 &axis , const tfScalar& angle ) : 
-					Quaternion( axis , angle ){}
+			Quaternion( axis , angle ){}
 
 	TFQuaternion::TFQuaternion( const tfScalar& yaw , const tfScalar& pitch 
-					, const tfScalar& roll) : Quaternion( yaw , pitch , roll ){}
+			, const tfScalar& roll) : Quaternion( yaw , pitch , roll ){}
 
 	void TFQuaternion::get_RPY( double& roll , double& pitch , double& yaw ){
 		tf::Matrix3x3( *this ).getRPY( roll , pitch , yaw );
@@ -58,12 +61,27 @@ namespace tf_handle{
 		this->setEulerZYX( temp_double[2] , temp_double[1] , temp_double[0] );
 	}
 
+	void TFQuaternion::operator=( geometry_msgs::Quaternion q){
+		tf::Matrix3x3( tf::Quaternion( q.x , q.y , q.z , q.w ) ).getRPY( 
+				temp_double[0] , temp_double[1] , temp_double[2] );
+		this->setEulerZYX( temp_double[2] , temp_double[1] , temp_double[0] );
+	}
+
 	geometry_msgs::Vector3 TFQuaternion::rotation( geometry_msgs::Vector3 problem ){
 		this->temp_vector3.x = problem.x;
 		this->temp_vector3.y = problem.y;
 		this->temp_vector3.z = problem.z;
 		this->rotation( this->temp_vector3.x , this->temp_vector3.y , this->temp_vector3.z );
 		return this->temp_vector3;
+	}
+
+	geometry_msgs::Quaternion TFQuaternion::get_quaternion(){
+		geometry_msgs::Quaternion temp_quaternion;
+		temp_quaternion.w = this->w();
+		temp_quaternion.x = this->x();
+		temp_quaternion.y = this->y();
+		temp_quaternion.z = this->z();
+		return temp_quaternion;
 	}
 
 	void TFQuaternion::print_quaternion(){
@@ -80,7 +98,13 @@ namespace tf_handle{
 		this->get_RPY( this->temp_double[0] , this->temp_double[1] , this->temp_double[2] );	
 		printf("%10.4lf%10.4lf%10.4lf" , this->temp_double[0] / PI * 180 
 				, this->temp_double[1] / PI * 180 , this->temp_double[2] / PI * 180 );
+	}
 
+	void edit_value( double& problem){
+		for( ; fabs(problem) > PI ; ){
+			if( problem < 0 ) problem += ( 2*PI );
+			else problem += (-2*PI);
+		}
 	}
 }
 

@@ -2,7 +2,7 @@
 	File name			:	imu.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , FEB 06
-	Date last modified	:	2018 , FEB 06
+	Date last modified	:	2018 , FEB 09
 	Purpose				:	Connection between IMU with ROS system
 
 	Maintainer			:	Supasan Komonlit
@@ -14,7 +14,9 @@
 */
 //=====================>
 
-//#define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
+#define _TEST_CONNECTION_ // If define this line. This code willn't connect IMU hardware
+
+#define	NED_TO_ENU
 
 #include	<ros/ros.h>
 
@@ -28,6 +30,7 @@
 #include	<zeabus_library/tf_handle/tf_quaternion.h>
 
 #include	<zeabus_library/subscriber/SubImu.h>
+
 
 //#define	_DEBUG_SPILT_DATA_ // For debug about get value each part of packet
 
@@ -54,6 +57,8 @@ int main( int argv , char** argc ){
 
 	double offset_rotation[3];
 	double offset_translation[3];
+	double offset_value[3];
+	bool use_offset;
 	
 
 	std::string port_name; 
@@ -72,6 +77,10 @@ int main( int argv , char** argc ){
 	ph.param< double >( "translation_x" , offset_translation[0] , 0.0 );
 	ph.param< double >( "translation_y" , offset_translation[1] , 0.0 );
 	ph.param< double >( "translation_z" , offset_translation[2] , 0.0 );
+	ph.param< bool >( "use_offset" , use_offset , false );
+	ph.param< double >( "offset_roll" , offset_value[0] , 0.0 );
+	ph.param< double >( "offset_pitch" , offset_value[1] , 0.0 );
+	ph.param< double >( "offset_yaw" , offset_value[2] , 0.0 );
 
 	ph.param< int >("frequency" , frequency , 50 );
 	ph.param< std::string >( "port_imu", port_name
@@ -103,11 +112,16 @@ int main( int argv , char** argc ){
 	ros::Publisher pub_sensor = nh.advertise< sensor_msgs::Imu >( publish_topic , 1 );
 
 #ifdef _TEST_CONNECTION_
-	sensor_msgs::Imu receive_sensor;
 	zeabus_library::subscriber::SubImu listener( &sensor );
+	int received = 1;
+	listener.register_ttl( &received , 1 );
 	ros::Subscriber sub_sensor = nh.subscribe( subscribe_topic , 1 
-			, &zeabus_library::subscriber::SubImu::callback
+			, &zeabus_library::subscriber::SubImu::callback_ttl
 			, &listener );
+	sensor.orientation.x = 0;
+	sensor.orientation.y = 0;
+	sensor.orientation.z = 0;
+	sensor.orientation.w = 1;
 #endif
 
 #ifndef _TEST_CONNECTION_
@@ -218,6 +232,23 @@ int main( int argv , char** argc ){
 					run += 1;
 				}
 			}
+			if( use_offset ){
+				zeabus_library::tf_handle::TFQuaternion temp_quaternion( sensor.orientation.x
+						, sensor.orientation.y , sensor.orientation.z , sensor.orientation.w );
+				double roll , pitch , yaw ;
+				temp_quaternion.get_RPY( roll,  pitch , yaw);
+				roll += offset_value[0];
+				pitch += offset_value[1];
+				yaw += offset_value[2];
+				zeabus_library::tf_handle::edit_value( roll );
+				zeabus_library::tf_handle::edit_value( pitch );
+				zeabus_library::tf_handle::edit_value( yaw );
+				temp_quaternion.setEulerZYX( yaw , pitch , roll );
+				sensor.orientation.x = temp_quaternion.x();
+				sensor.orientation.y = temp_quaternion.y();
+				sensor.orientation.z = temp_quaternion.z();
+				sensor.orientation.w = temp_quaternion.w();
+			}
 			time = ros::Time::now();
 			sensor.header.stamp = time;
 			pub_sensor.publish( sensor );
@@ -226,7 +257,26 @@ int main( int argv , char** argc ){
 		}
 
 #else
+		rate.sleep();
 		ros::spinOnce();
+		if( use_offset && received ){
+			zeabus_library::tf_handle::TFQuaternion temp_quaternion( sensor.orientation.x
+					, sensor.orientation.y , sensor.orientation.z , sensor.orientation.w );
+			double roll , pitch , yaw ;
+			temp_quaternion.get_RPY( roll,  pitch , yaw);
+			roll += offset_value[0];
+			pitch += offset_value[1];
+			yaw += offset_value[2];
+			zeabus_library::tf_handle::edit_value( roll );
+			zeabus_library::tf_handle::edit_value( pitch );
+			zeabus_library::tf_handle::edit_value( yaw );
+			temp_quaternion.setEulerZYX( yaw , pitch , roll );
+			sensor.orientation.x = temp_quaternion.x();
+			sensor.orientation.y = temp_quaternion.y();
+			sensor.orientation.z = temp_quaternion.z();
+			sensor.orientation.w = temp_quaternion.w();
+			received = 0;
+		}
 		time = ros::Time::now();
 		sensor.header.stamp = time;
 		sensor.header.frame_id = frame_id;

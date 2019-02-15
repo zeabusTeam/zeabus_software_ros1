@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+
 <launch>
 	<arg name="dev" default="/dev/input/js0"/>
 	
@@ -16,7 +18,7 @@
 		<param name="roll_pitch" value="1"/>
 		<param name="roll_yaw" value="3"/>
 		<param name="depth_axis" value="4"/>
-		<param name="topic_joy" value="/control/force"/>
+		<param name="topic_joy" value="/control/twist"/>
 	</node>
 	
 </launch>

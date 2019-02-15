@@ -41,11 +41,11 @@ add_dependencies( front_control	${PROJECT_NAME}_gencfg
 target_link_libraries( front_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
 
 
-#add_executable(second_control src/second_control.cpp)
+add_executable(back_control src/back_control.cpp)
 
-#add_dependencies( second_control ${PROJECT_NAME}_gencfg 
-#							${${PROJECT_NAME}_EXPORTED_TARGETS}
-#							${catkin_EXPORTED_TARGETS}
-#)
+add_dependencies( back_control ${PROJECT_NAME}_gencfg 
+							${${PROJECT_NAME}_EXPORTED_TARGETS}
+							${catkin_EXPORTED_TARGETS}
+)
 
-#target_link_libraries( second_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries( back_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )

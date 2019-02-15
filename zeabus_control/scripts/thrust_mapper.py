@@ -11,7 +11,7 @@ import rospy
 import numpy as np
 import LookUpPWM_2018 as lup
 from hg_ros_pololu.msg import Pwm
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import TwistStamped
 
 
 class ThrustMapper:

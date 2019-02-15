@@ -50,7 +50,7 @@ int main( int argv , char** argc ){
 	const static double zero = 0;
 	const static double one = 1;
 
-	ros::init( argv , argc , "control_front");
+	ros::init( argv , argc , "front_control");
 
 	ros::NodeHandle ph("~");
 	ros::NodeHandle nh("");

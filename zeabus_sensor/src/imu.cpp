@@ -258,7 +258,6 @@ int main( int argv , char** argc ){
 		sensor.header.stamp = time;
 		sensor.header.frame_id = frame_id;
 		pub_sensor.publish( sensor );
-		broadcaster.sendTransform( tf::StampedTransform( transform, time, parent_id, frame_id ));
 #endif
 
 	}	

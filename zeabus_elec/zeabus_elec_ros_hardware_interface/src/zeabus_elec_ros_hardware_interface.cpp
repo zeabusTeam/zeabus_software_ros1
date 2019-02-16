@@ -6,7 +6,8 @@
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
 #include <std_msgs/Bool.h>
-#include <cmath>
+
+#include <string>
 
 #include <zeabus_elec_ros_hardware_interface/PowerSwitchCommand.h>
 #include <zeabus_elec_ros_hardware_interface/IOCommand.h>
@@ -36,6 +37,7 @@ static ros::ServiceServer hold_torpedo_server;
 static ros::ServiceClient power_dist_service_client;
 static ros::ServiceClient solenoid_service_client;
 
+static std::string pressure_header_frame_id, pressure_child_frame_id;
 static double atm_pressure, depth_offset;
 
 double barometer_value_to_depth(uint16_t barometer_value)
@@ -50,7 +52,7 @@ double barometer_value_to_depth(uint16_t barometer_value)
     //ROS_INFO("pressure sensor analog value : %.4d", barometer_value);
     //ROS_INFO("pressure sensor voltage : %.4lf V", barometer_voltage);
     ROS_INFO("pressure : %.4lf psi", psi);
-    //ROS_INFO("depth : %.4lf meter\n", depth);
+    ROS_INFO("depth : %.4lf meter\n", -depth);
 
     return depth;
 }
@@ -58,14 +60,12 @@ double barometer_value_to_depth(uint16_t barometer_value)
 void send_depth(const zeabus_elec_ros_peripheral_bridge::barometer::ConstPtr& msg)
 {
     nav_msgs::Odometry odometry;
-    double depth, depth_differential;
+    double depth;
 
     depth = barometer_value_to_depth(msg->pressureValue);
 
-    ROS_INFO("depth : %.4lf meter\n", -depth);
-    
-    odometry.header.frame_id = "odom";
-    odometry.child_frame_id = "base_link";
+    odometry.header.frame_id = pressure_header_frame_id;
+    odometry.child_frame_id = pressure_child_frame_id;
     odometry.header.stamp = ros::Time::now();
 
     odometry.pose.pose.position.z = -depth;
@@ -221,6 +221,8 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "Zeabus_Elec_Hardware_interface");
     ros::NodeHandle nh("/zeabus/elec");
 
+    nh.param<std::string>("/Zeabus_Elec_Hardware_interface/pressure_header_frame_id", pressure_header_frame_id, "odom");
+    nh.param<std::string>("/Zeabus_Elec_Hardware_interface/pressure_child_frame_id", pressure_child_frame_id, "base_link");
     nh.param<double>("/Zeabus_Elec_Hardware_interface/atm_pressure", atm_pressure, ONE_ATM_AS_PSI);
     nh.param<double>("/Zeabus_Elec_Hardware_interface/depth_offset", depth_offset, 0);
 

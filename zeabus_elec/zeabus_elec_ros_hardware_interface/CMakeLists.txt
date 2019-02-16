@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(FILES
     IOCommand.srv
     PowerSwitchCommand.srv
-	Torpedo.srv
+    Torpedo.srv
 )
 
 generate_messages(DEPENDENCIES

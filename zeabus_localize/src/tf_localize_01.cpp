@@ -36,7 +36,7 @@
 #define _PRINT_CHECK_DATA_
 #define _CLEAR_SCREEN_
 
-#define _DEBUG_ROTATION_TWIST_
+//#define _DEBUG_ROTATION_TWIST_
 
 int main( int argv , char** argc ){
 

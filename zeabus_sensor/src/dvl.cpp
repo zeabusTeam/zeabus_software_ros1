@@ -14,7 +14,7 @@
 */
 //====================>
 
-#define _TEST_CONNECTION_ // If define this line. This code willn't connect dvl hardware
+//#define _TEST_CONNECTION_ // If define this line. This code willn't connect dvl hardware
 
 #include	<ros/ros.h>
 

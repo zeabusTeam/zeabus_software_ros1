@@ -34,9 +34,9 @@ class ControlAUV:
 
 		self.set_name( name_id )
 
-		self.save_position = [0 , 0 , 0 , 0 , 0 , 0]
+		self.save_state = [0 , 0 , 0 , 0 , 0 , 0]
 
-		self.collect_position = [0 , 0 , 0 , 0 , 0 ]
+		self.collect_state = [0 , 0 , 0 , 0 , 0 ]
 
 		self.velocity_publisher	= rospy.Publisher("/mission/twist" ,TwistStamped ,queue_size = 1)
 
@@ -140,20 +140,20 @@ class ControlAUV:
 	def save_target( self ):
 		self.stamp_time()
 		result = self.cl_check_position( self.header ,  "target" )
-		self.save_position[0] = result.pose.pose.position.x
-		self.save_position[1] = result.pose.pose.position.y
-		self.save_position[2] = result.pose.pose.position.z
+		self.save_state[0] = result.pose.pose.position.x
+		self.save_state[1] = result.pose.pose.position.y
+		self.save_state[2] = result.pose.pose.position.z
 		temp_orientation = [ result.pose.pose.orientation.x , result.pose.pose.orientation.y ,
 							result.pose.pose.orientation.z , result.pose.pose.orientation.w ]
-		[ self.save_position[3] , self.save_position[4] 
-				, self.save_position[5] ] = euler_from_quaternion( temp_orientation ) 
+		[ self.save_state[3] , self.save_state[4] 
+				, self.save_state[5] ] = euler_from_quaternion( temp_orientation ) 
 
 	def collect_target( self ):
 		self.stamp_time()
 		result = self.cl_check_position( self.header , "target" )
-		self.collect_position[0] = result.pose.pose.position.x
-		self.collect_position[1] = result.pose.pose.position.y
-		self.collect_position[2] = result.pose.pose.position.z
+		self.collect_state[0] = result.pose.pose.position.x
+		self.collect_state[1] = result.pose.pose.position.y
+		self.collect_state[2] = result.pose.pose.position.z
 
 	def velocity( self , data_velocity): # please send in dictionary type
 		self.stamp_time()

@@ -213,13 +213,12 @@ int main( int argv , char** argc ){
 		if( start_up ){
 			if( received_state ){
 				current_quaternion = current_state.pose.pose.orientation;
-				current_quaternion.get_RPY( temp_double[0] , temp_double[1] , temp_double[3] );
-				temp_double[0] = 0.0;
-				temp_double[1] = 0.0;
-				current_quaternion.setEulerZYX( temp_double[2] , zero , zero );
-				current_state.pose.pose.orientation = current_quaternion.get_quaternion();
-				target_state = current_state;
-				linear_state = current_state;
+				current_quaternion.get_RPY( temp_double[0] , temp_double[1] , temp_double[2] );
+				target_quaternion.setRPY( zero , zero , temp_double[2] );
+				target_state.pose.pose.position = current_state.pose.pose.position;	
+				target_state.pose.pose.orientation = target_quaternion.get_quaternion();
+				save_state = target_state;
+				linear_state = target_state;
 				start_up = false;
 				received_state = 0;				
 			}
@@ -235,7 +234,7 @@ int main( int argv , char** argc ){
 			diff_quaternion = target_quaternion * current_quaternion.inverse();
 			if( received_state < aborted_control ){
 				received_state = 0;
-				start_up = false;
+				start_up = true;
 				continue;
 			}
 		//====================> PLAN XY
@@ -283,14 +282,14 @@ int main( int argv , char** argc ){
 			if( fix_velocity[2] ){
 				current_quaternion.get_RPY( temp_double[0] , temp_double[1] , temp_double[2] );
 				control_twist.twist.angular.z = value_fix_velocity[5];
-				target_quaternion.setEulerZYX( temp_double[2] , zero , zero );
+				target_quaternion.setRPY( zero , zero , temp_double[2] );
 				target_state.pose.pose.orientation = target_quaternion.get_quaternion();
 			}
 			else if( received_target_twist[5] > 0 ){
 				received_target_twist[5]--;
 				control_twist.twist.angular.z = received_twist.twist.angular.z;
 				current_quaternion.get_RPY( temp_double[0] , temp_double[1] , temp_double[2] );
-				target_quaternion.setEulerZYX( temp_double[2] , zero , zero );
+				target_quaternion.setRPY( zero , zero , temp_double[2] );
 				target_state.pose.pose.orientation = target_quaternion.get_quaternion();
 			} 
 			else{

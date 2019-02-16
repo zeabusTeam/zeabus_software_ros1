@@ -13,6 +13,10 @@
 	Namespace			:	zeabus_library::tf_handle
 */
 
+#ifdef TF_EULER_DEFAULT_ZYX
+	#undef TF_EULER_DEFAULT_ZYX
+#endif
+
 #include	<tf/transform_broadcaster.h>
 
 #include	<geometry_msgs/Vector3.h>

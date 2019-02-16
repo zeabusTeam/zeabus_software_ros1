@@ -44,8 +44,8 @@ namespace control{
 				, this->temp_double[2] );	
 		this->temp_double[2]  += request.data.z;
 		zeabus_library::tf_handle::edit_value( this->temp_double[2] );
-		this->target_quaternion->setEulerZYX( this->temp_double[2] , this->temp_double[1]
-				, this->temp_double[0] );
+		this->target_quaternion->setRPY( this->temp_double[0] , this->temp_double[1]
+				, this->temp_double[2] );
 		this->target_state->pose.pose.orientation.x = this->target_quaternion->x();
 		this->target_state->pose.pose.orientation.y = this->target_quaternion->y();
 		this->target_state->pose.pose.orientation.w = this->target_quaternion->w();
@@ -58,8 +58,8 @@ namespace control{
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->target_quaternion->get_RPY( this->temp_double[0] , this->temp_double[1] 
 				, this->temp_double[2] );
-		this->target_quaternion->setEulerZYX( request.data.z , this->temp_double[1]
-				, this->temp_double[0] );
+		this->target_quaternion->setRPY( this->temp_double[0] , this->temp_double[1]
+				, request.data.z );
 		this->target_state->pose.pose.orientation.x = this->target_quaternion->x();
 		this->target_state->pose.pose.orientation.y = this->target_quaternion->y();
 		this->target_state->pose.pose.orientation.w = this->target_quaternion->w();

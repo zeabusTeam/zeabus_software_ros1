@@ -18,6 +18,8 @@
 //#define _DEBUG_ZEABUS_LIBRARY_QUATERNION_VARIABLE_
 //#define _DEBUG_VALUE_INPUT_MATH_H_
 
+#undef TF_EULER_DEFAULT_ZYX
+
 namespace euler_ = zeabus_library::euler;
 
 namespace zeabus_library{

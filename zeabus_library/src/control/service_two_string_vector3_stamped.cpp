@@ -24,6 +24,7 @@ namespace control{
 	bool ServiceTwoStringVector3Stamped::callback_reset_velocity(
 			zeabus_library::TwoStringVector3Stamped::Request& request,
 			zeabus_library::TwoStringVector3Stamped::Response& response ){
+		response.result = true;
 		if( request.type == "xy"){
 			this->fix_velocity[0] = false;
 			this->fix_velocity[1] = false;
@@ -44,7 +45,7 @@ namespace control{
 		else if( request.type == "all" ){
 			for( int run = 0 ; run < 6 ; run++ ) this->fix_velocity[run] = false;
 		}
-		response.result = true; 
+		else response.result = false;
 	}
 
 	bool ServiceTwoStringVector3Stamped::callback_check_position(

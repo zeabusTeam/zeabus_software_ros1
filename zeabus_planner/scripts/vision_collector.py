@@ -124,7 +124,7 @@ class VisionCollector:
 		self.center_y			= self.drum_center_y
 		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area' ]
 		self.not_sum = [ 'left' , 'right' , 'forward' , 'backward']
-		self.request_data = rospy.ServiceProxy( "/vision_drum" , vision_srv_drum )
+		self.request_data = rospy.ServiceProxy( "/vision/drum" , vision_srv_drum )
 
 	def drum_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
@@ -152,7 +152,7 @@ class VisionCollector:
 		self.center_y			= self.gate_center_y
 		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area' , 'pos' ]
 		self.not_sum = []
-		self.request_data = rospy.ServiceProxy( "/vision_gate" , vision_srv_gate )
+		self.request_data = rospy.ServiceProxy( "/vision/gate" , vision_srv_gate )
 
 	def gate_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
@@ -177,7 +177,7 @@ class VisionCollector:
 		self.center_y			= self.flare_center_y
 		self.can_sum = [ 'cx' , 'cy' , 'area' ]
 		self.not_sum = []
-		self.request_data = rospy.ServiceProxy( "/vision_flare" , vision_srv_flare )
+		self.request_data = rospy.ServiceProxy( "/vision/flare" , vision_srv_flare )
 
 	def flare_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data

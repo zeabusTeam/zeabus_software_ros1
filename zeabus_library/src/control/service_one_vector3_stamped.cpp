@@ -2,12 +2,12 @@
 	File name			:	service_one_vector3_stamped.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , FEB 05
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , FEB 17
 	Purpose				:	
 
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.0.1
 	status				:	production
 
 	Namespace			:	zeabus_library::control
@@ -58,6 +58,7 @@ namespace control{
 			, zeabus_library::OneVector3Stamped::Response& response ){
 		this->target_quaternion->get_RPY( this->temp_double[0] , this->temp_double[1] 
 				, this->temp_double[2] );
+		zeabus_library::tf_handle::edit_value( request.data.z );
 		this->target_quaternion->setRPY( this->temp_double[0] , this->temp_double[1]
 				, request.data.z );
 		this->target_state->pose.pose.orientation.x = this->target_quaternion->x();

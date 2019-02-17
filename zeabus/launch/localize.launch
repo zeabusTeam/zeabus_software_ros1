@@ -11,7 +11,7 @@
 		<param name="dvl_id" type="str" value="dvl"/>
 		<param name="robot_id" type="str" value="robot"/>
 		<param name="frame_id" type="str" value="world"/>
-		<param name="frequency" type="int" value="50"/>
+		<param name="frequency" type="int" value="30"/>
 		<param name="aborted" type="double" value="0.001"/>
 	</node>
 

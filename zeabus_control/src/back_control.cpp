@@ -39,9 +39,9 @@
 int main( int argv , char** argc ){
 
 	double ok_error[6] = { 0.01 , 0.01 , 0.1 , 0.02 , 0.02 , 0.02};
-	double limit_pid[6] = { 1 , 1 , 1 , 1 , 1 , 1};
+	double limit_pid[6] = { 1 , 1 , 1.5 , 1 , 1 , 1};
 
-	ros::init( argv , argc , "second_control");
+	ros::init( argv , argc , "back_control");
 
 	ros::NodeHandle nh("");
 	ros::NodeHandle ph("~");
@@ -72,6 +72,7 @@ int main( int argv , char** argc ){
 	zeabus_library::subscriber::SubTwistStamped listen_target( &target_twist );
 
 	zeabus_library::tf_handle::TFQuaternion qh; // quaternion handle
+	zeabus_library::tf_handle::TFQuaternion qh_inverse; // quaternion handle
 
 	ros::Rate rate( frequency );
 
@@ -93,8 +94,8 @@ int main( int argv , char** argc ){
 	zeabus_library::DynParam tune_value;
 	tune_value.set_package_file( "zeabus_control" );
 	tune_value.set_directory_file( "constant" );
-	tune_value.set_name_file( "second_control" );
-	tune_value.set_node( "second_control" );
+	tune_value.set_name_file( "back_control" );
+	tune_value.set_node( "back_control" );
 
 	zeabus_library::control::PID pid[6];
 
@@ -143,7 +144,9 @@ int main( int argv , char** argc ){
 
 		qh = current_state.pose.pose.orientation;
 
-		force_twist.twist.linear = qh.rotation( temp_twist.twist.linear );
+		qh_inverse = qh.inverse();
+
+		force_twist.twist.linear = qh_inverse.rotation( temp_twist.twist.linear );
 		force_twist.twist.angular = temp_twist.twist.angular;
 		
 		tell_force.publish( force_twist );

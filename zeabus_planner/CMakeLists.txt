@@ -17,8 +17,3 @@ catkin_package(
   CATKIN_DEPENDS rospy geometry_msgs std_msgs message_runtime tf
   DEPENDS system_lib 
 )
-
-set( zeabus_planner_scripts
-  scripts/auv_controller.py
-)
-

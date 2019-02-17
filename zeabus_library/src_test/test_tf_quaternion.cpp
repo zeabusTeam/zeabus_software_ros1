@@ -36,8 +36,8 @@ int main(){
 	printf("\n==================== QUATERNION ROTATION q3 = q2*q1==========================\n");
 	input_value( euler01 , 0 , 0 , PI/2 );
 	input_value( euler02 , 0 , 0 , PI );
-	quaternion01.setEulerZYX( euler01[2] , euler01[1] , euler01[0] );
-	quaternion02.setEulerZYX( euler02[2] , euler02[1] , euler02[0] );
+	quaternion01.setRPY( euler01[2] , euler01[1] , euler01[0] );
+	quaternion02.setRPY( euler02[2] , euler02[1] , euler02[0] );
 	quaternion03 = quaternion02 * quaternion01;
 	tf::Matrix3x3(quaternion03).getRPY( euler03[0] , euler03[1] , euler03[2]);	
 	print_euler( euler01 , euler02 , euler03 );
@@ -45,8 +45,8 @@ int main(){
 	printf("\n\n set 2\n");
 	input_value( euler01 , 0 , 0 , 1 );
 	input_value( euler02 , 0 , 0 , 1.5 );
-	quaternion01.setEulerZYX( euler01[2] , euler01[1] , euler01[0] );
-	quaternion02.setEulerZYX( euler02[2] , euler02[1] , euler02[0] );
+	quaternion01.setRPY( euler01[2] , euler01[1] , euler01[0] );
+	quaternion02.setRPY( euler02[2] , euler02[1] , euler02[0] );
 	quaternion03 = quaternion02 * quaternion01;
 	tf::Matrix3x3(quaternion03).getRPY( euler03[0] , euler03[1] , euler03[2]);	
 	print_euler( euler01 , euler02 , euler03 );
@@ -54,8 +54,8 @@ int main(){
 	printf("\n\n set 3\n");
 	input_value( euler01 , 0 , 0 , 1 );
 	input_value( euler02 , PI , 0 , 0 );
-	quaternion01.setEulerZYX( euler01[2] , euler01[1] , euler01[0] );
-	quaternion02.setEulerZYX( euler02[2] , euler02[1] , euler02[0] );
+	quaternion01.setRPY( euler01[2] , euler01[1] , euler01[0] );
+	quaternion02.setRPY( euler02[2] , euler02[1] , euler02[0] );
 	quaternion03 = quaternion02 * quaternion01;
 	tf::Matrix3x3(quaternion03).getRPY( euler03[0] , euler03[1] , euler03[2]);	
 	print_euler( euler01 , euler02 , euler03 );
@@ -63,8 +63,8 @@ int main(){
 	printf("\n\n set 4\n");
 	input_value( euler01 , 3.14 , 0 , 1 );
 	input_value( euler02 , 0 , 0 , 1.5 );
-	quaternion01.setEulerZYX( euler01[2] , euler01[1] , euler01[0] );
-	quaternion02.setEulerZYX( euler02[2] , euler02[1] , euler02[0] );
+	quaternion01.setRPY( euler01[2] , euler01[1] , euler01[0] );
+	quaternion02.setRPY( euler02[2] , euler02[1] , euler02[0] );
 	quaternion03 = quaternion02 * quaternion01;
 	tf::Matrix3x3(quaternion03).getRPY( euler03[0] , euler03[1] , euler03[2]);	
 	print_euler( euler01 , euler02 , euler03 );
@@ -72,8 +72,8 @@ int main(){
 	printf("\n============= QUATERNION DIFFERENTIAL q3*q1 = q2 know q2 and q1 =============\n");
 	input_value( euler01 , 0 , 0 , 0 );
 	input_value( euler02 , 0.2 , 0.1 , 2.3 );
-	quaternion01.setEulerZYX( euler01[2] , euler01[1] , euler01[0] );
-	quaternion02.setEulerZYX( euler02[2] , euler02[1] , euler02[0] );
+	quaternion01.setRPY( euler01[2] , euler01[1] , euler01[0] );
+	quaternion02.setRPY( euler02[2] , euler02[1] , euler02[0] );
 	quaternion03 = quaternion02 * quaternion01.inverse();
 	tf::Matrix3x3(quaternion03).getRPY( euler03[0] , euler03[1] , euler03[2]);	
 	print_euler( euler01 , euler02 , euler03 );

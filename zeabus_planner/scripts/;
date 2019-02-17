@@ -114,11 +114,7 @@ class MissionGate:
 				else:
 					self.echo("Warning Don't have this condition")
 
-		def step_02( self ):
-			while( not rospy.is_shutdown() ):
-				self.sleep( 0.1 )
-				self.vision.analysis_all( "gate" , "sevinar" , 5 )
-				self.vision.echo_data()
+		def step_02( self )
 
 #===============> STANDARD FUNCTION
 	def survey_mode(	self			, vision		, task		, request	, 

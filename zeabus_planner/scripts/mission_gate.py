@@ -79,6 +79,7 @@ class MissionGate:
 		self.echo("Let play")
 		self.step_01()
 		self.step_02()
+		self.echo("Finsh")
 
 	def step_01( self ):
 		while( not rospy.is_shutdown() ):
@@ -114,11 +115,22 @@ class MissionGate:
 				else:
 					self.echo("Warning Don't have this condition")
 
-		def step_02( self ):
-			while( not rospy.is_shutdown() ):
-				self.sleep( 0.1 )
-				self.vision.analysis_all( "gate" , "sevinar" , 5 )
-				self.vision.echo_data()
+	def step_02( self ):
+		count_have_object = 0
+		while( not rospy.is_shutdown() ):
+			self.sleep( 0.1 )
+			self.vision.analysis_all( "gate" , "sevinar" , 5 )
+			self.vision.echo_data()
+			if( self.vision.have_object() ):
+				count_have_object += 1
+				if( count_have_object == 3 ):
+					self.ch.reset_velocity( 'xy' )
+					self.ch.fix_yaw( self.start_yaw - (math.pi / 2) )
+					self.ch.reset_target( 'xy' )
+					break
+			else:
+				count_have_object = 0
+			self.echo("count_have_object is " + str(count_have_object) )
 
 #===============> STANDARD FUNCTION
 	def survey_mode(	self			, vision		, task		, request	, 

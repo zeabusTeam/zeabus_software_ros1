@@ -58,7 +58,7 @@ class MissionGate:
 				count_ok = 0
 			if( count_ok == 5 ):
 				break
-			self.echo( "Wait Depth counr is " + str( count_ok ) )
+			self.echo( "Wait Depth count is " + str( count_ok ) )
 		
 		count_ok = 0
 		self.echo( "Waiting YAW are OK")
@@ -70,18 +70,18 @@ class MissionGate:
 				count_ok = 0
 			if( count_ok == 5 ):
 				break
-			self.echo( "Wait Yaw counr is " + str( count_ok ) )
-		
+			self.echo( "Wait Yaw count is " + str( count_ok ) )
+
 	def survey_mode(	self			, vision		, task		, request	, 
 						first_forward	, first_survey	, forward	, survey	):
-		find_object = False
+		self.find_object = False
 		time_first_forward = True
 		time_first_survey = True
 		# Big Loop make survey still find object
 		self.echo(	"Data for SURVEY TASK : " + task + " REQUEST : " + request + 
 					" And distance are " + str( first_forward ) + " : " + str( first_survey) +
 					" : " + str( forward ) + " : " + str( survey ) )
-		while( not rospy.is_shutdown() and not find_object ):
+		while( not rospy.is_shutdown() and not self.find ):
 			# This for go forward
 			if( time_first_forward ):
 				distance = first_forward
@@ -91,7 +91,7 @@ class MissionGate:
 			self.echo( "We will move forward and search distance is " + str( distance ) )
 			self.ch.save_position()
 			self.ch.velocity_xy( math.copysign( 0.2 , distance ) , 0 )
-			while( not rospy.is_shutdown() and not find_object ):
+			while( not rospy.is_shutdown() and not self.find_object ):
 				self.sleep( 0.1 )
 				current_distance = self.ch.calculate_distance()
 				self.echo( "SURVEY DISTANCE IS " + str( current_distance ) )
@@ -99,10 +99,10 @@ class MissionGate:
 					break
 				vision.analysis_all( task , request , 5 )
 				self.echo( vision.echo_data() )
-				find_object = vision.have_object()
+				self.find_object = vision.have_object()
 
 			self.ch.reset_velocity( "xy" )
-			if( find_object ): break
+			if( self.find_object ): break
 			count_ok = 0 
 			while(not rospy.is_shutdown() ):
 				self.sleep( 0.1 )	
@@ -123,7 +123,7 @@ class MissionGate:
 			self.echo( "We will move survey and search distance is " + str( distance ) )
 			self.ch.save_position()
 			self.ch.velocity_xy( 0 , math.copysign( 0.2 , distance )  )
-			while( not rospy.is_shutdown() and not find_object ):
+			while( not rospy.is_shutdown() and not self.find_object ):
 				self.sleep( 0.1 )
 				current_distance = self.ch.calculate_distance()
 				self.echo( "SURVEY DISTANCE IS " + str( current_distance ) )
@@ -131,10 +131,10 @@ class MissionGate:
 					break
 				vision.analysis_all( task , request , 5 )
 				self.echo( vision.echo_data() )
-				find_object = vision.have_object()
+				self.find_object = vision.have_object()
 
 			self.ch.reset_velocity("xy")
-			if( find_object ): break
+			if( self.find_object ): break
 			count_ok = 0 
 			while(not rospy.is_shutdown() ):
 				self.sleep( 0.1 )	
@@ -149,32 +149,51 @@ class MissionGate:
 #===============> This for forward step three
 			distance = forward
 			self.echo( "We will move forward and search distance is " + str( distance ) )
-			self.auv.survey( 'x' , distance , 0.3 )
-			count_ok = 0 
-			while( not rospy.is_shutdown() and not find_object ):
+			self.ch.save_position()
+			self.ch.velocity_xy( 0.2 , 0 )
+			while( not rospy.is_shutdown() and not self.find_object ):
 				self.sleep( 0.1 )
-				if( self.auv.check_state( 'xy' , 0.06 ) ):
-					count_ok += 1
-					if( count_ok > 5 ):
-						break
-				else:
-					count_ok = 0
+				if( current_distance > distance ):
+					break
 				vision.analysis_all( task , request , 5 )
 				self.echo( vision.echo_data() )
-				find_object = vision.have_object()
+				self.find_object = vision.have_object()
+
+			self.ch.reset_velocity("xy")
+			if( self.find_object ): break
+			count_ok = 0 
+			while(not rospy.is_shutdown() ):
+				self.sleep( 0.1 )	
+				if( self.auv.check_position( "xy" , 0.1 ) ):
+					count_ok += 1
+				else:
+					count_ok = 0
+				if( count_ok == 5 ):
+					break
+				self.echo( "Wait distance counr is " + str( count_ok ) )
 #===============> This for survey round four
+
 			distance = math.copysign( survey , first_survey * -1 )
 			self.echo( "We will move survey and search distance is " + str( distance ) ) 
-			self.auv.survey( 'y' , distance , 0.4 )
-			count_ok = 0
-			while( not rospy.is_shutdown() and not find_object ):
+			self.ch.save_position()
+			self.ch.velocity_xy( 0.2 , 0 )
+			while( not rospy.is_shutdown() and not self.find_object ):
 				self.sleep( 0.1 )
+				current_distance = self.ch.calculate_distance()
+				self.echo( "SURVEY DISTANCE IS " + str( current_distance ) )
 				if( self.auv.check_state( 'xy' , 0.06) ):
-					count_ok += 1
-					if( count_ok > 5 ):
-						break
-				else:
-					count_ok = 0
+					break
 				vision.analysis_all( task , request , 5 )
 				self.echo( vision.echo_data() )
-				find_object = vision.have_object()
+				self.find_object = vision.have_object()
+			self.ch.reset_velocity("xy")
+			if( self.find_object ): break
+			count_ok = 0 
+			while(not rospy.is_shutdown() ):
+				self.sleep( 0.1 )	
+				if( self.auv.check_position( "xy" , 0.1 ) ):
+					count_ok += 1
+				else:
+					count_ok = 0
+				if( count_ok == 5 ):
+					break

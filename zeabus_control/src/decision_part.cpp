@@ -27,8 +27,9 @@ namespace control{
 	double velocity_xy( double error ){
 		double temp = fabs( error );
 		if( temp < 0.05 ) return 0;
-		else if( temp < 0.25 ) return copysign( 0.1 , error );
-		else if( temp < 1 ) return copysign(0.5 , error );
+		else if( temp < 0.3 ) return copysign( 0.1 , error );
+		else if( temp < 0.6 ) return copysign( 0.2 , error );
+		else if( temp < 1 ) return copysign( 0.5 , error );
 		else return copysign( 1 , error );
 	}
 

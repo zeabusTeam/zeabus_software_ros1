@@ -54,7 +54,7 @@ int main( int argv , char** argc ){
 			, &listen_switch);
 
 	ros::ServiceClient connect_control = 
-			nh.serviceClient< zeabus_library::TwoBool >("control/open");
+			nh.serviceClient< zeabus_library::TwoBool >("/control/active");
 
 	zeabus_library::TwoBool srv_connet_control;
 
@@ -73,6 +73,7 @@ int main( int argv , char** argc ){
 			if( switch_data.data ) if( count_switch < limit_count_switch ) count_switch++;
 			else if( count_switch > 0 ) count_switch--;
 		}
+
 		//===============> Control Back control
 		if( status_back_control ){ // back control are now open
 			if( count_switch == 0 ){

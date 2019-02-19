@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.2
+	version				:	1.2.0
 	status				:	Production
 
 	Namespace			:	-
@@ -30,6 +30,8 @@
 #include	<geometry_msgs/TwistStamped.h>
 
 #include	<zeabus_library/tf_handle/tf_quaternion.h>
+
+#include	<zeabus_library/service/service_two_bool.h>
 
 #include	<zeabus_library/subscriber/SubTwistStamped.h>
 #include	<zeabus_library/subscriber/SubOdometry.h>
@@ -87,6 +89,14 @@ int main( int argv , char** argc ){
 							, &zeabus_library::subscriber::SubTwistStamped::callback
 							, &listen_target );
 
+	zeabus_library::service::ServiceTwoBool service_two_bool; 
+	bool target_active = 0, current_active = 0;
+	service_two_bool.register_bool( &target_active );
+
+	ros::ServiceServer ser_active_control = nh.advertiseService("/control/active"
+			, &zeabus_library::service::ServiceTwoBool::callback
+			, &service_two_bool );
+
 //===============> DYNAMIC_RECONFIGURE SYSTEM & LIBRARY FOR SAVE & LOAD
 	dynamic_reconfigure::Server< zeabus_control::pid_Config > server;
 	dynamic_reconfigure::Server< zeabus_control::pid_Config >::CallbackType function;
@@ -106,6 +116,7 @@ int main( int argv , char** argc ){
 		pid[run].limit_pid( limit_pid[run] + add_max_pid[run] );
 	}
 
+//===============> LOOP OPERATING ROS SYSTEM
 	while( nh.ok() ){
 		rate.sleep();
 		ros::spinOnce();
@@ -117,6 +128,20 @@ int main( int argv , char** argc ){
 			tune_value.dump();
 			reset_constant( pid );	
 			want_save_constant = false;
+		}
+		if( current_active ){ // now active mode
+			if( ! target_active ){ // data want to close activate
+				zeabus_library::bold_red("<========== NON ACTIVE CONTROL ==========>");
+				current_active = false;
+			}
+		}
+		else{
+			if( target_active ){
+				zeabus_library::bold_green("<========== ACTIVE CONTROL ==========>");
+				current_active = true;
+				reset_constant( pid ); 
+			}
+			else continue;
 		}
 
 		diff_twist.twist.linear.x = 

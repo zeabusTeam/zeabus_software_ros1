@@ -1,5 +1,5 @@
 /*
-	File name			:	service_three_bool.h		
+	File name			:	service_two_bool.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2019 , FEB 19
 	Date last modified	:	2019 , ??? ??
@@ -20,8 +20,8 @@
 
 #include	<zeabus_library/TwoBool.h>
 
-#ifndef _ZEABUS_LIBRARY_SERVICE_THREE_BOOL_H_
-#define _ZEABUS_LIBRARY_SERVICE_THREE_BOOL_H_
+#ifndef _ZEABUS_LIBRARY_SERVICE_TWO_BOOL_H_
+#define _ZEABUS_LIBRARY_SERVICE_TWO_BOOL_H_
 
 namespace zeabus_library{
 

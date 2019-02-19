@@ -14,9 +14,9 @@
 */
 //===============>
 
-#include	<zeabbus_library/service/service_two_bool.h>
+#include	<zeabus_library/service/service_two_bool.h>
 
-namespace zeabbus_library{
+namespace zeabus_library{
 
 namespace service{
 
@@ -30,7 +30,7 @@ namespace service{
 
 	bool ServiceTwoBool::callback( zeabus_library::TwoBool::Request& request 
 			, zeabus_library::TwoBool::Response& response ){
-		response.data = *(this->data);
+		response.result = *(this->data);
 		*(this->data) = request.data;
 		return true;
 	}

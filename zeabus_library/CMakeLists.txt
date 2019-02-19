@@ -100,9 +100,6 @@ set( zeabus_library_control_sources
 	src/control/service_three_odometry.cpp
 )
 
-set( zeabus_library_service_sources
-	src/service/service/service_two_bool.cpp
-)
 
 set( zeabus_library_rotation_sources
 	src/rotation/quaternion.cpp
@@ -126,6 +123,10 @@ set( zeabus_library_subscriber_sources
 	src/subscriber/SubOdometry.cpp
 	src/subscriber/SubTwistStamped.cpp
 	src/subscriber/SubTwistWithCovarianceStamped.cpp
+)
+
+set( zeabus_library_service_sources
+	src/service/service_two_bool.cpp
 )
 
 set( zeabus_library_sources
@@ -153,8 +154,8 @@ add_library( zeabus_library			STATIC		${zeabus_library_sources}
 												${zeabus_library_control_sources}
 												${zeabus_library_localize_sources}
 												${zeabus_library_rotation_sources} 
-												${zeabus_library_subscriber_sources} 
-												${zeabus_library_service_sources}
+												${zeabus_library_subscriber_sources}
+												${zeabus_library_service_sources} 
 )
 
 add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}

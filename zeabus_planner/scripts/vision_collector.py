@@ -190,10 +190,10 @@ class VisionCollector:
 		self.data['cy_2']		= temporary.cy2
 		self.data['area']		= temporary.area
 
-	def gate_center_x( self ):
+	def qualification_center_x( self ):
 		return ( self.result['cx_2'] + self.result['cx_1'] ) / 2
 
-	def gate_center_y( self ):
+	def qualification_center_y( self ):
 		return ( self.result['cy_2'] + self.result['cy_1'] ) / 2
 
 ##================================> SERVICE VISION FLARE <=======================================

@@ -103,6 +103,7 @@ class MissionQualification:
 		return True
 
 if __name__=="__main__":
+	rospy.init_node("mission_qualification" , anonymous=False)
 	mission_qualify = MissionQualification()
 	rospy.spin()
 						

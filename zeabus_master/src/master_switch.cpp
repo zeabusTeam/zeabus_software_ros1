@@ -35,7 +35,7 @@ int main( int argv , char** argc ){
 	ros::NodeHandle ph("~");
 
 //===============> PARAMETER PART
-	std::string switch_topic = "planner/switch";
+	std::string switch_topic = "planner_switch";
 	int frequency = 60;
 	int limit_count_switch = 50;
 
@@ -70,8 +70,12 @@ int main( int argv , char** argc ){
 		rate.sleep();
 		ros::spinOnce();
 		if( received ){
-			if( switch_data.data ) if( count_switch < limit_count_switch ) count_switch++;
-			else if( count_switch > 0 ) count_switch--;
+			if( switch_data.data ){ 
+				if( count_switch < limit_count_switch ) count_switch++;
+			}
+			else{ 
+				if( count_switch > 0 ) count_switch--;
+			}
 		}
 
 		//===============> Control Back control

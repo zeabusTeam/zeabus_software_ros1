@@ -41,7 +41,7 @@
 int main( int argv , char** argc ){
 
 	double ok_error[6] = { 0.01 , 0.01 , 0.1 , 0.02 , 0.02 , 0.02};
-	double limit_pid[6] = { 1 , 1 , 1.5 , 1 , 1 , 1};
+	double limit_pid[6] = { 0.5 , 0.5 , 1.5 , 1 , 1 , 1};
 	double add_max_pid[6] = { 0.5 , 0.5 , 1 , 0.2 , 0.2 , 0.2 };
 
 	ros::init( argv , argc , "back_control");

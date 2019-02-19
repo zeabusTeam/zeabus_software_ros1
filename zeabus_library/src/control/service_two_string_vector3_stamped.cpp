@@ -73,7 +73,6 @@ namespace control{
 			if( fabs( this->temp_double[2] ) < request.adding.z ) response.result = true;
 			else response.result = false;
 		}
-			
 	}
 
 	bool ServiceTwoStringVector3Stamped::callback_reset_target(

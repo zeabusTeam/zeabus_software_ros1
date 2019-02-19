@@ -177,7 +177,7 @@ class VisionCollector:
 		self.individual_data	= self.qualification_data
 		self.center_x			= self.qualification_center_x
 		self.center_y			= self.qualification_center_y
-		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area' , 'pos' ]
+		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area'  ]
 		self.not_sum = []
 		self.request_data = rospy.ServiceProxy( "/vision/qualification" , vision_srv_gate )
 	
@@ -189,15 +189,12 @@ class VisionCollector:
 		self.data['cx_2']		= temporary.cx2
 		self.data['cy_2']		= temporary.cy2
 		self.data['area']		= temporary.area
-		self.data['pos']		= temporary.pos
 
 	def gate_center_x( self ):
 		return ( self.result['cx_2'] + self.result['cx_1'] ) / 2
 
 	def gate_center_y( self ):
 		return ( self.result['cy_2'] + self.result['cy_1'] ) / 2
-
-	 
 
 ##================================> SERVICE VISION FLARE <=======================================
 	def flare_set_up( self ):

@@ -38,6 +38,7 @@ add_message_files(
 
 add_service_files(
 	FILES
+	TwoBool.srv
 	ThreeOdometry.srv
 	OneVector3Stamped.srv
 	TwoStringVector3Stamped.srv
@@ -99,6 +100,10 @@ set( zeabus_library_control_sources
 	src/control/service_three_odometry.cpp
 )
 
+set( zeabus_library_service_sources
+	src/service/service/service_two_bool.cpp
+)
+
 set( zeabus_library_rotation_sources
 	src/rotation/quaternion.cpp
 	src/rotation/rotation_handle.cpp
@@ -148,7 +153,10 @@ add_library( zeabus_library			STATIC		${zeabus_library_sources}
 												${zeabus_library_control_sources}
 												${zeabus_library_localize_sources}
 												${zeabus_library_rotation_sources} 
-												${zeabus_library_subscriber_sources} )
+												${zeabus_library_subscriber_sources} 
+												${zeabus_library_service_sources}
+)
+
 add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}
 												${catkin_EXPORTED_TARGETS} )
 target_link_libraries( zeabus_library			${catkin_LIBRARIES} ${Boost_LIBRARIES})

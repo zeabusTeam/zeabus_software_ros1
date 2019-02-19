@@ -59,28 +59,28 @@ class ControlAUV:
 
 	def calculate_distance( self ):
 		self.collect_target()
-		return math.sqrt( math.pow( save_position[0] - collect_position[0] , 2 ) + 
-				math.pow( save_position[1] - collect_position[1] , 2 ) ) 
+		return math.sqrt( math.pow( self.save_state[0] - self.collect_state[0] , 2 ) + 
+				math.pow( self.save_state[1] - self.collect_state[1] , 2 ) ) 
 
 	def relative_xy( self , x , y ):
 		self.stamp_time()
 		self.vector.x = x
 		self.vector.y = y
-		result = self.cl_relative_xy( self.header , self.vector )
+		result = self.cl_relative_xy( self.header , self.vector ).result
 		self.clear_vector()
 		return result
 	
 	def relative_z( self , z ):
 		self.stamp_time()
 		self.vector.z = z
-		result = self.cl_relative_z( self.header , self.vector )
+		result = self.cl_relative_z( self.header , self.vector ).result
 		self.clear_vector()
 		return result
 
 	def relative_yaw( self , yaw ):
 		self.stamp_time()
 		self.vector.z = yaw
-		result = self.cl_relative_yaw( self.header , self.vector )
+		result = self.cl_relative_yaw( self.header , self.vector ).result
 		self.clear_vector()
 		return result
 
@@ -88,58 +88,58 @@ class ControlAUV:
 		self.stamp_time()
 		self.vector.x = x
 		self.vector.y = y
-		result = self.cl_velocity_xy( self.header , self.vector )
+		result = self.cl_velocity_xy( self.header , self.vector ).result
 		self.clear_vector()
 		return result
 
 	def velocity_z( self , z ):
 		self.stamp_time()
 		self.vector.z = z
-		result = self.cl_velocity_z( self.header , self.vector )
+		result = self.cl_velocity_z( self.header , self.vector ).result
 		self.clear_vector()
 		return result
 
 	def velocity_yaw( self , yaw ):
 		self.stamp_time()
 		self.vector.z = yaw
-		result = self.cl_velocity_yaw( self.header , self.vector )
+		result = self.cl_velocity_yaw( self.header , self.vector ).result
 		self.clear_vector()
 		return result
 
 	def fix_z( self , z ):
 		self.stamp_time()
 		self.vector.z = z
-		result = self.cl_velocity_z( self.header , self.vector )
+		result = self.cl_fix_z( self.header , self.vector ).result
 		self.clear_vector()
 		return result
 
 	def fix_yaw( self , yaw ):
 		self.stamp_time()
-		self.vector.z = z 
-		result = self.cl_velocity_z( self.header , self.vector )
+		self.vector.z = yaw 
+		result = self.cl_fix_yaw( self.header , self.vector ).result
 		self.clear_vector()
 		return result
 
 	def reset_target( self , data ):
 		self.stamp_time()
-		result = self.cl_reset_target( self.header , data , self.vector )
+		result = self.cl_reset_target( self.header , data , self.vector ).result
 		return result
 
 	def reset_velocity( self , data ):
 		self.stamp_time()
-		result = self.cl_reset_velocity( self.header , data , self.vector )
+		result = self.cl_reset_velocity( self.header , data , self.vector ).result
 		return result
 
 	def check_position( self , data , adding ):
 		self.stamp_time()
 		self.clear_vector( adding )
-		result = self.cl_check_position( self.header , data , self.clear_vector )
+		result = self.cl_check_position( self.header , data , self.vector ).result
 		self.clear_vector()
 		return result
 
 	def save_target( self ):
 		self.stamp_time()
-		result = self.cl_check_position( self.header ,  "target" )
+		result = self.cl_get_target( "target" ).data
 		self.save_state[0] = result.pose.pose.position.x
 		self.save_state[1] = result.pose.pose.position.y
 		self.save_state[2] = result.pose.pose.position.z
@@ -150,7 +150,7 @@ class ControlAUV:
 
 	def collect_target( self ):
 		self.stamp_time()
-		result = self.cl_check_position( self.header , "target" )
+		result = self.cl_get_target( "target" ).data
 		self.collect_state[0] = result.pose.pose.position.x
 		self.collect_state[1] = result.pose.pose.position.y
 		self.collect_state[2] = result.pose.pose.position.z
@@ -182,14 +182,15 @@ class ControlAUV:
 			self.twist_stamped.twist.angular.z = data_velocity['yaw']
 		else:
 			self.twist_stamped.twist.angular.z = 0
-		self.velocity_publisher.publish( self.twist_stamped.twist )
+		self.velocity_publisher.publish( self.twist_stamped )
 
 #===============> SET UP HEADER PART
 	def set_name( self , name ):
 		self.header.frame_id = name
 
 	def stamp_time( self ):
-		self.header.stamp = rospy.get_time()	
+#		self.header.stamp = rospy.get_time()	
+		None
 
 	def clear_vector( self , number = 0.0 ):
 		self.vector.x = number

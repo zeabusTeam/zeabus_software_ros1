@@ -41,18 +41,18 @@ class MissionGate:
 		self.data_pub.publish( String( message ) )
 
 #===============> SPECIFIC FUNCTION
-	def main_play( self , move_x , move_y ):
+	def main_play( self ):
 		self.echo( "==========> MISSION GATE START! ")
 
-		self.fix_z( -3.5 )
+		self.ch.fix_z( -3.5 )
 		self.ch.save_target()
-		self.start_yaw = self.ch.save_position[5]
+		self.start_yaw = self.ch.save_state[5]
 
 		count_ok = 0
 		self.echo( "Waiting Depth are OK")
 		while(not rospy.is_shutdown() ):
 			self.sleep( 0.1 )	
-			if( self.auv.check_position( "z" , 0.1 ) ):
+			if( self.ch.check_position( "z" , 0.1 ) ):
 				count_ok += 1
 			else:
 				count_ok = 0
@@ -64,7 +64,7 @@ class MissionGate:
 		self.echo( "Waiting YAW are OK")
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1 )
-			if( self.auv.check_position( "yaw" , 0.08 ) ):
+			if( self.ch.check_position( "yaw" , 0.08 ) ):
 				count_ok += 1
 			else:
 				count_ok = 0
@@ -88,49 +88,57 @@ class MissionGate:
 			self.vision.echo_data() # for print n_obj and center of x ,  y axis
 			if( self.vision.have_object() ):
 				count_unfound = 0
-				if( self.vision.result['pose'] == 0 ):
+				self.echo( self.vision.echo_data() )
+				if( self.vision.result['pos'] == 0 ):
 					if( abs( self.vision.center_x() ) < 0.1 ):
 						self.echo("Found Pos : 0 and Move Forward")
-						self.auv.velocity( {'x' : 0.2})
-						if( self.vision.area() > 0.7 ):
-							self.echo("Area are over let play direct and spin")
-							self.ch.velocity_xy( 1 , 0 )
-							self.sleep( 0.1 )
-							self.echo("I command to fix velocity for odom frame")
-							self.ch.relative_yaw( math.pi )
-							self.echo("I command to rotate pi radian")
-							break
-					elif( self.vision.center_x() < 0 )
+						self.ch.velocity( {'x' : 0.4})
+					elif( self.vision.center_x() < 0 ):
 						self.echo("Found Pos : 0 and Move Left")
-						self.auv.velocity( {'y' : 0.4})
-					elif( self.vision.center_x() > 0 )
+						self.ch.velocity( {'y' : 0.2})
+					elif( self.vision.center_x() > 0 ):
 						self.echo("Found Pos : 0 and Move right")
-						self.auv.velocity( {'y' : -0.4})
+						self.ch.velocity( {'y' : -0.2})
+					if( self.vision.area() > 0.7 ):
+						self.echo("Area are over let play direct")
+						self.ch.relative_xy( 5 , 0 )
+						self.echo("I command to relative xy")
+						break
 				elif( self.vision.result['pos'] == -1 ):
 					self.echo("Found Pos : -1 and Move Left")
-					self.auv.velocity( {'y' : 0.5} )
+					self.ch.velocity( {'y' : 0.3} )
+					if( self.vision.area() > 0.6 ):
+						self.sleep(0.2)
+						self.echo("Area are over let play direct")
+						self.ch.relative_xy( 5 , 2 )
+						self.echo("I command to relative xy")
+						break
 				elif( self.vision.result['pos'] == 1 ):
 					self.echo("Found Pos : 1 and Move right")
-					self.auv.velocity( {'y' : -0.5 } )
+					self.ch.velocity( {'y' : -0.3 } )
+					if( self.vision.area() > 0.6 ):
+						self.sleep(0.2)
+						self.echo("Area are over let play direct")
+						self.ch.relative_xy( 5 , -2 )
+						self.echo("I command to relative xy")
+						break
 				else:
 					self.echo("Warning Don't have this condition")
 
 	def step_02( self ):
-		count_have_object = 0
+		count_ok = 0
+		self.echo( "Waiting xy are OK in step 2")
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1 )
-			self.vision.analysis_all( "gate" , "sevinar" , 5 )
-			self.vision.echo_data()
-			if( self.vision.have_object() ):
-				count_have_object += 1
-				if( count_have_object == 3 ):
-					self.ch.reset_velocity( 'xy' )
-					self.ch.fix_yaw( self.start_yaw - (math.pi / 2) )
-					self.ch.reset_target( 'xy' )
-					break
+			if( self.ch.check_position( "xy" , 0.1 ) ):
+				count_ok += 1
 			else:
-				count_have_object = 0
-			self.echo("count_have_object is " + str(count_have_object) )
+				count_ok = 0
+			if( count_ok == 5 ):
+				break
+			self.echo( "Wait xy count is " + str( count_ok ) + " step 02" )
+		count_have_object = 0
+		self.ch.fix_z( -0.5 )
 
 #===============> STANDARD FUNCTION
 	def survey_mode(	self			, vision		, task		, request	, 
@@ -142,7 +150,7 @@ class MissionGate:
 		self.echo(	"Data for SURVEY TASK : " + task + " REQUEST : " + request + 
 					" And distance are " + str( first_forward ) + " : " + str( first_survey) +
 					" : " + str( forward ) + " : " + str( survey ) )
-		while( not rospy.is_shutdown() and not self.find ):
+		while( not rospy.is_shutdown() and not self.find_object ):
 			# This for go forward
 			if( time_first_forward ):
 				distance = first_forward
@@ -150,7 +158,7 @@ class MissionGate:
 			else:
 				distance = forward
 			self.echo( "We will move forward and search distance is " + str( distance ) )
-			self.ch.save_position()
+			self.ch.save_target()
 			self.ch.velocity_xy( math.copysign( 0.3 , distance ) , 0 )
 			while( not rospy.is_shutdown() and not self.find_object ):
 				self.sleep( 0.1 )
@@ -167,7 +175,7 @@ class MissionGate:
 			count_ok = 0 
 			while(not rospy.is_shutdown() ):
 				self.sleep( 0.1 )	
-				if( self.auv.check_position( "xy" , 0.1 ) ):
+				if( self.ch.check_position( "xy" , 0.1 ) ):
 					count_ok += 1
 				else:
 					count_ok = 0
@@ -182,7 +190,7 @@ class MissionGate:
 			else:
 				distance = math.copysign( survey , first_survey )
 			self.echo( "We will move survey and search distance is " + str( distance ) )
-			self.ch.save_position()
+			self.ch.save_target()
 			self.ch.velocity_xy( 0 , math.copysign( 0.3 , distance )  )
 			while( not rospy.is_shutdown() and not self.find_object ):
 				self.sleep( 0.1 )
@@ -199,7 +207,7 @@ class MissionGate:
 			count_ok = 0 
 			while(not rospy.is_shutdown() ):
 				self.sleep( 0.1 )	
-				if( self.auv.check_position( "xy" , 0.1 ) ):
+				if( self.ch.check_position( "xy" , 0.1 ) ):
 					count_ok += 1
 				else:
 					count_ok = 0
@@ -210,7 +218,7 @@ class MissionGate:
 #===============> This for forward step three
 			distance = forward
 			self.echo( "We will move forward and search distance is " + str( distance ) )
-			self.ch.save_position()
+			self.ch.save_target()
 			self.ch.velocity_xy( 0.2 , 0 )
 			while( not rospy.is_shutdown() and not self.find_object ):
 				self.sleep( 0.1 )
@@ -225,7 +233,7 @@ class MissionGate:
 			count_ok = 0 
 			while(not rospy.is_shutdown() ):
 				self.sleep( 0.1 )	
-				if( self.auv.check_position( "xy" , 0.1 ) ):
+				if( self.ch.check_position( "xy" , 0.1 ) ):
 					count_ok += 1
 				else:
 					count_ok = 0
@@ -236,13 +244,13 @@ class MissionGate:
 #===============> This for survey round four
 			distance = math.copysign( survey , first_survey * -1 )
 			self.echo( "We will move survey and search distance is " + str( distance ) ) 
-			self.ch.save_position()
+			self.ch.save_target()
 			self.ch.velocity_xy( 0.2 , 0 )
 			while( not rospy.is_shutdown() and not self.find_object ):
 				self.sleep( 0.1 )
 				current_distance = self.ch.calculate_distance()
 				self.echo( "SURVEY DISTANCE IS " + str( current_distance ) )
-				if( self.auv.check_state( 'xy' , 0.06) ):
+				if( self.ch.check_state( 'xy' , 0.06) ):
 					break
 				vision.analysis_all( task , request , 5 )
 				self.echo( vision.echo_data() )
@@ -252,9 +260,14 @@ class MissionGate:
 			count_ok = 0 
 			while(not rospy.is_shutdown() ):
 				self.sleep( 0.1 )	
-				if( self.auv.check_position( "xy" , 0.1 ) ):
+				if( self.ch.check_position( "xy" , 0.1 ) ):
 					count_ok += 1
 				else:
 					count_ok = 0
 				if( count_ok == 5 ):
 					break
+
+if __name__=="__main__":
+	rospy.init_node("mission_gate" , anonymous=False)
+	mission_gate = MissionGate()
+	mission_gate.main_play()

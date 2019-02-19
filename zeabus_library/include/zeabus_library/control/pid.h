@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.1.0
 	status				:	Product
 
 	Namespace			:	zeabus_library/control
@@ -37,6 +37,7 @@ namespace control{
 			void set_constant( double p , double i , double d );
 			void offset_i( double offset );
 			void limit_i( double limit );
+			void limit_pid( double limit );
 			
 			double calculate( double error );
 			void calculate( double error , double& result );
@@ -52,7 +53,8 @@ namespace control{
 			double period;
 			// value condition of i
 			double offset;
-			double limit;
+			double i_limit;
+			double pid_limit;
 			double sum;	
 			// value of pid
 			double previous_error;

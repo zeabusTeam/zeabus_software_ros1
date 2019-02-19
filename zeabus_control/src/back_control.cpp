@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.1
+	version				:	1.1.2
 	status				:	Production
 
 	Namespace			:	-
@@ -40,6 +40,7 @@ int main( int argv , char** argc ){
 
 	double ok_error[6] = { 0.01 , 0.01 , 0.1 , 0.02 , 0.02 , 0.02};
 	double limit_pid[6] = { 1 , 1 , 1.5 , 1 , 1 , 1};
+	double add_max_pid[6] = { 0.5 , 0.5 , 1 , 0.2 , 0.2 , 0.2 };
 
 	ros::init( argv , argc , "back_control");
 
@@ -102,7 +103,7 @@ int main( int argv , char** argc ){
 	for( int run = 0 ; run < 6 ; run++ ){
 		pid[run].limit_i( limit_pid[run] );
 		pid[run].set_constant( 0 , 0 , 0 );
-		pid[run].offset_i(0);
+		pid[run].limit_pid( limit_pid[run] + add_max_pid[run] );
 	}
 
 	while( nh.ok() ){

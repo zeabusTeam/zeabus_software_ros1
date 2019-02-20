@@ -53,12 +53,17 @@ int main( int argv , char** argc ){
 	std::string state_topic;
 	std::string target_topic;
 	std::string output_topic;
+	bool target_active; 
+	bool current_active;
+	current_active = 0;
 	int frequency;
 
 	ph.param< std::string >("state_topic" , state_topic , "/localize/state" );
 	ph.param< std::string >("target_topic" , target_topic , "/control/twist");
 	ph.param< std::string >("output_topic" , output_topic , "/control/force");  	
 	ph.param< int >("frequency" , frequency , 40 );
+	ph.param< bool >("start_control" , current_active , false);
+	target_active = current_active;
 
 //===============> SETUP VARIABLE & ROS SYSTEM
 
@@ -90,7 +95,6 @@ int main( int argv , char** argc ){
 							, &listen_target );
 
 	zeabus_library::service::ServiceTwoBool service_two_bool; 
-	bool target_active = 0, current_active = 0;
 	service_two_bool.register_bool( &target_active );
 
 	ros::ServiceServer ser_active_control = nh.advertiseService("/control/active"
@@ -135,13 +139,15 @@ int main( int argv , char** argc ){
 				current_active = false;
 			}
 		}
-		else{
-			if( target_active ){
+		else{ // now non active mode
+			if( target_active ){ // data want to activate control
 				zeabus_library::bold_green("<========== ACTIVE CONTROL ==========>");
 				current_active = true;
 				reset_constant( pid ); 
 			}
-			else continue;
+			else{ 
+				continue;
+			}
 		}
 
 		diff_twist.twist.linear.x = 

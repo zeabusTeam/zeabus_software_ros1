@@ -66,21 +66,33 @@ class ControlAUV:
 		self.stamp_time()
 		self.vector.x = x
 		self.vector.y = y
-		result = self.cl_relative_xy( self.header , self.vector ).result
+        try:
+            print( "Sending relative_xy x : y is " + str(x) + "," + str(y) )
+		    result = self.cl_relative_xy( self.header , self.vector ).result
+		except rospy.ServiceException , error :
+			print("Service relative_xy line 73 error :\n\t" + error )
 		self.clear_vector()
 		return result
 	
 	def relative_z( self , z ):
 		self.stamp_time()
 		self.vector.z = z
-		result = self.cl_relative_z( self.header , self.vector ).result
+        try:
+            print( "Sending relative_z : " + str(z) )
+            result = self.cl_relative_z( self.header , self.vector ).result
+        except rospy.ServiceException , error :
+            print("Service relative_z line 84 error :\n\t" + error )
 		self.clear_vector()
 		return result
 
 	def relative_yaw( self , yaw ):
 		self.stamp_time()
 		self.vector.z = yaw
-		result = self.cl_relative_yaw( self.header , self.vector ).result
+        try:
+            print( "Sending relative_yaw : " + str(yaw))
+		    result = self.cl_relative_yaw( self.header , self.vector ).result
+        except rospy.ServiceException , error :
+            print("Service relative_yaw line 95 error :\n\t" + error )
 		self.clear_vector()
 		return result
 
@@ -88,58 +100,94 @@ class ControlAUV:
 		self.stamp_time()
 		self.vector.x = x
 		self.vector.y = y
-		result = self.cl_velocity_xy( self.header , self.vector ).result
+        try:
+            print( "Sending velocity_xy x : y is " + str(x) + "," + str(y) )
+		    result = self.cl_velocity_xy( self.header , self.vector ).result
+        except rospy.ServiceException , error :
+            print("Service velocity_xy line 107 error :\n\t" + error )
 		self.clear_vector()
 		return result
 
 	def velocity_z( self , z ):
 		self.stamp_time()
 		self.vector.z = z
-		result = self.cl_velocity_z( self.header , self.vector ).result
+        try:
+            print( "Sending velocity_z z is " + str(z) )
+    		result = self.cl_velocity_z( self.header , self.vector ).result
+        except rospy.ServiceException , error L
+            print( "Service velocity_z line 108 error :\n\t" + error )
 		self.clear_vector()
 		return result
 
 	def velocity_yaw( self , yaw ):
 		self.stamp_time()
 		self.vector.z = yaw
-		result = self.cl_velocity_yaw( self.header , self.vector ).result
+        try:
+            print( "Sending velocity_yaw is " + str(yaw) )
+    		result = self.cl_velocity_yaw( self.header , self.vector ).result
+        except rospy.ServiceException , error L
+            print( "Service velocity_yaw line 129 error :\n\t" + error )
 		self.clear_vector()
 		return result
 
 	def fix_z( self , z ):
 		self.stamp_time()
 		self.vector.z = z
-		result = self.cl_fix_z( self.header , self.vector ).result
+        try:
+            print( "Sending fix_z is " + str(z) )
+    		result = self.cl_fix_z( self.header , self.vector ).result
+        except rospy.ServiceException , error L
+            print( "Service fix_z line 141 error :\n\t" + error )
 		self.clear_vector()
 		return result
 
 	def fix_yaw( self , yaw ):
 		self.stamp_time()
 		self.vector.z = yaw 
-		result = self.cl_fix_yaw( self.header , self.vector ).result
+        try:
+            print( "Sending fix_yaw is " + str(yaw) )
+    		result = self.cl_fix_yaw( self.header , self.vector ).result
+        except rospy.ServiceException , error L
+            print( "Service fix_yaw line 151 error :\n\t" + error )
 		self.clear_vector()
 		return result
 
 	def reset_target( self , data ):
 		self.stamp_time()
-		result = self.cl_reset_target( self.header , data , self.vector ).result
+        try:
+            print( "Sending reset_target is " + data )
+    		result = self.cl_reset_target( self.header , data , self.vector ).result
+        except rospy.ServiceException , error L
+            print( "Service reset_target line 161 error :\n\t" + error )
 		return result
 
 	def reset_velocity( self , data ):
 		self.stamp_time()
-		result = self.cl_reset_velocity( self.header , data , self.vector ).result
+        try:
+            print( "Sending reset_velocity is " + data )
+    		result = self.cl_reset_velocity( self.header , data , self.vector ).result
+        except rospy.ServiceException , error L
+            print( "Service reset_velocity line 170 error :\n\t" + error )
 		return result
 
 	def check_position( self , data , adding ):
 		self.stamp_time()
 		self.clear_vector( adding )
-		result = self.cl_check_position( self.header , data , self.vector ).result
+        try:
+            print( "Sending check_position data : adding is " + data + " : " + str( adding) )
+    		result = self.cl_check_position( self.header , data , self.vector ).result
+        except rospy.ServiceException , error L
+            print( "Service check_position line 180 error :\n\t" + error )
 		self.clear_vector()
 		return result
 
 	def save_target( self ):
 		self.stamp_time()
-		result = self.cl_get_target( "target" ).data
+        try:
+            print( "Sending get_target" )
+    		result = self.cl_get_target( "target" ).data
+        except rospy.ServiceException , error L
+            print( "Service get_target line 190 error :\n\t" + error )
 		self.save_state[0] = result.pose.pose.position.x
 		self.save_state[1] = result.pose.pose.position.y
 		self.save_state[2] = result.pose.pose.position.z
@@ -150,7 +198,11 @@ class ControlAUV:
 
 	def collect_target( self ):
 		self.stamp_time()
-		result = self.cl_get_target( "target" ).data
+        try:
+            print( "Sending get_target" )
+    		result = self.cl_get_target( "target" ).data
+        except rospy.ServiceException , error L
+            print( "Service get_target line 205 error :\n\t" + error )
 		self.collect_state[0] = result.pose.pose.position.x
 		self.collect_state[1] = result.pose.pose.position.y
 		self.collect_state[2] = result.pose.pose.position.z

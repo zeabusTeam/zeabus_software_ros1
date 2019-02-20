@@ -31,9 +31,7 @@
 
 #include	<zeabus_library/tf_handle/tf_quaternion.h>
 
-#include	<zeabus_library/control/service_one_vector3_stamped.h>
-#include	<zeabus_library/control/service_two_string_vector3_stamped.h>
-#include	<zeabus_library/control/service_three_odometry.h>
+#include	<zeabus_library/control/all_service.h>
 
 #include	"decision_part.cpp"
 

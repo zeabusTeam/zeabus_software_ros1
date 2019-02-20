@@ -31,7 +31,7 @@
 
 #include	<zeabus_library/tf_handle/tf_quaternion.h>
 
-#include	<zeabus_library/service/service_two_bool.h>
+#include	<zeabus_library/service/ServiceTwoBool.h>
 
 #include	<zeabus_library/subscriber/SubTwistStamped.h>
 #include	<zeabus_library/subscriber/SubOdometry.h>

@@ -1,5 +1,5 @@
 /*
-	File name			:	service_two_bool.cpp		
+	File name			:	ServiceTwoBool.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , FEB 19
 	Date last modified	:	2018 , FEB ??
@@ -14,7 +14,7 @@
 */
 //===============>
 
-#include	<zeabus_library/service/service_two_bool.h>
+#include	<zeabus_library/service/ServiceTwoBool.h>
 
 namespace zeabus_library{
 

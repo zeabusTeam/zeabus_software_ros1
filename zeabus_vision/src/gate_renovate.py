@@ -133,7 +133,8 @@ def find_pipe(binary, align):
 
     if len(result) <= number_of_object:
         return result, len(result)
-    
+
+    # find closet
     closest_pair = []
     min_dist = 2000
     for i in range(len(result)):
@@ -143,10 +144,10 @@ def find_pipe(binary, align):
             if dist_x >= 50 and dist_y < min_dist:
                 min_dist = dist_y
                 closest_pair = [result[i], result[j]]
+
     if closest_pair == []:
         return result[:1], 1
-    else:
-        return closest_pair, 2
+    return closest_pair, 2
 
 
 def find_gate():

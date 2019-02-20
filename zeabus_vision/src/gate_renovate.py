@@ -63,9 +63,7 @@ def message(state=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
 
 def what_align(cnt):
     x, y, w, h = cv.boundingRect(cnt)
-    if w > h:
-        return 'h'
-    return 'v'
+    return 'h' if w > h else 'v'
 
 
 def is_pipe(cnt, percent):

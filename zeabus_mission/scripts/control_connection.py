@@ -61,6 +61,50 @@ class ControlConnection:
 
 		self.cl_get_state		= rospy.ServiceProxy("/control/get_target" , ThreeOdometry )
 
+#===============> SERVICE OF ONEVECTOR3STAMPED
+	def velocity_xy( self , x , y ):
+		self.clear_vector()
+		self.vector.x = x
+		self.vector.y = y
+		result = self.service_one_vector( self.cl_velocity_xy , self.vector , "velocity_xy")
+		return result
+
+	def velocity_z( self , z ):
+		self.clear_vector( z )
+		result = self.service_one_vector( self.cl_velocity_z , self.vector , "velocity_z")
+		return result
+
+	def velocity_yaw( self , yaw ):
+		self.clear_vector( yaw )
+		result = self.service_one_vector( self.cl_velocity_yaw , self.vector , "velocity_yaw")
+		return result
+
+	def relative_xy( self , x , y ):
+		self.clear_vector()
+		self.vector.x = x
+		self.vector.y = y
+		result = self.service_one_vector( self.cl_relative_xy , self.vector , "relative_xy")
+		return result
+
+	def relative_z( self , z ):
+		self.vector.z = z
+		result = self.service_one_vector( self.cl_relative_z , self.vector , "relative_z")
+		return result
+
+	def relative_yaw( self , yaw ):
+		self.vector.z = yaw 
+		result = self.service_one_vector( self.cl_relative_yaw , self.vector , "relative_yaw")
+		return result
+
+	def fix_z( self , z ):
+		self.vector.z = z 
+		result = self.service_one_vector( self.cl_fix_z , self.vector , "fix_z")
+		return result
+
+	def fix_yaw( self , yaw ):
+		self.vector.z =yaw 
+		result = self.service_one_vector( self.cl_fix_yaw , self.vector , "fix_yaw")
+		return result
 #===============> FUNCTION FOR CALL SERVICE
 
 	def service_one_vector( self , service , vector3 , message = ""):
@@ -68,8 +112,9 @@ class ControlConnection:
 		try:
 			result = service( self.header , vector3 ).result
 		except rospy.ServiceException , error :
-			print("service one vector of " + message + " :\n\t" + error )
-			result = 0
+			print("\x1B[1;31mservice one vector of " + str(message) + " :\n\t\x1B[0;37m" + 
+					str(error) )
+			result = False
 		return result
 
 	def service_two_vector( self , service , string , vector3 , message = "" ):
@@ -77,16 +122,18 @@ class ControlConnection:
 		try:
 			result = service( self.header , string , vector3 ).result
 		except rospy.ServiceException , error :
-			print("service two vector of " + message + " :\n\t" + error )
-			result = 0
+			print("\x1B[1;31mservice two vector of " + str(message) + " :\n\t\x1B[0;37m" + 
+					str(error) )
+			result = False
 		return result
 
 	def service_three_odometry( self , service , string , message = ""):
 		try:
 			result = service( string ).data
 		except rospy.ServiceException , error :
-			print("service three odometry of " + message , " :\n\t" + error )
-			result = 0
+			print("\x1B[1;31mservice three odometry of " + str(message) , " :\n\t\x1B[0;37m" + 
+					str(error) )
+			result = False
 		return result
 
 #===============> SET UP HEADER PART
@@ -100,3 +147,12 @@ class ControlConnection:
 		self.vector.x = number
 		self.vector.y = number
 		self.vector.z = number
+
+if( __name__ == "__main__" ):
+	rospy.init_node("testing_control_connection")
+	ch = ControlConnection("testing_robot")
+
+	print("Welcome to testing control")
+
+	ch.velocity_xy( 0.5 , 0.2 )
+	print("Already send velocity_xy 0.5 : 0.2")

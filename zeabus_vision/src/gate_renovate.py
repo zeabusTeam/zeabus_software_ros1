@@ -6,7 +6,6 @@
     Date edit: 2018/1/23 
     Python Version: 2.7
 """
-# from statistics import Statistics
 import rospy
 import numpy as np
 import cv2 as cv
@@ -15,7 +14,6 @@ from zeabus_vision.msg import vision_gate
 from zeabus_vision.srv import vision_srv_gate
 import color_text as ct
 import vision_lib as lib
-# from fourier_transform import FourierTransform
 from operator import itemgetter
 
 IMAGE = None
@@ -24,17 +22,17 @@ PUBLIC_TOPIC = '/vision/mission/gate/'
 SUB_SAMPLING = 0.3
 DEBUG = {
     'time': False,
-    'console': False,
-    'rqt-grid': False,
-    'detail': False
+    'console': True,
+    'detail': False,
+    'not-only-res': True
 }
 
 
 def mission_callback(msg):
     task = str(msg.task.data)
-    req =  str(msg.req.data)
+    req = str(msg.req.data)
     if DEBUG['console']:
-        lib.print_mission(task,req)
+        lib.print_mission(task, req)
     if task == 'gate':
         return find_gate()
 
@@ -48,6 +46,17 @@ def image_callback(msg):
 
 
 def message(state=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
+    """
+        group value into massage
+    """
+    # convert cx,cy to range -1 - 1
+    himg, wimg = IMAGE.shape[:2]
+    cx1 = lib.Aconvert(cx1, wimg)
+    cx2 = lib.Aconvert(cx2, wimg)
+    cy1 = -1.0*lib.Aconvert(cy1, himg)
+    cy2 = -1.0*lib.Aconvert(cy2, himg)
+
+    # group value into vision_gate
     msg = vision_gate()
     msg.state = state
     msg.pos = pos
@@ -62,32 +71,39 @@ def message(state=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
 
 
 def what_align(cnt):
+    """
+        return direction of pipe
+    """
     x, y, w, h = cv.boundingRect(cnt)
     return 'h' if w > h else 'v'
 
 
-def is_pipe(cnt, percent):
+def is_pipe(cnt, percent, rect):
     """
         Information
         Pipe    width = 150
                 height = 40
     """
-    (x, y), (w, h), angle = cv.minAreaRect(cnt)
+    (x, y), (w, h), angle = rect
+    if -70 <= angle and angle <= -20:
+        return False
 
-    area_ratio_expected = 0.50
-    wh_ratio_expected = 9  # (150 / 40.) * 2
     w, h = max(w, h), min(w, h)
+    wh_ratio = 1.0 * w / h
+    wh_ratio_expected = (150 / 4.) / 2
+    if wh_ratio < wh_ratio_expected * percent:
+        return False
+
     area_cnt = cv.contourArea(cnt)
     area_box = w * h
-    if (area_box == 0) or area_cnt <= 500:
+    if area_box < 10 or area_cnt <= 500:
         return False
 
+    area_ratio_expected = 0.50
     area_ratio = area_cnt / area_box
-    wh_ratio = 1.0 * w / h
-    if (not (area_ratio > area_ratio_expected
-             and wh_ratio > wh_ratio_expected * percent
-             and (angle >= -20 or angle <= -70))):
+    if area_ratio < area_ratio_expected:
         return False
+
     return True
 
 
@@ -95,37 +111,42 @@ def find_pipe(binary, align):
     _, contours, _ = cv.findContours(
         binary, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     number_of_object = 2 if align == 'v' else 1
-    percent_pipe = 0.4 if align == 'h' else 0.8
-    result = []
+    percent_pipe = 0.8 if align == 'v' else 0.2
+    topic = 'mask/pipe/vertical' if align == 'v' else 'mask/pipe/horizontal'
+    color = (0, 255, 255) if align == 'v' else (255, 0, 255)
     pipe = cv.cvtColor(binary, cv.COLOR_GRAY2BGR)
+    result = []
 
     for cnt in contours:
         (x, y), (w, h), angle = rect = cv.minAreaRect(cnt)
-        w, h = max(w, h), min(w, h)
-        if not is_pipe(cnt, percent_pipe) or not what_align(cnt) == align:
+        this_align = what_align(cnt)
+        if not is_pipe(cnt, percent_pipe, rect) or not this_align == align:
             continue
-
+        (w, h) = (min(w, h), max(w, h)) if align == 'v' else (max(w, h), min(w, h))
         box = cv.boxPoints(rect)
         box = np.int64(box)
-        if align == 'v':
-            cv.drawContours(pipe, [box], 0, (0, 255, 255), 2)
-            result.append([int(x), int(y), int(h), int(w), angle])
-        else:
-            cv.drawContours(pipe, [box], 0, (255, 0, 255), 2)
-            result.append([int(x), int(y), int(w), int(h), angle])
-    if align == 'v':
-        lib.publish_result(pipe, 'bgr', PUBLIC_TOPIC + 'mask/vpipe')
-    if align == 'h':
-        lib.publish_result(pipe, 'bgr', PUBLIC_TOPIC+'mask/hpipe')
-    if align == 'v':
-        result = sorted(result, key=itemgetter(3), reverse=True)
-    else:
-        result = sorted(result, key=itemgetter(2), reverse=True)
+        cv.drawContours(pipe, [box], 0, color, 2)
+        result.append([int(x), int(y), int(w), int(h), angle])
 
-    if len(result) < number_of_object:
+    lib.publish_result(pipe, 'bgr', PUBLIC_TOPIC + topic)
+    result = sorted(result, key=itemgetter(3) if align == 'v' else itemgetter(2), reverse=True)
+
+    if len(result) <= number_of_object:
         return result, len(result)
+    
+    closest_pair = []
+    min_dist = 2000
+    for i in range(len(result)):
+        for j in range(i+1, len(result)):
+            dist_x = abs(result[j][0] - result[i][0])
+            dist_y = abs(result[j][1] - result[i][1])
+            if dist_x >= 50 and dist_y < min_dist:
+                min_dist = dist_y
+                closest_pair = [result[i], result[j]]
+    if closest_pair == []:
+        return result[:1], 1
     else:
-        return result[:number_of_object], number_of_object
+        return closest_pair, 2
 
 
 def find_gate():
@@ -189,7 +210,7 @@ def find_gate():
         mode = 0
     if mode == 0:
         lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'image_result')
+        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
         lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
         lib.publish_result(horizontal, 'gray',
                            PUBLIC_TOPIC + 'mask/horizontal')
@@ -214,7 +235,7 @@ def find_gate():
         lib.print_result("FOUND TWO V", ct.YELLOW)
         cx1 = min(vertical_cx)
         cx2 = max(vertical_cx)
-        cy1 = (sum(vertical_cy1)+min(vertical_cy1))/len(vertical_cy1)
+        cy1 = (sum(vertical_cy1)+min(vertical_cy1))/len(vertical_cy1 + 1)
     cy2 = (sum(vertical_cy2)+max(vertical_cy2)) / \
         (len(vertical_cy2)+1) if no_pipe_v != 0 else himg
     right_excess = (cx2 > 0.95*wimg)
@@ -230,14 +251,11 @@ def find_gate():
     cv.circle(display, (int((cx1+cx2)/2), int((cy1+cy2)/2)),
               3, (0, 255, 255), -1)
     area = 1.0*abs(cx2-cx1)*abs(cy1-cy2)/(himg*wimg)
-    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'image_result')
+    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
     lib.publish_result(horizontal, 'gray', PUBLIC_TOPIC + 'mask/horizontal')
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
-    cx1 = lib.Aconvert(cx1, wimg)
-    cx2 = lib.Aconvert(cx2, wimg)
-    cy1 = -1.0*lib.Aconvert(cy1, himg)
-    cy2 = -1.0*lib.Aconvert(cy2, himg)
+
     return message(state=mode, cx1=cx1, cx2=cx2, cy1=cy1, cy2=cy2, pos=pos, area=area)
 
 

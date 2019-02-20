@@ -81,14 +81,16 @@ int main( int argv , char** argc ){
 		//===============> Control Back control
 		if( status_back_control ){ // back control are now open
 			if( count_switch == 0 ){
-				srv_connet_control.request.data = true;
+				srv_connet_control.request.data = false;
 				connect_control.call( srv_connet_control );
+				status_back_control = false; //  change to control are now close
 			}
 		} 
 		else{ // back control are now close
 			if( count_switch == limit_count_switch ){
 				srv_connet_control.request.data = true;
 				connect_control.call( srv_connet_control );
+				status_back_control = true; // change to control are now open
 			}
 		}
 		#ifdef _SHOW_COUNT_SWITCH_

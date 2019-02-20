@@ -1,5 +1,5 @@
 /*
-	File name			:	service_three_odometry.cpp		
+	File name			:	ServiceThreeOdometry.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , FEB 13
 	Date last modified	:	2018 , ??? ??
@@ -14,7 +14,7 @@
 */
 //===============>
 
-#include	<zeabus_library/control/service_three_odometry.h>
+#include	<zeabus_library/control/ServiceThreeOdometry.h>
 
 namespace zeabus_library{
 

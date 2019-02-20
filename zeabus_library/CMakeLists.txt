@@ -95,9 +95,9 @@ set( zeabus_library_localize_sources
 
 set( zeabus_library_control_sources
 	src/control/pid.cpp	
-	src/control/service_one_vector3_stamped.cpp
-	src/control/service_two_string_vector3_stamped.cpp
-	src/control/service_three_odometry.cpp
+	src/control/ServiceOneVector3Stamped.cpp
+	src/control/ServiceTwoStringVector3Stamped.cpp
+	src/control/ServiceThreeOdometry.cpp
 )
 
 
@@ -127,7 +127,7 @@ set( zeabus_library_subscriber_sources
 )
 
 set( zeabus_library_service_sources
-	src/service/service_two_bool.cpp
+	src/service/ServiceTwoBool.cpp
 )
 
 set( zeabus_library_sources

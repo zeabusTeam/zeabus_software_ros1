@@ -14,5 +14,6 @@
 */
 //===============>
 
-#include	<zeabus_library/control/service_one_vector3_stamped.h>
-#include	<zeabus_library/control/service_two_string_vector3_stmaped.h>
+#include	<zeabus_library/control/ServiceOneVector3Stamped.h>
+#include	<zeabus_library/control/ServiceTwoStringVector3Stamped.h>
+#include	<zeabus_library/control/ServiceThreeOdometry.h>

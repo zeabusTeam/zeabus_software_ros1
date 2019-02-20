@@ -1,5 +1,5 @@
 /*
-	File name			:	service_two_bool.h		
+	File name			:	ServiceTwoBool.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2019 , FEB 19
 	Date last modified	:	2019 , ??? ??

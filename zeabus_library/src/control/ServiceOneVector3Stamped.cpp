@@ -1,5 +1,5 @@
 /*
-	File name			:	service_one_vector3_stamped.cpp		
+	File name			:	ServiceOneVector3Stamped.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , FEB 05
 	Date last modified	:	2018 , FEB 17
@@ -14,7 +14,7 @@
 */
 //===============>
 
-#include	<zeabus_library/control/service_one_vector3_stamped.h>
+#include	<zeabus_library/control/ServiceOneVector3Stamped.h>
 
 namespace zeabus_library{
 

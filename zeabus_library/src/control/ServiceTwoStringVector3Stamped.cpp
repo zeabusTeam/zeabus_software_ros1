@@ -1,5 +1,5 @@
 /*
-	File name			:	service_two_string_vector3_stamped.cpp		
+	File name			:	ServiceTwoStringVector3Stamped.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , FEB 05
 	Date last modified	:	2018 , ??? ??
@@ -14,7 +14,7 @@
 */
 //===============>
 
-#include	<zeabus_library/control/service_two_string_vector3_stamped.h>
+#include	<zeabus_library/control/ServiceTwoStringVector3Stamped.h>
 
 namespace zeabus_library{
 

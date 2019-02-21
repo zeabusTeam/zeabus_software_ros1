@@ -75,6 +75,10 @@ def get_kernel(shape='rect', ksize=(5, 5)):
 #     return lower, upper
 
 
+def normalize(gray):
+    return np.uint8(255 * (gray - gray.min()) / (gray.max() - gray.min()))
+
+
 def bg_subtraction(gray):
     min_gray = 20
     max_gray = 250
@@ -86,6 +90,25 @@ def bg_subtraction(gray):
     obj1[sub > min_gray] = 255
     obj2[sub < max_gray] = 255
     obj = cv.bitwise_and(obj1, obj2)
+    return obj
+
+
+def neg_bg_subtraction(gray):
+    """
+        new bg_subtraction
+        create by: skconan
+    """
+    bg = cv.medianBlur(gray, 61)
+    fg = cv.medianBlur(gray, 5)
+    sub_sign = np.int16(fg) - np.int16(bg)
+    sub_pos = np.clip(sub_sign.copy(), 0, sub_sign.copy().max())
+    sub_neg = np.clip(sub_sign.copy(), sub_sign.copy().min(), 0)
+    sub_pos = normalize(sub_pos)
+    sub_neg = normalize(sub_neg)
+    _, obj = cv.threshold(
+        sub_neg, 0, 255, cv.THRESH_BINARY_INV + cv.THRESH_OTSU)
+    bg = np.uint8(bg)
+    fg = np.uint8(fg)
     return obj
 
 
@@ -130,7 +153,7 @@ def clear_screen():
 
 
 def pre_process(bgr, mission):
-    return bgr
+    return bgr.copy
 
 
 def print_mission(task, req=''):

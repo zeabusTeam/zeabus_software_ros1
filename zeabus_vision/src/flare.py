@@ -14,32 +14,44 @@ from zeabus_vision.srv import vision_srv_flare
 import color_text as ct
 import vision_lib as lib
 
-bgr = None
-image_result = None
-public_topic = '/vision/mission/flare/'
-sub_sampling = 1
+IMAGE = None
+PUBLIC_TOPIC = '/vision/mission/flare/'
+SUB_SAMPLING = 1
+DEBUG = {
+    'time': False,
+    'console': True,
+    'detail': False,
+    'not-only-res': True
+}
 
 def mission_callback(msg):
-    lib.print_result('mission_callback', ct.CYAN)
     task = str(msg.task.data)
     req = str(msg.req.data)
+    if DEBUG['console']:
+        lib.print_mission(task, req)
 
-    print("task",task + " " + req)
     if task == 'flare' and req in ['near','far']:
         return find_flare(req)
 
 
 def image_callback(msg):
-    global bgr, image_result, sub_sampling
+    global IMAGE
     arr = np.fromstring(msg.data, np.uint8)
     bgr = cv.resize(cv.imdecode(arr, 1), (0, 0),
                     fx=sub_sampling, fy=sub_sampling)
-    h_img, w_img = bgr.shape[:2]
-    bgr = cv.resize(bgr, (int(w_img/3), int(h_img/3)))
-    image_result = bgr.copy()
+    IMAGE = bgr.copy()
 
 
 def message(state=0, cx=0.0, cy=0.0, area=0.0):
+    """
+        group value into massage
+    """
+    # convert x,y to range -1 - 1
+    himg,wimg = IMAGE.shape[:2]
+    cx = lib.Aconvert(cx, wimg)
+    cy = -1.0*lib.Aconvert(cy, himg)
+
+    # group value into vision_flare
     msg = vision_flare()
     msg.state = state
     msg.cx = cx
@@ -52,94 +64,89 @@ def message(state=0, cx=0.0, cy=0.0, area=0.0):
 def get_mask(img):
     hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
     # upper, lower = get_color_range('yellow', 'front', '1', 'flare')
-    upper = np.array([48, 255, 255], dtype=np.uint8)
-    lower = np.array([14, 0, 0], dtype=np.uint8)
+    # upper = np.array([48, 255, 255], dtype=np.uint8)
+    # lower = np.array([14, 0, 0], dtype=np.uint8)
+    upper = np.array([60, 255, 255], dtype=np.uint8)
+    lower = np.array([2, 0, 0], dtype=np.uint8)
     mask = cv.inRange(hsv, lower, upper)
     return mask
 
+def is_verticle_pipe(cnt, percent, rect):
+    """
+        Information
+        Pipe    width = 100
+                height = 4
+    """
+    pipe = {
+        'width' = 100.0,
+        'height' = 4.0
+    }
+    x, y, w, h = cv.boundingRect(cnt)
+    if h <= w:
+        return False
 
-def get_ROI(mask, case):
-    himg, wimg = mask.shape[:2]
-    ROI = []
-    contours = cv.findContours(
-        mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
-    for cnt in contours:
-        check_area = 10000 if case == 'near' else 100
-        area = cv.contourArea(cnt)
-        if area < check_area:
-            continue
-        rect = cv.minAreaRect(cnt)
-        (w,h) = rect[1]
-        angle = rect[2]
-        print angle
-        box = cv.boxPoints(rect)
-        box = np.int64(box)
-        BR = box[0]
-        BL = box[1]
-        TL = box[2]
-        TR = box[3]
-        cv.drawContours(image_result,[box],0,(0,0,255),2)
-        top_excess = (TL[1] <0.05*himg or TR[1] < 0.05*himg)
-        right_excess = (TR[0] > 0.95*wimg or BR[0] > 0.95*wimg)
-        left_excess = (TL[0] < (0.05*wimg) or BL[0] < 0.05*wimg)
-        bottom_excess = (BL[1] > 0.95*himg or BR[1] > 0.95*himg)
-        if case == 'near':
-            percent_area = (float(area)/(himg*wimg))
-            print TL[1] , TR[1] , 0.05*wimg
-            print percent_area , bottom_excess , top_excess
-            if ((percent_area > 0.25) and bottom_excess and top_excess):
-                ROI.append(cnt)
-        elif case == 'far':
-            h_w_ratio = 1.0*h/w
-            print h_w_ratio ,left_excess ,right_excess
-            if not(left_excess or right_excess) and h_w_ratio >= 0.035 and (angle <= -80 or angle == 0) :
-                ROI.append(cnt)
-    return ROI
+    (x, y), (w, h), angle = rect
+    if not (angle >= -25 or angle <= -65):
+        return False
 
+    area_cnt = cv.contourArea(cnt)
+    area_box = w * h
+    w, h = max(w, h), min(w, h)
 
-def get_cx(cnt):
-    global image_result
-    himg, wimg = image_result.shape[:2]
-    rect = cv.minAreaRect(cnt)
-    box = cv.boxPoints(rect)
-    box = np.int64(box)
-    BR = box[0]
-    BL = box[1]
-    TL = box[2]
-    TR = box[3]
-    cv.drawContours(image_result,[box],0,(0,255,0),2)
-    cx = ((TL[0]+TR[0])/2 + (BL[0]+BR[0])/2)/2
-    cy = ((TR[1]+BR[1])/2 + (TL[1]+BL[1])/2)/2
-    cv.circle(image_result, (cx, cy), 5, (0, 0, 255), -1)
-    cx = lib.Aconvert(cx, wimg)
-    cy = -1.0*lib.Aconvert(cy, himg)
-    area = -1
-    return cx, cy, area
+    print('area', (area_box, area_cnt, w, h))
+    if area_box <= 50 or area_cnt <= 300 or w < 50:
+        return False
+
+    area_ratio_expected = 0.3
+    area_ratio = area_cnt / area_box
+    print('c2', area_ratio)
+    if area_ratio < area_ratio_expected:
+        return False
+
+    wh_ratio_expected = (pipe['width']/pipe['height'])/2
+
+    wh_ratio = 1.0 * w / h
+    print((wh_ratio, (w, h)))
+    if wh_ratio < wh_ratio_expected * percent:
+        return False
+
+    return True
 
 
 def find_flare(req):
-    global bgr
-    if bgr is None:
+    global IMAGE
+    if IMAGE is None:
         lib.img_is_none()
         return message(state=-1)
-    mask = get_mask(bgr)
-    ROI = get_ROI(mask, case=req)
-    mode = len(ROI)
-    if mode == 0:
-        lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(image_result, 'bgr', public_topic + 'image_result')
-        lib.publish_result(mask, 'gray', public_topic + 'mask')
-        return message()
-    elif mode >= 1:
-        if mode == 1:
-            lib.print_result("FOUND A FLARE", ct.GREEN)
-        elif mode > 1:
-            lib.print_result("FOUND BUT HAVE SOME NOISE (" +
-                         str(mode) + ")", ct.YELLOW)
-        cx, cy, area = get_cx(cnt=max(ROI, key=cv.contourArea))
-        lib.publish_result(image_result, 'bgr', public_topic + 'image_result')
-        lib.publish_result(mask, 'gray', public_topic + 'mask')
-        return message(cx=cx, cy=cy, area=area, state=len(ROI))
+    mask = cv.bitwise_not(get_mask(bgr))
+    obj = lib.bg_subtraction(gray)
+
+    kernel_box = lib.get_kernel(ksize=(7, 7))
+    kernel_vertical = lib.get_kernel(ksize=(1, 25))
+    vertical = cv.erode(obj.copy(), kernel_vertical)
+    vertical = cv.dilate(vertical.copy(), kernel_box)
+    kernel_erode = lib.get_kernel(ksize=(3, 11))
+    vertical = cv.erode(vertical.copy(), kernel_erode)
+
+    vertical_pipe = find_pipe(vertical)
+
+    # ROI = get_ROI(mask, case=req)
+    # mode = len(ROI)
+    # if mode == 0:
+    #     lib.print_result("NOT FOUND", ct.RED)
+    #     lib.publish_result(image_result, 'bgr', PUBLIC_TOPIC + 'image_result')
+    #     lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'mask')
+    #     return message()
+    # elif mode >= 1:
+    #     if mode == 1:
+    #         lib.print_result("FOUND A FLARE", ct.GREEN)
+    #     elif mode > 1:
+    #         lib.print_result("FOUND BUT HAVE SOME NOISE (" +
+    #                      str(mode) + ")", ct.YELLOW)
+    #     cx, cy, area = get_cx(cnt=max(ROI, key=cv.contourArea))
+    #     lib.publish_result(image_result, 'bgr', PUBLIC_TOPIC + 'image_result')
+    #     lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'mask')
+    #     return message(cx=cx, cy=cy, area=area, state=len(ROI))
 
 if __name__ == '__main__':
     rospy.init_node('vision_flare', anonymous=False)

@@ -75,7 +75,7 @@ int main( int argv , char** argc ){
 	ph.param< std::string >("linear_id" , linear_id , "robot_linear");
 	ph.param< std::string >("my_id" , my_id , "control_front");
 	ph.param< int >("frequency" , frequency , 40 );
-	ph.param< int >("constant_ttl" , constant_ttl , 10 );
+	ph.param< int >("constant_ttl" , constant_ttl , 20 );
 
 	aborted_control = copysign( frequency , -1 );
 

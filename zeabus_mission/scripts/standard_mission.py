@@ -1,13 +1,13 @@
 #!/usr/bin/python2
 #################################################################################################
 ####
-####	FILE		: standart_mission.py
+####	FILE		: standard_mission.py
 ####	Maintain	: Supasan Komonlit
 ####	Create on	: 2019 , FEB 20
-####	Purpose		: For connection with control part
+####	Purpose		: Pattern of mission planner
 ####
 #################################################################################################
-from __future__ import print_function
+from __future__				import print_function
 #===============>
 
 import rospy
@@ -15,7 +15,6 @@ import math
 import time
 
 from control_connection		import ControlConnection
-from vision_collector		import VisionCollector
 
 from zeabus_library.srv		import TwoBool
 

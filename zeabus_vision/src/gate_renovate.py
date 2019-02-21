@@ -177,25 +177,27 @@ def find_gate():
     vertical_pipe, no_pipe_v = find_pipe(vertical, 'v')
     horizontal_pipe, no_pipe_h = find_pipe(horizontal, 'h')
 
-    horizontal_cx = []
-    horizontal_cy = []
-    vertical_cx = []
-    vertical_cy1 = []
-    vertical_cy2 = []
-
-    for res in horizontal_pipe:
-        x, y, w, h, angle = res
+    # horizontal
+    if no_pipe_h > 0:
+        x, y, w, h, angle = horizontal_pipe[0]
         cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
                      (int(x + w / 2.), int(y + h / 2.)), (0, 255, 0), 2)
-        horizontal_cx.append([(x - w / 2.), (x + w / 2.)])
-        horizontal_cy.append(y)
+        horizontal_cx = [(x - w / 2.), (x + w / 2.)]
+        horizontal_cy = [(y - h / 2.), (y + h / 2.)]
+
+    vertical_cx1 = []
+    vertical_cx2 = []
+    vertical_cy1 = []
+    vertical_cy2 = []
     for res in vertical_pipe:
         x, y, w, h, angle = res
         cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
                      (int(x + w / 2.), int(y + h / 2.)), (108, 105, 255), 2)
-        vertical_cx.append(x)
+        vertical_cx1.append((x - w / 2.))
+        vertical_cx2.append((x + w / 2.))
         vertical_cy1.append((y - h / 2.))
         vertical_cy2.append((y + h / 2.))
+        
     himg, wimg = obj.shape[:2]
     mode = 0
     if no_pipe_h == 1:
@@ -209,6 +211,7 @@ def find_gate():
         mode = 4
     else:
         mode = 0
+
     if mode == 0:
         lib.print_result("NOT FOUND", ct.RED)
         lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
@@ -217,28 +220,39 @@ def find_gate():
                            PUBLIC_TOPIC + 'mask/horizontal')
         lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
         return message()
+
     elif mode == 1:
         lib.print_result("FOUND GATE", ct.GREEN)
-        cx1 = (horizontal_cx[0][0] + min(vertical_cx)) / 2.
-        cx2 = (horizontal_cx[0][1] + max(vertical_cx)) / 2.
-        cy1 = horizontal_cy[0]
+        cx1 = max(min(vertical_cx1),min(vertical_cx2))
+        cx2 = min(max(vertical_cx1),max(vertical_cx2))
+        cy1 = max(min(vertical_cy1),max(horizontal_cy))
+        cy2 = min(vertical_cy2)
     elif mode == 2:
-        lib.print_result("FOUND ONE V AND ONE H", ct.YELLOW)
-        cx1 = horizontal_cx[0][0]
-        cx2 = horizontal_cx[0][1]
-        cy1 = horizontal_cy[0]
+        cx_h = np.mean(horizontal_cx)
+        cx_v = np.mean(vertical_cx1 + vertical_cx2)
+        if cx_h > cx_v:
+            lib.print_result("FOUND ONE LEFT V AND ONE H", ct.YELLOW)
+            cx1 = max(min(horizontal_cx),max(vertical_cx2))
+            cx2 = max(horizontal_cx)
+            cy1 = max(max(horizontal_cy),min(vertical_cy1))
+            cy2 = min(vertical_cy2)
+        else:
+            cx1 = min(horizontal_cx)
+            cx2 = min(min(vertical_cx1),max(horizontal_cx))
+            cy1 = max(max(horizontal_cy),min(vertical_cy1))
+            cy2 = min(vertical_cy2)
     elif mode == 3:
         lib.print_result("FOUND ONE H", ct.YELLOW)
-        cx1 = horizontal_cx[0][0]
-        cx2 = horizontal_cx[0][1]
-        cy1 = horizontal_cy[0]
+        cx1 = min(horizontal_cx)
+        cx2 = max(horizontal_cx)
+        cy1 = max(horizontal_cy)
+        cy2 = himg
     elif mode == 4:
         lib.print_result("FOUND TWO V", ct.YELLOW)
-        cx1 = min(vertical_cx)
-        cx2 = max(vertical_cx)
-        cy1 = (sum(vertical_cy1)+min(vertical_cy1))/len(vertical_cy1 + 1)
-    cy2 = (sum(vertical_cy2)+max(vertical_cy2)) / \
-        (len(vertical_cy2)+1) if no_pipe_v != 0 else himg
+        cx1 = min(vertical_cx2)
+        cx2 = max(vertical_cx1)
+        cy1 = max(vertical_cy1)
+        cy2 = min(vertical_cy2)
     right_excess = (cx2 > 0.95*wimg)
     left_excess = (cx1 < (0.05*wimg))
     if (right_excess and not left_excess):
@@ -247,8 +261,9 @@ def find_gate():
         pos = -1
     else:
         pos = 0
-    # cv.rectangle(display, (int(cx1), int(cy1)),
-        #  (int(cx2), int(cy2)), (0, 255, 0), 3)
+
+    cv.rectangle(display, (int(cx1), int(cy1)),
+         (int(cx2), int(cy2)), (0, 255, 0), 3)
     cv.circle(display, (int((cx1+cx2)/2), int((cy1+cy2)/2)),
               3, (0, 255, 255), -1)
     area = 1.0*abs(cx2-cx1)*abs(cy1-cy2)/(himg*wimg)
@@ -256,7 +271,6 @@ def find_gate():
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
     lib.publish_result(horizontal, 'gray', PUBLIC_TOPIC + 'mask/horizontal')
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
-
     return message(state=mode, cx1=cx1, cx2=cx2, cy1=cy1, cy2=cy2, pos=pos, area=area)
 
 

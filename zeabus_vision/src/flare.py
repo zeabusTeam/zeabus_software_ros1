@@ -86,7 +86,7 @@ def is_verticle_pipe(cnt, percent, rect):
         return False
 
     (x, y), (w, h), angle = rect
-    if not (angle >= -25 or angle <= -65):
+    if not (angle >= -20 or angle <= -70):
         return False
 
     area_cnt = cv.contourArea(cnt)
@@ -112,6 +112,48 @@ def is_verticle_pipe(cnt, percent, rect):
 
     return True
 
+def find_pipe(binary, align):
+    _, contours, _ = cv.findContours(
+        binary, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    number_of_object = 2 if align == 'v' else 1
+    percent_pipe = 0.8 if align == 'v' else 0.2
+    topic = 'mask/pipe/vertical' if align == 'v' else 'mask/pipe/horizontal'
+    color = (0, 255, 255) if align == 'v' else (255, 0, 255)
+    pipe = cv.cvtColor(binary, cv.COLOR_GRAY2BGR)
+    result = []
+
+    for cnt in contours:
+        (x, y), (w, h), angle = rect = cv.minAreaRect(cnt)
+        this_align = what_align(cnt)
+        if not is_pipe(cnt, percent_pipe, rect) or not this_align == align:
+            continue
+        (w, h) = (min(w, h), max(w, h)) if align == 'v' else (max(w, h), min(w, h))
+        box = cv.boxPoints(rect)
+        box = np.int64(box)
+        cv.drawContours(pipe, [box], 0, color, 2)
+        result.append([int(x), int(y), int(w), int(h), angle])
+
+    lib.publish_result(pipe, 'bgr', PUBLIC_TOPIC + topic)
+    result = sorted(result, key=itemgetter(3) if align == 'v' else itemgetter(2), reverse=True)
+
+    if len(result) <= number_of_object:
+        return result, len(result)
+
+    # find closet
+    closest_pair = []
+    min_dist = 2000
+    for i in range(len(result)):
+        for j in range(i+1, len(result)):
+            dist_x = abs(result[j][0] - result[i][0])
+            dist_y = abs(result[j][1] - result[i][1])
+            if dist_x >= 50 and dist_y < min_dist:
+                min_dist = dist_y
+                closest_pair = [result[i], result[j]]
+
+    if closest_pair == []:
+        return result[:1], 1
+    return closest_pair, 2
+
 
 def find_flare(req):
     global IMAGE
@@ -128,7 +170,27 @@ def find_flare(req):
     kernel_erode = lib.get_kernel(ksize=(3, 11))
     vertical = cv.erode(vertical.copy(), kernel_erode)
 
-    vertical_pipe = find_pipe(vertical)
+    vertical_pipe, no_v_pipe = find_pipe(vertical)
+    mode = no_v_pipe
+    if mode == 0:
+        lib.print_result("NOT FOUND", ct.RED)
+        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
+        lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
+        lib.publish_result(horizontal, 'gray',
+                           PUBLIC_TOPIC + 'mask/horizontal')
+        lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
+        return message()
+    x, y, w, h, angle = vertical_pipe[0]
+    cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
+                 (int(x + w / 2.), int(y + h / 2.)), (0, 255, 0), 2)
+    vertical_x = [(x - w / 2.), (x + w / 2.)]
+    vertical_y = [(y - h / 2.), (y + h / 2.)]
+    cx1,cx2 = min(cx1,cx2),max(cx1,cx2)
+    cy1,cy2 = min(cy1,cy2),max(cy1,cy2)
+            #     lib.print_result("NOT FOUND", ct.RED)
+    #     lib.publish_result(image_result, 'bgr', PUBLIC_TOPIC + 'image_result')
+    #     lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'mask')
+    #     return message()
 
     # ROI = get_ROI(mask, case=req)
     # mode = len(ROI)

@@ -11,10 +11,8 @@ import numpy as np
 from sensor_msgs.msg import CompressedImage
 from zeabus_vision.msg import vision_flare
 from zeabus_vision.srv import vision_srv_flare
-from vision_lib import *
 import color_text as ct
-import os
-#import pyqtgraph as pyplt
+import vision_lib as lib
 
 bgr = None
 image_result = None
@@ -22,7 +20,7 @@ public_topic = '/vision/mission/flare/'
 sub_sampling = 1
 
 def mission_callback(msg):
-    print_result('mission_callback', ct.CYAN)
+    lib.print_result('mission_callback', ct.CYAN)
     task = str(msg.task.data)
     req = str(msg.req.data)
 
@@ -113,8 +111,8 @@ def get_cx(cnt):
     cx = ((TL[0]+TR[0])/2 + (BL[0]+BR[0])/2)/2
     cy = ((TR[1]+BR[1])/2 + (TL[1]+BL[1])/2)/2
     cv.circle(image_result, (cx, cy), 5, (0, 0, 255), -1)
-    cx = Aconvert(cx, wimg)
-    cy = -1.0*Aconvert(cy, himg)
+    cx = lib.Aconvert(cx, wimg)
+    cy = -1.0*lib.Aconvert(cy, himg)
     area = -1
     return cx, cy, area
 
@@ -122,35 +120,35 @@ def get_cx(cnt):
 def find_flare(req):
     global bgr
     if bgr is None:
-        img_is_none()
+        lib.img_is_none()
         return message(state=-1)
     mask = get_mask(bgr)
     ROI = get_ROI(mask, case=req)
     mode = len(ROI)
     if mode == 0:
-        print_result("NOT FOUND", ct.RED)
-        publish_result(image_result, 'bgr', public_topic + 'image_result')
-        publish_result(mask, 'gray', public_topic + 'mask')
+        lib.print_result("NOT FOUND", ct.RED)
+        lib.publish_result(image_result, 'bgr', public_topic + 'image_result')
+        lib.publish_result(mask, 'gray', public_topic + 'mask')
         return message()
     elif mode >= 1:
         if mode == 1:
-            print_result("FOUND A FLARE", ct.GREEN)
+            lib.print_result("FOUND A FLARE", ct.GREEN)
         elif mode > 1:
-            print_result("FOUND BUT HAVE SOME NOISE (" +
+            lib.print_result("FOUND BUT HAVE SOME NOISE (" +
                          str(mode) + ")", ct.YELLOW)
         cx, cy, area = get_cx(cnt=max(ROI, key=cv.contourArea))
-        publish_result(image_result, 'bgr', public_topic + 'image_result')
-        publish_result(mask, 'gray', public_topic + 'mask')
+        lib.publish_result(image_result, 'bgr', public_topic + 'image_result')
+        lib.publish_result(mask, 'gray', public_topic + 'mask')
         return message(cx=cx, cy=cy, area=area, state=len(ROI))
 
 if __name__ == '__main__':
     rospy.init_node('vision_flare', anonymous=False)
 
-    image_topic = get_topic("front")
-    rospy.Subscriber(image_topic, CompressedImage, image_callback)
+    IMAGE_TOPIC = lib.get_topic("front")
+    rospy.Subscriber(IMAGE_TOPIC, CompressedImage, image_callback)
     rospy.Service('vision/flare', vision_srv_flare(),
                   mission_callback)
-    print_result("INIT NODE FLARE", ct.GREEN)
+    lib.print_result("INIT NODE FLARE", ct.GREEN)
 
     rospy.spin()
-    print_result("END PROGRAM", ct.YELLOW_HL+ct.RED)
+    lib.print_result("END PROGRAM", ct.YELLOW_HL+ct.RED)

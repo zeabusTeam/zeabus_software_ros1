@@ -48,6 +48,9 @@ def image_callback(msg):
 
 
 def message(state=0, pos=0, cx=0.0, cy=0.0, area=0.0):
+    himg, wimg = IMAGE.shape[:2]
+    cx = lib.Aconvert(cx, wimg)
+    cy = -1.0*lib.Aconvert(cy, himg)
     msg = vision_gate()
     msg.state = state
     msg.pos = pos
@@ -74,30 +77,24 @@ def is_verticle_pipe(cnt, percent, rect):
     if not (angle >= -25 or angle <= -65):
         return False
 
-
-    
     area_cnt = cv.contourArea(cnt)
     area_box = w * h
     w, h = max(w, h), min(w, h)
 
-    print('area',(area_box,area_cnt,w,h))
+    print('area', (area_box, area_cnt, w, h))
     if area_box <= 50 or area_cnt <= 300 or w < 50:
         return False
 
-    
-
     area_ratio_expected = 0.3
     area_ratio = area_cnt / area_box
-    print('c2',area_ratio)
+    print('c2', area_ratio)
     if area_ratio < area_ratio_expected:
         return False
 
-
-   
     wh_ratio_expected = (100/4.)/2
-    
+
     wh_ratio = 1.0 * w / h
-    print((wh_ratio,(w,h)))
+    print((wh_ratio, (w, h)))
     if wh_ratio < wh_ratio_expected * percent:
         return False
 
@@ -136,13 +133,13 @@ def find_pipe(binary):
         closest_pair = []
         min_dist = 2000
         for i in range(len(result)):
-            for j in range(i+1,len(result)):
+            for j in range(i+1, len(result)):
                 dist_y = abs(result[j][1] - result[i][1])
                 dist_x = abs(result[j][0] - result[i][0])
                 if dist_x >= 50 and dist_y < min_dist:
                     min_dist = dist_y
-                    closest_pair = [result[i],result[j]]   
-        if closest_pair == []:       
+                    closest_pair = [result[i], result[j]]
+        if closest_pair == []:
             return result[:1], 1
         else:
             return closest_pair, 2
@@ -192,23 +189,13 @@ def find_qualify_pole():
         return message()
     elif mode == 1:
         lib.print_result("FOUNG ONE POLE", ct.YELLOW)
-        cx1 = min(vertical_cx1)
-        cx2 = max(vertical_cx2)
-        cy1 = min(vertical_cy1)
-        cy2 = max(vertical_cy2)
     elif mode == 2:
         lib.print_result("FOUND", ct.GREEN)
-        cx1 = min(max(vertical_cx1),max(vertical_cx2))
-        cx2 = max(min(vertical_cx1),min(vertical_cx2))
-        cy1 = min(max(vertical_cy1),max(vertical_cy2))
-        cy2 = max(min(vertical_cy1),min(vertical_cy2))
-    else:
-        lib.print_result("FOUND POLE WITH NOISE (" +
-                         str(no_pipe_v) + ")", ct.YELLOW)
-        cx1 = min(max(vertical_cx1),max(vertical_cx2))
-        cx2 = max(min(vertical_cx1),min(vertical_cx2))
-        cy1 = min(max(vertical_cy1),max(vertical_cy2))
-        cy2 = max(min(vertical_cy1),min(vertical_cy2))
+
+    cx1 = min(vertical_cx2)
+    cx2 = max(vertical_cx1)
+    cy1 = max(vertical_cy1)
+    cy2 = min(vertical_cy2)
 
     cx1, cx2 = min(cx1, cx2), max(cx1, cx2)
     cy1, cy2 = min(cy1, cy2), max(cy1, cy2)
@@ -226,18 +213,17 @@ def find_qualify_pole():
         pos = 0
 
     cv.rectangle(display, (int(cx1), int(cy1)),
-         (int(cx2), int(cy2)), (0, 255, 0), 3)
-
+                 (int(cx2), int(cy2)), (0, 255, 0), 3)
     cv.circle(display, (int((cx1+cx2)/2), int((cy1+cy2)/2)),
               3, (0, 255, 255), -1)
+
     area = 1.0*abs(cx2-cx1)*abs(cy2-cy1)/(himg*wimg)
     lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'image_result')
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
-    cx = lib.Aconvert((cx1+cx2)/2, wimg)
-    cy = -1.0*lib.Aconvert((cy1+cy2)/2, himg)
+
     print(time()-checkpnt)
-    return message(state=mode, cx=cx, cy=cy, pos=pos, area=area)
+    return message(state=mode, cx=(cx1+cx2)/2, cy=(cy1+cy2)/2, pos=pos, area=area)
 
 
 if __name__ == '__main__':

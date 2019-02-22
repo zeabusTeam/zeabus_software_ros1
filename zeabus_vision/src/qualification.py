@@ -15,6 +15,7 @@ from zeabus_vision.srv import vision_srv_gate
 import color_text as ct
 import vision_lib as lib
 from operator import itemgetter
+from time import time
 
 IMAGE = None
 PROCESS_DATA = {}
@@ -62,7 +63,7 @@ def is_verticle_pipe(cnt, percent, rect):
     """
         Information
         Pipe    width = 100
-                height = 40
+                height = 4
     """
 
     x, y, w, h = cv.boundingRect(cnt)
@@ -73,20 +74,30 @@ def is_verticle_pipe(cnt, percent, rect):
     if not (angle >= -25 or angle <= -65):
         return False
 
+
+    
     area_cnt = cv.contourArea(cnt)
     area_box = w * h
+    w, h = max(w, h), min(w, h)
 
-    if area_box <= 50 or area_cnt <= 500:
+    print('area',(area_box,area_cnt,w,h))
+    if area_box <= 50 or area_cnt <= 300 or w < 50:
         return False
 
-    area_ratio_expected = 0.5
+    
+
+    area_ratio_expected = 0.3
     area_ratio = area_cnt / area_box
+    print('c2',area_ratio)
     if area_ratio < area_ratio_expected:
         return False
 
-    wh_ratio_expected = (100/40.)/2
-    w, h = max(w, h), min(w, h)
+
+   
+    wh_ratio_expected = (100/4.)/2
+    
     wh_ratio = 1.0 * w / h
+    print((wh_ratio,(w,h)))
     if wh_ratio < wh_ratio_expected * percent:
         return False
 
@@ -97,7 +108,7 @@ def find_pipe(binary):
     _, contours, _ = cv.findContours(
         binary, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     number_of_object = 2
-    percent_pipe = 0.7
+    percent_pipe = 0.6
     result = []
     pipe = cv.cvtColor(binary, cv.COLOR_GRAY2BGR)
 
@@ -122,10 +133,23 @@ def find_pipe(binary):
     if len(result) < number_of_object:
         return result, len(result)
     else:
-        return result[:number_of_object], number_of_object
+        closest_pair = []
+        min_dist = 2000
+        for i in range(len(result)):
+            for j in range(i+1,len(result)):
+                dist_y = abs(result[j][1] - result[i][1])
+                dist_x = abs(result[j][0] - result[i][0])
+                if dist_x >= 50 and dist_y < min_dist:
+                    min_dist = dist_y
+                    closest_pair = [result[i],result[j]]   
+        if closest_pair == []:       
+            return result[:1], 1
+        else:
+            return closest_pair, 2
 
 
 def find_qualify_pole():
+    checkpnt = time()
     global IMAGE
     if IMAGE is None:
         lib.img_is_none()
@@ -212,6 +236,7 @@ def find_qualify_pole():
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
     cx = lib.Aconvert((cx1+cx2)/2, wimg)
     cy = -1.0*lib.Aconvert((cy1+cy2)/2, himg)
+    print(time()-checkpnt)
     return message(state=mode, cx=cx, cy=cy, pos=pos, area=area)
 
 

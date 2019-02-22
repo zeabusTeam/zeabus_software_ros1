@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(zeabus_vision)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
+  rosbag
+  OpenCV REQUIRED
 )
 find_package(OpenCV REQUIRED)
 
@@ -140,7 +142,11 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/zeabus_vision_node.cpp)
-
+add_executable(bag2mp4 src/bag2mp4.cpp)
+target_link_libraries(bag2mp4
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBS}
+)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

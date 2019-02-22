@@ -16,7 +16,7 @@ import time
 
 from vision_collector		import VisionCollector
 
-from standart_mission		import StandardMission
+from standard_mission		import StandardMission
 
 class MissionGate( StandardMission ):
 
@@ -170,7 +170,7 @@ class MissionGate( StandardMission ):
 		while( not rospy.is_shutdown() ):
 			self.sleep()
 			self.vision.analysis_all("gate" , "sevinar" , 5 )
-			self.echo( self.vision.echo_data() ):
+			self.echo( self.vision.echo_data() )
 			if( not self.vision.echo_data() ):
 				count_unfound += 1
 				continue

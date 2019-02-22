@@ -31,7 +31,8 @@ class ThrustMapper:
             [cos_45, -sin_45, 0],  	# thruster 5
             [cos_45, sin_45, 0],  	# thruster 6
             [-cos_45, -sin_45, 0],  # thruster 7
-            [-cos_45, sin_45, 0]  	# thruster 8
+#            [-cos_45, sin_45, 0]  	# thruster 8
+			[0 , 0 , 0]
         ])
 
         self.distance = np.array([

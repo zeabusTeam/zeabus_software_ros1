@@ -100,10 +100,6 @@ class MissionDrum( StandardMission ):
 				vy = min(0.075,abs(self.y)) * (self.y/abs(self.y))
 				self.velocity({'x':vx,'y':vy})
 
-
-			
-			
-					
 if __name__ == "__main__" :
 	rospy.init_node("mission_drum")
 	MG = MissionDrum( "mission_drum")

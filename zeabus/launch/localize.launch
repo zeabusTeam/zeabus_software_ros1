@@ -12,7 +12,7 @@
 		<param name="robot_id" type="str" value="robot"/>
 		<param name="frame_id" type="str" value="world"/>
 		<param name="frequency" type="int" value="30"/>
-		<param name="aborted" type="double" value="0.001"/>
+		<param name="aborted" type="double" value="0.0005"/>
 	</node>
 
 </launch>

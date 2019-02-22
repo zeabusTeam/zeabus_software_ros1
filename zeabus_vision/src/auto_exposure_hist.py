@@ -6,7 +6,6 @@
     Python Version: 2.7
 """
 
-
 import os
 import rospy
 import cv2 as cv
@@ -52,8 +51,6 @@ class AutoExposure:
         self.client = Client(self.client_name)
         self.sub_sampling = 0.25
         self.stat = Statistics()
-
-        
 
     def image_callback(self, msg):
         arr = np.fromstring(msg.data, np.uint8)

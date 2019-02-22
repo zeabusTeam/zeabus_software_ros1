@@ -96,7 +96,9 @@ int main( int argv , char** argc ){
 		#ifdef _SHOW_COUNT_SWITCH_
 			count_print++;
 			if( count_print == 5 ){
-				printf("count_switch : %5d\n" , count_switch );	
+				printf("count_switch    : %5d\n" , count_switch );	
+				printf("status_control  : %5d\n" , status_back_control );
+				printf("\n\n");	
 				count_print = 0;
 			}
 		#endif

@@ -112,7 +112,7 @@ class ControlConnection:
 				self.save_state[2] ] = euler_from_quaternion( temp_orientation )
 
 	def get_state( self ):
-		result = self.service_three_odometry( self.cl_get_state , "target" , "get target state")
+		result = self.service_three_odometry( self.cl_get_state , "current" , "get target state")
 		self.temp_state[0]	= result.pose.pose.position.x
 		self.temp_state[1]	= result.pose.pose.position.y
 		self.temp_state[2]	= result.pose.pose.position.z

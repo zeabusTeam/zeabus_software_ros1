@@ -1,4 +1,4 @@
 <launch>
-  <include file="$(find zeabus_vision)/launch/front_hist.launch"></include>
-  <include file="$(find zeabus_vision)/launch/bottom_hist.launch"></include>
+  <include file="$(find zeabus_vision)/launch/front.launch"></include>
+  <include file="$(find zeabus_vision)/launch/bottom.launch"></include>
 </launch>

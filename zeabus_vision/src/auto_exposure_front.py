@@ -1,21 +1,21 @@
 #!/usr/bin/python2.7
+"""
+    File name: auto_exposure_hist_front.py
+    Author: skconan
+    Date created: 2018/11/03
+    Python Version: 2.7
+"""
+
+
+import os
 import rospy
-# from auto_exposure import AutoExposure
-from auto_exposure_old import AutoExposure
-
-def adjust():
-    EVmin = 0.1
-    EVdefault = 0.1
-    sub_topic = rospy.get_param("/auto_exposure_front/topic_ae", None)
-    client_name = rospy.get_param("/auto_exposure_front/client_ae", None)
-    print sub_topic
-    print client_name
-    if sub_topic is not None:
-        AEC = AutoExposure(sub_topic=sub_topic, client_name=client_name,
-                           default_exposure_value=EVdefault, min_exposure_value=EVmin)
-        AEC.adjust_exposure_value()
+from auto_exposure_hist import AutoExposure
 
 
-if __name__ == "__main__":
-    rospy.init_node("Auto_Exposure_Front", anonymous=False)
-    adjust()
+def auto_exposure_front():
+    rospy.init_node('AutoExposureFront')
+    AE = AutoExposure("/auto_exposure_hist_front")
+    AE.run()
+
+if __name__=='__main__':
+    auto_exposure_front()

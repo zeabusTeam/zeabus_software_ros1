@@ -33,7 +33,7 @@ class StandardMission( ControlConnection ):
 
 		self.mission = rospy.Service( name_service , TwoBool , callback_service )
 
-	def sleep( self , second ):
+	def sleep( self , second = 0.1 ):
 		self.rate.sleep()
 		time.sleep( second )
 

@@ -110,7 +110,9 @@ class VisionCollector:
 			+ str( self.result["cx_1"] ) + " : " + str( self.result['cx_2'] ) + " ===,=== "
 			+ str( self.result["cy_1"] ) + " : " + str( self.result['cy_2'] )
 		)
-	
+
+	def num_object( self ):
+		return self.result['n_obj']	
 			
 #################################################################################################
 ####

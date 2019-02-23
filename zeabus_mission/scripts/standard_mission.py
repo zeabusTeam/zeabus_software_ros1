@@ -37,7 +37,7 @@ class StandardMission( ControlConnection ):
 		self.rate.sleep()
 		time.sleep( second )
 
-	def echo( self , message ):
+	def echo_vision( self , message ):
 		self.data_pub.publish( String( message ) )
 		print( str(message) , end = "\n\n")
 

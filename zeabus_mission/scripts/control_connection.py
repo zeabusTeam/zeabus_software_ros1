@@ -67,8 +67,10 @@ class ControlConnection:
 
 	def distance( self ):
 		self.target_state()
-		return math.sqrt( math.pow( self.save_state[0] - self.temp_state[0] , 2 ) + 
-				math.pow( self.save_state[1] - self.temp_state[1] , 2 )	)
+		print( self.save_state )
+		print( self.temp_state )
+		return math.sqrt( math.pow( 1.0*self.save_state[0] - 1.0*self.temp_state[0] , 2 ) + 
+				math.pow( 1.0*self.save_state[1] - 1.0*self.temp_state[1] , 2 )	)
 
 #===============> PUBLISHER PART
 
@@ -110,8 +112,8 @@ class ControlConnection:
 		self.save_state[2]	= result.pose.pose.position.z
 		temp_orientation	= [ result.pose.pose.orientation.x, result.pose.pose.orientation.y,
 								result.pose.pose.orientation.z, result.pose.pose.orientation.w ]
-		[self.save_state[0] , self.save_state[1] , 
-				self.save_state[2] ] = euler_from_quaternion( temp_orientation )
+		[self.save_state[3] , self.save_state[4] , 
+				self.save_state[5] ] = euler_from_quaternion( temp_orientation )
 
 	def get_state( self ):
 		result = self.service_three_odometry( self.cl_get_state, "current", "get current state")
@@ -120,18 +122,18 @@ class ControlConnection:
 		self.current_state[2]	= result.pose.pose.position.z
 		temp_orientation	= [ result.pose.pose.orientation.x, result.pose.pose.orientation.y,
 								result.pose.pose.orientation.z, result.pose.pose.orientation.w ]
-		[self.current_state[0] , self.current_state[1] , 
-				self.current_state[2] ] = euler_from_quaternion( temp_orientation )
+		[self.current_state[3] , self.current_state[4] , 
+				self.current_state[5] ] = euler_from_quaternion( temp_orientation )
 
 	def target_state( self ):
 		result = self.service_three_odometry( self.cl_get_state , "target" , "get target state")
-		self.target_state[0]	= result.pose.pose.position.x
-		self.target_state[1]	= result.pose.pose.position.y
-		self.target_state[2]	= result.pose.pose.position.z
+		self.temp_state[0]	= result.pose.pose.position.x
+		self.temp_state[1]	= result.pose.pose.position.y
+		self.temp_state[2]	= result.pose.pose.position.z
 		temp_orientation	= [ result.pose.pose.orientation.x, result.pose.pose.orientation.y,
 								result.pose.pose.orientation.z, result.pose.pose.orientation.w ]
-		[self.target_state[0] , self.target_state[1] , 
-				self.target_state[2] ] = euler_from_quaternion( temp_orientation )
+		[self.temp_state[3] , self.temp_state[4] , 
+				self.temp_state[5] ] = euler_from_quaternion( temp_orientation )
 
 
 #===============> SERVICE OF TWOSTRINGVECTOR3STAMPED
@@ -231,7 +233,6 @@ class ControlConnection:
 		except rospy.ServiceException , error :
 			print("\x1B[1;31mservice three odometry of " + str(message) , " :\n\t\x1B[0;37m" + 
 					str(error) )
-			result = False
 		return result
 
 #===============> SET UP HEADER PART

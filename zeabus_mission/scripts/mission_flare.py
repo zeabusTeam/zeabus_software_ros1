@@ -33,12 +33,13 @@ class MissionGate( StandardMission ):
 
 		result = False
 
+		self.echo( self.name , "START MISSION FLARE")
+
 		result = self.step_01()
 
 		if( result ): result = self.step_02()
 
-		self.echo( self.name , "START MISSION FLARE")
-
+		return result
 
 	def step_01( self ):  # play in far mode and try to find in near mode
 		self.echo( self.name , "PLAY STEP ONE TO FIND FLAR IN FAR MODE")
@@ -46,21 +47,21 @@ class MissionGate( StandardMission ):
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "flare" , "far" , 5 )
-			self.echo( self.vision.echo_data() ):
-			
+			self.echo_vision( self.vision.echo_data() )	
 			if( self.vision.have_object() ):
 				count_unfound = 0
-				if( abs(self.vision.center_x() ) < 0.1 ):
-					self.velocity( {'x' : < 0.1 } )
-					self.echo( "FARMODE Move FORWARD")
+				if( abs(self.vision.center_x() ) < 0.3 ):
+					self.velocity( {'x' :  0.1 } )
+					self.echo( self.name , "FARMODE Move FORWARD")
 				elif( self.vision.center_x() < 0 ):
 					self.velocity( {'y' :  0.08 } )
-					self.echo( "FARMODE MOVE LEFT")
+					self.echo(  self.name ,"FARMODE MOVE LEFT")
 				elif( self.vision.center_x() > 0 ):
 					self.velocity( {'y' : -0.08 } )
-					self.echo( "FARMODE MOVE RIGHT")
+					self.echo(  self.name ,"FARMODE MOVE RIGHT")
 				else:
-					self.echo( "\tERROR IN LINE 59 =====================================")
+					self.echo(  self.name ,
+							"\tERROR IN LINE 59 =====================================")
 
 			else:
 				count_unfound += 1
@@ -68,9 +69,10 @@ class MissionGate( StandardMission ):
 				if( count_unfound == 5 ):
 					break
 			self.vision.analysis_all( "flare" , "near" , 5 )
-			if( self.vision.have_object() )
+			if( self.vision.have_object() ):
 				self.echo( self.name , "FOUND IN NEAR MODE" )
 				self.reset_target( "xy" )
+				break
 
 		if( count_unfound == 5 ):
 			return False
@@ -85,31 +87,32 @@ class MissionGate( StandardMission ):
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "flare" , "near" , 5 )
-			self.echo( self.vision.echo_data() )
+			self.echo_vision( self.vision.echo_data() )
 	
-			if( self.vision..have_object() ):
+			if( self.vision.have_object() ):
 				count_unfound = 0
-				if( abs(self.vision.center_x() ) < 0.07 ):
+				if( abs(self.vision.center_x() ) < 0.5 ):
 					if( not haved_reset_target ): 
 						self.reset_target("xy")
-						self.echo( self.name , "Renew target")
-					self.echo( self.name , "That center we will move direct if we can")
+						self.echo( self.name , "NEARMODE Renew target")
+					self.echo( self.name , "NEARMODE That center we will move direct if we can")
 					if( self.check_position( "xy" , 0.05 ) ):
 						count_ok += 1
 						if( count_ok == 5 ):
 							self.velocity_xy( 0.2 , 0 )
-							self.echo( self.name , "GO DIRECT")	
+							self.echo( self.name , "NEARMODE GO DIRECT")	
 							break
 					else:
 						count_ok = 0
 				elif( self.vision.center_x() < 0 ):
 					self.velocity( { 'y' : 0.05 })
-					self.echo("NEARMODE MOVE LEFT")
+					self.echo( self.name , "NEARMODE MOVE LEFT")
 				elif( self.vision.center_x() > 0 ):
 					self.velocity( { 'y' : -0.05 })
-					self.echo("NEARMODE MOVE RIGHT")
+					self.echo( self.name , "NEARMODE MOVE RIGHT")
 				else:
-					self.echo( "\tERROR IN LINE 112 =====================================")
+					self.echo( self.name ,  
+							"\tERROR IN LINE 112 =====================================")
 			else:
 				count_unfound += 1
 				if( count_unfound == 5 ):
@@ -118,7 +121,7 @@ class MissionGate( StandardMission ):
 		while( not rospy.is_shutdown() and count_unfound < 5 ):
 			self.sleep( 0.1)
 			self.vision.analysis_all( "flare" , "near" , 5 )
-			self.echo( self.vision.echo_data() )
+			self.echo_vision( self.vision.echo_data() )
 			if( self.vision.have_object() ):
 				count_unfound = 0
 			else:

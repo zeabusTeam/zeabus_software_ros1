@@ -29,12 +29,12 @@ class MissionGate( StandardMission ):
 
 		self.echo( self.name ,  "GATE SETUP FINISHED")
 
-	def callback( self ): # Divide to 2 part move to center and direction
+	def callback( self , request): # Divide to 2 part move to center and direction
 
 		result = False
 
 		self.echo( self.name , "START MISSION GATE")
-
+	
 		count = 0
 
 		count += self.step_01()
@@ -42,11 +42,12 @@ class MissionGate( StandardMission ):
 		if( count != 0 ):
 			result = self.step_02( count )
 
-		if( result ):
-			result = self.step_03() # check gate	
-		else:
-			self.echo( self.name , "Wrong count get into function step_2")
+#		if( result ):
+#			result = self.step_03() # check gate	
+#		else:
+#			self.echo( self.name , "Wrong count get into function step_2")
 
+		self.fix_z( -0.5 )
 		return result
 
 	def step_01( self ):
@@ -55,7 +56,7 @@ class MissionGate( StandardMission ):
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "gate" , "sevinar" , 5 )
-			self.echo( self.vision.echo_data() )
+			self.echo_vision( self.vision.echo_data() )
 
 			if( count_unfound == 5 ):
 				break
@@ -75,7 +76,7 @@ class MissionGate( StandardMission ):
 				else:
 					self.echo( self.name , "Found Pos : 0 and Move Right")
 					self.velocity( {'y' : -0.1} )
-				if( self.vision.area() > 0.7 ):
+				if( self.vision.area() > 0.6 ):
 					self.collect_state()
 					self.echo( self.name , "Area are over let play direct")
 					self.velocity_xy( 0.2 , 0 )
@@ -86,25 +87,10 @@ class MissionGate( StandardMission ):
 
 			elif( self.vision.result['pos'] == -1 ):
 				self.echo( self.name , "Found Pos : -1 and Move Left" )
-				self.velocity( { 'y' : 0.15 } )
-				if( self.vision.area() > 0.6 ):
-					self.echo( self.name , "Area are over let play")
-					self.relative_z( -0.3 )
-					self.sleep()
-					self.relative_xy( 5 , -2 )
-					result = 2
-					break
-				
+				self.velocity( { 'y' : 0.2 } )
 			elif( self.vision.result['pos'] == 1 ):
 				self.echo( self.name , "Found Pos : 1 and Move Right" )
-				self.velocity( { 'y' : -0.15 } )
-				if( self.vision.area() > 0.6 ):
-					self.echo( self.name , "Area are over let play")
-					self.relative_z( -0.3 )
-					self.sleep()
-					self.relative_xy( 5 , 2 )
-					result = 2
-					break
+				self.velocity( { 'y' : -0.2 } )
 
 		return result
 						
@@ -115,7 +101,7 @@ class MissionGate( StandardMission ):
 				self.sleep()
 				distance = self.distance()
 				self.echo( self.name , "Now distance " + str( distance ) )
-				if( distance > 5 ):
+				if( distance > 2.5 ):
 					self.reset_velocity( "xy" )
 					self.relative_z( 0.3 )
 					break
@@ -172,8 +158,8 @@ class MissionGate( StandardMission ):
 		while( not rospy.is_shutdown() ):
 			self.sleep()
 			self.vision.analysis_all("gate" , "sevinar" , 5 )
-			self.echo( self.vision.echo_data() )
-			if( not self.vision.echo_data() ):
+			self.echo_vision( self.vision.echo_data() )
+			if( not self.vision.have_object() ):
 				count_unfound += 1
 				continue
 			count_unfound = 0

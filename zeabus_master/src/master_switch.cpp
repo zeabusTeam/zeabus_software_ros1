@@ -27,6 +27,8 @@
 
 #define _SHOW_COUNT_SWITCH_
 
+#define _PLAY_QUALIFICATION_
+
 int main( int argv , char** argc ){
 
 	ros::init( argv , argc , "master_switch");
@@ -55,12 +57,20 @@ int main( int argv , char** argc ){
 
 	ros::ServiceClient connect_control = 
 			nh.serviceClient< zeabus_library::TwoBool >("/control/active");
-
 	zeabus_library::TwoBool srv_connet_control;
+
+#ifdef _PLAY_QUALIFICATION_
+	ros::ServiceClient connect_mission_qualification =
+			nh.serviceClient< zeabus_library::TwoBool >("/mission/qualification");
+	zeabus_library::TwoBool srv_connect_mission_qualification;
+#endif
 
 //================> LOOP ROS SYSTEM	
 	int count_switch = 0;
 	bool status_back_control = 0;
+#ifdef _PLAY_QUALIFICATION_
+	bool status_mission_qualification = 0;
+#endif
 	
 	#ifdef _SHOW_COUNT_SWITCH_
 		int count_print = 0;
@@ -93,11 +103,30 @@ int main( int argv , char** argc ){
 				status_back_control = true; // change to control are now open
 			}
 		}
+
+#ifdef _PLAY_QUALIFICATION_
+		if( status_mission_qualification ){
+			if( count_switch == 0 ){
+				status_mission_qualification = false;
+			}
+		}
+		else{
+			if( count_switch == limit_count_switch ){
+				srv_connect_mission_qualification.request.data = true;
+				connect_mission_qualification.call( srv_connect_mission_qualification );
+				status_mission_qualification = true;
+			}
+		}
+#endif
+
 		#ifdef _SHOW_COUNT_SWITCH_
 			count_print++;
 			if( count_print == 5 ){
-				printf("count_switch    : %5d\n" , count_switch );	
-				printf("status_control  : %5d\n" , status_back_control );
+				printf("count_switch        : %5d\n" , count_switch );	
+				printf("status_control      : %5d\n" , status_back_control );
+			#ifdef _PLAY_QUALIFICATION_
+				printf("status_qulification : %5d\n" , status_mission_qualification );
+			#endif
 				printf("\n\n");	
 				count_print = 0;
 			}

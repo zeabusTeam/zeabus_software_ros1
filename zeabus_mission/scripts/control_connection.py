@@ -39,9 +39,11 @@ class ControlConnection:
 
 		self.set_name( name_id )
 
-		self.save_state = [ 0 , 0 , 0 , 0 , 0 , 0 ]
+		self.save_state		= [ 0 , 0 , 0 , 0 , 0 , 0 ]
 
-		self.temp_state = [ 0 , 0 , 0 , 0 , 0 , 0 ]	
+		self.temp_state		= [ 0 , 0 , 0 , 0 , 0 , 0 ]
+
+		self.current_state	= [ 0 , 0 , 0 , 0 , 0 , 0 ]
 
 		self.velocity_publisher = rospy.Publisher("/mission/twist", TwistStamped, queue_size= 1)
 
@@ -64,7 +66,7 @@ class ControlConnection:
 		self.cl_get_state		= rospy.ServiceProxy("/control/get_target" , ThreeOdometry )
 
 	def distance( self ):
-		self.collect_state()
+		self.target_state()
 		return math.sqrt( math.pow( self.save_state[0] - self.temp_state[0] , 2 ) + 
 				math.pow( self.save_state[1] - self.temp_state[1] , 2 )	)
 
@@ -112,14 +114,25 @@ class ControlConnection:
 				self.save_state[2] ] = euler_from_quaternion( temp_orientation )
 
 	def get_state( self ):
-		result = self.service_three_odometry( self.cl_get_state , "current" , "get target state")
-		self.temp_state[0]	= result.pose.pose.position.x
-		self.temp_state[1]	= result.pose.pose.position.y
-		self.temp_state[2]	= result.pose.pose.position.z
+		result = self.service_three_odometry( self.cl_get_state, "current", "get current state")
+		self.current_state[0]	= result.pose.pose.position.x
+		self.current_state[1]	= result.pose.pose.position.y
+		self.current_state[2]	= result.pose.pose.position.z
 		temp_orientation	= [ result.pose.pose.orientation.x, result.pose.pose.orientation.y,
 								result.pose.pose.orientation.z, result.pose.pose.orientation.w ]
-		[self.temp_state[0] , self.temp_state[1] , 
-				self.temp_state[2] ] = euler_from_quaternion( temp_orientation )
+		[self.current_state[0] , self.current_state[1] , 
+				self.current_state[2] ] = euler_from_quaternion( temp_orientation )
+
+	def target_state( self ):
+		result = self.service_three_odometry( self.cl_get_state , "target" , "get target state")
+		self.target_state[0]	= result.pose.pose.position.x
+		self.target_state[1]	= result.pose.pose.position.y
+		self.target_state[2]	= result.pose.pose.position.z
+		temp_orientation	= [ result.pose.pose.orientation.x, result.pose.pose.orientation.y,
+								result.pose.pose.orientation.z, result.pose.pose.orientation.w ]
+		[self.target_state[0] , self.target_state[1] , 
+				self.target_state[2] ] = euler_from_quaternion( temp_orientation )
+
 
 #===============> SERVICE OF TWOSTRINGVECTOR3STAMPED
 

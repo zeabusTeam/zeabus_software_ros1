@@ -60,12 +60,14 @@ namespace control{
 							this->target_state->pose.pose.position.y ) < this->temp_vector3.y)){
 				response.result = true;
 			}
+			else response.result = false;
 		}
 		else if( request.type == "z" ){
 			if(  fabs( this->current_state->pose.pose.position.z 
 					- this->target_state->pose.pose.position.z) < request.adding.z ){
 				response.result = true;
 			}	
+			else response.result = false;
 		}
 		else if( request.type == "yaw" ){
 			this->diff_quaternion->get_RPY( this->temp_double[0] , this->temp_double[1] 
@@ -73,6 +75,7 @@ namespace control{
 			if( fabs( this->temp_double[2] ) < request.adding.z ) response.result = true;
 			else response.result = false;
 		}
+		else response.result = false;
 	}
 
 	bool ServiceTwoStringVector3Stamped::callback_reset_target(

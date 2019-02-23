@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<node	name="imu_node01"				pkg="zeabus_sensor"
+			type="imu_node"					output="screen"
+	>
+		<param name="topic_input_node_imu" type="str" value="/sensor/imu/port01"/>
+		<param name="topic_output_node_imu" type="str" value="/sensor/imu/node01"/>
+		<param name="frequency_imu" type="int" value="50"/>
+	</node>
+
+</launch>

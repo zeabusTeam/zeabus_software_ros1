@@ -36,6 +36,7 @@
  */
 #include <string>
 #include <ros/ros.h>
+#include <geometry_msgs/TwistStamped.h>
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/Joy.h>
 #include "boost/thread/mutex.hpp"
@@ -98,7 +99,7 @@ ZeabusTeleop::ZeabusTeleop()
 
   deadman_pressed_ = false;
   zero_twist_published_ = false;
-  vel_pub_ = ph_.advertise<geometry_msgs::Twist>(topic_joy, 1, true);
+  vel_pub_ = ph_.advertise<geometry_msgs::TwistStamped>(topic_joy, 1, true);
   joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("/joy", 10, &ZeabusTeleop::joyCallback, this);
   timer_ = nh_.createTimer(ros::Duration(0.1), boost::bind(&ZeabusTeleop::publish, this));
 }
@@ -134,12 +135,14 @@ void ZeabusTeleop::publish()
   boost::mutex::scoped_lock lock(publish_mutex_);
   if (deadman_pressed_)
   {
-    vel_pub_.publish(last_published_);
+	geometry_msgs::TwistStamped real_last;
+	real_last.twist = last_published_;
+    vel_pub_.publish(real_last);
     zero_twist_published_ = false;
   }
   else if (!deadman_pressed_ && !zero_twist_published_)
   {
-    vel_pub_.publish(geometry_msgs::Twist());
+    vel_pub_.publish(geometry_msgs::TwistStamped());
     zero_twist_published_ = true;
   }
 }

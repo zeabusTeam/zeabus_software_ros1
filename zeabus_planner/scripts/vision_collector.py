@@ -28,6 +28,8 @@ class VisionCollector:
 			self.flare_set_up()	
 		elif( mission_vision == 'drum' ):
 			self.drum_set_up()
+		elif( mission_vision == 'qualification'):
+			self.qualification_set_up()
 		else:
 			print( "<=== VisionCollecotr ===> ERROR PLEASE Look condition on line 32")
 			exit( 0 )
@@ -92,9 +94,21 @@ class VisionCollector:
 		return self.result['area']
 
 	def echo_data( self ):
-		print( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj'] )
+		if( not self.have_object() ):
+			return str ( "<=== VISION COLLECTOR  DON\'T HAVE OBJECT")
+		return str ( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj'] )
 			+ " center_x : center_y " + str( self.center_x() ) + " : " + str( self.center_y() )
+			+ " and area is " + str( self.result['area'])
 		)
+
+	def echo_specific( self ):
+		if( not self.have_object() ):
+			return str ( "<=== VISION COLLECTOR  DON\'T HAVE OBJECT")
+		return str ( "<=== VISION COLLECTOR ===> cx_1 : cx_2 , cy_1 : cy_2 " 
+			+ str( self.result["cx_1"] ) + " : " + str( self.result['cx_2'] ) + " ===,=== "
+			+ str( self.result["cy_1"] ) + " : " + str( self.result['cy_2'] )
+		)
+	
 			
 #################################################################################################
 ####
@@ -112,7 +126,7 @@ class VisionCollector:
 		self.center_y			= self.drum_center_y
 		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area' ]
 		self.not_sum = [ 'left' , 'right' , 'forward' , 'backward']
-		self.request_data = rospy.ServiceProxy( "/vision_drum" , vision_srv_drum )
+		self.request_data = rospy.ServiceProxy( "/vision/drum" , vision_srv_drum )
 
 	def drum_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
@@ -140,7 +154,7 @@ class VisionCollector:
 		self.center_y			= self.gate_center_y
 		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area' , 'pos' ]
 		self.not_sum = []
-		self.request_data = rospy.ServiceProxy( "/vision_gate" , vision_srv_gate )
+		self.request_data = rospy.ServiceProxy( "/vision/gate" , vision_srv_gate )
 
 	def gate_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
@@ -158,6 +172,30 @@ class VisionCollector:
 	def gate_center_y( self ):
 		return ( self.result['cy_2'] + self.result['cy_1'] ) / 2
 
+##============================> SERVICE VISION QUALIFICATION <==================================
+	def qualification_set_up( self ):
+		self.individual_data	= self.qualification_data
+		self.center_x			= self.qualification_center_x
+		self.center_y			= self.qualification_center_y
+		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area'  ]
+		self.not_sum = []
+		self.request_data = rospy.ServiceProxy( "/vision/qualification" , vision_srv_gate )
+	
+	def qualification_data( self , task , request ):
+		temporary = self.request_data( String( task ) , String( request ) ).data
+		self.data['n_obj']		= temporary.state
+		self.data['cx_1']		= temporary.cx1
+		self.data['cy_1']		= temporary.cy1
+		self.data['cx_2']		= temporary.cx2
+		self.data['cy_2']		= temporary.cy2
+		self.data['area']		= temporary.area
+
+	def qualification_center_x( self ):
+		return ( self.result['cx_2'] + self.result['cx_1'] ) / 2
+
+	def qualification_center_y( self ):
+		return ( self.result['cy_2'] + self.result['cy_1'] ) / 2
+
 ##================================> SERVICE VISION FLARE <=======================================
 	def flare_set_up( self ):
 		self.individual_data	= self.flare_data
@@ -165,7 +203,7 @@ class VisionCollector:
 		self.center_y			= self.flare_center_y
 		self.can_sum = [ 'cx' , 'cy' , 'area' ]
 		self.not_sum = []
-		self.request_data = rospy.ServiceProxy( "/vision_flare" , vision_srv_flare )
+		self.request_data = rospy.ServiceProxy( "/vision/flare" , vision_srv_flare )
 
 	def flare_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data

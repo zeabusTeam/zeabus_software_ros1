@@ -12,7 +12,7 @@ rospack = rospkg.RosPack()
 name_package = 'zeabus_control'
 print("finish init node")
 #location_file_01 = '/script/teledyne_2018_bound_min.txt'
-location_file_01 = '/scripts/teledyne_9th_degree.txt'
+location_file_01 = '/scripts/teledyne_9th_degree_bound_min.txt'
 pwm_force_data_01 = read_file( rospack.get_path(name_package) + location_file_01 )
 
 location_file_02 = '/scripts/blue_robotics_2018_bound_min.txt'

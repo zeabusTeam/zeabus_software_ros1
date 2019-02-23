@@ -9,15 +9,13 @@ find_package(catkin REQUIRED COMPONENTS
 	geometry_msgs
 	zeabus_library
 	zeabus_extension
-	message_generation
 	dynamic_reconfigure
 )
 
 find_package(Boost REQUIRED COMPONENTS system)
 
 generate_dynamic_reconfigure_options(
-	cfg/pid_control.cfg
-	cfg/offset_control.cfg
+	cfg/pid_.cfg
 )
 
 catkin_package(
@@ -32,19 +30,20 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library( zeabus_control STATIC src/other_function_double.cpp)
+add_executable(front_control src/front_control.cpp)
 
-add_dependencies( zeabus_control ${${PROJECT_NAME}_EXPORTED_TARGETS}
-								${catkin_EXPORTED_TARGETS}
+add_dependencies( front_control	${PROJECT_NAME}_gencfg 
+							${${PROJECT_NAME}_EXPORTED_TARGETS}
+							${catkin_EXPORTED_TARGETS}
 )
+target_link_libraries( front_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
 
-target_link_libraries( zeabus_control ${catkin_LIBRARIES} )
 
-add_executable(control src/main_control.cpp)
+add_executable(back_control src/back_control.cpp)
 
-add_dependencies( control	${PROJECT_NAME}_gencfg 
+add_dependencies( back_control ${PROJECT_NAME}_gencfg 
 							${${PROJECT_NAME}_EXPORTED_TARGETS}
 							${catkin_EXPORTED_TARGETS}
 )
 
-target_link_libraries( control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries( back_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )

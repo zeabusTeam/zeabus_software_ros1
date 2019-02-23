@@ -4,10 +4,10 @@
   <version>0.0.0</version>
   <description>The zeabus_library package</description>
 
-  <maintainer email="zeabus@todo.todo">zeabus</maintainer>
+  <maintainer email="supasan.k@ku.th">SupasanKomonlit</maintainer>
 
 
-  <license>TODO</license>
+  <license>BSD</license>
 
 
   <buildtool_depend>catkin</buildtool_depend>
@@ -16,8 +16,18 @@
   <build_export_depend>roscpp</build_export_depend>
   <exec_depend>roscpp</exec_depend>
 
+  <build_depend>roslib</build_depend>
+  <build_export_depend>roslib</build_export_depend>
+  <exec_depend>roslib</exec_depend>
+
+  <build_depend>tf</build_depend>
+  <exec_depend>tf</exec_depend>
+
   <build_depend>std_msgs</build_depend>
   <exec_depend>std_msgs</exec_depend>
+
+  <build_depend>sensor_msgs</build_depend>
+  <exec_depend>sensor_msgs</exec_depend>
 
   <build_depend>message_generation</build_depend>
   <exec_depend>message_runtime</exec_depend>

@@ -2,36 +2,66 @@ cmake_minimum_required(VERSION 2.8.3)
 project(zeabus_sensor)
 
 find_package(catkin REQUIRED COMPONENTS
+	tf
 	roscpp
 	std_msgs
+	sensor_msgs
 	geometry_msgs
-	message_generation
+	zeabus_static
+	zeabus_library
 )
 
 find_package(Boost REQUIRED COMPONENTS system chrono)
 
-add_service_files(
-	DIRECTORY srv
-	FILES
-	port_sensor.srv
-)
-
-# HAVE THIS LINE FOR GENERATE MESSAGE
-generate_messages( DEPENDENCIES std_msgs)
-
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES zeabus_sensor
-  CATKIN_DEPENDS roscpp zeabus_extension  std_msgs geometry_msgs message_runtime
+  LIBRARIES zeabus_sensor  
+  CATKIN_DEPENDS roscpp  zeabus_library sensor_msgs tf geometry_msgs zeabus_static std_msgs
   DEPENDS Boost 
 )
 
 include_directories( include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
-#add_executable(node_3dm_gx5_45 src/3dm_gx5_45/3dm_gx5_45_node.cpp)
-#add_executable(node_filter_imu src/3dm_gx5_45/filter_imu_node.cpp)
-#
-#add_dependencies(node_3dm_gx5_45 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTD_TARGETS})
-#
-#target_link_libraries(node_3dm_gx5_45 ${catkin_LIBRARIES} ${boost_LIBRARIES})
-#target_link_libraries(node_filter_imu ${catkin_LIBRARIES} ${boost_LIBRARIES})
+#add_executable( imu_port src/inertial_measurement_unit/imu_port.cpp )
+#add_dependencies( imu_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( imu_port ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+#add_executable( imu_node src/inertial_measurement_unit/imu_node.cpp )
+#add_dependencies( imu_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( imu_node ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+#add_executable( dvl_port src/teledyne_dvl/dvl_port.cpp )
+#add_dependencies( dvl_port ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( dvl_port ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+#add_executable( dvl_node src/teledyne_dvl/dvl_node.cpp )
+#add_dependencies( dvl_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( dvl_node ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+# ------------------------------------- TF FILE ------------------------------------------------
+
+#add_executable( tf_port_imu src/inertial_measurement_unit/tf_port_imu.cpp )
+#add_dependencies( tf_port_imu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( tf_port_imu ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+#add_executable( tf_port_dvl src/teledyne_dvl/tf_port_dvl.cpp )
+#add_dependencies( tf_port_dvl ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( tf_port_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+#add_executable( tf_robot_frame src/tf_robot_frame.cpp )
+#add_dependencies( tf_robot_frame ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries( tf_robot_frame ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+# ----------------------------------- LAST GROUP -----------------------------------------------
+add_executable( tf_imu src/imu.cpp )
+add_dependencies( tf_imu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( tf_imu ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+add_executable( tf_dvl src/dvl.cpp )
+add_dependencies( tf_dvl ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( tf_dvl ${catkin_LIBRARIES} ${boost_LIBRARIES})
+
+add_executable( tf_robot src/robot.cpp )
+add_dependencies( tf_robot ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( tf_robot ${catkin_LIBRARIES} ${boost_LIBRARIES})
+

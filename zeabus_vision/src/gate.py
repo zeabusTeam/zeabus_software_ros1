@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python2.7
 """
     File name:gate.py
     Author: skconan, AyumiizZ

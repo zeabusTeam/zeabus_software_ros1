@@ -39,11 +39,11 @@ class StandardMission( ControlConnection ):
 
 	def echo( self , message ):
 		self.data_pub.publish( String( message ) )
-		print( str(message) )
+		print( str(message) , end = "\n\n")
 
 	def echo( self , name , message ):
 		self.data_pub.publish( String("<==" + str(name) + "==> " + str(message) ) )
-		print( "<==" + str(name) + "==>" + str(message) )
+		print( "<==" + str(name) + "==> " + str(message) , end = "\n\n")
 
 def callback( request ):
 	print("Callback in file standard_mission.py")

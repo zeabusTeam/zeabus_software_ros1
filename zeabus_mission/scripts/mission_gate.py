@@ -192,7 +192,7 @@ class MissionGate( StandardMission ):
 					self.echo( self.name , "Pos is 1 & Move Right")
 					self.velocity( { 'y' : -0.15} )
 			elif( self.vision.result['pos'] == -1 ):
-				if( self.visio.area() > 0.4 ):
+				if( self.vision.area() > 0.4 ):
 					self.echo( self.name , "Pos is -1 & overlimit finish this job")
 					break
 				else:

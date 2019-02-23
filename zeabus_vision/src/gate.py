@@ -150,6 +150,15 @@ def find_pipe(binary, align):
     return closest_pair, 2
 
 
+def get_flare(img):
+    hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
+    # upper, lower = get_color_range('yellow', 'front', '1', 'flare')
+    upper = np.array([48, 255, 255], dtype=np.uint8)
+    lower = np.array([14, 0, 0], dtype=np.uint8)
+    mask = cv.inRange(hsv, lower, upper)
+    return mask
+
+
 def find_gate():
     global IMAGE
     if IMAGE is None:
@@ -168,12 +177,15 @@ def find_gate():
     vertical = cv.dilate(vertical.copy(), kernel_box)
     kernel_erode = lib.get_kernel(ksize=(3, 11))
     vertical = cv.erode(vertical.copy(), kernel_erode)
+    vertical = cv.bitwise_and(vertical,cv.bitwise_not(get_flare(pre_process)))
 
     kernel_horizontal = lib.get_kernel(ksize=(21, 1))
     horizontal = cv.erode(obj.copy(), kernel_horizontal)
     horizontal = cv.dilate(horizontal.copy(), kernel_box)
     kernel_erode = lib.get_kernel(ksize=(11, 3))
     horizontal = cv.erode(horizontal.copy(), kernel_erode)
+    horizontal = cv.bitwise_and(horizontal,cv.bitwise_not(get_flare(pre_process)))
+
 
     vertical_pipe, no_pipe_v = find_pipe(vertical, 'v')
     horizontal_pipe, no_pipe_h = find_pipe(horizontal, 'h')

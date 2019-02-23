@@ -27,6 +27,8 @@ class MissionGate( StandardMission ):
 
 		self.vision = VisionCollector("gate")
 
+		self.echo( self.name ,  "GATE SETUP FINISHED")
+
 	def callback( self ): # Divide to 2 part move to center and direction
 
 		result = False

@@ -67,14 +67,14 @@ class VisionCollector:
 		self.reset_collect()
 		while( count_found < amont and count_unfound < amont ):
 			self.individual_data( task , request )
-			if( self.data['n_obj'] >= 1 ):
+			if( self.data['n_obj'] > 0 ):
 				count_found += 1
 				for run in self.can_sum:
 					self.collect[ run ] += self.data[ run ]
 			else:
 				count_unfound += 1
 		if( count_found == amont ):
-			self.result['n_obj'] = 1
+			self.result['n_obj'] = self.data['n_obj']
 			for run in self.can_sum:
 				self.result[run] = self.collect[run] / amont
 			for run in self.not_sum:
@@ -87,7 +87,7 @@ class VisionCollector:
 			self.collect[ run ] = 0
 
 	def have_object( self ):
-		if( self.result['n_obj'] == 1 ):
+		if( self.result['n_obj'] != 0 ):
 			return 	True
 		else:
 			return False

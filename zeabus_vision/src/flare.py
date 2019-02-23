@@ -151,7 +151,6 @@ def find_far_flare():
     
     display = IMAGE.copy()
     pre_process = lib.pre_process(IMAGE,'flare')
-    mask = cv.bitwise_not(get_mask(pre_process.copy()))
     gray = cv.cvtColor(pre_process.copy(), cv.COLOR_BGR2GRAY)
     obj = lib.bg_subtraction(gray)
 
@@ -198,30 +197,6 @@ def find_far_flare():
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
     return message(cx=(x1+x2)/2., cy=(y1+y2)/2., area=area, state=1)
     
-    
-    
-            #     lib.print_result("NOT FOUND", ct.RED)
-    #     lib.publish_result(image_result, 'bgr', PUBLIC_TOPIC + 'image_result')
-    #     lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'mask')
-    #     return message()
-
-    # ROI = get_ROI(mask, case=req)
-    # mode = len(ROI)
-    # if mode == 0:
-    #     lib.print_result("NOT FOUND", ct.RED)
-    #     lib.publish_result(image_result, 'bgr', PUBLIC_TOPIC + 'image_result')
-    #     lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'mask')
-    #     return message()
-    # elif mode >= 1:
-    #     if mode == 1:
-    #         lib.print_result("FOUND A FLARE", ct.GREEN)
-    #     elif mode > 1:
-    #         lib.print_result("FOUND BUT HAVE SOME NOISE (" +
-    #                      str(mode) + ")", ct.YELLOW)
-    #     cx, cy, area = get_cx(cnt=max(ROI, key=cv.contourArea))
-    #     lib.publish_result(image_result, 'bgr', PUBLIC_TOPIC + 'image_result')
-    #     lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'mask')
-    #     return message(cx=cx, cy=cy, area=area, state=len(ROI))
 
 def find_near_flare():
     if IMAGE is None:

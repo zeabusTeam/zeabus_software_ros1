@@ -17,17 +17,61 @@ import vision_lib as lib
 from operator import itemgetter
 from time import time
 
+
+class Log:
+    def __init__(self):
+        self.time = None
+        self.cx1 = self.cx2 = None
+        self.cy1 = self.cy2 = None
+        self.state = None
+        self.assume = None
+
+    def update_time(self):
+        if self.time is not None and self.time - time() > 5:
+            self.cx1 = self.cx2 = None
+            self.cy1 = self.cy2 = None
+            self.state = self.assume = None
+        self.time = time()
+
+    def save_data(self, cx1=None, cx2=None, cy1=None, cy2=None, state=None):
+        self.cx1 = cx1
+        self.cx2 = cx2
+        self.cy1 = cy1
+        self.cy2 = cy2
+        self.state = state
+
+    def assume_pole(self, mode, x, y):
+        if self.state == 2 and self.assume is None and mode == 1:
+            line1 = lib.distance_2_point(x1=self.cx1, y1=self.cy1, x2=x, y2=y)
+            line2 = lib.distance_2_point(x1=self.cx2, y1=self.cy2, x2=x, y2=y)
+            if line1 > line2:
+                self.assume = 'Right'
+            else:
+                self.assume = 'Left'
+        else:
+            self.assume = None
+
+    def assume_to_pos(self):
+        if self.assume == 'Right':
+            return 1
+        if self.assume == 'Left':
+            return -1
+        return 0
+
+
 IMAGE = None
-PROCESS_DATA = {}
 PUBLIC_TOPIC = '/vision/mission/qualification/'
 SUB_SAMPLING = 0.3
 DEBUG = {
+    'print': True,
     'time': False,
     'console': True,
     'rqt-grid': False,
     'detail': False,
     'not-only-res': True
 }
+
+log = Log()
 
 
 def mission_callback(msg):
@@ -80,21 +124,23 @@ def is_verticle_pipe(cnt, percent, rect):
     area_cnt = cv.contourArea(cnt)
     area_box = w * h
     w, h = max(w, h), min(w, h)
-
-    print('area', (area_box, area_cnt, w, h))
+    if DEBUG['print']:
+        print('area', (area_box, area_cnt, w, h))
     if area_box <= 50 or area_cnt <= 300 or w < 50:
         return False
 
     area_ratio_expected = 0.3
     area_ratio = area_cnt / area_box
-    print('c2', area_ratio)
+    if DEBUG['print']:
+        print('c2', area_ratio)
     if area_ratio < area_ratio_expected:
         return False
 
     wh_ratio_expected = (100/4.)/2
 
     wh_ratio = 1.0 * w / h
-    print((wh_ratio, (w, h)))
+    if DEBUG['print']:
+        print((wh_ratio, (w, h)))
     if wh_ratio < wh_ratio_expected * percent:
         return False
 
@@ -115,7 +161,8 @@ def find_pipe(binary):
         if not is_verticle_pipe(cnt, percent_pipe, rect):
             continue
 
-        print('c1')
+        if DEBUG['print']:
+            print('c1')
 
         box = cv.boxPoints(rect)
         box = np.int64(box)
@@ -146,11 +193,12 @@ def find_pipe(binary):
 
 
 def find_qualify_pole():
-    checkpnt = time()
-    global IMAGE
+    global IMAGE, log
     if IMAGE is None:
         lib.img_is_none()
         return message(state=-1)
+
+    log.update_time()
 
     display = IMAGE.copy()
     gray = cv.cvtColor(IMAGE.copy(), cv.COLOR_BGR2GRAY)
@@ -203,15 +251,6 @@ def find_qualify_pole():
     cx1, cx2 = max(cx1, 0), min(cx2, wimg)
     cy1, cy2 = max(cy1, 0), min(cy2, himg)
 
-    right_excess = (cx2 > 0.95*wimg)
-    left_excess = (cx1 < (0.05*wimg))
-    if (right_excess and not left_excess):
-        pos = 1
-    elif (not right_excess and left_excess):
-        pos = -1
-    else:
-        pos = 0
-
     cv.rectangle(display, (int(cx1), int(cy1)),
                  (int(cx2), int(cy2)), (0, 255, 0), 3)
     cv.circle(display, (int((cx1+cx2)/2), int((cy1+cy2)/2)),
@@ -221,8 +260,9 @@ def find_qualify_pole():
     lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'image_result')
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
-
-    print(time()-checkpnt)
+    log.assume_pole(mode=mode, x=cx1, y=cy1)
+    pos = log.assume_to_pos()
+    log.save_data(state=mode, cx1=cx1, cx2=cx2, cy1=cy1, cy2=cy2)
     return message(state=mode, cx=(cx1+cx2)/2, cy=(cy1+cy2)/2, pos=pos, area=area)
 
 

@@ -50,12 +50,11 @@ def range_str2array(string):
 def get_kernel(shape='rect', ksize=(5, 5)):
     if shape == 'rect':
         return cv.getStructuringElement(cv.MORPH_RECT, ksize)
-    elif shape == 'ellipse':
+    if shape == 'ellipse':
         return cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize)
-    elif shape == 'plus':
+    if shape == 'plus':
         return cv.getStructuringElement(cv.MORPH_CROSS, ksize)
-    else:
-        return None
+    return None
 
 # def get_color_range(color, camera_position, number, mission):
 #     lower = None
@@ -161,3 +160,6 @@ def print_mission(task, req=''):
     req = 'BLANK' if req == '' else req
     print("task is " + ct.UNDERLINE + task + ct.DEFAULT +
           " and req is " + ct.UNDERLINE + req + ct.DEFAULT)
+
+def distance_2_point(x1,y1,x2,y2):
+    return ((y2-y1)**2 + (x2-x1)**2)**0.5

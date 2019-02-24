@@ -1,4 +1,5 @@
-#!/usr/bin/python2
+#!/usr/bin/python2.7
+
 #################################################################################################
 ####
 ####	FILE		: standart_mission.py
@@ -7,7 +8,6 @@
 ####	Purpose		: For connection with control part
 ####
 #################################################################################################
-from __future__ import print_function
 #===============>
 
 import rospy

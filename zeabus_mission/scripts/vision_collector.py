@@ -1,4 +1,5 @@
-#!/usr/bin/python2
+#!/usr/bin/python2.7
+
 #################################################################################################
 ####
 ####	FILE		: vision_collector.py
@@ -7,7 +8,6 @@
 ####	Purpose		: For manage about analysis vision data
 ####
 #################################################################################################
-from __future__ import print_function
 #===============>
 
 import rospy

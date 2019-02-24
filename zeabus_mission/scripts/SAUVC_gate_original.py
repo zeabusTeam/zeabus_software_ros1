@@ -4,8 +4,8 @@
 ####	FILE		: mission_gate.py
 ####	Maintain	: Supasan Komonlit
 ####	Create on	: 2019 , FEB 21
-####	Purpose		: For competition in SAUVC2019
-####
+####	Purpose		: For competition in SAUVC2019 about mission gate and vision don't have
+####				  affect by reflect	
 #################################################################################################
 from __future__			import print_function
 #===============>

@@ -50,11 +50,12 @@ def message(state=0, pos=0, x1=0.0, y1=0.0, x2=0.0, y2=0.0, area=0.0):
         group value into massage
     """
     # convert x,y to range -1 - 1
-    himg, wimg = IMAGE.shape[:2]
-    x1 = lib.Aconvert(x1, wimg)
-    x2 = lib.Aconvert(x2, wimg)
-    y1 = -1.0*lib.Aconvert(y1, himg)
-    y2 = -1.0*lib.Aconvert(y2, himg)
+    if(state >= 0):
+        himg, wimg = IMAGE.shape[:2]
+        x1 = lib.Aconvert(x1, wimg)
+        x2 = lib.Aconvert(x2, wimg)
+        y1 = -1.0*lib.Aconvert(y1, himg)
+        y2 = -1.0*lib.Aconvert(y2, himg)
 
     # group value into vision_gate
     msg = vision_gate()

@@ -92,9 +92,10 @@ def image_callback(msg):
 
 
 def message(state=0, pos=0, cx=0.0, cy=0.0, area=0.0):
-    himg, wimg = IMAGE.shape[:2]
-    cx = lib.Aconvert(cx, wimg)
-    cy = -1.0*lib.Aconvert(cy, himg)
+    if(state >= 0):
+        himg, wimg = IMAGE.shape[:2]
+        cx = lib.Aconvert(cx, wimg)
+        cy = -1.0*lib.Aconvert(cy, himg)
     msg = vision_gate()
     msg.state = state
     msg.pos = pos

@@ -134,12 +134,28 @@ def find_pipe(binary, align):
 
     if len(result) < number_of_object:
         return result, len(result)
+    # else:
+        # return result[:number_of_object], number_of_object	
     else:
-        return result[:number_of_object], number_of_object
+        closest_pair = []
+        min_dist = 2000
+        for i in range(len(result)):
+            for j in range(i+1,len(result)):
+                dist_y = abs(result[j][1] - result[i][1])
+                dist_x = abs(result[j][0] - result[i][0])
+                if dist_x >= 50 and dist_y < min_dist:
+                    min_dist = dist_y
+                    closest_pair = [result[i],result[j]]   
+        if closest_pair == []:       
+            return result[:1], 1
+        else:
+            return closest_pair, 2
+
 
 
 def find_gate():
     global image_input, stat, previous_bg, first_object, tracker, tracker_status, object_box, untrack_frame
+    # return message()
     if image_input is None:
         img_is_none()
         return message(state=-1)

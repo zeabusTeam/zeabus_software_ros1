@@ -202,7 +202,7 @@ def find_qualify_pole():
 
     display = IMAGE.copy()
     gray = cv.cvtColor(IMAGE.copy(), cv.COLOR_BGR2GRAY)
-    obj = lib.bg_subtraction(gray)
+    obj = lib.bg_subtraction(gray,mode='neg')
 
     kernel_box = lib.get_kernel(ksize=(7, 7))
 

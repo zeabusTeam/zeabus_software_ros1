@@ -168,7 +168,7 @@ def find_gate():
     display = IMAGE.copy()
     pre_process = lib.pre_process(IMAGE,'gate')
     gray = cv.cvtColor(pre_process.copy(), cv.COLOR_BGR2GRAY)
-    obj = lib.bg_subtraction(gray)
+    obj = lib.bg_subtraction(gray,mode='neg')
 
     kernel_box = lib.get_kernel(ksize=(7, 7))
 

@@ -37,7 +37,7 @@ def publish_result(img, type, topicName):
 
 def get_topic(camera):
     if camera == 'front':
-        return '/vision/front/image_rect_color/compressed'
+        return '/vision/front/image_raw/compressed'
     elif camera == 'bottom':
         return '/vision/bottom/image_raw/compressed'
 
@@ -78,7 +78,7 @@ def normalize(gray):
     return np.uint8(255 * (gray - gray.min()) / (gray.max() - gray.min()))
 
 
-# def bg_subtraction(gray):
+# def bg_subtraction(gray,mode='neg'):
 #     min_gray = 20
 #     max_gray = 250
 #     bg = cv.medianBlur(gray, 61)
@@ -156,7 +156,7 @@ def clear_screen():
 
 
 def pre_process(bgr, mission):
-    return bgr.copy
+    return bgr.copy()
 
 
 def print_mission(task, req=''):

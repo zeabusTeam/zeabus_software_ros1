@@ -86,7 +86,7 @@ def is_pipe(cnt, percent, rect):
                 height = 40
     """
     (x, y), (w, h), angle = rect
-    if -70 <= angle and angle <= -20:
+    if (-70 <= angle and angle <= -20) or h < 2 or w < 2:
         return False
 
     w, h = max(w, h), min(w, h)

@@ -171,9 +171,9 @@ def find_far_flare():
     color = ct.CYAN
     if mode == 0:
         lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
-        lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
-        lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
+        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'near/display')
+        lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'near/mask/vertical')
+        lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'near/mask')
         return message()
     x, y, w, h, angle = vertical_pipe[0]
     cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
@@ -237,8 +237,9 @@ def get_obj(mask, display):
         pipe_rule = wh_ratio > 2 and (angle <= -25 and angle >= -65)
         if excess_rule and pipe_rule and area_rule:
             result.append(((x1+x2)/2., (y1+y2)/2., area_box, cnt))
-
-    return max(result, key=lambda x: cv.contourArea(x[3]))
+    if result != []:
+        return max(result, key=lambda x: cv.contourArea(x[3]))
+    return (0,0,0,0)
 
 
 def find_near_flare():
@@ -248,10 +249,10 @@ def find_near_flare():
 
     display = IMAGE.copy()
     pre_process = lib.pre_process(IMAGE, 'flare')
-    mask = cv.bitwise_not(get_mask(pre_process.copy()))
+    mask = get_mask(pre_process.copy())
     cx, cy, area, obj = get_obj(mask, display)
     mode = obj
-    color = ct.PURPLE  # if req == "near" else ct.CYAN
+    color = ct.PURPLE
     if mode == 0:
         lib.print_result("NOT FOUND "+color+"(FAR)", ct.RED)
         lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'far/display')
@@ -269,6 +270,7 @@ if __name__ == '__main__':
     rospy.init_node('vision_flare', anonymous=False)
 
     IMAGE_TOPIC = lib.get_topic("front")
+    # IMAGE_TOPIC = '/vision/front/image_raw/compressed'
     rospy.Subscriber(IMAGE_TOPIC, CompressedImage, image_callback)
     rospy.Service('vision/flare', vision_srv_flare(),
                   mission_callback)

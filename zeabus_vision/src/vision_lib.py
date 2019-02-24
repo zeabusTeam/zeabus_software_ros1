@@ -37,7 +37,7 @@ def publish_result(img, type, topicName):
 
 def get_topic(camera):
     if camera == 'front':
-        return '/vision/front/image_raw/compressed'
+        return '/vision/front/image_rect_color/compressed'
     elif camera == 'bottom':
         return '/vision/bottom/image_raw/compressed'
 

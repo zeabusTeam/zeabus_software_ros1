@@ -87,10 +87,16 @@ class VisionCollector:
 			self.collect[ run ] = 0
 
 	def have_object( self ):
-		if( self.result['n_obj'] != 0 ):
+		if( self.result['n_obj'] > 0 ):
 			return 	True
 		else:
 			return False
+
+	def distance_x( self ):
+		return abs( self.result['cx_1'] - self.result['cx_2'] )
+	
+	def distance_y( self ):
+		return abs( self.result['cy_1'] - self.result['cy_2'] )
 
 	def area( self ):
 		return self.result['area']
@@ -106,9 +112,10 @@ class VisionCollector:
 	def echo_specific( self ):
 		if( not self.have_object() ):
 			return str ( "<=== VISION COLLECTOR  DON\'T HAVE OBJECT")
-		return str ( "<=== VISION COLLECTOR ===> cx_1 : cx_2 , cy_1 : cy_2 " 
+		return str ( "<=== VISION COLLECTOR ===> cx_1 : cx_2 , cy_1 : cy_2 , d_x : d_y " 
 			+ str( self.result["cx_1"] ) + " : " + str( self.result['cx_2'] ) + " ===,=== "
-			+ str( self.result["cy_1"] ) + " : " + str( self.result['cy_2'] )
+			+ str( self.result["cy_1"] ) + " : " + str( self.result['cy_2'] ) + " ===,=== "
+			+ str( self.distance_x() ) + " : " + str( self.distance_y() )
 		)
 
 	def num_object( self ):

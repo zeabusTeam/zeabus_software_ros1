@@ -25,6 +25,7 @@ DEBUG = {
     'not-only-res': True
 }
 
+
 def mission_callback(msg):
     task = str(msg.task.data)
     req = str(msg.req.data)
@@ -49,11 +50,13 @@ def message(state=0, cx=0.0, cy=0.0, area=0.0):
     """
         group value into massage
     """
-    # convert x,y to range -1 - 1
-    himg,wimg = IMAGE.shape[:2]
-    cx = lib.Aconvert(cx, wimg)
-    cy = -1.0*lib.Aconvert(cy, himg)
-    area = lib.Aconvert(area, (himg*wimg))
+    if(state > 0):
+        # convert x,y to range -1 - 1
+        himg, wimg = IMAGE.shape[:2]
+        cx = lib.Aconvert(cx, wimg)
+        cy = -1.0*lib.Aconvert(cy, himg)
+        area = lib.Aconvert(area, (himg*wimg))
+
     # group value into vision_flare
     msg = vision_flare()
     msg.state = state
@@ -73,6 +76,7 @@ def get_mask(img):
     # lower = np.array([2, 0, 0], dtype=np.uint8)
     mask = cv.inRange(hsv, lower, upper)
     return mask
+
 
 def is_verticle_pipe(cnt, percent, rect):
     """
@@ -106,7 +110,7 @@ def is_verticle_pipe(cnt, percent, rect):
     if area_ratio < area_ratio_expected:
         return False
 
-    wh_ratio_expected = 6 # (pipe['width']/pipe['height'])/2
+    wh_ratio_expected = 6  # (pipe['width']/pipe['height'])/2
 
     wh_ratio = 1.0 * w / h
     print((wh_ratio, (w, h)))
@@ -114,6 +118,7 @@ def is_verticle_pipe(cnt, percent, rect):
         return False
 
     return True
+
 
 def find_pipe(binary):
     _, contours, _ = cv.findContours(
@@ -148,9 +153,9 @@ def find_far_flare():
     if IMAGE is None:
         lib.img_is_none()
         return message(state=-1)
-    
+
     display = IMAGE.copy()
-    pre_process = lib.pre_process(IMAGE,'flare')
+    pre_process = lib.pre_process(IMAGE, 'flare')
     gray = cv.cvtColor(pre_process.copy(), cv.COLOR_BGR2GRAY)
     obj = lib.bg_subtraction(gray)
 
@@ -163,6 +168,7 @@ def find_far_flare():
 
     vertical_pipe, no_v_pipe = find_pipe(vertical)
     mode = no_v_pipe
+    color = ct.CYAN
     if mode == 0:
         lib.print_result("NOT FOUND", ct.RED)
         lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
@@ -175,55 +181,88 @@ def find_far_flare():
     vertical_x = [(x - w / 2.), (x + w / 2.)]
     vertical_y = [(y - h / 2.), (y + h / 2.)]
 
-    himg,wimg = IMAGE.shape[:2]
-    x1,x2 = max(min(vertical_x),0),min(max(vertical_x),wimg)
-    y1,y2 = max(min(vertical_y),0),min(max(vertical_y),himg)
+    himg, wimg = IMAGE.shape[:2]
+    x1, x2 = max(min(vertical_x), 0), min(max(vertical_x), wimg)
+    y1, y2 = max(min(vertical_y), 0), min(max(vertical_y), himg)
     area = (x2-x1) * (y2-y1)
 
-    if area > 90000 or area < 1500:
-        lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
-        lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
-        lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
+    if area > 90000 or area < 4500:
+        lib.print_result("NOT FOUND "+color+"(NEAR)", ct.RED)
+        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'near/display')
+        lib.publish_result(vertical, 'gray', PUBLIC_TOPIC +
+                           'near/mask/vertical')
+        lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'near/mask')
         return message()
 
-    lib.print_result("FOUND", ct.RED)
+    lib.print_result("FOUND "+color+"(NEAR)", ct.RED)
     cv.rectangle(display, (int(x1), int(y1)),
                  (int(x2), int(y2)), (0, 255, 0), 3)
     cv.circle(display, (int((x1+x2)/2), int((y1+y2)/2)),
               3, (0, 255, 255), -1)
-    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
-    lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
-    lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
+    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'near/display')
+    lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'near/mask/vertical')
+    lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'near/mask')
     return message(cx=(x1+x2)/2., cy=(y1+y2)/2., area=area, state=1)
-    
+
+
+def get_obj(mask, display):
+    himg, wimg = mask.shape[:2]
+    result = []
+    contours = cv.findContours(
+        mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
+    for cnt in contours:
+        check_area = 72000
+        area_cnt = cv.contourArea(cnt)
+        if area_cnt < check_area:
+            continue
+        (x, y), (w, h), angle = rect = cv.minAreaRect(cnt)
+        box = cv.boxPoints(rect)
+        box = np.int64(box)
+        cv.drawContours(display, [box], 0, (0, 0, 255), 2)
+
+        x1, x2 = (x - w / 2.), (x + w / 2.)
+        y1, y2 = (y - h / 2.), (y + h / 2.)
+        x1, x2 = max(min(x1, x2), 0), min(max(x1, x2), wimg)
+        y1, y2 = max(min(y1, y2), 0), min(max(y1, y2), himg)
+
+        right_excess = y2 > 0.95*wimg
+        left_excess = x1 < (0.05*wimg)
+        bottom_excess = x2 > 0.95*himg
+
+        (w, h) = max(w, h), min(w, h)
+        wh_ratio = 1.0*w / h
+        area_box = w * h
+        area_rule = 1.0 * area_cnt / area_box > 0.3
+        excess_rule = not(left_excess or right_excess) and bottom_excess
+        pipe_rule = wh_ratio > 2 and (angle <= -25 and angle >= -65)
+        if excess_rule and pipe_rule and area_rule:
+            result.append(((x1+x2)/2., (y1+y2)/2., area_box, cnt))
+
+    return max(result, key=lambda x: cv.contourArea(x[3]))
+
 
 def find_near_flare():
     if IMAGE is None:
         lib.img_is_none()
         return message(state=-1)
-    
+
     display = IMAGE.copy()
-    pre_process = lib.pre_process(IMAGE,'flare')
+    pre_process = lib.pre_process(IMAGE, 'flare')
     mask = cv.bitwise_not(get_mask(pre_process.copy()))
-    ROI = get_ROI(mask)
-    mode = len(ROI)
+    cx, cy, area, obj = get_obj(mask, display)
+    mode = obj
+    color = ct.PURPLE  # if req == "near" else ct.CYAN
     if mode == 0:
-        lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(display, 'bgr',PUBLIC_TOPIC + 'far/display')
-        lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'far/mask')
-        return message()
-    elif mode >= 1:
-        color = ct.PURPLE # if req == "near" else ct.CYAN
-        if mode == 1:
-            lib.print_result("FOUND "+color+'far'+ct.GREEN+" FLARE", ct.GREEN)
-        elif mode > 1:
-            lib.print_result("FOUND BUT HAVE SOME NOISE (" +
-                         str(mode) + ")", ct.YELLOW)
-        cx, cy, area = get_cx(cnt=max(ROI, key=cv.contourArea))
+        lib.print_result("NOT FOUND "+color+"(FAR)", ct.RED)
         lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'far/display')
         lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'far/mask')
-        return message(cx=cx, cy=cy, area=area, state=len(ROI))
+        return message()
+    if mode == 1:
+        lib.print_result("FOUND "+color+"(FAR)", ct.GREEN)
+        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'far/display')
+        lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'far/mask')
+        return message(cx=cx, cy=cy, area=area, state=mode)
+    return message(state=0)
 
 
 if __name__ == '__main__':

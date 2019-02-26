@@ -42,14 +42,16 @@ class Log:
 
     def assume_pole(self, mode, x, y):
         if self.state == 2 and self.assume is None and mode == 1:
-            line1 = lib.distance_2_point(x1=self.cx1, y1=self.cy1, x2=x, y2=y)
-            line2 = lib.distance_2_point(x1=self.cx2, y1=self.cy2, x2=x, y2=y)
+            line1 = abs(self.cx1 - x)
+            line2 = abs(self.cx2 - x)
             if line1 > line2:
                 self.assume = 'Right'
             else:
                 self.assume = 'Left'
-        else:
+        elif mode == 2:
             self.assume = None
+                        
+
 
     def assume_to_pos(self):
         if self.assume == 'Right':
@@ -63,7 +65,7 @@ IMAGE = None
 PUBLIC_TOPIC = '/vision/mission/qualification/'
 SUB_SAMPLING = 0.3
 DEBUG = {
-    'print': True,
+    'print': False,
     'time': False,
     'console': True,
     'rqt-grid': False,
@@ -79,7 +81,7 @@ def mission_callback(msg):
     req = str(msg.req.data)
     if DEBUG['console']:
         lib.print_mission(task, req)
-    if task == 'qualify' or task == 'qualification':
+    if task in ['qualify', 'qualification'] and req.lower() != 'sevinar':
         return find_qualify_pole()
 
 
@@ -104,6 +106,8 @@ def message(state=0, pos=0, cx=0.0, cy=0.0, area=0.0):
     msg.area = area
     if DEBUG['console'] or DEBUG['detail']:
         print msg
+        rospy.sleep(0.05)
+        lib.clear_screen()
     return msg
 
 

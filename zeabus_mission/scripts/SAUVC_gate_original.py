@@ -182,7 +182,7 @@ class MissionGate( StandardMission ):
 					self.echo( self.name , "Pos is -1 & overlimit finish this job")
 					break
 				else:
-					self.echo( self.name , "Pos is -1 & Moe Left")
+					self.echo( self.name , "Pos is -1 & Move Left")
 					self.velocity( {'y' : 0.15 } )
 		return True
 			 

@@ -30,7 +30,7 @@ class MissionQualification( StandardMission ):
 	def __init__( self , name ):
 		self.name = name
 
-		StandardMission.__inti__( self , self.name , "/mission/qualification" , self.callback )
+		StandardMission.__init__( self , self.name , "/mission/qualification" , self.callback )
 
 		self.vision = VisionCollector( "qualification" )
 	
@@ -44,7 +44,7 @@ class MissionQualification( StandardMission ):
 		self.reset_velocity( "xy" )
 		self.reset_target( "xy" )
 		self.reset_target( "yaw" )
-		self.fix_z( -0.3 )
+		self.fix_z( -0.5 )
 
 		self.echo( self.name , "START MISSION QUALIFICATION")
 
@@ -56,13 +56,17 @@ class MissionQualification( StandardMission ):
 		self.collect_state()
 		self.velocity_xy( 0.25 , 0 )
 		count_have_object = 0
+		start_time = time.time()
 		while( not rospy.is_shutdown() ):
 			self.sleep( 0.15 )
+			if( ( time.time() - start_time ) < 5 ):
+				self.echo( self.name , "Now time is " + str( time.time() - start_time ))
+				continue	
 			self.vision.analysis_all( "qualification" , "sevinar" , 5 )
 			self.echo_vision( self.vision.echo_data() )
 			if( self.vision.have_object() ):
 				count_have_object += 1
-				if( count_have_object == 3 ):
+				if( count_have_object == 6 ):
 					break
 			else:
 				count_have_object = 0
@@ -116,7 +120,7 @@ class MissionQualification( StandardMission ):
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "qualification" , "sevinar" , 5 )
 			self.echo_vision( self.vision.echo_data() )
-			if( self.vision.num_object == 1 ):
+			if( self.vision.num_object() == 1 ):
 				count_not_single = 0
 				count_not_found = 0
 				if( abs(self.vision.center_x() ) < 0.3 ):
@@ -136,12 +140,12 @@ class MissionQualification( StandardMission ):
 					self.run_type = 0
 					break
 				self.echo_vision( self.vision.echo_specific() )
-				if( self.vision.distance_x() > 0.6 ):
+				if( self.vision.distance_x() > 0.2 ):
 					self.echo( self.name ,  "Now over distance we have to chance to last move")
 					self.run_type = 3
 					break
 					
-			elif( self.vision.num_object == 2 ):
+			elif( self.vision.num_object() == 2 ):
 				count_not_single += 1
 				self.echo( self.name , "type_1 found double pier : " + str( count_not_single ) )
 				if( count_not_single == 5 ):
@@ -167,10 +171,10 @@ class MissionQualification( StandardMission ):
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "qualification" , "sevinar" , 5 )
 			self.echo_vision( self.vision.echo_data() )
-			if( self.vision.num_object == 2 ):
+			if( self.vision.num_object() == 2 ):
 				count_not_doulbe = 0
 				count_not_found = 0
-				if( abs( self.vision.center_x() ) < 0.2 ):
+				if( abs( self.vision.center_x() ) < 0.10 ):
 					if( not current_fix_velocity ):
 						self.velocity_xy( 0.25 , 0 )
 						current_fix_velocity = True
@@ -181,14 +185,14 @@ class MissionQualification( StandardMission ):
 						self.reset_velocity( "xy" )
 					self.velocity( {'y' : 0.1 } )
 					self.echo( self.name , "type_2 we move left")
-`				elif( self.vision.center_x() > 0 )
+				elif( self.vision.center_x() > 0 ):
 					if( current_fix_velocity ):
 						current_fix_velocity = False
 						self.reset_velocity( "xy" )
 					self.velocity( {'y' : -0.1})
 					self.echo( self.name , "type_2 we move right")
 				self.echo_vision( self.vision.echo_specific() )
-				if( self.vision.distance_x() > 1.6 ):
+				if( self.vision.distance_x() > 1.0 ):
 					self.echo( self.name , "Now over distance we decide to only move forward")
 					self.run_type = 0
 					if( not current_fix_velocity ):
@@ -196,7 +200,7 @@ class MissionQualification( StandardMission ):
 						self.echo( self.name , "We order contant velocity x is 0.3")
 						current_fix_velocity = True
 					break
-			elif( self.vision.num_object == 1 ):
+			elif( self.vision.num_object() == 1 ):
 				if( current_fix_velocity ):
 					current_fix_velocity = False
 					self.reset_velocity( "xy") 
@@ -216,8 +220,8 @@ class MissionQualification( StandardMission ):
 					self.run_type = 0
 					self.type_pier = 0
 					if( not current_fix_velocity ):
-						self.velocity_xy( 0.3 , 0 ):
-						self.echo( selfname , "I don't know what should I do FORWARD!")
+						self.velocity_xy( 0.3 , 0 )
+						self.echo( self.name , "I don't know what should I do FORWARD!")
 						current_fix_velocity = True
 					break
 

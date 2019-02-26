@@ -39,6 +39,13 @@ namespace control{
 		data.z = 0;
 	}
 
+
+	template<typename number >bool wrong_direction(number start ,number current ,number target){
+		number current_sign = std::signbit(current - start);
+		number target_sign = std::signbit(target - start);
+		return current_sign != target_sign;
+	}
+
 }
 
 }

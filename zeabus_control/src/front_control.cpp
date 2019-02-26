@@ -241,10 +241,37 @@ int main( int argv , char** argc ){
 						, current_state.pose.pose.position.y 
 						, target_state.pose.pose.position.x , target_state.pose.pose.position.y 
 						, diff_point.x , diff_point.y );
-
+				// This will check case target is opposite of linear or target velocity
+				if( control_::wrong_direction( save_state.pose.pose.position.x , 
+						target_state.pose.pose.position.x ,linear_state.pose.pose.position.x )){
+					bool wrong_direction_x = control_::wrong_direction( 
+							save_state.pose.pose.position.x , current_state.pose.pose.position.x
+							, linear_state.pose.pose.position.x ); 
+					bool wrong_direction_y = control_::wrong_direction( 
+							save_state.pose.pose.position.y , current_state.pose.pose.position.y
+							, linear_state.pose.pose.position.y ); 
+					if( wrong_direction_x && wrong_direction_y ){
+						target_state.pose.pose.position.x = save_state.pose.pose.position.x;
+						target_state.pose.pose.position.y = save_state.pose.pose.position.y;
+					}
+					else if( wrong_direction_x ){
+						target_state.pose.pose.position.y = current_state.pose.pose.position.y;
+						lh.find_point_x( target_state.pose.pose.position.x 
+								, target_state.pose.pose.position.y );
+					}
+					else{
+						target_state.pose.pose.position.x = current_state.pose.pose.position.x;
+						lh.find_point_y( target_state.pose.pose.position.x 
+								, target_state.pose.pose.position.y );
+					}
+					diff_point.x = target_state.pose.pose.position.x 
+							- current_state.pose.pose.position.x; 
+					diff_point.y = target_state.pose.pose.position.y
+							- current_state.pose.pose.position.y; 
+				}
 				control_twist.twist.linear.x = value_fix_velocity[0] +
 						control_::velocity_xy( diff_point.x );
-	
+
 				control_twist.twist.linear.y = value_fix_velocity[1] +
 						control_::velocity_xy( diff_point.y );
 			}

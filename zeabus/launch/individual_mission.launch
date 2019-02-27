@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<node name="mission_gate" output="screen" pkg="zeabus_mission" 
+			type="SAUVC_gate_original.py"/>
+
+	<node name="mission_flare" output="screen" pkg="zeabus_mission"
+			type="SAUVC_mission_flare.py"/>
+
+</launch>

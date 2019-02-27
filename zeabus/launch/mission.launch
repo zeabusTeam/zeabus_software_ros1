@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<include file="$(find zeabus)/launch/individual_mission.launch"/>
+
+	<node name="mission_all" output="screen" pkg="zeabus_mission" type="mission_all.py"/>
+
+</launch>

@@ -33,6 +33,8 @@ class StandardMission( ControlConnection ):
 
 		self.mission = rospy.Service( name_service , TwoBool , callback_service )
 
+		self.state = False
+
 	def sleep( self , second = 0.1 ):
 		self.rate.sleep()
 		time.sleep( second )
@@ -44,6 +46,12 @@ class StandardMission( ControlConnection ):
 	def echo( self , name , message ):
 		self.data_pub.publish( String("<==" + str(name) + "==> " + str(message) ) )
 		print( "<==" + str(name) + "==> " + str(message) , end = "\n\n")
+
+	def ok_state( self ):
+		if( ( not rospy.is_shutdown() ) and self.state ):
+			return True
+		return False
+
 
 def callback( request ):
 	print("Callback in file standard_mission.py")

@@ -2,12 +2,12 @@
 	File name			:	pid.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , JAN 24
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , FEB 27
 	Purpose				:	For receive message from localize in control system
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.1.0
+	version				:	1.2.0
 	status				:	Product
 
 	Namespace			:	zeabus_library/control

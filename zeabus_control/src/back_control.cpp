@@ -2,12 +2,12 @@
 	File name			:	back_control.cpp
 	Author				:	Supasan Komonlit
 	Date created		:	2019 , FEB 10
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , FEB 27
 	Purpose				:	For control system will give force in robot frame by pid
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.2.0
+	version				:	1.3.0
 	status				:	Production
 
 	Namespace			:	-
@@ -42,7 +42,8 @@ int main( int argv , char** argc ){
 
 	double ok_error[6] = { 0.01 , 0.01 , 0.1 , 0.02 , 0.02 , 0.05};
 	double limit_pid[6] = { 3 , 3 , 1.5 , 0.3 , 0.3 , 0.15 };
-	double add_max_pid[6] = { 1 , 1 , 1 , 0.2 , 0.2 , 0.08 };
+	double max_pid[6] = { 3.5 , 3.5 , 2.5 , 0.5 , 0.5 , 0.3 };
+	double min_pid[6] = { -3.5 , -3.5 , 0 , -0.5 , -0.5 , -0.3}
 
 	ros::init( argv , argc , "back_control");
 
@@ -117,7 +118,7 @@ int main( int argv , char** argc ){
 	for( int run = 0 ; run < 6 ; run++ ){
 		pid[run].limit_i( limit_pid[run] );
 		pid[run].set_constant( 0 , 0 , 0 );
-		pid[run].limit_pid( limit_pid[run] + add_max_pid[run] );
+		pid[run].set_limit( min_pid[run] , max_pid[run] );
 	}
 
 //===============> LOOP OPERATING ROS SYSTEM

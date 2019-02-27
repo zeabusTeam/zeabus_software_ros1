@@ -37,7 +37,10 @@ namespace control{
 			void set_constant( double p , double i , double d );
 			void offset_i( double offset );
 			void limit_i( double limit );
-			void limit_pid( double limit );
+			void set_max_limit( double limit );
+			void set_min_limit( double limit );
+			void set_limit( double min , double max );
+			
 			
 			double calculate( double error );
 			void calculate( double error , double& result );
@@ -54,7 +57,8 @@ namespace control{
 			// value condition of i
 			double offset;
 			double i_limit;
-			double pid_limit;
+			double max_limit;
+			double min_limit;
 			double sum;	
 			// value of pid
 			double previous_error;

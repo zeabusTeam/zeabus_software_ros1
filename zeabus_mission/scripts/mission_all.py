@@ -24,11 +24,14 @@ class MissionAll( StandardMission ):
 	def __init__( self , name ):
 		self.name = name
 
-		StandardMission.__init__( self , self.name , "/mission/all" , self.callback )
+		StandardMission.__init__( self ,	 self.name , "/mission/all" , self.callback )
 
 		self.gate = VisionCollector("gate")
+		self.run_gate = False
 		self.drum = VisionCollector("drum")
+		self.run_drum = False
 		self.flare = VisionCollector("flare")
+		self.run_flare = False
 		self.mission_gate = rospy.ServiceProxy( "/mission/gate" , TwoBool )
 		self.mission_flare = rospy.ServiceProxy( "/mission/flare" , TwoBool )
 		self.mission_drum = rospy.ServiceProxy( "/mission/drum" , TwoBool )
@@ -37,10 +40,30 @@ class MissionAll( StandardMission ):
 
 		self.start_yaw = 0
 
+		self.over = self.over_distance
+		self.type_over = "distance"
+#		self.over = self.over_time
+#		self.type = "time"
+
 		self.echo(self.name , "FINISHED SETUP ALL MISSION")
 
 	def callback( self , message ):
 		
+		self.state = message.data
+
+		if( not self.state ):
+			self.echo( self.name , "Switch call to stop run mission")
+			if( self.run_gate ):
+				self.run_gate = self.gate( False )
+				self.echo( self.name , "Call to close gate")
+			if( self.run_drum ):
+				self.run_drum = self.drun( False)
+				self.echo( self.name , "Call to close drum")
+			if( self.run_flare ):
+				self.run_flare = self.flare( False )
+				self.echo( self.name ,  "Call to close flare")
+			return False
+
 		# This function will call by switch we must reset data target
 		self.reset_velocity( "xy" )
 		self.reset_target( "xy")
@@ -51,148 +74,126 @@ class MissionAll( StandardMission ):
 		self.start_yaw = self.save_state[5]
 	
 		self.echo( self.name , "START ALL MISSION at yaw is " + str( self.start_yaw ) )
+	
+		self.wait_state( "z" , 0.1 , 5 )	
 
-		count_ok = 0
-		while( not rospy.is_shutdown() ):
-			if( self.check_position("z" , 0.1 ) ):
-				count_ok += 1
-				if( count_ok == 5 ): break
-			else:
-				count_ok = 0
-			self.echo( self.name , "Depth ok is " + str( count_ok ) )
+		# FINISH Part set up data information for startup
 
-		# In survey mode this ensure you will make mission finish 
-		self.survey_mode( 1, 6, 1, -4, self.gate, "gate", "sevinar", 5, self.mission_gate)
-
-		self.fix_z( -3.8 )
-		count_ok = 0
-		while( not rospy.is_shutdown() ):
-			if( self.check_position("z" , 0.1 ) ):
-				count_ok += 1
-				if( count_ok == 5 ): break
-			else:
-				count_ok = 0
-			self.echo( self.name , "Depth ok is " + str( count_ok ) )
-
-		self.fix_yaw( self.start_yaw - ( math.pi/2 ) )
-		count_ok = 0
-		while( not rospy.is_shutdown() ):
-			if( self.check_position("yaw" , 0.1 ) ):
-				count_ok += 1
-				if( count_ok == 5 ): break
-			else:
-				count_ok = 0
-			self.echo( self.name , "yaw ok is " + str( count_ok ) )
-		
-		self.survey_mode( 3, 6, 1, -4, self.flare, "flare", "far", 5, self.mission_flare() )
-		
 		return True
 		
 		
 	# WARNING ! survey mode will use after rotation 
 	# step is move forward move slide move forward and move inverse slide
-	def survey_mode( self , first_forward , first_slide , value_forward , value_slide ,
-			vision , first_argument , second_argument , third_argument , service_call ):
-		self.echo( self.name , "We Start surbey")
-		type_movement = 1 # 1 is first_forward , 2 is first_slide , 3 forward , 4 second_slide
+	def survey_mode( self , first_forward , first_slide , forward , slide , mission , service ):
+		self.echo( self.name , "We start survey for mission " + str(mission) ) 
+		type_movement = 1 # 1 is forward , 2 is first_slide , 3 is forward , 4 is slide
 		current_fix_velocity = False
 		count_have_object = 0
-		while( not rospy.is_shutdown() ):
-			self.sleep( 0.1 )
-			vision.analysis_all( first_argument , second_argument , third_argument )
-			self.echo( self.name , "Now Type move is " + str( type_movement ) +
-					" <===> Count found object is " + str( count_have_object ) )
-			if( vision.have_object() ):
-				count_have_object += 1
-				if( count_have_object == 5 ):
-					result_play_game = service_call( True )
-					self.echo( self.name , "Send to Play Game")
-					if( result_play_game ):
-						self.echo( self.name ,  "Oh Finish")
-						break
-					self.echo( self.name , "Oh Noooooo Don't finish continue survey")
-					count_have_object = 0					
-				if( current_fix_velocity ):
-					self.echo( self.name ,  "I reset target")
-					self.reset_velocity( "xy" )
-					current_fix_velocity = False
-				continue
+		limit_value = first_forward
+		while( self.ok_state() ):
+			# This part of connect to vision and call service for make make mission
+			if( mission == "gate" ):
+				self.gate.analysis_all( "gate" , "sevinar" , 5 )
+				if( self.gate.have_object() ): count_have_object += 1
+				else: count_have_object = 0
+			elif( mission == "flare" ):
+				self.flare.analysis_all( "flare" , "far" , 5 )
+				if( self.flare.have_object() ): count_have_object += 1
+				else:
+					self.flare.analysis_all( "flare" , "near" , 5 )
+					if( self.flare.have_object() ): count_have_object += 1
+					else: count_have_object = 0
+			elif( mission == "drum" ):
+				self.drum.analysis_all( "drum" , "drop" , 5 )
+				if( self.drum.have_object() ): count_have_object += 1
+				else: count_have_object = 0
 			else:
-				count_have_object = 0
-
-			# Manage about movement mode
+				self.echo( self.name , "Don't have this mode vision aborted" )
+				self.state = False
+			if( count_have_object > 0 ):
+				if( current_fix_velocity ):
+					self.reset_velocity( "xy" )
+					self.reset_target("xy")
+					current_fix_velocity = False
+					if( self.type_over == "distance" ):
+						limit_value -= self.distance()
+					elif( self.type_over == "time" ):
+						limit_value -= time.time() - self.start_time
+				self.echo( self.name , "Now survey for mission " + str(mission) + 
+						" Count " + str(count_have_object) )
+				if( count_have_object == 5 ):
+					None
+				continue
+			# This part of connect to control for survey
 			if( type_movement == 1 ):
 				if( not current_fix_velocity ):
-					self.velocity_xy( 0.2 , 0 )
+					self.over( limit_value , True )
+					self.velocity_xy( 0.10 , 0 )
 					current_fix_velocity = True
-					self.over_distance( first_forward , True )
-				elif( self.over_distance( first_forward ) ):
-					self.echo( self.name ,  "Change to type_movement 2")
-					if( current_fix_velocity ):
-						self.reset_velocity( "xy" )
-						self.reset_target( "xy" )
-						current_fix_velocity = False
-					type_movement = 2
-
+				if( self.over( limit_value ) ):
+					type_movement = 2 
+					self.reset_veloccity( "xy" )
+					current_fix_velocity = False
+	
 			elif( type_movement == 2 ):
 				if( not current_fix_velocity ):
-					self.velocity_xy( 0.0 , math.copysign( 0.2 , first_slide ) )
-					current_fix_velocity = True
-					self.over_distance( abs(first_slide) , True )
-				elif( self.over_distance( abs(first_slide) ) ):
-					self.echo( self.name ,  "Change to type_movement 3")
-					if( current_fix_velocity ):
-						self.reset_velocity( "xy" )
-						self.reset_target( "xy" )
-						current_fix_velocity = False
+					self.over( limit_value , True )
+					self.velocity_xy( 0 , math.copysign( 0.1 , first_slide ) )	
+					current_fix_velocity = True 
+				if( self.over( limit_value ) ):
 					type_movement = 3
+					self.reset_veloccity( "xy" )
+					current_fix_velocity = False
 
 			elif( type_movement == 3 ):
 				if( not current_fix_velocity ):
-					self.velocity_xy( 0.2 , 0 )
+					self.over( limit_value , True )
+					self.velocity_xy( 0.1 , 0 )
 					current_fix_velocity = True
-					self.over_distance( value_forward , True )
-				elif( self.over_distance( value_forward )):
-					self.echo( self.name ,  "Change to type_movement 4")
-					if( current_fix_velocity ):
-						self.reset_velocity( "xy" )
-						self.reset_target( "xy" )
-						current_fix_velocity = False
+				if( self.over( limit_value ) ) :
 					type_movement = 4
-		
-			elif( type_movement == 4 ):	
+					self.reset_veloccity( "xy" )
+					current_fix_velocity = False
+					first_forward = forward
+			elif( type_movement == 4 ):
 				if( not current_fix_velocity ):
-					self.velocity_xy( 0 , math.copysign( 0.15 , value_slide) )
+					self.over( limit_value , True )
+					self.velocity_xy( 0 , math.copysign( 0.1 , slide) )
 					current_fix_velocity = True
-					self.over_distance( abs(value_slide) , True )
-				elif( self.over_distance( abs(value_slide) ) ):
-					self.echo( self.name ,  "Change to type_movement 4")
-					if( current_fix_velocity ):
-						self.reset_velocity( "xy" )
-						self.reset_target( "xy" )
-						current_fix_velocity = False
-					first_slide = maht.copysign( value_slide , first_slide )
-					first_forward = math.copysign( value_slide , first_forward )
+				if( self.over( limit_value ) ):
 					type_movement = 1
-		
-		
-		
-	def over_distance( self , limit , setup = False ):
+					self.reset_veloccity( "xy" )	
+					current_fix_velocity = False
+					first_slide = math.copysign( slide , first_slide )
+			else:
+				self.echo( self.name , "Dont'have this mode type_movement aborted")
+				self.state = False
+
+	def over_time( self , limit_value , setup = False ):
+		if( setup ):
+			self.start_time = time.time()	
+			return False
+		elif( limit_value < time.time() - self.start_time ):
+			print( "For check difftime " + str( time.time() - self.start_time ) +
+					" and limit time is " + str( limit_value ) )
+			return True
+		else:
+			print( "For check difftime " + str( time.time() - self.start_time ) +
+					" and limit time is " + str( limit_value ) )
+			return False
+
+	def over_distance( self , limit_value , setup = False ):
 		if( setup ):
 			self.collect_state()
-		return self.check_result( self.distance() , limit )	
-	
-	def check_time( self , limit , setup = False ):
-		if( setup ):
-			self.start_time = time.time()
-		return self.check_result( time.time() - self.start_time() , limit )
-
-	def check_result( self , data , limit ):
-		self.echo( self.name , "DATA : LIMIT " + str(data) + " : " + str(limit) + " m or s" )
-		if( data >= limit ): return True
-		else: return False
-	
-
+			return False
+		elif( self.distance() > limit_value ):
+			print( "For check distance " +str( self.distace() ) +" and limit is " +limit_value )
+			return True
+		else:
+			print( "For check distance " +str( self.distace() ) +" and limit is " +limit_value )
+			return False
+			
+		
 if __name__ == "__main__":
 	rospy.init_node( "mission_all" )
 	MA = MissionAll( "mission_all" )

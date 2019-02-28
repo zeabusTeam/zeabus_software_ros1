@@ -3,7 +3,7 @@
 ####
 ####	FILE		: SAUVC_qualification_vision.py
 ####	Maintain	: Supasan Komonlit
-####	Create on	: 2019 , FEB 23
+####	Create on	: 2019 , FEB 28
 ####	Purpose		: For connection with control part
 ####
 #################################################################################################
@@ -12,9 +12,7 @@ from __future__ import print_function
 
 ################################# EXPAND MISSION SOLUTION #######################################
 ####	This file is mission for qualification round for SAUVC2019 
-####	In case have vision for make and we can use only center in x axis
-####	Don't worry about depth because we use pressure to matk that
-####	And the last one we have decide to do, although vision find only single pier
+####	In case have only dvl don't use vision
 #################################################################################################
 
 import	rospy
@@ -60,7 +58,7 @@ class MissionQualification( StandardMission ):
 		self.collect_state()
 		self.velocity_xy( 0.3 , 0 )
 		while( self.ok_state() ):
-			self.sleep(0.5):
+			self.sleep(0.2):
 			self.echo( self.name , "Now move direct" )
 		self.reset_velocity( "xy" )
 		self.reset_target("xy")

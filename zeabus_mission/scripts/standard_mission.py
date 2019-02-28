@@ -26,6 +26,8 @@ class StandardMission( ControlConnection ):
 
 	def __init__( self , name , name_service  , callback_service ):
 
+		self.name = name
+
 		ControlConnection.__init__( self , name )
 
 		self.data_pub = rospy.Publisher("/mission/echo" , String , queue_size = 1 )
@@ -52,6 +54,19 @@ class StandardMission( ControlConnection ):
 			return True
 		return False
 
+	def wait_state( self , type_check , adding , amont ):
+		self.echo( self.name , "We will check " + str(type_check) + "by adding " + str( adding ))
+		print_string = "Type check is " + str(type_check) + " and count is " 
+		count_ok = 0
+		while( self.ok_state() ):
+			self.sleep( 0.1 )
+			if( self.check_position( type_check , adding ) ):
+				count_ok += 1
+				if( count_ok == amont ):
+					break
+			else:
+				count_ok = 0
+			self.echo( self.name ,  str(print_string) + str( count_ok ) )
 
 def callback( request ):
 	print("Callback in file standard_mission.py")

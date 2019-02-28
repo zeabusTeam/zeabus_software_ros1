@@ -35,6 +35,7 @@ class MissionAll( StandardMission ):
 		self.mission_gate = rospy.ServiceProxy( "/mission/gate" , TwoBool )
 		self.mission_flare = rospy.ServiceProxy( "/mission/flare" , TwoBool )
 		self.mission_drum = rospy.ServiceProxy( "/mission/drum" , TwoBool )
+		self.mission_golf = rospy.ServiceProxy( "/mission/golf" , TwoBool )
 
 		self.start_time = time.time()
 
@@ -77,6 +78,43 @@ class MissionAll( StandardMission ):
 	
 		self.wait_state( "z" , 0.1 , 5 )	
 
+		result = self.survey_mode( 2 , 6 , 1.5 , -4 , "gate" , self.gate )
+
+		if( self.state ):	
+			self.fix_z( -1.3 )
+			self.fix_yaw( self.start_yaw - math.pi / 2 )
+			self.wait_state( "z" , 0.1 , 5 )
+			self.wait_state( "yaw" , 0.1 , 5 )
+			result = self.survey_mode( 6 , 6 , 1 , -4 , "flare" , self.flare )
+
+		if( self.state ):
+			self.fix_z( -0.5 )
+			self.fix_yaw( self.start_yaw )
+			self.wait_state( "z" , 0.1 , 5 )
+			self.wait_state( "yaw" , 0.1 , 5 )
+			result = self.survey_mode( 6 , 10 , 1 , 5 , "drum" , sefl.drum )
+	
+		if( self.state ):
+			self.fix_z( -0.5 )
+			self.wait_state( "z" , 0.1 , 5 )
+			self.velocity_xy( -0.1 , 0 )
+			self.over_time( 15 , True )
+			while( self.ok_state() ):
+				self.sleep( 0.1 )
+				if( self.over_time( 15 ) ):
+					break
+			self.reset_target( "xy" )
+			self.velocity_xy( 0.1 , 0 )
+			while( self.ok_state() ):
+				self.sleep( 0.1 )
+				self.drum.analysis_all( "drum" , "drop" , 5 )
+				if( self.drum.have_object() ):
+					self.mission_golf( True )
+					break
+
+		self.fix_z( 0 )	
+			
+		
 		# FINISH Part set up data information for startup
 
 		return True
@@ -122,7 +160,12 @@ class MissionAll( StandardMission ):
 				self.echo( self.name , "Now survey for mission " + str(mission) + 
 						" Count " + str(count_have_object) )
 				if( count_have_object == 5 ):
-					None
+					# This is part about send service to individual mission to do task
+					self.echo( self.name , "We send process to mission " + str(mission) )
+					result = service( True )
+					count_have_object = 0
+					if( result ):
+						return True
 				continue
 			# This part of connect to control for survey
 			if( type_movement == 1 ):
@@ -155,6 +198,7 @@ class MissionAll( StandardMission ):
 					self.reset_veloccity( "xy" )
 					current_fix_velocity = False
 					first_forward = forward
+
 			elif( type_movement == 4 ):
 				if( not current_fix_velocity ):
 					self.over( limit_value , True )
@@ -168,12 +212,13 @@ class MissionAll( StandardMission ):
 			else:
 				self.echo( self.name , "Dont'have this mode type_movement aborted")
 				self.state = False
+		return False
 
 	def over_time( self , limit_value , setup = False ):
 		if( setup ):
 			self.start_time = time.time()	
 			return False
-		elif( limit_value < time.time() - self.start_time ):
+		elif( abs(limit_value) < time.time() - self.start_time ):
 			print( "For check difftime " + str( time.time() - self.start_time ) +
 					" and limit time is " + str( limit_value ) )
 			return True

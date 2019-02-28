@@ -34,8 +34,8 @@ class MissionAll( StandardMission ):
 		self.run_flare = False
 		self.mission_gate = rospy.ServiceProxy( "/mission/gate" , TwoBool )
 		self.mission_flare = rospy.ServiceProxy( "/mission/flare" , TwoBool )
-		self.mission_drum = rospy.ServiceProxy( "/mission/drum" , TwoBool )
-		self.mission_golf = rospy.ServiceProxy( "/mission/golf" , TwoBool )
+		self.mission_drum = rospy.ServiceProxy( "/mission/drop" , TwoBool )
+		self.mission_golf = rospy.ServiceProxy( "/mission/pick" , TwoBool )
 
 		self.start_time = time.time()
 

@@ -222,6 +222,7 @@ int main( int argv , char** argc ){
 					, force_twist.twist.linear.x , force_twist.twist.linear.y 
 					, force_twist.twist.linear.z , force_twist.twist.angular.x 
 					, force_twist.twist.angular.y , force_twist.twist.angular.z);
+			printf("STATUS_CONTROL	:%10d\n" , target_free_xy );
 		#endif
 	}
 }

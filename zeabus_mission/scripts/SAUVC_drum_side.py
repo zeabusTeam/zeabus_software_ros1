@@ -70,22 +70,27 @@ class MissionDrum( StandardMission ):
 				value_y = 0
 			self.echo( self.name ,  "I command velocity x : y are " + str(value_x) + " : " +
 					str(value_y) )
-			self.velocity( {'x' : value_x , 'y' : value_y } )
 			if( not count_Time ):
 				self.target_state()
 				if( self.temp_state[2] < -1.3 ):
 					count_Time = True
 					start_time = time.time()
+					self.free_xy( True )
 			else:
 				diff_time = time.time() - start_time
 				self.echo( self.name , "Count time for drop " + str(diff_time) )
 				if( diff_time > 5 ):
 					self.echo( self.name , "We have to command drop ball" )
-					self.reset_velocity( "z" ) 
-					self.fix_z(-0.5)
 					break
-		self.reset_target("xy")
+				else:
+					continue
+			self.velocity( {'x' : value_x , 'y' : value_y } )
+
+		self.reset_velocity( "z" ) 
+		self.fix_z(-0.5)
 		self.wait_state( "z" , 0.1 , 5 )
+		self.free_xy( False )
+		self.reset_target("xy")
 
 if __name__=="__main__":
 	rospy.init_node( "mission_drum" )

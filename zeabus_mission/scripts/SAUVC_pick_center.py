@@ -184,6 +184,7 @@ class MissionPick( StandardMission ):
 						start_time = time.time()
 						diff_time = 0
 						self.velocity_z( -0.1 )
+						self.free_xy( True )
 						while( self.ok_state() and diff_time < 10 ):
 							self.sleep( 0.1 )
 							self.reset_target( "xy" )
@@ -191,6 +192,7 @@ class MissionPick( StandardMission ):
 							self.echo( self.name , "Now time is " + diff_time )
 						self.reset_velocity( "z" )
 						self.fix_z( -0.5 )
+						self.free_xy( False )
 						break
 			self.echo( self.name , "Finish pick golf it ok?")
 			

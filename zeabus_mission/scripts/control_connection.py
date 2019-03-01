@@ -13,7 +13,7 @@ from __future__ import print_function
 import rospy
 import math
 
-from zeabus_library.srv import OneVector3Stamped , TwoStringVector3Stamped , ThreeOdometry
+from zeabus_library.srv import OneVector3Stamped, TwoStringVector3Stamped, ThreeOdometry, TwoBool
 
 from std_msgs.msg import Header
 from geometry_msgs.msg import Twist , TwistStamped , Vector3
@@ -25,6 +25,7 @@ from tf.transformations import euler_from_quaternion
 ##	OneVector3Stamped		: relative_${xy, z, yaw} , fix_$(z, yaw) , velocity_$(xy, z, yaw)
 ##	TwoStringVector3Stamped	: reset_target reset_velocity check_position 
 ##	ThreeOdometry			: get_state
+##	TwoBool					: free_xy
 ################################################################################################
 
 class ControlConnection:
@@ -64,6 +65,8 @@ class ControlConnection:
 				TwoStringVector3Stamped ) 
 
 		self.cl_get_state		= rospy.ServiceProxy("/control/get_target" , ThreeOdometry )
+
+		self.cl_free_xy			= rospy.ServiceProxy("/control/free_xy" , TwoBool )
 
 	def distance( self ):
 		self.target_state()
@@ -205,6 +208,11 @@ class ControlConnection:
 		result = self.service_one_vector( self.cl_fix_yaw , self.vector , "fix_yaw")
 		return result
 
+#===============> SERVICE OF TWOBOOL
+	def free_xy( self , data ):
+		result = self.service_two_bool( self.cl_free_xy , data , "target_free_xy")
+		return result
+		
 #===============> FUNCTION FOR CALL SERVICE
 
 	def service_one_vector( self , service , vector3 , message = ""):
@@ -232,6 +240,14 @@ class ControlConnection:
 			result = service( string ).data
 		except rospy.ServiceException , error :
 			print("\x1B[1;31mservice three odometry of " + str(message) , " :\n\t\x1B[0;37m" + 
+					str(error) )
+		return result
+
+	def service_two_bool( self , service , data , message = ""):
+		try:
+			result = service( string ).result
+		except rospy.ServiceException , error :
+			print("\x1B[1;31mservice two bool of " + str(message) , " :\n\t\x1B[0;37m" + 
 					str(error) )
 		return result
 

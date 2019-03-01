@@ -13,18 +13,21 @@ from __future__			import print_function
 import rospy
 import math
 import time
+import os
 
 from vision_collector		import VisionCollector
 from standard_mission		import StandardMission 
 
 from zeabus_library.srv		import TwoBool
 
+new_pid = 1
+
 class MissionAll( StandardMission ):
 	
 	def __init__( self , name ):
 		self.name = name
 
-		StandardMission.__init__( self ,	 self.name , "/mission/all" , self.callback )
+		StandardMission.__init__( self , self.name , "/mission/all" , self.callback )
 
 		self.gate = VisionCollector("gate")
 		self.run_gate = False
@@ -49,11 +52,21 @@ class MissionAll( StandardMission ):
 		self.echo(self.name , "FINISHED SETUP ALL MISSION")
 
 	def callback( self , message ):
-		
-		self.state = message.data
-
-		if( not self.state ):
+		global new_pid
+		if( self.state and message.data ):
+			self.echo( self.name , "Now mission will run please close befor try again")
+			return False
+		elif( message.data ):
+			self.state = True
+			new_pid = os.fork()
+			if( new_pid == 0 ):
+				print( "Into new_pid fork " + str( new_pid ) )
+				new_pid = 0
+				return True	
+			self.main_play()
+		else:
 			self.echo( self.name , "Switch call to stop run mission")
+			self.state = False
 			if( self.run_gate ):
 				self.run_gate = self.gate( False )
 				self.echo( self.name , "Call to close gate")
@@ -64,6 +77,10 @@ class MissionAll( StandardMission ):
 				self.run_flare = self.flare( False )
 				self.echo( self.name ,  "Call to close flare")
 			return False
+		
+		self.echo( self.name , "End Callback")
+
+	def main_play( self ):
 
 		# This function will call by switch we must reset data target
 		self.reset_velocity( "xy" )
@@ -232,14 +249,22 @@ class MissionAll( StandardMission ):
 			self.collect_state()
 			return False
 		elif( self.distance() > limit_value ):
-			print( "For check distance " +str( self.distace() ) +" and limit is " +limit_value )
+			print( "For check distance " +str( self.distance() ) 
+					+" and limit is " + str( limit_value ) )
 			return True
 		else:
-			print( "For check distance " +str( self.distace() ) +" and limit is " +limit_value )
+			print( "For check distance " +str( self.distance() ) 
+					+" and limit is " + str( limit_value ) )
 			return False
 			
 		
 if __name__ == "__main__":
 	rospy.init_node( "mission_all" )
 	MA = MissionAll( "mission_all" )
-	rospy.spin()
+	rate = rospy.Rate( 10 )
+	while( not rospy.is_shutdown() ):
+		print( "RUNNING on new_pid after : " + str(new_pid) )
+		if( new_pid == 0):
+			os._exit(0)
+		print( "RUNNING on new_pid after : " + str(new_pid) )
+		rate.sleep()

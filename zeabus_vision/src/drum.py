@@ -32,7 +32,7 @@ def mission_callback(msg):
 
     print(msg)
 
-    drum_option = ['search', 'drop']
+    drum_option = ['red','blue']
     golf_option = ['pick']
     if task == 'drum' and req in drum_option:
         return find_drum(req)

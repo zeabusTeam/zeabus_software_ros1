@@ -87,4 +87,7 @@ class MissionDrum( StandardMission ):
 		self.reset_target("xy")
 		self.wait_state( "z" , 0.1 , 5 )
 
-					
+if __name__=="__main__":
+	rospy.init_node( "mission_drum" )
+	MD = MissionDrum( "mission_drum" )
+	rospy.spin()

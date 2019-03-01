@@ -67,8 +67,8 @@ class ControlConnection:
 
 	def distance( self ):
 		self.target_state()
-		print( self.save_state )
-		print( self.temp_state )
+#		print( self.save_state )
+#		print( self.temp_state )
 		return math.sqrt( math.pow( 1.0*self.save_state[0] - 1.0*self.temp_state[0] , 2 ) + 
 				math.pow( 1.0*self.save_state[1] - 1.0*self.temp_state[1] , 2 )	)
 

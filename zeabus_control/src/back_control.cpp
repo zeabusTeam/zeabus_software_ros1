@@ -43,7 +43,7 @@ int main( int argv , char** argc ){
 	double ok_error[6] = { 0.01 , 0.01 , 0.1 , 0.02 , 0.02 , 0.05};
 	double limit_pid[6] = { 3 , 3 , 1.5 , 0.3 , 0.3 , 0.15 };
 	double max_pid[6] = { 3.5 , 3.5 , 2.5 , 0.5 , 0.5 , 0.3 };
-	double min_pid[6] = { -3.5 , -3.5 , 0 , -0.5 , -0.5 , -0.3}
+	double min_pid[6] = { -3.5 , -3.5 , 0 , -0.5 , -0.5 , -0.3};
 
 	ros::init( argv , argc , "back_control");
 

@@ -274,7 +274,7 @@ def find_qualify_pole():
 if __name__ == '__main__':
     rospy.init_node('vision_qualification', anonymous=False)
     IMAGE_TOPIC = lib.get_topic("front")
-    IMAGE_TOPIC = '/vision/front/image_raw/compressed'
+    # IMAGE_TOPIC = '/vision/front/image_raw/compressed'
     rospy.Subscriber(IMAGE_TOPIC, CompressedImage, image_callback)
     rospy.Service('vision/qualification', vision_srv_gate(),
                   mission_callback)

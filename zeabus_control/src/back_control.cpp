@@ -56,6 +56,7 @@ int main( int argv , char** argc ){
 	std::string output_topic;
 	bool target_active; 
 	bool current_active;
+	bool target_free_xy = false;
 	current_active = 0;
 	int frequency;
 
@@ -95,12 +96,20 @@ int main( int argv , char** argc ){
 							, &zeabus_library::subscriber::SubTwistStamped::callback
 							, &listen_target );
 
-	zeabus_library::service::ServiceTwoBool service_two_bool; 
-	service_two_bool.register_bool( &target_active );
+	zeabus_library::service::ServiceTwoBool service_active; 
+	service_active.register_bool( &target_active );
 
 	ros::ServiceServer ser_active_control = nh.advertiseService("/control/active"
 			, &zeabus_library::service::ServiceTwoBool::callback
-			, &service_two_bool );
+			, &service_active );
+
+	zeabus_library::service::ServiceTwoBool service_free_xy;
+	service_free_xy.register_bool( &target_free_xy );
+
+	ros::ServiceServer ser_free_xy = nh.advertiseService("/control/free_xy" 
+			, &zeabus_library::service::ServiceTwoBool::callback
+			, &service_free_xy );
+
 
 //===============> DYNAMIC_RECONFIGURE SYSTEM & LIBRARY FOR SAVE & LOAD
 	dynamic_reconfigure::Server< zeabus_control::pid_Config > server;
@@ -151,6 +160,11 @@ int main( int argv , char** argc ){
 			else{ 
 				continue;
 			}
+		}
+
+		if( target_free_xy ){
+			target_twist.twist.linear.x = current_state.twist.twist.linear.x;
+			target_twist.twist.linear.y = current_state.twist.twist.linear.y;
 		}
 
 		diff_twist.twist.linear.x = 

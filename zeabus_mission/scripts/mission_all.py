@@ -63,7 +63,10 @@ class MissionAll( StandardMission ):
 				print( "Into new_pid fork " + str( new_pid ) )
 				new_pid = 0
 				return True	
-			self.main_play()
+			else:
+				print( "Command to wait pid " + str( new_pid ) )
+				os.waitpid( new_pid , 0)
+				self.main_play()
 		else:
 			self.echo( self.name , "Switch call to stop run mission")
 			self.state = False
@@ -263,8 +266,9 @@ if __name__ == "__main__":
 	MA = MissionAll( "mission_all" )
 	rate = rospy.Rate( 10 )
 	while( not rospy.is_shutdown() ):
-		print( "RUNNING on new_pid after : " + str(new_pid) )
+#		print( "RUNNING on new_pid before : " + str(new_pid) )
 		if( new_pid == 0):
 			os._exit(0)
-		print( "RUNNING on new_pid after : " + str(new_pid) )
+#		print( "RUNNING on new_pid after : " + str(new_pid) )
 		rate.sleep()
+	print("End of file new_pid is " + str(new_pid))

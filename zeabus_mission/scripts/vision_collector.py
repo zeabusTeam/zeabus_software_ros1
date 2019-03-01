@@ -154,8 +154,9 @@ class VisionCollector:
 		self.data['backward']	= temporary.backward
 
 	def drum_echo( self ):
-		return str( "<=== VISION ===> n_obj : cx_2 , left : right : forward : backward " 
-				+ str( self.result["n_obj"] ) + " : " + str( self.result["cx_2"] ) + " , " 
+		return str( "<=== VISION ===> point1 : point2 , left : right : forward : backward [ " 
+				+ str( self.result["cx_1"] ) + " , " + str( self.result["cy_1"] ) + " ] : [ " 
+				+ str( self.result["cx_2"] ) + " , " + str( self.result["cy_2"] ) + " ] : " 
 				+ str( self.result["left"] ) + " : " + str( self.result["right"] ) + " : " 
 				+ str( self.result["forward"] ) + " : " + str( self.result["backward"] ) 
 		)

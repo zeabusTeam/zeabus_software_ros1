@@ -54,6 +54,7 @@ class MissionPick( StandardMission ):
 			return False
 		else:
 			self.step_02()
+			result = True
 
 		return result
 		
@@ -126,6 +127,7 @@ class MissionPick( StandardMission ):
 
 			self.echo( self.name + " Mode " + str( mode_control ) , 
 					"We command velocity x : y --> " + str( value_x ) + " : " + str( value_y ) )
+			self.velocity( {'x' : value_x , 'y' : value_y } )
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "golf" , "sevinar" , 5 )
 			self.echo_vision( self.vision.echo_data() )
@@ -152,7 +154,47 @@ class MissionPick( StandardMission ):
 					count_change_mode += 1
 					if( count_change_mode > 4 )
 						return False
+
+		def step_02( self ): # this part we will pick a ball
+			self.echo( self.name , "We will start to pick ball")
+			self.fix_z( -1.1  )
+			count_ok_depth = 0 
+			value_x = 0
+			value_y = 0
+			while( self.ok_state() ):
+				self.vision.analysis_all( "golf" , "sevinar" , 5 )
+				self.echo_vision( self.vision.echo_data() )
+				if( self.vision.center_x() < -0.5 ): value_y = -0.08
+				elif( self.vision.center_x() > -0.1 ): value_y = 0.08
+				else: value_y = 0
+				if( self.vision.center_y() < 0.1 ): value_x = 0.08
+				elif( self.vision.center_y() > 0.5 ): value_x = -0.08
+				else: value_x = 0
+				self.echo( self.name + " vel x : y is" +str( value_x ) +" : " +str( value_y ) )
+				self.velocity( {'x' : value_x , 'y' : value_y } )
 				
+				if( self.check_position( "z" , 0.15 ) ):
+					count_ok_depth += 1
+				else:
+					count_ok_depth = 0
+				if( value_x == 0 and value_y == 0 ):
+					self.echo( self.name , "Target on lock" )
+					if( count_ok_depth > 5 ):
+						self.echo( self.name , "We will move down now ")
+						start_time = time.time()
+						diff_time = 0
+						self.velocity_z( -0.1 )
+						while( self.ok_state() and diff_time < 10 ):
+							self.sleep( 0.1 )
+							self.reset_target( "xy" )
+							diff_time = time.time() - start_time
+							self.echo( self.name , "Now time is " + diff_time )
+						self.reset_velocity( "z" )
+						self.fix_z( -0.5 )
+						break
+			self.echo( self.name , "Finish pick golf it ok?")
+			
+			
 
 if __name__=="__main__":
 	rospy.init_node( "mission_pick" )

@@ -109,8 +109,16 @@ namespace zeabus_library{
 	void LinearEquation::print_equation(){
 		printf("set1 A B D : %10.4lf%10.4lf%10.4lf\n" , this->A , 1.0 , this->D );
 		printf("set2 A B D : %10.4lf%10.4lf%10.4lf\n" , this->A_inverse , 1.0 , this->D_2 );
-		printf("type save P: %10d%10.4lf%10.4lf\n" , this->type , this->save_x , this->save_y);
-		
+		printf("type save P: %10d%10.4lf%10.4lf\n" , this->type , this->save_x , this->save_y);	
+	}
+
+	// Remind equation is -mx + y = b term Ax + By = D
+	void LinearEquation::find_point_x( double& x , double y ){ // x = ( D - y ) / A
+		x = ( this->D - y ) / A;
+	}
+
+	void LinearEquation::find_point_y( double x , double& y ){ // y = D - Ax
+		y = ( this->D - ( x * this->A ) );
 	}
 
 }

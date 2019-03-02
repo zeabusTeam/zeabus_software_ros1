@@ -18,6 +18,7 @@ from dynamic_reconfigure.client import Client as Client
 
 class AutoExposure:
     def __init__(self, namespace, debug=False):
+        print(namespace)
         image_topic = rospy.get_param(namespace + "/topic")
         self.client_name = rospy.get_param(namespace + "/client")
         self.p_lower_nth_default = rospy.get_param(

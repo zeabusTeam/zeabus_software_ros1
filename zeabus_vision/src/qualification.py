@@ -42,14 +42,16 @@ class Log:
 
     def assume_pole(self, mode, x, y):
         if self.state == 2 and self.assume is None and mode == 1:
-            line1 = lib.distance_2_point(x1=self.cx1, y1=self.cy1, x2=x, y2=y)
-            line2 = lib.distance_2_point(x1=self.cx2, y1=self.cy2, x2=x, y2=y)
+            line1 = abs(self.cx1 - x)
+            line2 = abs(self.cx2 - x)
             if line1 > line2:
                 self.assume = 'Right'
             else:
                 self.assume = 'Left'
-        else:
+        elif mode == 2:
             self.assume = None
+                        
+
 
     def assume_to_pos(self):
         if self.assume == 'Right':
@@ -79,7 +81,7 @@ def mission_callback(msg):
     req = str(msg.req.data)
     if DEBUG['console']:
         lib.print_mission(task, req)
-    if task == 'qualify' or task == 'qualification':
+    if task in ['qualify', 'qualification'] and req.lower() != 'sevinar':
         return find_qualify_pole()
 
 
@@ -108,6 +110,8 @@ def message(state=0, pos=0, cx1=0.0, cy1=0.0,cx2 = 0.0,cy2 =0.0 ,area=0.0):
     msg.area = area
     if DEBUG['console'] or DEBUG['detail']:
         print msg
+        rospy.sleep(0.05)
+        lib.clear_screen()
     return msg
 
 
@@ -236,7 +240,7 @@ def find_qualify_pole():
     mode = no_pipe_v
     if mode == 0:
         lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'image_result')
+        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
         lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
         lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
         return message()
@@ -262,7 +266,7 @@ def find_qualify_pole():
               3, (0, 255, 255), -1)
 
     area = 1.0*abs(cx2-cx1)*abs(cy2-cy1)/(himg*wimg)
-    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'image_result')
+    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
     log.assume_pole(mode=mode, x=cx1, y=cy1)
@@ -273,7 +277,9 @@ def find_qualify_pole():
 
 if __name__ == '__main__':
     rospy.init_node('vision_qualification', anonymous=False)
-    rospy.Subscriber(lib.get_topic("front"), CompressedImage, image_callback)
+    IMAGE_TOPIC = lib.get_topic("front")
+    # IMAGE_TOPIC = '/vision/front/image_raw/compressed'
+    rospy.Subscriber(IMAGE_TOPIC, CompressedImage, image_callback)
     rospy.Service('vision/qualification', vision_srv_gate(),
                   mission_callback)
     lib.print_result("INIT NODE QUALIFICATION", ct.GREEN)

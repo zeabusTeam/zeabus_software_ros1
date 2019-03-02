@@ -86,25 +86,26 @@ def is_pipe(cnt, percent, rect):
                 height = 40
     """
     (x, y), (w, h), angle = rect
+    # print((-70 <= angle and angle <= -20))
     if (-70 <= angle and angle <= -20) or h < 2 or w < 2:
         return False
-
+    # print(rect)
     w, h = max(w, h), min(w, h)
     wh_ratio = 1.0 * w / h
     wh_ratio_expected = (150 / 4.) / 2
     if wh_ratio < wh_ratio_expected * percent:
         return False
-
+    # print(rect)
     area_cnt = cv.contourArea(cnt)
     area_box = w * h
     if area_box < 10 or area_cnt <= 500:
         return False
-
+    # print(rect)
     area_ratio_expected = 0.50
     area_ratio = area_cnt / area_box
     if area_ratio < area_ratio_expected:
         return False
-
+    # print(rect)
     return True
 
 
@@ -112,7 +113,7 @@ def find_pipe(binary, align):
     _, contours, _ = cv.findContours(
         binary, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     number_of_object = 2 if align == 'v' else 1
-    percent_pipe = 0.8 if align == 'v' else 0.2
+    percent_pipe = 0.4 if align == 'v' else 0.2
     topic = 'mask/pipe/vertical' if align == 'v' else 'mask/pipe/horizontal'
     color = (0, 255, 255) if align == 'v' else (255, 0, 255)
     pipe = cv.cvtColor(binary, cv.COLOR_GRAY2BGR)
@@ -160,6 +161,17 @@ def get_flare(img):
     return mask
 
 
+# def get_mode(data):
+#     count = np.bincount(data)
+#     max_idx = count.max()
+#     count = list(count)
+#     return count.index(max_idx)
+
+def get_mean(data):
+    data = np.int64(data)
+    data = data ** 2
+    return np.mean(data)
+
 def find_gate():
     global IMAGE
     if IMAGE is None:
@@ -169,6 +181,12 @@ def find_gate():
     display = IMAGE.copy()
     pre_process = lib.pre_process(IMAGE,'gate')
     gray = cv.cvtColor(pre_process.copy(), cv.COLOR_BGR2GRAY)
+    hsv = cv.cvtColor(pre_process,cv.COLOR_BGR2HSV)
+    b,g,r = cv.split(pre_process)
+    # equ = lib.equalize(gray)
+    clahe = cv.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+    equ = clahe.apply(b)
+    lib.publish_result(equ, 'gray', PUBLIC_TOPIC + 'gray')
     obj = lib.bg_subtraction(gray,mode='neg')
 
     kernel_box = lib.get_kernel(ksize=(7, 7))
@@ -178,6 +196,8 @@ def find_gate():
     vertical = cv.dilate(vertical.copy(), kernel_box)
     kernel_erode = lib.get_kernel(ksize=(3, 11))
     vertical = cv.erode(vertical.copy(), kernel_erode)
+    
+    # remove flare from vertical
     vertical = cv.bitwise_and(vertical,cv.bitwise_not(get_flare(pre_process)))
 
     kernel_horizontal = lib.get_kernel(ksize=(21, 1))
@@ -189,13 +209,15 @@ def find_gate():
 
 
     vertical_pipe, no_pipe_v = find_pipe(vertical, 'v')
+    print('v',no_pipe_v)
     horizontal_pipe, no_pipe_h = find_pipe(horizontal, 'h')
+    print('h',no_pipe_h)
 
     # horizontal
     if no_pipe_h > 0:
         x, y, w, h, angle = horizontal_pipe[0]
-        cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
-                     (int(x + w / 2.), int(y + h / 2.)), (0, 255, 0), 2)
+        # cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
+        #              (int(x + w / 2.), int(y + h / 2.)), (0, 255, 0), 2)
         horizontal_x = [(x - w / 2.), (x + w / 2.)]
         horizontal_y = [(y - h / 2.), (y + h / 2.)]
 
@@ -213,20 +235,16 @@ def find_gate():
         vertical_y2.append((y + h / 2.))
         
     himg, wimg = obj.shape[:2]
-    mode = 0
-    if no_pipe_h == 1:
-        if no_pipe_v == 2:
-            mode = 1
-        elif no_pipe_v == 1:
-            mode = 2
-        elif no_pipe_v == 0:
-            mode = 3
-    elif no_pipe_h == 0 and no_pipe_v == 2:
-        mode = 4
-    else:
-        mode = 0
+    state = no_pipe_v
 
-    if mode == 0:
+    if no_pipe_v == 1:
+        state == 1
+    elif no_pipe_v == 2:
+        state == 2
+    else:
+        state == 0
+    
+    if state == 0:
         lib.print_result("NOT FOUND", ct.RED)
         lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
         lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
@@ -234,39 +252,61 @@ def find_gate():
                            PUBLIC_TOPIC + 'mask/horizontal')
         lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
         return message()
-
-    elif mode == 1:
+    
+    if state == 2:
         lib.print_result("FOUND GATE", ct.GREEN)
-        x1 = max(min(vertical_x1),min(vertical_x2))
-        x2 = min(max(vertical_x1),max(vertical_x2))
-        y1 = max(min(vertical_y1),max(horizontal_y))
-        y2 = min(vertical_y2)
-    elif mode == 2:
-        cx_h = np.mean(horizontal_x)
-        cx_v = np.mean(vertical_x1 + vertical_x2)
-        if cx_h > cx_v:
-            lib.print_result("FOUND ONE LEFT V AND ONE H", ct.YELLOW)
-            x1 = max(min(horizontal_x),max(vertical_x2))
-            x2 = max(horizontal_x)
-            y1 = max(max(horizontal_y),min(vertical_y1))
-            y2 = min(vertical_y2)
+        x1 = max(vertical_x1)
+        x2 = min(vertical_x2)
+        y1 = min(vertical_y1)
+        y2 = max(vertical_y2)
+    
+    if state == 1:
+        lib.print_result("FOUND ONE V", ct.YELLOW)
+        x1 = int(min(vertical_x1))
+        x2 = int(max(vertical_x2))
+        y1 = int(min(vertical_y1))
+        y2 = int(max(vertical_y2))
+        h = int(abs(x1-x2))
+        cy = (y1+y2)/2
+
+        # print((y1,h,x1,x2))
+        gray = equ
+        temp = int(max(y1-1.5*h,0))
+        left_h = gray[temp:y1+h/2, 0:x1]
+        right_h = gray[temp:y1+h/2, x2:wimg]
+        low_left_h = gray[cy:cy+h/2, 0:x1]
+        low_right_h = gray[cy:cy+h/2, x2:wimg]
+
+        
+        lib.publish_result(left_h, 'gray', PUBLIC_TOPIC + 'l')
+        lib.publish_result(right_h, 'gray', PUBLIC_TOPIC + 'r')
+        lib.publish_result(low_left_h, 'gray', PUBLIC_TOPIC + 'll')
+        lib.publish_result(low_right_h, 'gray', PUBLIC_TOPIC + 'lr')
+        # mode_left_h = get_mode(left_h.ravel())
+        # mode_right_h = get_mode(right_h.ravel())
+        # mode_low_left_h = get_mode(low_left_h.ravel())
+        # mode_low_right_h = get_mode(low_right_h.ravel())
+        
+        mean_left_h = 1.0*get_mean(left_h.ravel())
+        mean_right_h = 1.0*get_mean(right_h.ravel())
+        mean_low_left_h = 1.0*get_mean(low_left_h.ravel())
+        mean_low_right_h = 1.0*get_mean(low_right_h.ravel())
+
+        diff_left = abs(mean_left_h-mean_low_left_h)
+        diff_right = abs(mean_right_h-mean_low_right_h)
+        
+        print(mean_left_h,mean_low_left_h,mean_right_h,mean_low_right_h)
+
+        # if(mean_left_h < mean_right_h):
+        # print(abs(diff_left-diff_right))
+        # if abs(diff_left-diff_right) < 500:
+        #     pass
+        if (diff_left > diff_right):
+            x1, x2 = 0, min(x1,x2)
         else:
-            x1 = min(horizontal_x)
-            x2 = min(min(vertical_x1),max(horizontal_x))
-            y1 = max(max(horizontal_y),min(vertical_y1))
-            y2 = min(vertical_y2)
-    elif mode == 3:
-        lib.print_result("FOUND ONE H", ct.YELLOW)
-        x1 = min(horizontal_x)
-        x2 = max(horizontal_x)
-        y1 = max(horizontal_y)
-        y2 = himg
-    elif mode == 4:
-        lib.print_result("FOUND TWO V", ct.YELLOW)
-        x1 = min(vertical_x2)
-        x2 = max(vertical_x1)
-        y1 = max(vertical_y1)
-        y2 = min(vertical_y2)
+            x1, x2 = max(x1,x2), wimg
+                
+   
     right_excess = (x2 > 0.95*wimg)
     left_excess = (x1 < (0.05*wimg))
     if (right_excess and not left_excess):
@@ -285,12 +325,14 @@ def find_gate():
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
     lib.publish_result(horizontal, 'gray', PUBLIC_TOPIC + 'mask/horizontal')
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
-    return message(state=mode, x1=x1, x2=x2, y1=y1, y2=y2, pos=pos, area=area)
+    return message(state=state, x1=x1, x2=x2, y1=y1, y2=y2, pos=pos, area=area)
 
 
 if __name__ == '__main__':
     rospy.init_node('vision_gate', anonymous=False)
-    rospy.Subscriber(lib.get_topic("front"), CompressedImage, image_callback)
+    IMAGE_TOPIC = lib.get_topic("front")
+    # IMAGE_TOPIC = '/vision/front/image_raw/compressed'
+    rospy.Subscriber(IMAGE_TOPIC, CompressedImage, image_callback)
     rospy.Service('vision/gate', vision_srv_gate(),
                   mission_callback)
     lib.print_result("INIT NODE GATE", ct.GREEN)

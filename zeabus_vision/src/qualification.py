@@ -93,16 +93,20 @@ def image_callback(msg):
     IMAGE = bgr.copy()
 
 
-def message(state=0, pos=0, cx=0.0, cy=0.0, area=0.0):
+def message(state=0, pos=0, cx1=0.0, cy1=0.0,cx2 = 0.0,cy2 =0.0 ,area=0.0):
     if(state > 0):
         himg, wimg = IMAGE.shape[:2]
-        cx = lib.Aconvert(cx, wimg)
-        cy = -1.0*lib.Aconvert(cy, himg)
+        cx1 = lib.Aconvert(cx1, wimg)
+        cy1 = -1.0*lib.Aconvert(cy1, himg)
+        cx2 = lib.Aconvert(cx2, wimg)
+        cy2 = -1.0*lib.Aconvert(cy2, himg)
     msg = vision_gate()
     msg.state = state
     msg.pos = pos
-    msg.cx1 = cx
-    msg.cy1 = cy
+    msg.cx1 = cx1
+    msg.cy1 = cy1
+    msg.cx2 = cx2
+    msg.cy2 = cy2
     msg.area = area
     if DEBUG['console'] or DEBUG['detail']:
         print msg
@@ -268,7 +272,7 @@ def find_qualify_pole():
     log.assume_pole(mode=mode, x=cx1, y=cy1)
     pos = log.assume_to_pos()
     log.save_data(state=mode, cx1=cx1, cx2=cx2, cy1=cy1, cy2=cy2)
-    return message(state=mode, cx=(cx1+cx2)/2, cy=(cy1+cy2)/2, pos=pos, area=area)
+    return message(state=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2 , pos=pos, area=area)
 
 
 if __name__ == '__main__':

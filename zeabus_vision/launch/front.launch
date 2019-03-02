@@ -48,8 +48,8 @@
     
 
 	<arg name="place" value="ku"/>
-	<rosparam ns="auto_exposure_hist_front" command="load" file="$(find zeabus_vision)/camera_info/$(arg place)/front/exposure.yaml"/>
-    <node pkg="zeabus_vision" name="auto_exposure_front" type="auto_exposure_front.py" output="screen">
+	<rosparam ns="auto_exposure_front" command="load" file="$(find zeabus_vision)/camera_info/$(arg place)/front/exposure.yaml"/>
+    <node pkg="zeabus_vision" name="auto_exposure_hist_front" type="auto_exposure_front.py" output="screen">
         <param name="topic" type="str" value="/$(arg camera_name)/$(arg camera_topic)/compressed"/>
         <param name="client" type="str" value="/ueye_cam_nodelet_$(arg nodelet_manager_name)/"/>
         <param name="exposure_default" type="double" value="$(arg exposure)"/>

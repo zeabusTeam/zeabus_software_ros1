@@ -97,15 +97,15 @@ class ThrustMapper:
                     torque[run] = self.min_force[run][1]
 
         cmd = []
-        for i in range(0, 4):
+        for i in range(0, 7):
             cmd.append(lup.lookup_pwm_02(torque[i]))
             if(torque[i] == 0):
                 cmd[i] = 1500
 
-        for i in range(4, 8):
-            cmd.append(lup.lookup_pwm_01(torque[i]))
-            if(torque[i] == 0):
-                cmd[i] = 1500
+#        for i in range(4, 8):
+#            cmd.append(lup.lookup_pwm_01(torque[i]))
+#            if(torque[i] == 0):
+#                cmd[i] = 1500
 
         for i in range(0, 8):
 			pwm_command.pwm[i] = cmd[i]  # thrust i

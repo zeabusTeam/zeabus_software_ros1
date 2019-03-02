@@ -2,12 +2,12 @@
 	File name			:	back_control.cpp
 	Author				:	Supasan Komonlit
 	Date created		:	2019 , FEB 10
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , FEB 27
 	Purpose				:	For control system will give force in robot frame by pid
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.2.0
+	version				:	1.3.0
 	status				:	Production
 
 	Namespace			:	-
@@ -42,7 +42,8 @@ int main( int argv , char** argc ){
 
 	double ok_error[6] = { 0.01 , 0.01 , 0.1 , 0.02 , 0.02 , 0.05};
 	double limit_pid[6] = { 3 , 3 , 1.5 , 0.3 , 0.3 , 0.15 };
-	double add_max_pid[6] = { 1 , 1 , 1 , 0.2 , 0.2 , 0.08 };
+	double max_pid[6] = { 3.5 , 3.5 , 2.5 , 0.5 , 0.5 , 0.3 };
+	double min_pid[6] = { -3.5 , -3.5 , 0 , -0.5 , -0.5 , -0.3};
 
 	ros::init( argv , argc , "back_control");
 
@@ -55,6 +56,7 @@ int main( int argv , char** argc ){
 	std::string output_topic;
 	bool target_active; 
 	bool current_active;
+	bool target_free_xy = false;
 	current_active = 0;
 	int frequency;
 
@@ -94,12 +96,20 @@ int main( int argv , char** argc ){
 							, &zeabus_library::subscriber::SubTwistStamped::callback
 							, &listen_target );
 
-	zeabus_library::service::ServiceTwoBool service_two_bool; 
-	service_two_bool.register_bool( &target_active );
+	zeabus_library::service::ServiceTwoBool service_active; 
+	service_active.register_bool( &target_active );
 
 	ros::ServiceServer ser_active_control = nh.advertiseService("/control/active"
 			, &zeabus_library::service::ServiceTwoBool::callback
-			, &service_two_bool );
+			, &service_active );
+
+	zeabus_library::service::ServiceTwoBool service_free_xy;
+	service_free_xy.register_bool( &target_free_xy );
+
+	ros::ServiceServer ser_free_xy = nh.advertiseService("/control/free_xy" 
+			, &zeabus_library::service::ServiceTwoBool::callback
+			, &service_free_xy );
+
 
 //===============> DYNAMIC_RECONFIGURE SYSTEM & LIBRARY FOR SAVE & LOAD
 	dynamic_reconfigure::Server< zeabus_control::pid_Config > server;
@@ -117,7 +127,7 @@ int main( int argv , char** argc ){
 	for( int run = 0 ; run < 6 ; run++ ){
 		pid[run].limit_i( limit_pid[run] );
 		pid[run].set_constant( 0 , 0 , 0 );
-		pid[run].limit_pid( limit_pid[run] + add_max_pid[run] );
+		pid[run].set_limit( min_pid[run] , max_pid[run] );
 	}
 
 //===============> LOOP OPERATING ROS SYSTEM
@@ -150,6 +160,11 @@ int main( int argv , char** argc ){
 			else{ 
 				continue;
 			}
+		}
+
+		if( target_free_xy ){
+			target_twist.twist.linear.x = current_state.twist.twist.linear.x;
+			target_twist.twist.linear.y = current_state.twist.twist.linear.y;
 		}
 
 		diff_twist.twist.linear.x = 
@@ -207,6 +222,7 @@ int main( int argv , char** argc ){
 					, force_twist.twist.linear.x , force_twist.twist.linear.y 
 					, force_twist.twist.linear.z , force_twist.twist.angular.x 
 					, force_twist.twist.angular.y , force_twist.twist.angular.z);
+			printf("STATUS_CONTROL	:%10d\n" , target_free_xy );
 		#endif
 	}
 }

@@ -103,16 +103,16 @@ class VisionCollector:
 
 	def echo_data( self ):
 		if( not self.have_object() ):
-			return str ( "<=== VISION COLLECTOR  DON\'T HAVE OBJECT")
-		return str ( "<=== VISION COLLECTOR ===> Object : " + str( self.result[ 'n_obj'] )
+			return str ( "<=== VISION ===> DON\'T HAVE OBJECT")
+		return str ( "<=== VISION ===> Object : " + str( self.result[ 'n_obj'] )
 			+ " center_x : center_y " + str( self.center_x() ) + " : " + str( self.center_y() )
 			+ " and area is " + str( self.result['area'])
 		)
 
 	def echo_specific( self ):
 		if( not self.have_object() ):
-			return str ( "<=== VISION COLLECTOR  DON\'T HAVE OBJECT")
-		return str ( "<=== VISION COLLECTOR ===> cx_1 : cx_2 , cy_1 : cy_2 , d_x : d_y " 
+			return str ( "<=== VISION ===> DON\'T HAVE OBJECT")
+		return str ( "<=== VISION ===> cx_1 : cx_2 , cy_1 : cy_2 , d_x : d_y " 
 			+ str( self.result["cx_1"] ) + " : " + str( self.result['cx_2'] ) + " ===,=== "
 			+ str( self.result["cy_1"] ) + " : " + str( self.result['cy_2'] ) + " ===,=== "
 			+ str( self.distance_x() ) + " : " + str( self.distance_y() )
@@ -138,6 +138,7 @@ class VisionCollector:
 		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area' ]
 		self.not_sum = [ 'left' , 'right' , 'forward' , 'backward']
 		self.request_data = rospy.ServiceProxy( "/vision/drum" , vision_srv_drum )
+		self.echo_special = self.drum_echo
 
 	def drum_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
@@ -151,6 +152,14 @@ class VisionCollector:
 		self.data['right']		= temporary.right
 		self.data['forward']	= temporary.forward
 		self.data['backward']	= temporary.backward
+
+	def drum_echo( self ):
+		return str( "<=== VISION ===> point1 : point2 , left : right : forward : backward [ " 
+				+ str( self.result["cx_1"] ) + " , " + str( self.result["cy_1"] ) + " ] : [ " 
+				+ str( self.result["cx_2"] ) + " , " + str( self.result["cy_2"] ) + " ] : " 
+				+ str( self.result["left"] ) + " : " + str( self.result["right"] ) + " : " 
+				+ str( self.result["forward"] ) + " : " + str( self.result["backward"] ) 
+		)
 
 	def drum_center_x( self ):
 		return (self.result['cx_1'] + self.result['cx_2'])/2
@@ -166,6 +175,7 @@ class VisionCollector:
 		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area' , 'pos' ]
 		self.not_sum = []
 		self.request_data = rospy.ServiceProxy( "/vision/gate" , vision_srv_gate )
+		self.echo_special = self.echo_specific
 
 	def gate_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
@@ -191,6 +201,7 @@ class VisionCollector:
 		self.can_sum = [ 'cx_1' , 'cx_2' , 'cy_1' , 'cy_2' , 'area'  ]
 		self.not_sum = []
 		self.request_data = rospy.ServiceProxy( "/vision/qualification" , vision_srv_gate )
+		self.echo_special = self.echo_specific
 	
 	def qualification_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
@@ -215,7 +226,7 @@ class VisionCollector:
 		self.can_sum = [ 'cx' , 'cy' , 'area' ]
 		self.not_sum = []
 		self.request_data = rospy.ServiceProxy( "/vision/flare" , vision_srv_flare )
-
+		
 	def flare_data( self , task , request ):
 		temporary = self.request_data( String( task ) , String( request ) ).data
 		self.data['n_obj']		= temporary.state

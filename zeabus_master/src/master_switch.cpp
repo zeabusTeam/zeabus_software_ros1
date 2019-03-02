@@ -119,13 +119,15 @@ int main( int argv , char** argc ){
 		if( status_mission_qualification ){
 			if( count_switch == 0 ){
 				status_mission_qualification = false;
+				srv_connect_mission_qualification.request.data = false;
+				connect_mission_qualification.call( srv_connect_mission_qualification );
 			}
 		}
 		else{
 			if( count_switch == limit_count_switch ){
+				status_mission_qualification = true;
 				srv_connect_mission_qualification.request.data = true;
 				connect_mission_qualification.call( srv_connect_mission_qualification );
-				status_mission_qualification = true;
 			}
 		}
 #endif
@@ -135,13 +137,15 @@ int main( int argv , char** argc ){
 		if( status_mission_all ){
 			if( count_switch == 0 ){
 				status_mission_all = false;
+				srv_connect_mission_all.request.data = false;
+				connect_mission_all.call( srv_connect_mission_all );
 			}
 		}
 		else{
 			if( count_switch == limit_count_switch ){
-				srv_connect_mission_all.request.data = true;
-				connect_mission_all.call( srv_connect_mission_qualification );
 				status_mission_all = true;
+				srv_connect_mission_all.request.data = true;
+				connect_mission_all.call( srv_connect_mission_all );
 			}
 		}
 #endif

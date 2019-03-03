@@ -34,14 +34,6 @@ def publish_result(img, type, topicName):
         msg = bridge.cv2_to_imgmsg(img, "bgr8")
     pub.publish(msg)
 
-
-def get_topic(camera):
-    if camera == 'front':
-        return '/vision/front/image_rect_color/compressed'
-    elif camera == 'bottom':
-        return '/vision/bottom/image_raw/compressed'
-
-
 def range_str2array(string):
     string = string.split(',')
     return np.array([int(string[0]), int(string[1]), int(string[2])], dtype=np.uint8)
@@ -92,7 +84,7 @@ def normalize(gray):
 #     return obj
 
 
-def bg_subtraction(gray,mode='neg'):
+def bg_subtraction(gray, mode='neg'):
     """
         new bg_subtraction
         create by: skconan
@@ -165,5 +157,35 @@ def print_mission(task, req=''):
     print("task is " + ct.UNDERLINE + task + ct.DEFAULT +
           " and req is " + ct.UNDERLINE + req + ct.DEFAULT)
 
-def distance_2_point(x1,y1,x2,y2):
+
+def distance_2_point(x1, y1, x2, y2):
     return ((y2-y1)**2 + (x2-x1)**2)**0.5
+
+
+def most_point(cnt, direction):
+    if(direction in ['l', 'left', 'leftmost']):
+        return tuple(cnt[cnt[:, :, 0].argmin()][0])
+    if(direction in ['r', 'right', 'rightmost']):
+        return tuple(cnt[cnt[:, :, 0].argmax()][0])
+    if(direction in ['t', 'top', 'topmost']):
+        return tuple(cnt[cnt[:, :, 1].argmin()][0])
+    if(direction in ['b', 'bottom', 'bottommost']):
+        return tuple(cnt[cnt[:, :, 1].argmax()][0])
+
+
+def get_color(request='black'):
+    request = request.lower()
+    color = {
+        'black': (0,0,0),
+        'blue': (0,0,255),
+        'red': (255,0,0),
+        'yellow': (255,255,0),
+        'green': (0,255,0),
+        'white': (255,255,255),
+        'cyam': (0,255,255),
+        'purple': (255,0,255)
+    }
+    try:
+        return color[request]
+    except:
+        return color['black']

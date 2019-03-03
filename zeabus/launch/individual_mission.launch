@@ -2,10 +2,19 @@
 
 <launch>
 
+	<arg name="gate_arg" value="SAUVC_gate_qualification"/>
+	<!--arg name="gate_arg" value="SAUVC_gate_origin"/-->
+
 	<node name="mission_gate" output="screen" pkg="zeabus_mission" 
-			type="SAUVC_gate_original.py"/>
+			type="$(arg gate_arg)"/>
 
 	<node name="mission_flare" output="screen" pkg="zeabus_mission"
 			type="SAUVC_mission_flare.py"/>
+
+	<node name="mission_drum" output="screen" pkg="zeabus_mission"
+			type="SAUVC_drum_side.py"/>
+
+	<node name="mission_pick" output="screen" pkg="zeabus_mission"
+			type="SAUVC_pick_center.py"/>
 
 </launch>

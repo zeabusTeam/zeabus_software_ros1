@@ -16,6 +16,7 @@ import color_text as ct
 from time import time
 from image_lib import Image
 
+
 class Log:
     def __init__(self):
         self.time = None
@@ -28,7 +29,7 @@ class Log:
             self.__init__()
         self.time = time()
         self.swap_shade()
-    
+
     def swap_shade(self):
         if self.history != [] and sum(self.history)/len(self.history) < 0.5:
             if self.shade == "dark":
@@ -37,7 +38,7 @@ class Log:
                 self.shade = "dark"
             self.history = []
 
-    def append_history(self,state):
+    def append_history(self, state):
         if len(self.history) >= self.max_history_length:
             self.history[:-4]
         if state >= 2:
@@ -54,20 +55,30 @@ DEBUG = {
 }
 log = Log()
 
+
 def mission_callback(msg):
     task = str(msg.task.data)
     req = str(msg.req.data)
     if DEBUG['console']:
         lib.print_mission(task, req)
 
-    drum_option = ['red','blue']
-    return_option = ['top-bottom','left-right','tb','lr']
+    drum_option = ['red', 'blue']
+    return_option = ['top-bottom', 'left-right', 'tb', 'lr']
     if task in drum_option and req in return_option:
-        return find_drum(task,req)
+        return find_drum(task, req)
     elif task == 'golf':
         return find_golf(task)
 
+
 def message(state=0, cx1=0, cy1=0, cx2=0, cy2=0, forward=False, backward=False, left=False, right=False, area=0):
+    if state > 0:
+        himg, wimg = image.display.shape[:2]
+        cx1 = lib.Aconvert(cx1, wimg)
+        cy1 = -1.0*lib.Aconvert(cy1, himg)
+        cx2 = lib.Aconvert(cx2, wimg)
+        cy2 = -1.0*lib.Aconvert(cy2, himg)
+        area = 1.0*area/(himg*wimg)
+
     msg = vision_drum()
     msg.state = state
     msg.cx1 = cx1
@@ -86,7 +97,7 @@ def message(state=0, cx1=0, cy1=0, cx2=0, cy2=0, forward=False, backward=False, 
 def get_mask(color, shade):
     image.get_hsv()
     blur = cv.medianBlur(image.hsv, 5)
-    _,s,_ = cv.split(blur)
+    _, s, _ = cv.split(blur)
 
     foregroud_mask = cv.threshold(
         s, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
@@ -111,7 +122,7 @@ def get_mask(color, shade):
 
 
 def get_contour(mask, request):
-    if request in ['red','blue'] or not DEBUG['by-pass-mat']:
+    if request in ['red', 'blue'] or not DEBUG['by-pass-mat']:
         mat_mask = get_mat()
         if mat_mask.shape != mask.shape:
             return cv.findContours(
@@ -126,6 +137,7 @@ def get_contour(mask, request):
         return cv.findContours(
             mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
 
+
 def get_obj(mask, request):
     contours = get_contour(mask, request)
     obj = []
@@ -136,22 +148,24 @@ def get_obj(mask, request):
             continue
 
         x, y, w, h = cv.boundingRect(cnt)
-        cv.rectangle(image.display, (x, y), (x+w, y+h), lib.get_color('yellow'), 2)
-        left_cy = lib.most_point(cnt,'left')[1]
-        right_cy = lib.most_point(cnt,'right')[1]
+        cv.rectangle(image.display, (x, y), (x+w, y+h),
+                     lib.get_color('yellow'), 2)
+        left_cy = lib.most_point(cnt, 'left')[1]
+        right_cy = lib.most_point(cnt, 'right')[1]
         if abs(left_cy-right_cy) > 0.2 * h:
             continue
 
-        cv.rectangle(image.display, (x, y), (x+w, y+h), lib.get_color('green'), 2)
+        cv.rectangle(image.display, (x, y), (x+w, y+h),
+                     lib.get_color('green'), 2)
         obj.append(cnt)
 
     if obj != []:
         return max(obj, key=cv.contourArea)
-    return [] 
+    return []
 
 
 def get_excess(cnt):
-    himg,wimg = image.display.shape[:2]
+    himg, wimg = image.display.shape[:2]
     x, y, w, h = cv.boundingRect(cnt)
     top_excess = (y < (0.05*wimg))
     right_excess = ((x+w) > 0.95*wimg)
@@ -160,17 +174,21 @@ def get_excess(cnt):
     return top_excess, bottom_excess, left_excess, right_excess
 
 
-def get_cx(cnt):
-    global image_result
+def get_cx(cnt, return_option=None):
     himg, wimg = image.display.shape[:2]
-    area = cv.contourArea(cnt)/(himg*wimg)
     (cx, cy) = lib.center_of_contour(cnt)
     cv.circle(image.display, (cx, cy), 5, (0, 0, 255), -1)
     x, y, w, h = cv.boundingRect(cnt)
-    cx1 = lib.Aconvert(x, wimg)
-    cy1 = -1.0*lib.Aconvert(y, himg)
-    cx2 = lib.Aconvert(x+w, wimg)
-    cy2 = -1.0*lib.Aconvert(y+h, himg)
+    area = w * h
+    if return_option is None:
+        cx1, cx2 = max(min(x,x+w),0),min(max(x,x+w),wimg)
+        cy1, cy2 = max(min(y,y+h),0),min(max(y,y+h),himg)
+    elif return_option in ['top-bottom','tb']:
+        cx1, cy1 = lib.most_point(cnt,'bottom')
+        cx2, cy2 = lib.most_point(cnt,'top')
+    elif return_option in ['left-right','lr']:
+        cx1, cy1 = lib.most_point(cnt,'left')
+        cx2, cy2 = lib.most_point(cnt,'right')
     return cx1, cy1, cx2, cy2, area
 
 
@@ -203,14 +221,16 @@ def find_drum(color, return_option):
         lib.publish_result(image.display, 'bgr', public_topic+'image_result')
         return message()
     lib.print_result("FOUND DRUM", ct.GREEN)
-    cv.circle(image.display,lib.most_point(obj,'right'),5,(255,255,0),-1)
-    cv.circle(image.display,lib.most_point(obj,'left'),5,(0,255,255),-1)
-    cx1, cy1, cx2, cy2, area = get_cx(obj)
+    cv.circle(image.display, lib.most_point(
+        obj, 'right'), 5, (255, 255, 0), -1)
+    cv.circle(image.display, lib.most_point(obj, 'left'), 5, (0, 255, 255), -1)
+    cx1, cy1, cx2, cy2, area = get_cx(obj,return_option=return_option)
     forward, backward, left, right = get_excess(obj)
     lib.publish_result(drum_mask, 'gray', public_topic+'mask/drum')
     lib.publish_result(image.display, 'bgr', public_topic+'display')
     return message(state=state, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,
-                    backward=backward, left=left, right=right, area=area)
+                   backward=backward, left=left, right=right, area=area)
+
 
 def find_golf(objective):
     global last_time, his, start_shade, shade
@@ -218,10 +238,8 @@ def find_golf(objective):
         lib.img_is_none()
         return message(state=-1)
     log.update_time()
-    # if(last_time == 0 or time()-last_time > 5 or his is None):
-    #     his = []
     himg, wimg = image.bgr.shape[:2]
-    golf_mask = get_mask("yellow",shade=log.shade)
+    golf_mask = get_mask("yellow", shade=log.shade)
     obj = get_obj(golf_mask, objective)
     state = len(obj)
     log.append_history(state)

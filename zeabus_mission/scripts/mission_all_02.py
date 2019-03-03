@@ -1,9 +1,9 @@
 #!/usr/bin/python2
 #################################################################################################
 ####
-####	FILE		: mission_all.py
+####	FILE		: mission_all_02.py
 ####	Maintain	: Supasan Komonlit
-####	Create on	: 2019 , FEB 21
+####	Create on	: 2019 , MAR 3
 ####	Purpose		: For competition in SAUVC2019
 ####
 #################################################################################################
@@ -16,14 +16,14 @@ import time
 import os
 
 from vision_collector		import VisionCollector
-from standard_mission		import StandardMission 
+from standard_mission		import StandardMission
 
 from zeabus_library.srv		import TwoBool
 
 new_pid = 1
 
 class MissionAll( StandardMission ):
-	
+
 	def __init__( self , name ):
 		self.name = name
 
@@ -47,7 +47,7 @@ class MissionAll( StandardMission ):
 		self.over = self.over_distance
 		self.type_over = "distance"
 #		self.over = self.over_time
-#		self.type = "time"
+#		self.type_over = "time"
 
 		self.echo(self.name , "FINISHED SETUP ALL MISSION")
 
@@ -81,40 +81,45 @@ class MissionAll( StandardMission ):
 				self.echo( self.name ,  "Call to close flare")
 			return False
 		
-		self.echo( self.name , "End Callback")
+		self.echo( self.name , "End Callback" )
 
 	def main_play( self ):
-
+	
 		# This function will call by switch we must reset data target
 		self.reset_velocity( "xy" )
-		self.reset_target( "xy")
+		self.reset_target( "xy" )
 		self.reset_target( "yaw" )
-		self.fix_z( -0.5 )
+		self.fix_z( -0.8 )
 
 		self.collect_state()
 		self.start_yaw = self.save_state[5]
-	
+
 		self.echo( self.name , "START ALL MISSION at yaw is " + str( self.start_yaw ) )
-	
-		self.wait_state( "z" , 0.1 , 5 )	
 
-		result = self.survey_mode( 2 , 6 , 1.5 , -4 , "gate" , self.gate )
+		self.wait_state( "z" , 0.1 , 5 )
 
-		if( self.state ):	
-			self.fix_z( -1.3 )
-			self.fix_yaw( self.start_yaw - math.pi / 2 )
-			self.wait_state( "z" , 0.1 , 5 )
+		self.velocity_xy( 0.2 , 0 )
+		self.over_time( 10 , True )
+		while( self.ok_state() and ( not self.over_time(10) ) ):
+			self.sleep( 0.1 )
+		self.reset_velocity( "xy" )
+		
+		result = self.gate( True )
+
+		if( self.ok_state() ):
+			self.fix_z( -1.4 )
+			self.fix_yaw( self.start_yaw - ( math.pi/2 ) )
 			self.wait_state( "yaw" , 0.1 , 5 )
-			result = self.survey_mode( 6 , 6 , 1 , -4 , "flare" , self.flare )
+			self.survey_mode( 5 , 6 , 1 , 4 , "flare" , self.flare )
 
-		if( self.state ):
-			self.fix_z( -0.5 )
+		if( self.ok_state() ):
+			self.fix_z( 0.5 )
 			self.fix_yaw( self.start_yaw )
 			self.wait_state( "z" , 0.1 , 5 )
 			self.wait_state( "yaw" , 0.1 , 5 )
-			result = self.survey_mode( 6 , 10 , 1 , 5 , "drum" , sefl.drum )
-	
-		if( self.state ):
+			result = self.survey_mode( 4 , 10 , 1 , 6 )
+
+		if( self.ok_state() ):
 			self.fix_z( -0.5 )
 			self.wait_state( "z" , 0.1 , 5 )
 			self.velocity_xy( -0.1 , 0 )
@@ -127,19 +132,12 @@ class MissionAll( StandardMission ):
 			self.velocity_xy( 0.1 , 0 )
 			while( self.ok_state() ):
 				self.sleep( 0.1 )
-				self.drum.analysis_all( "drum" , "drop" , 5 )
+				self.drum.analysis_all( "blue" , "side" , 5 )
 				if( self.drum.have_object() ):
 					self.mission_golf( True )
 					break
+		
 
-		self.fix_z( 0 )	
-			
-		
-		# FINISH Part set up data information for startup
-
-		return True
-		
-		
 	# WARNING ! survey mode will use after rotation 
 	# step is move forward move slide move forward and move inverse slide
 	def survey_mode( self , first_forward , first_slide , forward , slide , mission , service ):
@@ -162,7 +160,7 @@ class MissionAll( StandardMission ):
 					if( self.flare.have_object() ): count_have_object += 1
 					else: count_have_object = 0
 			elif( mission == "drum" ):
-				self.drum.analysis_all( "drum" , "drop" , 5 )
+				self.drum.analysis_all( "blue" , "side" , 5 )
 				if( self.drum.have_object() ): count_have_object += 1
 				else: count_have_object = 0
 			else:
@@ -195,7 +193,7 @@ class MissionAll( StandardMission ):
 					current_fix_velocity = True
 				if( self.over( limit_value ) ):
 					type_movement = 2 
-					self.reset_veloccity( "xy" )
+					self.reset_velocity( "xy" )
 					current_fix_velocity = False
 	
 			elif( type_movement == 2 ):
@@ -205,7 +203,7 @@ class MissionAll( StandardMission ):
 					current_fix_velocity = True 
 				if( self.over( limit_value ) ):
 					type_movement = 3
-					self.reset_veloccity( "xy" )
+					self.reset_velocity( "xy" )
 					current_fix_velocity = False
 
 			elif( type_movement == 3 ):
@@ -215,7 +213,7 @@ class MissionAll( StandardMission ):
 					current_fix_velocity = True
 				if( self.over( limit_value ) ) :
 					type_movement = 4
-					self.reset_veloccity( "xy" )
+					self.reset_velocity( "xy" )
 					current_fix_velocity = False
 					first_forward = forward
 
@@ -226,7 +224,7 @@ class MissionAll( StandardMission ):
 					current_fix_velocity = True
 				if( self.over( limit_value ) ):
 					type_movement = 1
-					self.reset_veloccity( "xy" )	
+					self.reset_velocity( "xy" )	
 					current_fix_velocity = False
 					first_slide = math.copysign( slide , first_slide )
 			else:

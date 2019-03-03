@@ -43,12 +43,15 @@ class MissionGate( StandardMission ):
 	
 		count = 0
 
-		count += self.step_01()
+		value_velocity = 0.1
 
-		if( count != 0 ):
-			result = self.step_02( count )
+		count = self.step_01( value_velocity )
+
+		result = self.step_02( value_velocity )
 
 		self.fix_z( -0.5 )
+
+		self.echo( self.name , "I Finish to de this mission ")
 		return result
 
 	def step_01( self , value_velocity ): # Move left or right untill find first pier
@@ -63,17 +66,53 @@ class MissionGate( StandardMission ):
 				if( current_fix_velocity ):
 					self.reset_velocity( "xy" )
 					current_fix_velocity = False
-					self.reset_target( "xy" )
-				while( self.ok_state() ): # Loop for move direct to pier
-					self.sleep( 0.1 )
-					if( abs( self.vision.center_x() ) < 0.2 ):
-						self.velocity( { 'x' : 0.1 } )
-					else:
-						self.velocity( { 'y' : math.copysign( 0.1 , self.vision.center_x()*-1 )})
-					if( self.vision.distance_x() > 0.6 ):
-						next_part = True
+					self.reset_target( "xy"
+				if( abs( self.vision.center_x() ) < 0.25 ):
+					self.velocity( { 'x' : 0.1 } )
+				else:
+					self.velocity( { 'y' : math.copysign( 0.1 , self.vision.center_x  ) * -1 } ) 
+				if( self.vision.distance_x() > 0.5 ):
+					next_part = True 
+			else:
+				if( not current_fix_velocity ):
+					self.velocity_xy( 0 , value_velocity )
+					current_fix_velocity = True
+				self.echo( self.name , "Now I move velocity in y axis is " + str(value_velocity))
+		return value_velocity
 					
-					
+	def step_02( self , value_velocity ):
+		# first move out to unfound pier
+		self.velocity_xy( 0 , math.copysign( 0.05 , value_velocity) )
+		result = False
+		while( self.ok_state() ):
+			self.sleep( 0.1 )
+			self.vision.analysis_all( "gate" , "sevinar" , 5 )
+			self.echo_vision( self.vision.echo_specific() )
+			if( self.vision.have_object() ):
+				self.echo( self.name , "I still found gate")
+			else:
+				self.echo( self.name , "Now I don't found pier we will end this tast")	
+				break
+		self.fix_z( -1 )
+		start_time = time.time()
+		diff_time = 0 
+		while( self.ok_state() and diff_time < 6 ):
+			self.sleep( 0.1 ):
+			diff_time = time.time() - start_time
+			self.echo( self.name , "Countdown move diff_time is " + str( diff_time ) )
+		self.reset_velocity( "xy" )
+		self.reset_target( "xy" )
+		start_time = time.time()
+		diff_time = 0
+		self.velocity_xy( 0.2 , 0 )
+		while( self.ok_state() and diff_time < 5 ):
+			self.sleep( 0.1 ):
+			diff_time = time.time() - start_time
+			self.echo( self.name , "Countdown last move diff time is " + str( diff_time ) )
+		if( diff_time > 5 ): result = True
+		self.reset_velocity( "xy" )
+		self.fix_z( -0.5 )
+		return result
 		
 					
 if __name__ == "__main__" :

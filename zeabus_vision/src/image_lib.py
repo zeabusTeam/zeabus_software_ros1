@@ -12,22 +12,16 @@ class Image:
         self.sub_sampling = sub_sampling
 
     def get_hsv(self):
-        try:
-            self.hsv
-        except:
-            self.hsv = cv.cvtColor(self.bgr, cv.COLOR_BGR2HSV)
+        self.hsv = cv.cvtColor(self.bgr, cv.COLOR_BGR2HSV)
 
     def get_gray(self):
-        try:
-            self.gray
-        except:
-            self.gray = cv.cvtColor(self.bgr, cv.COLOR_BGR2GRAY)
+        self.gray = cv.cvtColor(self.bgr, cv.COLOR_BGR2GRAY)
 
     def callback(self, msg):
         arr = np.fromstring(msg.data, np.uint8)
-        self.image = cv.resize(cv.imdecode(arr, 1), (0, 0),
+        self.bgr = cv.resize(cv.imdecode(arr, 1), (0, 0),
                                fx=self.sub_sampling, fy=self.sub_sampling)
-        self.display = self.image.copy()
+        self.display = self.bgr.copy()
 
     def topic(self, camera, mode='new'):
         if camera == 'front':
@@ -37,3 +31,4 @@ class Image:
                return '/vision/front/image_rect_color/compressed'
         elif camera == 'bottom':
             return '/vision/bottom/image_raw/compressed'
+            #return '/vision/bottom/image_raw/compressed'

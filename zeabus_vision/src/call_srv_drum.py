@@ -21,7 +21,8 @@ if __name__ == "__main__":
     i = 0
     while not rospy.is_shutdown():
         try:
-            res = call(String('drum'),String('blue'))
+            res = call(String('blue'),String('tb'))
+            res = call(String('golf'),String('tb'))
             if last is not -1 and res.data.state is -1:
                 print('Image is none...')
             elif res.data.state is -2:

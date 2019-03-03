@@ -50,7 +50,7 @@ class Log:
 public_topic = '/vision/mission/drum/'
 image = Image(sub_sampling=0.3)
 DEBUG = {
-    'by-pass-mat': False,
+    'by-pass-mat': True,
     'console': True
 }
 log = Log()
@@ -94,21 +94,27 @@ def message(state=0, cx1=0, cy1=0, cx2=0, cy2=0, forward=False, backward=False, 
     return msg
 
 
-def get_mask(color, shade):
+def get_mask(color, shade=None):
     image.get_hsv()
     blur = cv.medianBlur(image.hsv, 5)
     _, s, _ = cv.split(blur)
+	
+    foregroud_mask = s
 
-    foregroud_mask = cv.threshold(
-        s, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
+    # foregroud_mask = cv.threshold(
+    #     s, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
 
     if color == "blue":
-        upper = np.array([120, 255, 255], dtype=np.uint8)
-        lower = np.array([90, 160, 0], dtype=np.uint8)
+        upper = np.array([161, 197, 195], dtype=np.uint8)
+        lower = np.array([49, 9, 63], dtype=np.uint8)
+        # upper = np.array([120, 255, 255], dtype=np.uint8)
+        # lower = np.array([90, 160, 0], dtype=np.uint8)
     if color == "yellow":
         if shade == "dark":
-            upper = np.array([47, 255, 255], dtype=np.uint8)
-            lower = np.array([20, 17, 228], dtype=np.uint8)
+            upper = np.array([66, 255, 255], dtype=np.uint8)
+            lower = np.array([37, 98, 0], dtype=np.uint8)
+            #upper = np.array([47, 255, 255], dtype=np.uint8)
+            #lower = np.array([20, 17, 228], dtype=np.uint8)
         elif shade == "light":
             upper = np.array([60, 255, 255], dtype=np.uint8)
             lower = np.array([27, 160, 97], dtype=np.uint8)
@@ -122,7 +128,7 @@ def get_mask(color, shade):
 
 
 def get_contour(mask, request):
-    if request in ['red', 'blue'] or not DEBUG['by-pass-mat']:
+    if request in ['red', 'blue'] and not DEBUG['by-pass-mat']:
         mat_mask = get_mat()
         if mat_mask.shape != mask.shape:
             return cv.findContours(
@@ -152,8 +158,8 @@ def get_obj(mask, request):
                      lib.get_color('yellow'), 2)
         left_cy = lib.most_point(cnt, 'left')[1]
         right_cy = lib.most_point(cnt, 'right')[1]
-        if abs(left_cy-right_cy) > 0.2 * h:
-            continue
+        # if abs(left_cy-right_cy) > 0.2 * h:
+        #    continue
 
         cv.rectangle(image.display, (x, y), (x+w, y+h),
                      lib.get_color('green'), 2)
@@ -193,7 +199,7 @@ def get_cx(cnt, return_option=None):
 
 
 def get_mat():
-    mat = get_mask(image.bgr, "green")
+    mat = get_mask("green")
     lib.publish_result(mat, 'gray', public_topic+'mask/mat/unprocessed')
     contours = cv.findContours(
         mat, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
@@ -212,9 +218,9 @@ def find_drum(color, return_option):
         lib.img_is_none()
         return message(state=-1)
     himg, wimg = image.display.shape[:2]
-    drum_mask = get_mask(image.display, color)
+    drum_mask = get_mask(color)
     obj = get_obj(drum_mask, color)
-    state = len(obj)
+    state = obj != []
     if state == 0:
         lib.print_result("CANNOT FOUND DRUM", ct.RED)
         lib.publish_result(drum_mask, 'gray', public_topic+'mask/drum')
@@ -263,6 +269,7 @@ if __name__ == '__main__':
     rospy.init_node('vision_drum', anonymous=False)
 
     image_topic = image.topic("bottom")
+    print(image_topic)
     rospy.Subscriber(image_topic, CompressedImage, image.callback)
     rospy.Service('vision/drum', vision_srv_drum(),
                   mission_callback)

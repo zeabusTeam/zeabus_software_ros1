@@ -18,7 +18,6 @@ from image_lib import Image
 
 class Log:
     def __init__(self):
-        self.history = None
         self.time = None
         self.history = []
         self.shade = "light"
@@ -28,12 +27,13 @@ class Log:
         if self.time is not None and self.time - time() > 2:
             self.__init__()
         self.time = time()
+        self.swap_shade()
     
-    def swap_shade(self, shade):
+    def swap_shade(self):
         if self.history != [] and sum(self.history)/len(self.history) < 0.5:
-            if shade.lower() == "dark":
+            if self.shade == "dark":
                 self.shade = "light"
-            elif shade.lower() == "light":
+            elif self.shade == "light":
                 self.shade = "dark"
             self.history = []
 
@@ -52,7 +52,7 @@ DEBUG = {
     'by-pass-mat': False,
     'console': True
 }
-
+log = Log()
 
 def mission_callback(msg):
     task = str(msg.task.data)
@@ -214,48 +214,29 @@ def find_drum(color, return_option):
 
 def find_golf(objective):
     global last_time, his, start_shade, shade
-    if IMAGE is None:
+    if image.bgr is None:
         lib.img_is_none()
         return message(state=-1)
-    if(last_time == 0 or time()-last_time > 5 or his is None):
-        his = []
-    himg, wimg = IMAGE.shape[:2]
-    if himg > 1000 or wimg > 1000:
-        lib.print_result("size bug plz wait", color=ct.RED)
-        last_time = time()
-        return message(state=-2)
-    if len(his) == 5 and 1 not in his:
-        start_shade += 1
-        start_shade %= len(shade)
-    print(shade[start_shade],his)
-    golf_mask = get_mask(IMAGE, "yellow",shade=shade[start_shade])
-    ROI = get_ROI(golf_mask, objective)
-    if ROI is None:
-        lib.print_result("size bug plz wait", color=ct.RED)
-        last_time = time()
-        return message(state=-2)
-    state = len(ROI)
+    log.update_time()
+    # if(last_time == 0 or time()-last_time > 5 or his is None):
+    #     his = []
+    himg, wimg = image.bgr.shape[:2]
+    golf_mask = get_mask("yellow",shade=log.shade)
+    obj = get_obj(golf_mask, objective)
+    state = len(obj)
+    log.append_history(state)
     if state == 0:
         lib.print_result("CANNOT FOUND GOLF", ct.RED)
         lib.publish_result(golf_mask, 'gray', public_topic+'mask/golf')
-        lib.publish_result(image_result, 'bgr', public_topic+'image_result')
-        last_time = time()
-        append_history(0)
+        lib.publish_result(image.display, 'bgr', public_topic+'image_result')
         return message()
     elif state >= 1:
         if state == 1:
             lib.print_result("FOUND GOLF", ct.GREEN)
-            append_history(1)
-        elif state > 1:
-            lib.print_result("FOUND BUT HAVE SOME NOISE (" +
-                         str(state) + ")", ct.YELLOW)
-            append_history(1.0/state)
-        cnt = max(ROI, key=cv.contourArea)
-        cx1, cy1, cx2, cy2, area = get_cx(cnt)
-        forward, backward, left, right = get_excess(cnt)
+        cx1, cy1, cx2, cy2, area = get_cx(obj)
+        forward, backward, left, right = get_excess(obj)
         lib.publish_result(golf_mask, 'gray', public_topic+'mask/golf')
-        lib.publish_result(image_result, 'bgr', public_topic+'image_result')
-        last_time = time()
+        lib.publish_result(image.bgr, 'bgr', public_topic+'image_result')
         return message(state=state, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,
                        backward=backward, left=left, right=right, area=area)
 
@@ -263,7 +244,7 @@ def find_golf(objective):
 if __name__ == '__main__':
     rospy.init_node('vision_drum', anonymous=False)
 
-    image_topic = lib.get_topic("bottom")
+    image_topic = image.topic("bottom")
     rospy.Subscriber(image_topic, CompressedImage, image.callback)
     rospy.Service('vision/drum', vision_srv_drum(),
                   mission_callback)

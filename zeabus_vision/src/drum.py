@@ -15,7 +15,8 @@ import vision_lib as lib
 import color_text as ct
 from time import time
 from image_lib import Image
-
+import math
+from operator import itemgetter
 
 class Log:
     def __init__(self):
@@ -48,7 +49,7 @@ class Log:
 
 
 public_topic = '/vision/mission/drum/'
-image = Image(sub_sampling=0.3)
+image = Image(sub_sampling=0.5)
 DEBUG = {
     'by-pass-mat': True,
     'console': True
@@ -149,7 +150,7 @@ def get_obj(mask, request):
     obj = []
     for cnt in contours:
         area = cv.contourArea(cnt)
-        check_area = 270 if request == 'golf' else 2700
+        check_area = 450 if request == 'golf' else 4500
         if area < check_area:
             continue
 
@@ -162,7 +163,7 @@ def get_obj(mask, request):
         #    continue
 
         cv.rectangle(image.display, (x, y), (x+w, y+h),
-                     lib.get_color('green'), 2)
+                     lib.get_color('yellow'), 2)
         obj.append(cnt)
 
     if obj != []:
@@ -182,9 +183,12 @@ def get_excess(cnt):
 
 def get_cx(cnt, return_option=None):
     himg, wimg = image.display.shape[:2]
-    (cx, cy) = lib.center_of_contour(cnt)
-    cv.circle(image.display, (cx, cy), 5, (0, 0, 255), -1)
+    if return_option is not None:
+        (cx, cy) = lib.center_of_contour(cnt)
+        cv.circle(image.display, (cx, cy), 5, (0, 0, 255), -1)
     x, y, w, h = cv.boundingRect(cnt)
+    cv.rectangle(image.display, (x, y), (x+w, y+h),
+                     lib.get_color('green'), 3)
     area = w * h
     if return_option is None:
         cx1, cx2 = max(min(x,x+w),0),min(max(x,x+w),wimg)
@@ -217,14 +221,15 @@ def find_drum(color, return_option):
     if image.bgr is None:
         lib.img_is_none()
         return message(state=-1)
+    image.renew_display()
     himg, wimg = image.display.shape[:2]
     drum_mask = get_mask(color)
     obj = get_obj(drum_mask, color)
     state = obj != []
     if state == 0:
         lib.print_result("CANNOT FOUND DRUM", ct.RED)
-        lib.publish_result(drum_mask, 'gray', public_topic+'mask/drum')
-        lib.publish_result(image.display, 'bgr', public_topic+'image_result')
+        lib.publish_result(drum_mask, 'gray', public_topic+'mask')
+        lib.publish_result(image.display, 'bgr', public_topic+'display')
         return message()
     lib.print_result("FOUND DRUM", ct.GREEN)
     cv.circle(image.display, lib.most_point(
@@ -232,38 +237,77 @@ def find_drum(color, return_option):
     cv.circle(image.display, lib.most_point(obj, 'left'), 5, (0, 255, 255), -1)
     cx1, cy1, cx2, cy2, area = get_cx(obj,return_option=return_option)
     forward, backward, left, right = get_excess(obj)
-    lib.publish_result(drum_mask, 'gray', public_topic+'mask/drum')
+    lib.publish_result(drum_mask, 'gray', public_topic+'mask')
     lib.publish_result(image.display, 'bgr', public_topic+'display')
     return message(state=state, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,
                    backward=backward, left=left, right=right, area=area)
 
 
+# def find_golf(objective):
+#     if image.bgr is None:
+#         lib.img_is_none()
+#         return message(state=-1)
+#     log.update_time()
+#     himg, wimg = image.bgr.shape[:2]
+#     golf_mask = get_mask("yellow", shade=log.shade)
+#     obj = get_obj(golf_mask, objective)
+#     state = len(obj)
+#     log.append_history(state)
+#     if state == 0:
+#         lib.print_result("CANNOT FOUND GOLF", ct.RED)
+#         lib.publish_result(golf_mask, 'gray', public_topic+'mask/golf')
+#         lib.publish_result(image.display, 'bgr', public_topic+'image_result')
+#         return message()
+#     elif state >= 1:
+#         if state == 1:
+#             lib.print_result("FOUND GOLF", ct.GREEN)
+#         cx1, cy1, cx2, cy2, area = get_cx(obj)
+#         forward, backward, left, right = get_excess(obj)
+#         lib.publish_result(golf_mask, 'gray', public_topic+'mask/golf')
+#         lib.publish_result(image.bgr, 'bgr', public_topic+'image_result')
+#         return message(state=state, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,
+#                        backward=backward, left=left, right=right, area=area)
+
 def find_golf(objective):
-    global last_time, his, start_shade, shade
     if image.bgr is None:
         lib.img_is_none()
         return message(state=-1)
-    log.update_time()
-    himg, wimg = image.bgr.shape[:2]
-    golf_mask = get_mask("yellow", shade=log.shade)
-    obj = get_obj(golf_mask, objective)
-    state = len(obj)
-    log.append_history(state)
+    image.renew_display()
+    image.get_gray()
+    obj = lib.bg_subtraction(image.gray,mode='pos')
+    contours= cv.findContours(obj.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)[1]
+    circle = []
+    for cnt in contours:
+        area_cnt = cv.contourArea(cnt)
+        (x,y),radius = cv.minEnclosingCircle(cnt)
+        center = (int(x),int(y))
+        area_cir = math.pi*(radius**2)
+        if area_cir <= 0 or area_cnt/area_cir < 0.8:
+            continue
+        cv.circle(image.display,center,int(radius),lib.get_color('yellow'),3)
+        circle.append([x,y,radius])
+
+    state = len(circle)
+
     if state == 0:
         lib.print_result("CANNOT FOUND GOLF", ct.RED)
-        lib.publish_result(golf_mask, 'gray', public_topic+'mask/golf')
-        lib.publish_result(image.display, 'bgr', public_topic+'image_result')
+        lib.publish_result(obj, 'gray', public_topic+'golf/mask')
+        lib.publish_result(image.display, 'bgr', public_topic+'golf/display')
         return message()
-    elif state >= 1:
-        if state == 1:
-            lib.print_result("FOUND GOLF", ct.GREEN)
-        cx1, cy1, cx2, cy2, area = get_cx(obj)
-        forward, backward, left, right = get_excess(obj)
-        lib.publish_result(golf_mask, 'gray', public_topic+'mask/golf')
-        lib.publish_result(image.bgr, 'bgr', public_topic+'image_result')
-        return message(state=state, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,
-                       backward=backward, left=left, right=right, area=area)
-
+    himg, wimg = image.display.shape[:2]
+    lib.print_result("FOUND GOLF", ct.GREEN)
+    circle = sorted(circle, key=itemgetter(2),reverse=True) 
+    circle = circle[0]
+    x,y,radius = circle
+    cv.circle(image.display,(int(x),int(y)),int(radius),lib.get_color('green'),3)
+    x1, x2 = max(x-radius, 0), min(x+radius, wimg)
+    y1, y2 = max(y-radius, 0), min(y+radius, himg)
+    area = math.pi*(radius**2)
+    forward, backward, left, right = get_excess(obj)
+    lib.publish_result(obj, 'gray', public_topic+'golf/mask')
+    lib.publish_result(image.display, 'bgr', public_topic+'golf/display')
+    return message(state=state, cx1=x1, cy1=y1, cx2=x2, cy2=y2, forward=forward,
+                    backward=backward, left=left, right=right, area=area)
 
 if __name__ == '__main__':
     rospy.init_node('vision_drum', anonymous=False)

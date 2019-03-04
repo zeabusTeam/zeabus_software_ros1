@@ -69,6 +69,8 @@ class MissionPick( StandardMission ):
 		count_change_mode = 0
 		count_found_golf = 0
 		limit_mode = 10
+		self.echo( self.name , "We command to hold for pick golf")
+		self.hold_golf()
 		while( self.ok_state() ):
 			self.sleep( 0.1 )
 			if( mode_control == 1 ):

@@ -10,7 +10,7 @@
 from __future__			import print_function
 #===============>
 
-import ropsy
+import rospy
 import math
 import time
 
@@ -21,7 +21,7 @@ from standard_mission		import StandardMission
 #===============> EXPLAIN CODE	
 #	This code will want to use position of golf in frame 
 #	Make that position to target and We straight down to collect
-#	Don't use explicit from side of drum
+#	Don't use explicit from left-right of drum
 
 class MissionPick( StandardMission ):
 
@@ -41,10 +41,11 @@ class MissionPick( StandardMission ):
 		result = False
 
 		self.state = request.data
-		if( not self.ok_state( ):
+		if( not self.ok_state( )):
 			return False
 
-		self.fix_z( -0.8 )
+		self.fix_z( -0.5 )
+		self.reset_target("xy")
 		self.wait_state( "z" , 0.1 , 5 )
 
 		found_object = self.step_01()
@@ -71,62 +72,35 @@ class MissionPick( StandardMission ):
 		limit_mode = 10
 		self.echo( self.name , "We command to hold for pick golf")
 		self.hold_golf()
+		self.echo( self.name , "We command finish")
 		while( self.ok_state() ):
 			self.sleep( 0.1 )
 			if( mode_control == 1 ):
-				self.vision.analysis_all( "blue" , "side" , 5 )
+				self.vision.analysis_all( "blue" , "left-right" , 5 )
 				self.echo_vision( self.vision.echo_special() )
-				if( self.vision.result["cx_1"] < -0.3 ):
-					value_y = -0.1
+				if( self.vision.result["cx_1"] < -0.5 ):
+					value_y = 0.1
 				elif( self.vision.result["cx_1"] > 0.0 ):
-					value_y = 0.1
-				else:
-					value_y = 0
-				if( abs( self.vision.result["cy_1"] ) < 0.2 ):
-					value_x = 0
-				else:
-					value_x = math.copysign( 0.1 , self.vision.result["cy_1"] )
-			elif( mode_control == 2 ):
-				self.vision.analysis_all( "blue" , "side" , 5 )
-				self.echo_vision( self.vision.echo_special() )
-				if( self.vision.result["cx_2"] > 0.3 ):
 					value_y = -0.1
-				elif( self.vision.result["cx_2"] < 0.0 ):
-					value_y = 0.1
 				else:
 					value_y = 0
-				if( abs( self.vision.result["cy_2"] ) < 0.2 ):
+				if( abs( self.vision.result["cy_1"] ) < 0.5 ):
 					value_x = 0
 				else:
-					value_x = math.copysign( 0.1 , self.vision.result[ "cy_2" ] )	
-			elif( mode_control == 3 ):
-				self.vision.analysis_all( "blue" , "nonside" , 5 )
-				self.echo_vision( self.vision.echo_special() )	
-				if( self.vision.result["cy_2"] > 0.3 ):
-					value_x = -0.1
-				elif( self.vision.result["cy_2"] < 0 ):
-					value_x = 0.1
-				else:
-					value_x = 0
-				if( abs( self.vision.result["cx_2"] ) < 0.2 ):
-					value_y = 0
-				else:
-					value_y = math.copysign( 0.1 , -1 * self.vision.result["cx_1"] )
-	
-			elif( mode_control == 4 ):	
-				self.vision.analysis_all( "blue" , "nonside" , 5 )
+					value_x = math.copysign( 0.05 , self.vision.result["cy_1"] )
+			elif( mode_control == 2 ):
+				self.vision.analysis_all( "blue" , "left-right" , 5 )
 				self.echo_vision( self.vision.echo_special() )
-				if( self.vision.result["cy_1"] < -0.3 ):
-					value_x = 0.1
-				elif( self.vision.result["cy_1"] > 0 ):
-					value_x = -0.1
+				if( self.vision.result["cx_2"] > 0.5 ):
+					value_y = -0.05
+				elif( self.vision.result["cx_2"] < 0.0 ):
+					value_y = 0.05
 				else:
-					value_x = 0
-				if( abs( self.vision.result["cx_1"] ) < 0.2 ):
 					value_y = 0
+				if( abs( self.vision.result["cy_2"] ) < 0.5 ):
+					value_x = 0
 				else:
-					value_y = math.copysign( 0.1 , -1 * self.vision.result["cx_1"] )			
-
+					value_x = math.copysign( 0.05 , self.vision.result[ "cy_2" ] )	
 			self.echo( self.name + " Mode " + str( mode_control ) , 
 					"We command velocity x : y --> " + str( value_x ) + " : " + str( value_y ) )
 			self.velocity( {'x' : value_x , 'y' : value_y } )
@@ -153,9 +127,11 @@ class MissionPick( StandardMission ):
 				count_change_mode += 1
 				self.echo( self.name , "count_change_mode " + str( count_change_mode ))
 				if( count_change_mode == limit_mode ):
-					count_change_mode += 1
-					if( count_change_mode > 4 )
+					mode_control += 1
+					count_change_mode = 0
+					if( mode_control > 2 ):
 						return False
+		print("Finish loop")
 
 		def step_02( self ): # this part we will pick a ball
 			self.echo( self.name , "We will start to pick ball")

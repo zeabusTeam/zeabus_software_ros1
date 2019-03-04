@@ -82,7 +82,7 @@ class MissionDrum( StandardMission ):
 				self.echo( self.name , "Count time for drop " + str(diff_time) )
 				if( diff_time > 5 ):
 					break
-				elif( diff_time > 2 && not ever_drop ):
+				elif( diff_time > 2 and not ever_drop ):
 					self.echo( self.name , "We have to command drop ball" )
 					self.fire_golf()
 				else:

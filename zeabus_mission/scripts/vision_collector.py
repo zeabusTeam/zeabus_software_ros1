@@ -32,6 +32,8 @@ class VisionCollector:
 			self.drum_set_up()
 		elif( mission_vision == 'qualification'):
 			self.qualification_set_up()
+		elif( mission_vision == "golf" ):
+			self.golf_set_up()
 		else:
 			print( "<=== VisionCollecotr ===> ERROR PLEASE Look condition on line 32")
 			exit( 0 )

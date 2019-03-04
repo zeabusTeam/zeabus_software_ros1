@@ -238,11 +238,13 @@ class ControlConnection:
 		return result
 		
 	def hold_golf( self ):
+		print("Command to hold golf")
 		try:
 			result = self.hold_torpedo( 1 )
 		except rospy.ServiceException , error :
 			print("\x1B[1;hold golf " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
 			result = False
+		print("Finish to hold golf")
 		return result
 
 #===============> SERVICE OF TWOBOOL
@@ -308,7 +310,7 @@ if( __name__ == "__main__" ):
 	ch = ControlConnection("testing_robot")
 
 	print("Welcome to testing control")
-#	ch.fire_gripper()	
+	ch.fire_gripper()	
 #	ch.hold_gripper()	
 #	ch.fire_golf()	
 #	ch.hold_golf()	

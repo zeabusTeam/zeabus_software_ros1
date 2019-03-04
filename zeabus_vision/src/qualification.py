@@ -16,6 +16,7 @@ import color_text as ct
 import vision_lib as lib
 from operator import itemgetter
 from time import time
+from image_lib import Image
 
 
 class Log:
@@ -50,8 +51,6 @@ class Log:
                 self.assume = 'Left'
         elif mode == 2:
             self.assume = None
-                        
-
 
     def assume_to_pos(self):
         if self.assume == 'Right':
@@ -61,9 +60,7 @@ class Log:
         return 0
 
 
-IMAGE = None
 PUBLIC_TOPIC = '/vision/mission/qualification/'
-SUB_SAMPLING = 0.3
 DEBUG = {
     'print': False,
     'time': False,
@@ -72,7 +69,7 @@ DEBUG = {
     'detail': False,
     'not-only-res': True
 }
-
+image = Image(sub_sampling=0.3)
 log = Log()
 
 
@@ -85,17 +82,9 @@ def mission_callback(msg):
         return find_qualify_pole()
 
 
-def image_callback(msg):
-    global IMAGE
-    arr = np.fromstring(msg.data, np.uint8)
-    bgr = cv.resize(cv.imdecode(arr, 1), (0, 0),
-                    fx=SUB_SAMPLING, fy=SUB_SAMPLING)
-    IMAGE = bgr.copy()
-
-
-def message(state=0, pos=0, cx1=0.0, cy1=0.0,cx2 = 0.0,cy2 =0.0 ,area=0.0):
+def message(state=0, pos=0, cx1=0.0, cy1=0.0, cx2=0.0, cy2=0.0, area=0.0):
     if(state > 0):
-        himg, wimg = IMAGE.shape[:2]
+        himg, wimg = image.display.shape[:2]
         cx1 = lib.Aconvert(cx1, wimg)
         cy1 = -1.0*lib.Aconvert(cy1, himg)
         cx2 = lib.Aconvert(cx2, wimg)
@@ -202,16 +191,14 @@ def find_pipe(binary):
 
 
 def find_qualify_pole():
-    global IMAGE, log
-    if IMAGE is None:
+    if image.bgr is None:
         lib.img_is_none()
         return message(state=-1)
 
+    image.renew_display()
     log.update_time()
-
-    display = IMAGE.copy()
-    gray = cv.cvtColor(IMAGE.copy(), cv.COLOR_BGR2GRAY)
-    obj = lib.bg_subtraction(gray,mode='neg')
+    image.get_gray()
+    obj = lib.bg_subtraction(image.gray, mode='neg')
 
     kernel_box = lib.get_kernel(ksize=(7, 7))
 
@@ -229,7 +216,7 @@ def find_qualify_pole():
     vertical_cy2 = []
     for res in vertical_pipe:
         x, y, w, h, angle = res
-        cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
+        cv.rectangle(image.display, (int(x - w / 2.), int(y - h / 2.)),
                      (int(x + w / 2.), int(y + h / 2.)), (108, 105, 255), 2)
         vertical_cx1.append((x - w / 2.))
         vertical_cx2.append((x + w / 2.))
@@ -240,7 +227,7 @@ def find_qualify_pole():
     mode = no_pipe_v
     if mode == 0:
         lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
+        lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'display')
         lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
         lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
         return message()
@@ -260,26 +247,24 @@ def find_qualify_pole():
     cx1, cx2 = max(cx1, 0), min(cx2, wimg)
     cy1, cy2 = max(cy1, 0), min(cy2, himg)
 
-    cv.rectangle(display, (int(cx1), int(cy1)),
+    cv.rectangle(image.display, (int(cx1), int(cy1)),
                  (int(cx2), int(cy2)), (0, 255, 0), 3)
-    cv.circle(display, (int((cx1+cx2)/2), int((cy1+cy2)/2)),
+    cv.circle(image.display, (int((cx1+cx2)/2), int((cy1+cy2)/2)),
               3, (0, 255, 255), -1)
 
     area = 1.0*abs(cx2-cx1)*abs(cy2-cy1)/(himg*wimg)
-    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
+    lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'display')
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
     log.assume_pole(mode=mode, x=cx1, y=cy1)
     pos = log.assume_to_pos()
     log.save_data(state=mode, cx1=cx1, cx2=cx2, cy1=cy1, cy2=cy2)
-    return message(state=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2 , pos=pos, area=area)
+    return message(state=mode, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, pos=pos, area=area)
 
 
 if __name__ == '__main__':
     rospy.init_node('vision_qualification', anonymous=False)
-    IMAGE_TOPIC = lib.get_topic("front")
-    # IMAGE_TOPIC = '/vision/front/image_raw/compressed'
-    rospy.Subscriber(IMAGE_TOPIC, CompressedImage, image_callback)
+    rospy.Subscriber(image.topic('front'), CompressedImage, image.callback)
     rospy.Service('vision/qualification', vision_srv_gate(),
                   mission_callback)
     lib.print_result("INIT NODE QUALIFICATION", ct.GREEN)

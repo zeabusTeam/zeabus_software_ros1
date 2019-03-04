@@ -14,6 +14,7 @@ import rospy
 import math
 
 from zeabus_library.srv import OneVector3Stamped, TwoStringVector3Stamped, ThreeOdometry, TwoBool
+from zeabus_elec_ros_hardware_interface.srv import Torpedo
 
 from std_msgs.msg import Header
 from geometry_msgs.msg import Twist , TwistStamped , Vector3
@@ -67,6 +68,9 @@ class ControlConnection:
 		self.cl_get_state		= rospy.ServiceProxy("/control/get_target" , ThreeOdometry )
 
 		self.cl_free_xy			= rospy.ServiceProxy("/control/free_xy" , TwoBool )
+
+		self.fire_torpedo		= rospy.ServiceProxy("/fire_torpedo" , Torpedo );
+		self.hold_torpedo		= rospy.ServiceProxy("/hold_torpedo" , Torpedo );
 
 	def distance( self ):
 		self.target_state()
@@ -208,6 +212,39 @@ class ControlConnection:
 		result = self.service_one_vector( self.cl_fix_yaw , self.vector , "fix_yaw")
 		return result
 
+#===============> SERVICE OF Torpedo
+	def fire_gripper( self ):
+		try:
+			result = self.fire_torpedo( 0 )
+		except rospy.ServiceException , error :
+			print("\x1B[1;release Gripper " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
+			result = False
+		return result
+		
+	def hold_gripper( self ):
+		try:
+			result = self.hold_torpedo( 0 )
+		except rospy.ServiceException , error :
+			print("\x1B[1;release Gripper " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
+			result = False
+		return result
+
+	def fire_golf( self ):
+		try:
+			result = self.fire_torpedo( 1 )
+		except rospy.ServiceException , error :
+			print("\x1B[1;fire golf " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
+			result = False
+		return result
+		
+	def hold_golf( self ):
+		try:
+			result = self.hold_torpedo( 1 )
+		except rospy.ServiceException , error :
+			print("\x1B[1;hold golf " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
+			result = False
+		return result
+
 #===============> SERVICE OF TWOBOOL
 	def free_xy( self , data ):
 		result = self.service_two_bool( self.cl_free_xy , data , "target_free_xy")
@@ -271,7 +308,11 @@ if( __name__ == "__main__" ):
 	ch = ControlConnection("testing_robot")
 
 	print("Welcome to testing control")
-
+#	ch.fire_gripper()	
+#	ch.hold_gripper()	
+#	ch.fire_golf()	
+#	ch.hold_golf()	
+'''
 	ch.velocity_xy( 0.5 , 0.2 )
 	print("Already send velocity_xy 0.5 : 0.2")
 
@@ -296,4 +337,4 @@ if( __name__ == "__main__" ):
 		if( count_ok == 5 ):
 			break
 		print("Wait xy count is " + str( count_ok ) )
-	
+'''

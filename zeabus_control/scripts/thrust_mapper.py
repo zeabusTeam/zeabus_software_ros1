@@ -28,10 +28,10 @@ class ThrustMapper:
             [0, 0, 1],  			# thruster 2
             [0, 0, 1],  			# thruster 3
             [0, 0, 1],  			# thruster 4
-            [cos_45, -sin_45, 0],  	# thruster 5
-            [cos_45, sin_45, 0],  	# thruster 6
-            [-cos_45, -sin_45, 0],  # thruster 7
-            [-cos_45, sin_45, 0]  	# thruster 8
+            [-cos_45, sin_45, 0],  	# thruster 5
+            [-cos_45, -sin_45, 0],  	# thruster 6
+            [cos_45, sin_45, 0],  # thruster 7
+            [cos_45, -sin_45, 0]  	# thruster 8
         ])
 
         self.distance = np.array([
@@ -97,7 +97,7 @@ class ThrustMapper:
                     torque[run] = self.min_force[run][1]
 
         cmd = []
-        for i in range(0, 7):
+        for i in range(0, 8):
             cmd.append(lup.lookup_pwm_02(torque[i]))
             if(torque[i] == 0):
                 cmd[i] = 1500

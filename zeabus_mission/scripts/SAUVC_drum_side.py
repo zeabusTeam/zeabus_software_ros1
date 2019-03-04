@@ -53,12 +53,13 @@ class MissionDrum( StandardMission ):
 		value_x = 0
 		value_y = 0
 		start_time = 0
+		ever_drop = False
 		while( self.ok_state() ):
 			self.vision.analysis_all( "drum" , "drop" , 5 )
 			self.echo_vision( self.vision.echo_special() )
 			if( self.vision.result["cx_2"] > 0.4 ):
 				value_x = -0.1
-			elif( self.vision.result["cx_2"] < 0.2 ):
+			elif( self.vision.result["cx_2"] < 0.1 ):
 				value_x = 0.1
 			else:
 				value_x = 0
@@ -80,8 +81,10 @@ class MissionDrum( StandardMission ):
 				diff_time = time.time() - start_time
 				self.echo( self.name , "Count time for drop " + str(diff_time) )
 				if( diff_time > 5 ):
-					self.echo( self.name , "We have to command drop ball" )
 					break
+				elif( diff_time > 2 && not ever_drop ):
+					self.echo( self.name , "We have to command drop ball" )
+					self.fire_golf()
 				else:
 					continue
 			self.velocity( {'x' : value_x , 'y' : value_y } )

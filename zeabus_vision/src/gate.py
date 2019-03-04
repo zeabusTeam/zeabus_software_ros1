@@ -14,9 +14,10 @@ from zeabus_vision.msg import vision_gate
 from zeabus_vision.srv import vision_srv_gate
 import color_text as ct
 import vision_lib as lib
+from image_lib import Image
 from operator import itemgetter
 
-IMAGE = None
+image = Image()
 PROCESS_DATA = {}
 PUBLIC_TOPIC = '/vision/mission/gate/'
 SUB_SAMPLING = 0.3
@@ -37,21 +38,13 @@ def mission_callback(msg):
         return find_gate()
 
 
-def image_callback(msg):
-    global IMAGE
-    arr = np.fromstring(msg.data, np.uint8)
-    bgr = cv.resize(cv.imdecode(arr, 1), (0, 0),
-                    fx=SUB_SAMPLING, fy=SUB_SAMPLING)
-    IMAGE = bgr.copy()
-
-
 def message(state=0, pos=0, x1=0.0, y1=0.0, x2=0.0, y2=0.0, area=0.0):
     """
         group value into massage
     """
     # convert x,y to range -1 - 1
     if(state >= 0):
-        himg, wimg = IMAGE.shape[:2]
+        himg, wimg = image.bgr.shape[:2]
         x1 = lib.Aconvert(x1, wimg)
         x2 = lib.Aconvert(x2, wimg)
         y1 = -1.0*lib.Aconvert(y1, himg)
@@ -173,13 +166,11 @@ def get_mean(data):
     return np.mean(data)
 
 def find_gate():
-    global IMAGE
-    if IMAGE is None:
+    if image.bgr is None:
         lib.img_is_none()
         return message(state=-1)
     
-    display = IMAGE.copy()
-    pre_process = lib.pre_process(IMAGE,'gate')
+    pre_process = lib.pre_process(image.bgr,'gate')
     gray = cv.cvtColor(pre_process.copy(), cv.COLOR_BGR2GRAY)
     hsv = cv.cvtColor(pre_process,cv.COLOR_BGR2HSV)
     b,g,r = cv.split(pre_process)
@@ -227,7 +218,7 @@ def find_gate():
     vertical_y2 = []
     for res in vertical_pipe:
         x, y, w, h, angle = res
-        cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
+        cv.rectangle(image.display, (int(x - w / 2.), int(y - h / 2.)),
                      (int(x + w / 2.), int(y + h / 2.)), (108, 105, 255), 2)
         vertical_x1.append((x - w / 2.))
         vertical_x2.append((x + w / 2.))
@@ -246,7 +237,7 @@ def find_gate():
     
     if state == 0:
         lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
+        lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'display')
         lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
         lib.publish_result(horizontal, 'gray',
                            PUBLIC_TOPIC + 'mask/horizontal')
@@ -316,12 +307,12 @@ def find_gate():
     else:
         pos = 0
 
-    cv.rectangle(display, (int(x1), int(y1)),
+    cv.rectangle(image.display, (int(x1), int(y1)),
          (int(x2), int(y2)), (0, 255, 0), 3)
-    cv.circle(display, (int((x1+x2)/2), int((y1+y2)/2)),
+    cv.circle(image.display, (int((x1+x2)/2), int((y1+y2)/2)),
               3, (0, 255, 255), -1)
     area = 1.0*abs(x2-x1)*abs(y1-y2)/(himg*wimg)
-    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'display')
+    lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'display')
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
     lib.publish_result(horizontal, 'gray', PUBLIC_TOPIC + 'mask/horizontal')
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
@@ -330,9 +321,7 @@ def find_gate():
 
 if __name__ == '__main__':
     rospy.init_node('vision_gate', anonymous=False)
-    IMAGE_TOPIC = lib.get_topic("front")
-    # IMAGE_TOPIC = '/vision/front/image_raw/compressed'
-    rospy.Subscriber(IMAGE_TOPIC, CompressedImage, image_callback)
+    rospy.Subscriber(image.topic('front'), CompressedImage, image.callback)
     rospy.Service('vision/gate', vision_srv_gate(),
                   mission_callback)
     lib.print_result("INIT NODE GATE", ct.GREEN)

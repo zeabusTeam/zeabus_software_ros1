@@ -13,9 +13,11 @@ from zeabus_vision.msg import vision_flare
 from zeabus_vision.srv import vision_srv_flare
 import color_text as ct
 import vision_lib as lib
+from image_lib import Image
 from operator import itemgetter
 
-IMAGE = None
+
+image = Image()
 PUBLIC_TOPIC = '/vision/mission/flare/'
 SUB_SAMPLING = 0.3
 DEBUG = {
@@ -38,21 +40,13 @@ def mission_callback(msg):
         return find_near_flare()
 
 
-def image_callback(msg):
-    global IMAGE
-    arr = np.fromstring(msg.data, np.uint8)
-    bgr = cv.resize(cv.imdecode(arr, 1), (0, 0),
-                    fx=SUB_SAMPLING, fy=SUB_SAMPLING)
-    IMAGE = bgr.copy()
-
-
 def message(state=0, cx=0.0, cy=0.0, area=0.0):
     """
         group value into massage
     """
     if(state > 0):
         # convert x,y to range -1 - 1
-        himg, wimg = IMAGE.shape[:2]
+        himg, wimg = image.bgr.shape[:2]
         cx = lib.Aconvert(cx, wimg)
         cy = -1.0*lib.Aconvert(cy, himg)
         area = lib.Aconvert(area, (himg*wimg))
@@ -150,12 +144,11 @@ def find_pipe(binary):
 
 
 def find_far_flare():
-    if IMAGE is None:
+    if image.bgr is None:
         lib.img_is_none()
         return message(state=-1)
 
-    display = IMAGE.copy()
-    pre_process = lib.pre_process(IMAGE, 'flare')
+    pre_process = lib.pre_process(image.bgr, 'flare')
     gray = cv.cvtColor(pre_process.copy(), cv.COLOR_BGR2GRAY)
     hsv = cv.cvtColor(pre_process, cv.COLOR_BGR2HSV)
     h, s, v = cv.split(hsv)
@@ -177,42 +170,42 @@ def find_far_flare():
     color = ct.CYAN
     if mode == 0:
         lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'far/display')
+        lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'far/display')
         lib.publish_result(
             vertical, 'gray', PUBLIC_TOPIC + 'far/mask/vertical')
         lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'far/mask')
         return message()
     x, y, w, h, angle = vertical_pipe[0]
-    cv.rectangle(display, (int(x - w / 2.), int(y - h / 2.)),
+    cv.rectangle(image.display, (int(x - w / 2.), int(y - h / 2.)),
                  (int(x + w / 2.), int(y + h / 2.)), (0, 255, 0), 2)
     vertical_x = [(x - w / 2.), (x + w / 2.)]
     vertical_y = [(y - h / 2.), (y + h / 2.)]
 
-    himg, wimg = IMAGE.shape[:2]
+    himg, wimg = image.bgr.shape[:2]
     x1, x2 = max(min(vertical_x), 0), min(max(vertical_x), wimg)
     y1, y2 = max(min(vertical_y), 0), min(max(vertical_y), himg)
     area = (x2-x1) * (y2-y1)
 
     if area > 8000 or area < 1500:
         lib.print_result("NOT FOUND "+color+"(FAR)", ct.RED)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'far/display')
+        lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'far/display')
         lib.publish_result(vertical, 'gray', PUBLIC_TOPIC +
                            'far/mask/vertical')
         lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'far/mask')
         return message()
 
     lib.print_result("FOUND "+color+"(FAR)", ct.GREEN)
-    cv.rectangle(display, (int(x1), int(y1)),
+    cv.rectangle(image.display, (int(x1), int(y1)),
                  (int(x2), int(y2)), (0, 255, 0), 3)
-    cv.circle(display, (int((x1+x2)/2), int((y1+y2)/2)),
+    cv.circle(image.display, (int((x1+x2)/2), int((y1+y2)/2)),
               3, (0, 255, 255), -1)
-    lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'far/display')
+    lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'far/display')
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'far/mask/vertical')
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'far/mask')
     return message(cx=(x1+x2)/2., cy=(y1+y2)/2., area=area, state=1)
 
 
-def get_obj(mask, display):
+def get_obj(mask):
     himg, wimg = mask.shape[:2]
     result = []
     contours = cv.findContours(
@@ -227,7 +220,7 @@ def get_obj(mask, display):
         (x, y), (w, h), angle = rect = cv.minAreaRect(cnt)
         box = cv.boxPoints(rect)
         box = np.int64(box)
-        cv.drawContours(display, [box], 0, (0, 0, 255), 2)
+        cv.drawContours(image.display, [box], 0, (0, 0, 255), 2)
 
         x1, x2 = (x - w / 2.), (x + w / 2.)
         y1, y2 = (y - h / 2.), (y + h / 2.)
@@ -252,28 +245,27 @@ def get_obj(mask, display):
 
 
 def find_near_flare():
-    if IMAGE is None:
+    if image.bgr is None:
         lib.img_is_none()
         return message(state=-1)
 
-    display = IMAGE.copy()
-    pre_process = lib.pre_process(IMAGE, 'flare')
+    pre_process = lib.pre_process(image.bgr, 'flare')
     mask = get_mask(pre_process.copy())
-    cx, cy, area, obj, box = get_obj(mask, display)
-    print(box)
+    cx, cy, area, obj, box = get_obj(mask)
+
     mode = area != 0
     color = ct.PURPLE
     if mode == 0:
         lib.print_result("NOT FOUND "+color+"(NEAR)", ct.RED)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'near/display')
+        lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'near/display')
         lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'near/mask')
         return message()
     if mode == 1:
-        cv.circle(display, (int(cx), int(cy)),
+        cv.circle(image.display, (int(cx), int(cy)),
                   3, (0, 255, 255), -1)
-        cv.drawContours(display, [box], 0, (0, 255, 0), 2)
+        cv.drawContours(image.display, [box], 0, (0, 255, 0), 2)
         lib.print_result("FOUND "+color+"(NEAR)", ct.GREEN)
-        lib.publish_result(display, 'bgr', PUBLIC_TOPIC + 'near/display')
+        lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'near/display')
         lib.publish_result(mask, 'gray', PUBLIC_TOPIC + 'near/mask')
         return message(cx=cx, cy=cy, area=area, state=mode)
     return message(state=0)
@@ -282,9 +274,7 @@ def find_near_flare():
 if __name__ == '__main__':
     rospy.init_node('vision_flare', anonymous=False)
 
-    IMAGE_TOPIC = lib.get_topic("front")
-    # IMAGE_TOPIC = '/vision/front/image_raw/compressed'
-    rospy.Subscriber(IMAGE_TOPIC, CompressedImage, image_callback)
+    rospy.Subscriber(image.topic('front'), CompressedImage, image.callback)
     rospy.Service('vision/flare', vision_srv_flare(),
                   mission_callback)
     lib.print_result("INIT NODE FLARE", ct.GREEN)

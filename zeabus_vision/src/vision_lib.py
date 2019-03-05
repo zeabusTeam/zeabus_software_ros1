@@ -102,7 +102,7 @@ def bg_subtraction(gray, mode='neg'):
         sub_pos = np.clip(sub_sign.copy(), 0, sub_sign.copy().max())
         sub_pos = normalize(sub_pos)
         _, obj = cv.threshold(
-            sub_pos, 0, 255, cv.THRESH_BINARY_INV + cv.THRESH_OTSU)
+            sub_pos, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)
         return obj
     return gray
 
@@ -179,10 +179,10 @@ def get_color(request='black'):
         'black': (0,0,0),
         'blue': (0,0,255),
         'red': (255,0,0),
-        'yellow': (255,255,0),
+        'cyan': (255,255,0),
         'green': (0,255,0),
         'white': (255,255,255),
-        'cyam': (0,255,255),
+        'yellow': (0,255,255),
         'purple': (255,0,255)
     }
     try:

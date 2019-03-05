@@ -32,3 +32,6 @@ class Image:
         elif camera == 'bottom':
             return '/vision/bottom/image_raw/compressed'
             #return '/vision/bottom/image_raw/compressed'
+
+    def renew_display(self):
+        self.display = self.bgr.copy()

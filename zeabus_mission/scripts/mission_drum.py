@@ -67,7 +67,7 @@ class MissionDrum( StandardMission ):
 	def run( self ):
 		result = 0
 		count_unfound = 0
-		self.fix_z(-0.3)
+		self.fix_z(-0.4)
 		count_ok = 0
 		while( not rospy.is_shutdown() ):
 			self.sleep()
@@ -96,7 +96,7 @@ class MissionDrum( StandardMission ):
 			r_str = str(r)
 			print("x y",self.x,self.y)
 			print("Radius in range",r_str)
-			if r <= 0.075:
+			if 0.1 <= self.x <= 0.2 and -0.6 <= self.y <= -0.7:
 				print("Center of golf")
 				res = self.reset_velocity('xy')
 				print("result reset xy",res)
@@ -109,11 +109,13 @@ class MissionDrum( StandardMission ):
 				if self.x == 0:
 					vx = 0
 				else:
-					vx = min(0.075,abs(self.x)) * (self.x/abs(self.x))
+					# vx = min(0.075,abs(self.x)) * (self.x/abs(self.x))
+					vx = min(0.1,abs(self.x)) * (self.x/abs(self.x)-0.2)
 				if self.y == 0:
 					vy =0 
 				else:
-					vy = min(0.075,abs(self.y)) * (self.y/abs(self.y))
+					# vy = min(0.075,abs(self.y)) * (self.y/abs(self.y))
+					vy = min(0.1,abs(self.y)) * (self.y/abs(self.y)-0.6)
 				self.velocity({'x':vx,'y':vy})
 
 if __name__ == "__main__" :

@@ -70,6 +70,8 @@ class VisionCollector:
 		while( count_found < amont and count_unfound < amont ):
 			self.individual_data( task , request )
 			if( self.data['n_obj'] > 0 ):
+				if( self.data[ 'n_obj' ] == 2 ):
+					count_found = amont
 				count_found += 1
 				for run in self.can_sum:
 					self.collect[ run ] += self.data[ run ]

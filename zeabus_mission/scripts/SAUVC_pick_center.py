@@ -54,7 +54,7 @@ class MissionPick( StandardMission ):
 			self.echo( self.name , "Don't found object mission aborted")
 			return False
 		else:
-			self.step_02()
+			self.step_03()
 			result = True
 
 		return result
@@ -111,16 +111,17 @@ class MissionPick( StandardMission ):
 			if( self.vision.have_object() ):
 				count_found_golf = 0
 				self.echo( self.name , "Find golf move to center of golf")
-				while( self.ok_state() and abs(count_found_golf) > 3 ):
+				while( self.ok_state() and abs(count_found_golf) < 15 ):
 					self.sleep(0.1)
-					self.vion.analysis_all( "golf" , "sevinar" , 5 )
+					self.vision.analysis_all( "golf" , "sevinar" , 5 )
 					if( self.vision.have_object() ):
 						count_found_golf += 1
 						self.velocity( { 'x' : math.copysign( 0.1 , self.vision.center_y())
 								, 'y' : math.copysign( 0.1 , -1 * self.vision.center_x() ) } )
 					else:
 						count_found_golf -= 0
-				if( count_found_golf == 3 ):
+					self.echo( self.name , "Found golf is  " + str( count_found_golf ) )
+				if( count_found_golf == 15 ):
 					return True
 
 			if( value_x == 0 and value_y == 0 ):
@@ -133,49 +134,76 @@ class MissionPick( StandardMission ):
 						return False
 		print("Finish loop")
 
-		def step_02( self ): # this part we will pick a ball
-			self.echo( self.name , "We will start to pick ball")
-			self.fix_z( -1.1  )
-			count_ok_depth = 0 
-			value_x = 0
-			value_y = 0
-			while( self.ok_state() ):
-				self.vision.analysis_all( "golf" , "sevinar" , 5 )
-				self.echo_vision( self.vision.echo_data() )
-				if( self.vision.center_x() < -0.5 ): value_y = -0.08
-				elif( self.vision.center_x() > -0.1 ): value_y = 0.08
-				else: value_y = 0
-				if( self.vision.center_y() < 0.1 ): value_x = 0.08
-				elif( self.vision.center_y() > 0.5 ): value_x = -0.08
-				else: value_x = 0
-				self.echo( self.name + " vel x : y is" +str( value_x ) +" : " +str( value_y ) )
-				self.velocity( {'x' : value_x , 'y' : value_y } )
-				
-				if( self.check_position( "z" , 0.15 ) ):
-					count_ok_depth += 1
-				else:
-					count_ok_depth = 0
-				if( value_x == 0 and value_y == 0 ):
-					self.echo( self.name , "Target on lock" )
-					if( count_ok_depth > 5 ):
-						self.echo( self.name , "We will move down now ")
-						start_time = time.time()
-						diff_time = 0
-						self.velocity_z( -0.1 )
-						self.free_xy( True )
-						while( self.ok_state() and diff_time < 10 ):
-							self.sleep( 0.1 )
-							self.reset_target( "xy" )
-							diff_time = time.time() - start_time
-							self.echo( self.name , "Now time is " + diff_time )
-						self.reset_velocity( "z" )
-						self.fix_z( -0.5 )
-						self.free_xy( False )
-						break
-			self.echo( self.name , "Finish pick golf it ok?")
+	def step_02( self ): # this part we will pick a ball
+		self.echo( self.name , "We will start to pick ball")
+		self.fix_z( -0.8  )
+		count_ok_depth = 0 
+		value_x = 0
+		value_y = 0
+		self.free_xy( True )
+		while( self.ok_state() ):
+			self.vision.analysis_all( "golf" , "sevinar" , 5 )
+			self.echo_vision( self.vision.echo_data() )
+			if( self.vision.center_x() < -0.5 ): value_y = -0.1
+			elif( self.vision.center_x() > -0.1 ): value_y = 0.1
+			else: value_y = 0
+			if( self.vision.center_y() < 0.1 ): value_x = 0.1
+			elif( self.vision.center_y() > 0.5 ): value_x = -0.1
+			else: value_x = 0
+			self.echo( self.name , " vel x : y is" +str( value_x ) +" : " +str( value_y ) )
+			self.velocity( {'x' : value_x , 'y' : value_y } )
 			
-			
+			if( self.check_position( "z" , 0.15 ) ):
+				count_ok_depth += 1
+			else:
+				count_ok_depth = 0
+			if( value_x == 0 and value_y == 0 ):
+				self.echo( self.name , "Target on lock" )
+				if( count_ok_depth > 5 ):
+					self.echo( self.name , "We will move down now ")
+					start_time = time.time()
+					diff_time = 0
+					self.velocity_z( -0.1 )
+					while( self.ok_state() and diff_time < 10 ):
+						self.sleep( 0.1 )
+						self.reset_target( "xy" )
+						diff_time = time.time() - start_time
+						self.echo( self.name , "Now time is " + diff_time )
+					self.reset_velocity( "z" )
+					self.fix_z( -0.5 )
+					self.free_xy( False )
+					break
+		self.echo( self.name , "Finish pick golf it ok?")
 
+	def step_03( self ):
+		self.echo( self.name , "We will start to pick ball")
+		current_fix_velocity = False
+		value_x = 0
+		value_y = 0
+		self.fix_z( -0.8)
+		self.wait_state( "z" , 0.1 , 5)
+		self.free_xy( True )
+		while( self.ok_state() ):
+			self.sleep( 0.05)
+			self.vision.analysis_all( "golf" , "sevinar" , 5 )
+			self.echo_vision( self.vision.echo_data() )
+			if( self.vision.have_object() ):
+				if( self.vision.center_x() > -0.4 ): value_y = -0.2
+				else: value_y = 0.1
+				if( self.vision.center_y() < 0.3 ): value_x = -0.15
+				else: value_x = 0.10
+				self.echo( self.name , "Vel x : y are " + str( value_x ) + " : " + str( value_y ) )
+				self.velocity( { 'x' : value_x , 'y' : value_y } )
+			else:
+				if( not current_fix_velocity ):
+					self.velocity_z( -0.03 )
+					current_fix_velocity = True
+				value_y = 0.0
+				value_x = 0.0
+				self.velocity( {'y' : value_y , 'x' : value_x } )
+				self.echo( self.name , "Vel x : y are " + str( value_x ) + " : " + str( value_y ) )
+				self.target_state()
+					
 if __name__=="__main__":
 	rospy.init_node( "mission_pick" )
 	MP = MissionPick( "mission_pick" )

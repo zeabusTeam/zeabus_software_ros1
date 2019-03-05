@@ -49,30 +49,37 @@ class MissionDrum( StandardMission ):
 
 	def step_01( self ): 
 		count_Time = False
-		self.velocity_z( -0.05 )
+		self.echo( self.name , "START AT STEP 01")
 		value_x = 0
 		value_y = 0
 		start_time = 0
 		ever_drop = False
+		self.velocity_z( -0.03 )
+		self.wait_state( "z" , 0.1 , 5 )
+		current_fix_z = False
 		while( self.ok_state() ):
-			self.vision.analysis_all( "drum" , "drop" , 5 )
+			self.vision.analysis_all( "blue" , "left-right" , 5 )
 			self.echo_vision( self.vision.echo_special() )
-			if( self.vision.result["cx_2"] > 0.4 ):
-				value_x = -0.1
-			elif( self.vision.result["cx_2"] < 0.1 ):
-				value_x = 0.1
-			else:
-				value_x = 0
-			if( not self.vision.result["forward"] ):
-				value_y = -0.1
-			elif( not self.vision.result["backward"] ):
-				value_y = 0.1
-			else:
+			self.echo_vision( self.vision.echo_data() )
+			if( abs( self.vision.center_x() ) < 0.15 ):
 				value_y = 0
+			else:
+				value_y = math.copysign( 0.1 , -1*self.vision.center_x() )
+			if( abs( self.vision.center_y() ) < 0.15 ):
+				value_x = 0
+			else:
+				value_x = math.copysign( 0.1 , self.vision.center_y() )
+#			if( not self.vision.result["forward"] ):
+#				value_x = -0.2
+#			elif( not self.vision.result["backward"] ):
+#				value_x = 0.2
+#			else:
+#				value_x = 0
 			self.echo( self.name ,  "I command velocity x : y are " + str(value_x) + " : " +
 					str(value_y) )
 			if( not count_Time ):
 				self.target_state()
+				self.echo( self.name , "Node depth is " + str( self.temp_state[2] ) )
 				if( self.temp_state[2] < -1.3 ):
 					count_Time = True
 					start_time = time.time()

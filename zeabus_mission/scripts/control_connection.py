@@ -284,7 +284,7 @@ class ControlConnection:
 
 	def service_two_bool( self , service , data , message = ""):
 		try:
-			result = service( string ).result
+			result = service( data ).result
 		except rospy.ServiceException , error :
 			print("\x1B[1;31mservice two bool of " + str(message) , " :\n\t\x1B[0;37m" + 
 					str(error) )

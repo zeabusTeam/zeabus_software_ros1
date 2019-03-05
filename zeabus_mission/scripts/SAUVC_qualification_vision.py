@@ -25,6 +25,8 @@ from vision_collector		import VisionCollector
 
 from standard_mission		import StandardMission
 
+new_pid = 1
+
 class MissionQualification( StandardMission ):
 	
 	def __init__( self , name ):
@@ -37,7 +39,25 @@ class MissionQualification( StandardMission ):
 		print("MISSION QUALIFICATION FINISHED SETUP")
 
 	def callback( self , message ):
-		
+
+		global new_pid		
+		if( self.state and message.data):
+			self.echo( self.name , "Now mission will run please close before try again")
+		elif( message.data ):
+			self.state = True
+			new_pid = os.fork()
+			if( new_pid == 0 ):
+				print( "Into new_pid fork " + str(new_pid) )
+				new_pid = 0
+				return True
+			else:
+				print( "Command to wait pid " + str( new_pid ) )
+				os.waitpit( new_pid , 0 )
+		else:
+			self.echo( self.name , "Switch call to stop run mission")
+			self.state = False
+			return True		
+
 		result = False
 
 		# This function will call by switch we must to reset data target

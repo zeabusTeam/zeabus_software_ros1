@@ -162,18 +162,20 @@ int main( int argv , char** argc ){
 			}
 		}
 
-		if( target_free_xy ){
-			target_twist.twist.linear.x = current_state.twist.twist.linear.x;
-			target_twist.twist.linear.y = current_state.twist.twist.linear.y;
-		}
-
 		diff_twist.twist.linear.x = 
 				target_twist.twist.linear.x - current_state.twist.twist.linear.x;
-		pid[0].calculate( diff_twist.twist.linear.x , temp_twist.twist.linear.x);
 
 		diff_twist.twist.linear.y = 
 				target_twist.twist.linear.y - current_state.twist.twist.linear.y;
-		pid[1].calculate( diff_twist.twist.linear.y , temp_twist.twist.linear.y);
+
+		if( target_free_xy ){
+			temp_twist.twist.linear.x = target_twist.twist.linear.x;
+			temp_twist.twist.linear.y = target_twist.twist.linear.y;
+		}
+		else{
+			pid[0].calculate( diff_twist.twist.linear.x , temp_twist.twist.linear.x);
+			pid[1].calculate( diff_twist.twist.linear.y , temp_twist.twist.linear.y);
+		}
 
 		diff_twist.twist.linear.z = 
 				target_twist.twist.linear.z - current_state.twist.twist.linear.z;

@@ -78,7 +78,7 @@ def mission_callback(msg):
     req = str(msg.req.data)
     if DEBUG['console']:
         lib.print_mission(task, req)
-    if task in ['gate'] and req.lower() not in ['sevinar','gap']:
+    if task in ['gate']:
         return find_pole()
 
 

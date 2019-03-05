@@ -78,7 +78,7 @@ def mission_callback(msg):
     req = str(msg.req.data)
     if DEBUG['console']:
         lib.print_mission(task, req)
-    if task in ['qualify', 'qualification'] and req.lower() != 'sevinar':
+    if task in ['qualify', 'qualification']:
         return find_qualify_pole()
 
 

@@ -1,4 +1,5 @@
-#!/usr/bin/python2.7
+#!/usr/bin/env python
+
 import sys
 import rospy
 import rospkg
@@ -115,7 +116,7 @@ class window:
         self.param_lower = rospy.get_param(
             'color_range_' + str(camera_position) + '_' + str(number) + '_' + str(mission) + '/color_' + camera_position + '/lower_' + name, '179,255,255')
         self.param_upper = rospy.get_param(
-            'color_range_' + str(camera_position) + '_' + str(number) + '_' + str(mission) + '/color_' + camera_position + '/upper_' + name, '0,0,0')
+            'color_range_' + str(camera_position) + '_'+ str(number) + '_' + str(mission) + '/color_' + camera_position + '/upper_' + name, '0,0,0')
         self.param_lower = self.range_str2list(self.param_lower)
         self.param_upper = self.range_str2list(self.param_upper)
         return self.param_lower, self.param_upper
@@ -127,7 +128,7 @@ class window:
             rospy.set_param(
                 '/color_range_' + str(camera_position) + '_' + str(number) + '_' + str(mission) + '/color_' + camera_position + '/lower_' + name, self.range_list2str(self.lower[name][-1]))
             rospy.set_param(
-                '/color_range_' + str(camera_position) + '_' + str(number) + '_' + str(mission) + '/color_' + camera_position + '/upper_' + name, self.range_list2str(self.upper[name][-1]))
+                '/color_range_' + str(camera_position) + '_'+ str(number) + '_' + str(mission) + '/color_' + camera_position + '/upper_' + name, self.range_list2str(self.upper[name][-1]))
 
         f = open(self.path + '/params/' + str(number) + '/color_' +
                  camera_position + '_' + str(mission) + '.yaml', 'w')
@@ -147,7 +148,9 @@ class window:
                 self.range_list2str(self.lower[name][-1]) + "'\n\n"
         return tmp
 
-
+def nothing(msg):
+    pass
+    
 def camera_callback(msg):
     global img, wait, hsv, image_width, image_height, mission, camera_position, sub_sampling
     if wait:
@@ -199,8 +202,8 @@ def compare_range(l, u, l1, u1):
     return not (l == l1 and u == u1)
 
 
-def nothing(x):
-    pass
+def print_result(msg):
+    print('<------------ ') + msg + (' ------------>')
 
 
 def select_color():
@@ -237,7 +240,7 @@ def select_color():
         rospy.sleep(0.01)
 
     while not rospy.is_shutdown():
-        print("color range")
+
         key = cv.waitKey(1) & 0xff
         if key == ord('p') and wait == False and not click:
             wait = True
@@ -255,10 +258,8 @@ def select_color():
             upper_current = [max(h, hu), max(s, su), max(v, vu)]
             w.push_range('mask', lower_current, upper_current)
             set_trackbar(lower_current, upper_current)
-        
         elif compare_range(lower, upper, lower_bar, upper_bar):
             w.push_range('mask', lower_bar, upper_bar)
-        
         elif status:
             if w.select[name]:
                 lower_current, upper_current = w.get_range('mask')
@@ -272,7 +273,6 @@ def select_color():
                 cv.setTrackbarPos('m <-> c', 'image', 0)
                 is_mask = True
             w.select[name] = not w.select[name]
-        
         elif is_mask:
             if key == ord('z'):
                 w.undo_range('mask')
@@ -280,13 +280,10 @@ def select_color():
                 w.redo_range('mask')
             elif key == ord('c'):
                 w.reset_range('mask')
-        
         elif key == ord('s'):
             w.save()
-        
         elif key == ord('q'):
             break
-        
         x = cv.getTrackbarPos('shoot_x', 'image')
         y = cv.getTrackbarPos('shoot_y', 'image')
         w.show_image(window_name)
@@ -299,8 +296,6 @@ def select_color():
 
 
 if __name__ == '__main__':
-    rospy.sleep(1)
-    
     rospy.init_node('color_range_main', anonymous=True)
     namespace = sys.argv[1]
     #############################################################################################
@@ -309,7 +304,7 @@ if __name__ == '__main__':
     mission = rospy.get_param(namespace+'/mission', 'null')
     number = rospy.get_param(namespace+'/number', 'null')
     #############################################################################################
-    clear_screen()
+
     print_result('TOPIC: ' + str(camera_topic))
     print_result('CAMERA: ' + str(camera_position))
     print_result('MISSION: ' + str(mission))

@@ -84,13 +84,13 @@ def normalize(gray):
 #     return obj
 
 
-def bg_subtraction(gray, mode='neg'):
+def bg_subtraction(gray, mode='neg', bg_blur_size=61, fg_blur_size=5):
     """
         new bg_subtraction
         create by: skconan
     """
-    bg = cv.medianBlur(gray, 61)
-    fg = cv.medianBlur(gray, 5)
+    bg = cv.medianBlur(gray, bg_blur_size)
+    fg = cv.medianBlur(gray, fg_blur_size)
     sub_sign = np.int16(fg) - np.int16(bg)
     if mode == 'neg':
         sub_neg = np.clip(sub_sign.copy(), sub_sign.copy().min(), 0)

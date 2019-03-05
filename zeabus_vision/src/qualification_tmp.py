@@ -198,15 +198,27 @@ def find_qualify_pole():
     image.renew_display()
     log.update_time()
     image.get_gray()
-    obj = lib.bg_subtraction(image.gray, mode='neg')
-
+    hsv = cv.cvtColor(image.bgr, cv.COLOR_BGR2HSV)
+    hue,s,v = cv.split(hsv)
+    # hue = cv.equalizeHist(hue)
+    clahe = cv.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+    cl1 = clahe.apply(hue)
+    obj = lib.bg_subtraction(cl1, mode='neg', fg_blur_size=3)
     kernel_box = lib.get_kernel(ksize=(7, 7))
 
     kernel_vertical = lib.get_kernel(ksize=(1, 25))
+    kernel_horizontal = lib.get_kernel(ksize=(25, 1))
+
     vertical = cv.erode(obj.copy(), kernel_vertical)
     vertical = cv.dilate(vertical.copy(), kernel_box)
+
+    hori = cv.erode(obj.copy(), kernel_horizontal)
+    hori = cv.dilate(hori.copy(), kernel_box)
+    
     kernel_erode = lib.get_kernel(ksize=(3, 11))
+    kernel_erode_hori = lib.get_kernel(ksize=(11, 3))
     vertical = cv.erode(vertical.copy(), kernel_erode)
+    hori = cv.erode(hori.copy(), kernel_erode_hori)
 
     vertical_pipe, no_pipe_v = find_pipe(vertical)
 
@@ -225,12 +237,17 @@ def find_qualify_pole():
 
     himg, wimg = obj.shape[:2]
     mode = no_pipe_v
+    lib.print_result("NOT FOUND", ct.RED)
+    lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'display')
+    lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
+    lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
+    lib.publish_result(image.gray, 'gray', PUBLIC_TOPIC + 'gray')
+    lib.publish_result(hue, 'gray', PUBLIC_TOPIC + 'hue')
+    lib.publish_result(hori, 'gray', PUBLIC_TOPIC + 'hori')
     if mode == 0:
-        lib.print_result("NOT FOUND", ct.RED)
-        lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'display')
-        lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
-        lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
+
         return message()
+
     elif mode == 1:
         lib.print_result("FOUNG ONE POLE", ct.YELLOW)
     elif mode == 2:
@@ -255,7 +272,10 @@ def find_qualify_pole():
     area = 1.0*abs(cx2-cx1)*abs(cy2-cy1)/(himg*wimg)
     lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'display')
     lib.publish_result(vertical, 'gray', PUBLIC_TOPIC + 'mask/vertical')
-    lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
+    # lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'mask')
+    lib.publish_result(image.gray, 'gray', PUBLIC_TOPIC + 'gray')
+    lib.publish_result(hue, 'gray', PUBLIC_TOPIC + 'hue')
+    # lib.publish_result(hori, 'gray', PUBLIC_TOPIC + 'hori')
     log.assume_pole(mode=mode, x=cx1, y=cy1)
     pos = log.assume_to_pos()
     log.save_data(state=mode, cx1=cx1, cx2=cx2, cy1=cy1, cy2=cy2)

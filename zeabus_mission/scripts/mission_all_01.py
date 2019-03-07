@@ -58,15 +58,7 @@ class MissionAll( StandardMission ):
 			return False
 		elif( message.data ):
 			self.state = True
-			new_pid = os.fork()
-			if( new_pid == 0 ):
-				print( "Into new_pid fork " + str( new_pid ) )
-				new_pid = 0
-				return True	
-			else:
-				print( "Command to wait pid " + str( new_pid ) )
-				os.waitpid( new_pid , 0)
-				self.main_play()
+			self.main_play()
 		else:
 			self.echo( self.name , "Switch call to stop run mission")
 			self.state = False

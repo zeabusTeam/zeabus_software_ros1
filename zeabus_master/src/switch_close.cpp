@@ -72,12 +72,12 @@ int main( int argv , char** argc ){
 
 //===============> LOOP ROS SYSTEM
 	int count_switch = limit_count_switch;
-	bool status_back_control = 0; // 0 / false is close and 1 / true is open
+	bool status_back_control = 1; // 0 / false is close and 1 / true is open
 #ifdef _PLAY_QUALIFICATION_
-	bool status_mission_qualification = 0;
+	bool status_mission_qualification = 1;
 #endif
 #ifdef _PLAY_ALL_MISSION_
-	bool status_mission_all = 0;
+	bool status_mission_all = 1;
 #endif
 
 #ifdef _SHOW_COUNT_SWITCH_
@@ -113,7 +113,7 @@ int main( int argv , char** argc ){
 			if( count_switch == 0 ){
 				status_mission_all = 0;
 				srv_connect_mission_all.request.data = false;
-				connect_control.call( srv_connect_mission_all );
+				connect_mission_all.call( srv_connect_mission_all );
 			}
 		}
 		else{ // Mission all noew are close
@@ -126,7 +126,7 @@ int main( int argv , char** argc ){
 			if( count_switch == 0 ){
 				status_mission_qualification = 0;
 				srv_connect_mission_qualification.request.data = false;
-				connect_control.call( srv_connect_mission_qualification );
+				connect_mission_qualification.call( srv_connect_mission_qualification );
 			}
 		}
 		else{ // Mission all now are close
@@ -136,8 +136,8 @@ int main( int argv , char** argc ){
 
 		#ifdef _SHOW_COUNT_SWITCH_
 			count_print++;
-			if( count_print == 5 ){
-				printf("count_switch_close   : %5d\n" , count_switch );	
+			if( count_print == 10 ){
+				printf("count_switch_close  : %5d\n" , count_switch );	
 				printf("status_control      : %5d\n" , status_back_control );
 			#ifdef _PLAY_QUALIFICATION_
 				printf("status_qulification : %5d\n" , status_mission_qualification );

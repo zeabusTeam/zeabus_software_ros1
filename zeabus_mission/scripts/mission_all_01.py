@@ -52,7 +52,6 @@ class MissionAll( StandardMission ):
 		self.echo(self.name , "FINISHED SETUP ALL MISSION")
 
 	def callback( self , message ):
-		global new_pid
 		if( self.state and message.data ):
 			self.echo( self.name , "Now mission will run please close befor try again")
 			return False
@@ -74,6 +73,7 @@ class MissionAll( StandardMission ):
 			return False
 		
 		self.echo( self.name , "End Callback")
+		return True
 
 	def main_play( self ):
 

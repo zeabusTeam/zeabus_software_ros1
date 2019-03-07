@@ -116,7 +116,7 @@ int main( int argv , char** argc ){
 			if( count_switch == limit_count_switch ){
 				status_mission_all = 1;
 				srv_connect_mission_all.request.data = true;
-				connect_control.call( srv_connect_mission_all );
+				connect_mission_all.call( srv_connect_mission_all );
 			}
 		}
 #endif
@@ -129,14 +129,14 @@ int main( int argv , char** argc ){
 			if( count_switch == limit_count_switch ){
 				status_mission_qualification = 1;
 				srv_connect_mission_qualification.request.data = true;
-				connect_control.call( srv_connect_mission_qualification );
+				connect_mission_qualification.call( srv_connect_mission_qualification );
 			}
 		}
 #endif
 
 		#ifdef _SHOW_COUNT_SWITCH_
 			count_print++;
-			if( count_print == 5 ){
+			if( count_print == 10 ){
 				printf("count_switch_open   : %5d\n" , count_switch );	
 				printf("status_control      : %5d\n" , status_back_control );
 			#ifdef _PLAY_QUALIFICATION_

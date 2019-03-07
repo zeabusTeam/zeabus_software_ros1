@@ -44,14 +44,14 @@ int main( int argv , char** argc ){
 //===============> SETUP VARIABLE & ROS SYSTEM
 	ros::Rate rate( frequency );
 
-	std_msgs::Bool swtich_data;
+	std_msgs::Bool switch_data;
 	int received = 0;
 
-	zeabus_library::subscriber::SubBool listen_switch( &swtich_data );
+	zeabus_library::subscriber::SubBool listen_switch( &switch_data );
 	listen_switch.register_ttl( &received , 1 );
 
-	ros::Subscriber sub_switch = nh.subscriber( switch_topic  , 1 
-			, &zeabus_library::subscriber:;SubBool::callback_ttl 
+	ros::Subscriber sub_switch = nh.subscribe( switch_topic  , 1 
+			, &zeabus_library::subscriber::SubBool::callback_ttl 
 			, &listen_switch );
 
 	ros::ServiceClient connect_control = 
@@ -86,7 +86,7 @@ int main( int argv , char** argc ){
 
 	while( nh.ok() ){
 		rate.sleep();
-		ros::spinOnce*(;
+		ros::spinOnce();
 		if( received ){
 			if( switch_data.data ){
 				if( count_switch < limit_count_switch ) count_switch++;

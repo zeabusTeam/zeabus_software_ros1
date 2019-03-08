@@ -56,7 +56,7 @@ class MissionQualification( StandardMission ):
 
 
 		self.collect_state()
-		self.velocity_xy( 0.3 , 0 )
+		self.velocity_xy( 0.4 , 0 )
 		while( self.ok_state() ):
 			self.sleep(0.2)
 			self.echo( self.name , "Now move direct" )

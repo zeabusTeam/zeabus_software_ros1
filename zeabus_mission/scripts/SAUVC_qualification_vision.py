@@ -67,7 +67,7 @@ class MissionQualification( StandardMission ):
 		self.type_pier = 0 # -1 : 0 : 1 is single left : double pier : single right
 
 		self.collect_state()
-		self.velocity_xy( 0.25 , 0 )
+		self.velocity_xy( 0.3 , 0 )
 		count_have_object = 0
 		start_time = time.time()
 		while( self.ok_state() ):

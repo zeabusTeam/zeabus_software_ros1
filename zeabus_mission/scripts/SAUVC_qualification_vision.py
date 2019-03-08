@@ -36,11 +36,22 @@ class MissionQualification( StandardMission ):
 
 		self.vision = VisionCollector( "qualification" )
 	
+		self.state = False
+
 		print("MISSION QUALIFICATION FINISHED SETUP")
 
 	def callback( self , message ):
 
 		result = False
+
+		if( message.data and self.state ):
+			self.echo( self.name , "Now mission qualification have running")
+			return False
+		elif( message.data ):
+			self.state = True
+		else:
+			self.state = False
+			return False
 
 		# This function will call by switch we must to reset data target
 		self.reset_target( "xy" )
@@ -59,7 +70,7 @@ class MissionQualification( StandardMission ):
 		self.velocity_xy( 0.25 , 0 )
 		count_have_object = 0
 		start_time = time.time()
-		while( not rospy.is_shutdown() ):
+		while( self.ok_state() ):
 			self.sleep( 0.05 )
 			if( ( time.time() - start_time ) < 5 ):
 				self.echo( self.name , "Now time is " + str( time.time() - start_time ))
@@ -93,7 +104,7 @@ class MissionQualification( StandardMission ):
 
 		self.echo( self.name , "We will start do it on function type : " + str( self.run_type) )
 
-		while( not rospy.is_shutdown() ):	
+		while( self.ok_state() ):	
 			if( self.run_type == 1 ): self.type_1()
 			elif( self.run_type == 2 ): self.type_2()
 			elif( self.run_type == 3 ): self.type_3()
@@ -121,7 +132,7 @@ class MissionQualification( StandardMission ):
 		
 		count_not_single = 0
 		count_not_found = 0
-		while( not rospy.is_shutdown() ):
+		while( self.ok_state() ):
 			self.sleep( 0.05 )
 			self.vision.analysis_all( "qualification" , "sevinar" , 5 )
 			self.echo_vision( self.vision.echo_data() )
@@ -170,7 +181,7 @@ class MissionQualification( StandardMission ):
 		count_not_found = 0
 		count_not_doulbe = 0
 		current_fix_velocity = False
-		while( not rospy.is_shutdown() ):
+		while( self.ok_state() ):
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "qualification" , "sevinar" , 5 )
 			self.echo_vision( self.vision.echo_data() )
@@ -234,7 +245,7 @@ class MissionQualification( StandardMission ):
 		#	this step we will move side to don't find pier and 
 		# will move a little time befor move forward
 		count_not_found = 0
-		while( not rospy.is_shutdown() ):
+		while( self.ok_state() ):
 			self.sleep( 0.1 )
 			self.vision.analysis_all( "qualification" , "sevinar" , 5 )
 			self.echo( self.name , "Type 3 and move slide to don't have object : " + 
@@ -248,7 +259,7 @@ class MissionQualification( StandardMission ):
 				break
 		start_time = time.time()
 		self.echo( self.name , "Move side 3 second")
-		while( not rospy.is_shutdown() ):
+		while( self.ok_state() ):
 			self.sleep( 0.1 )
 			diff_time = time.time() - start_time
 			self.velocity( {'y' : math.copysign( 0.10 , self.type_pier )} )	
@@ -261,4 +272,4 @@ class MissionQualification( StandardMission ):
 if __name__ == "__main__":
 	rospy.init_node("mission_qualification")
 	MQ = MissionQualification( "mission_qualification" )
-	rospy.spin()
+	rospy.spin()	

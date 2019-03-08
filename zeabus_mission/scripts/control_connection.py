@@ -215,7 +215,7 @@ class ControlConnection:
 #===============> SERVICE OF Torpedo
 	def fire_gripper( self ):
 		try:
-			result = self.fire_torpedo( 0 )
+			result = self.fire_torpedo( 1 )
 		except rospy.ServiceException , error :
 			print("\x1B[1;release Gripper " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
 			result = False
@@ -223,7 +223,7 @@ class ControlConnection:
 		
 	def hold_gripper( self ):
 		try:
-			result = self.hold_torpedo( 0 )
+			result = self.hold_torpedo( 1 )
 		except rospy.ServiceException , error :
 			print("\x1B[1;release Gripper " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
 			result = False
@@ -231,7 +231,7 @@ class ControlConnection:
 
 	def fire_golf( self ):
 		try:
-			result = self.fire_torpedo( 1 )
+			result = self.fire_torpedo( 0 )
 		except rospy.ServiceException , error :
 			print("\x1B[1;fire golf " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
 			result = False
@@ -240,7 +240,7 @@ class ControlConnection:
 	def hold_golf( self ):
 		print("Command to hold golf")
 		try:
-			result = self.hold_torpedo( 1 )
+			result = self.hold_torpedo( 0 )
 		except rospy.ServiceException , error :
 			print("\x1B[1;hold golf " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
 			result = False
@@ -310,8 +310,8 @@ if( __name__ == "__main__" ):
 	ch = ControlConnection("testing_robot")
 
 	print("Welcome to testing control")
-	ch.fire_gripper()	
-#	ch.hold_gripper()	
+#	ch.fire_gripper()	
+	ch.hold_gripper()	
 #	ch.fire_golf()	
 #	ch.hold_golf()	
 '''

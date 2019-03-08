@@ -98,13 +98,15 @@ int main( int argv , char** argc ){
 
 		//===============> Connection to Back Control
 		if( status_back_control ){ // Back control are now open
-			if( count_switch == 0 ) status_back_control = 0;
+			if( count_switch == 0 ){
+				status_back_control = 0;
+				srv_connect_control.request.data = false;
+				connect_control.call( srv_connect_control );
+			}
 		}
 		else{ // back control are now close
 			if( count_switch == limit_count_switch ){
 				status_back_control = 1;
-				srv_connect_control.request.data = true;
-				connect_control.call( srv_connect_control );
 			}
 		}
 #ifdef _PLAY_ALL_MISSION_

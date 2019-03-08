@@ -41,7 +41,7 @@
 int main( int argv , char** argc ){
 
 	double ok_error[6] = { 0.01 , 0.01 , 0.1 , 0.02 , 0.02 , 0.05};
-	double limit_pid[6] = { 2.5 , 2.5 , 1.5 , 0.3 , 0.3 , 0.15 };
+	double limit_pid[6] = { 2.5 , 2.5 , 1.5 , 0.3 , 0.3 , 0.13 };
 	double max_pid[6] = { 3 , 3 , 0 , 0.5 , 0.5 , 0.3 };
 	double min_pid[6] = { -3 , -3 , -2.5 , -0.5 , -0.5 , -0.3};
 

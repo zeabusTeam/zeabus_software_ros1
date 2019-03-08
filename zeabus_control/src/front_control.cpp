@@ -300,7 +300,7 @@ int main( int argv , char** argc ){
 				target_state.pose.pose.position.z = current_state.pose.pose.position.z;
 			}
 			else{
-				control_twist.twist.linear.z = control_::velocity_xy(
+				control_twist.twist.linear.z = control_::velocity_z(
 						target_state.pose.pose.position.z - current_state.pose.pose.position.z );
 			}
 		//====================> PLAN ROLL PITCH YAW

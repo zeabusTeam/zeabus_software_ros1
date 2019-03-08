@@ -5,6 +5,7 @@
  *      Author: mahisorn
  */
 
+#include <iostream>
 #include <hg_ros_serial/serial.h>
 
 using namespace hg_ros_serial;

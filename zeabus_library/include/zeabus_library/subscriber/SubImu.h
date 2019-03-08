@@ -22,8 +22,8 @@
 
 #include	<sensor_msgs/Imu.h>
 
-#ifndef _ZEABUS_LIBRARY_SUBSCRIBER_SEBIMU_H__
-#define _ZEABUS_LIBRARY_SUBSCRIBER_SEBIMU_H__
+#ifndef _ZEABUS_LIBRARY_SUBSCRIBER_SUBIMU_H__
+#define _ZEABUS_LIBRARY_SUBSCRIBER_SUBIMU_H__
 
 namespace zeabus_library{
 

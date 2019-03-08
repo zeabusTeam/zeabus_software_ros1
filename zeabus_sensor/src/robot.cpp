@@ -2,7 +2,7 @@
 	File name			:	robot.cpp		
 	Author				:	Supasan Komonlit
 	Date created		:	2019 , FEB 06
-	Date last modified	:	2019 , FEB 06
+	Date last modified	:	2019 , FEB 09
 	Purpose				:	
 
 	Maintainer			:	Supasan Komonlit
@@ -13,6 +13,8 @@
 	Namespace			:	None
 */
 //====================>
+
+//#define		_PRINT_ROBOT_EULER_
 
 #include	<ros/ros.h>
 
@@ -108,8 +110,10 @@ int main( int argv , char** argc ){
 		if( received_imu ){
 			zeabus_library::tf_handle::TFQuaternion tf_quaternion( data_imu.orientation );
 			tf_quaternion = rotation_imu*tf_quaternion;
-			transform.setRotation( tf_quaternion );	
-//			printf("ROBOT EULER	: "); tf_quaternion.print_radian(); printf("\n");	
+			transform.setRotation( tf_quaternion );
+			#ifdef _PRINT_ROBOT_EULER_	
+				printf("ROBOT EULER	: "); tf_quaternion.print_radian(); printf("\n");	
+			#endif
 			received_imu = 0;
 		}
 		transform.setOrigin( tf::Vector3( current_state.pose.pose.position.x 

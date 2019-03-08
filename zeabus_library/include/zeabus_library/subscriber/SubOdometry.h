@@ -22,6 +22,8 @@
 
 #include	<nav_msgs/Odometry.h>
 
+#include	<geometry_msgs/TwistStamped.h>
+
 #ifndef _ZEABUS_LIBRARY_SUBSCRIBER_SEBODOMETRY_H__
 #define _ZEABUS_LIBRARY_SUBSCRIBER_SEBODOMETRY_H__
 
@@ -36,20 +38,36 @@ namespace subscriber{
 
 			void register_data( nav_msgs::Odometry* data );
 
-			void callback( const nav_msgs::Odometry& message );
+			virtual void callback( const nav_msgs::Odometry& message );
 
 			void callback_ttl( const nav_msgs::Odometry& message );
 	
-			void register_ttl( int* ttl , int number = 20 );
+			virtual void register_ttl( int* ttl , int number = 20 );
 
 			void set_ttl( int number );
 
-		private:
+		protected:
 			int constant_ttl;
-			
-			int* ttl; // ttl = time to live 
+
+			int* ttl; // time to live
+
+		private:
 			nav_msgs::Odometry* data;
 
+	};
+
+	class SubOdometryByTwistStamped : public SubOdometry{
+	
+		public:
+			SubOdometryByTwistStamped( geometry_msgs::TwistStamped* data );
+			
+			void register_data( geometry_msgs::TwistStamped* data );
+
+			void callback( const nav_msgs::Odometry& message );	
+			void callback_ttl( const nav_msgs::Odometry& message );
+
+		private:
+			geometry_msgs::TwistStamped* data;	
 
 	};
 

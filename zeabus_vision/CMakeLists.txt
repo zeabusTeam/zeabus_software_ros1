@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
+  nav_msgs
 )
 find_package(OpenCV REQUIRED)
 
@@ -62,6 +63,7 @@ add_service_files(
   vision_srv_gate.srv
   vision_srv_flare.srv
   vision_srv_drum.srv
+  vision_srv_golf.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -75,6 +77,8 @@ add_service_files(
 generate_messages(
   DEPENDENCIES
   std_msgs
+  nav_msgs
+  geometry_msgs
 )
 
 ################################################

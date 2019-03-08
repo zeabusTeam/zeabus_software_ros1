@@ -1,22 +1,33 @@
 <?xml version="1.0"?>
+
 <package format="2">
-  <name>zeabus_mission</name>
-  <version>0.0.0</version>
-  <description>The zeabus_mission package</description>
 
-  <maintainer email="zeabus@todo.todo">zeabus</maintainer>
+	<name>zeabus_mission</name>
+	<version>0.0.0</version>
+	<description>The zeabus_mission package</description>
 
-  <license>TODO</license>
+	<maintainer email="zeabus@todo.todo">zeabus</maintainer>
 
-  <buildtool_depend>catkin</buildtool_depend>
+	<license>TODO</license>
 
-  <build_depend>rospy</build_depend>
-  <exec_depend>rospy</exec_depend>
+	<buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>std_msgs</build_depend>
-  <exec_depend>std_msgs</exec_depend>
+	<build_depend>rospy</build_depend>
+	<exec_depend>rospy</exec_depend>	
 
-  <build_depend>zeabus_library</build_depend>
-  <build_export_depend>zeabus_library</build_export_depend>
+	<build_depend>geometry_msgs</build_depend>
+	<exec_depend>geometry_msgs</exec_depend>	
+
+	<build_depend>zeabus_library</build_depend>
+	<exec_depend>zeabus_library</exec_depend>	
+
+	<build_depend>tf</build_depend>
+	<exec_depend>tf</exec_depend>	
+
+	<build_depend>std_msgs</build_depend>
+	<exec_depend>std_msgs</exec_depend>	
+
+	<build_depend>nav_msgs</build_depend>
+	<exec_depend>nav_msgs</exec_depend>	
 
 </package>

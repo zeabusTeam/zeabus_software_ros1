@@ -1,0 +1,6 @@
+# Call
+std_msgs/String task
+std_msgs/String req
+---
+# Return
+geometry_msgs/Point point

@@ -15,8 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(Boost REQUIRED COMPONENTS system)
 
 generate_dynamic_reconfigure_options(
-	cfg/pid_control.cfg
-	cfg/offset_control.cfg
 	cfg/pid_.cfg
 )
 
@@ -32,21 +30,20 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-#add_executable(first_control src/first_control.cpp)
+add_executable(front_control src/front_control.cpp)
 
-#add_dependencies( first_control	${PROJECT_NAME}_gencfg 
-#							${${PROJECT_NAME}_EXPORTED_TARGETS}
-#							${catkin_EXPORTED_TARGETS}
-#)
+add_dependencies( front_control	${PROJECT_NAME}_gencfg 
+							${${PROJECT_NAME}_EXPORTED_TARGETS}
+							${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries( front_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
 
-#target_link_libraries( first_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
 
+add_executable(back_control src/back_control.cpp)
 
-#add_executable(second_control src/second_control.cpp)
+add_dependencies( back_control ${PROJECT_NAME}_gencfg 
+							${${PROJECT_NAME}_EXPORTED_TARGETS}
+							${catkin_EXPORTED_TARGETS}
+)
 
-#add_dependencies( second_control ${PROJECT_NAME}_gencfg 
-#							${${PROJECT_NAME}_EXPORTED_TARGETS}
-#							${catkin_EXPORTED_TARGETS}
-#)
-
-#target_link_libraries( second_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries( back_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} )

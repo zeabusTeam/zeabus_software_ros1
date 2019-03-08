@@ -13,6 +13,10 @@
 	Namespace			:	zeabus_library::tf_handle
 */
 
+#ifdef TF_EULER_DEFAULT_ZYX
+	#undef TF_EULER_DEFAULT_ZYX
+#endif
+
 #include	<tf/transform_broadcaster.h>
 
 #include	<geometry_msgs/Vector3.h>
@@ -57,6 +61,7 @@ namespace tf_handle{
 			geometry_msgs::Quaternion get_quaternion();
 
 			void operator=( tf::Quaternion q);
+			void operator=( geometry_msgs::Quaternion q);
 
 			void print_quaternion();
 			void print_radian();
@@ -68,7 +73,7 @@ namespace tf_handle{
 
 	};
 
-	void edit_value( double& problem );
+	void edit_value( double& problem ); // make value -PI<= x <= PI
 
 }
 

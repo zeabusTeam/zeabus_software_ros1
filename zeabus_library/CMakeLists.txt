@@ -38,11 +38,10 @@ add_message_files(
 
 add_service_files(
 	FILES
-	GetTwoPoint.srv
-	OneInt.srv
-	StrPoint.srv
-	StrTwoPoint.srv
-	TwoPoint.srv	
+	TwoBool.srv
+	ThreeOdometry.srv
+	OneVector3Stamped.srv
+	TwoStringVector3Stamped.srv
 )
 
 add_service_files(
@@ -60,12 +59,12 @@ add_service_files(
 	DelObject.srv
 )
 
-generate_messages( DEPENDENCIES std_msgs geometry_msgs)
+generate_messages( DEPENDENCIES std_msgs geometry_msgs nav_msgs )
 
 catkin_package(
 	INCLUDE_DIRS include
 	LIBRARIES zeabus_library
-	CATKIN_DEPENDS roscpp message_runtime std_msgs tf
+	CATKIN_DEPENDS roscpp message_runtime std_msgs tf 
 	DEPENDS Boost
 )
 
@@ -95,11 +94,12 @@ set( zeabus_library_localize_sources
 )
 
 set( zeabus_library_control_sources
-	src/control/service_control.cpp
-	src/control/listen_odometry.cpp	
-	src/control/listen_twist.cpp
 	src/control/pid.cpp	
+	src/control/ServiceOneVector3Stamped.cpp
+	src/control/ServiceTwoStringVector3Stamped.cpp
+	src/control/ServiceThreeOdometry.cpp
 )
+
 
 set( zeabus_library_rotation_sources
 	src/rotation/quaternion.cpp
@@ -120,8 +120,14 @@ set( zeabus_library_sensor_sources
 
 set( zeabus_library_subscriber_sources
 	src/subscriber/SubImu.cpp
+	src/subscriber/SubBool.cpp
 	src/subscriber/SubOdometry.cpp
+	src/subscriber/SubTwistStamped.cpp
 	src/subscriber/SubTwistWithCovarianceStamped.cpp
+)
+
+set( zeabus_library_service_sources
+	src/service/ServiceTwoBool.cpp
 )
 
 set( zeabus_library_sources
@@ -149,7 +155,10 @@ add_library( zeabus_library			STATIC		${zeabus_library_sources}
 												${zeabus_library_control_sources}
 												${zeabus_library_localize_sources}
 												${zeabus_library_rotation_sources} 
-												${zeabus_library_subscriber_sources} )
+												${zeabus_library_subscriber_sources}
+												${zeabus_library_service_sources} 
+)
+
 add_dependencies( zeabus_library				${${PROJECT_NAME}_EXPORTED_TARGETS}
 												${catkin_EXPORTED_TARGETS} )
 target_link_libraries( zeabus_library			${catkin_LIBRARIES} ${Boost_LIBRARIES})

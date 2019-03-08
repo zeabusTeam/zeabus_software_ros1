@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<node name="front_control" output="log" pkg="zeabus_control" type="front_control"/>
+
+	<node name="back_control" output="screen" pkg="zeabus_control" type="back_control"/>
+
+</launch>

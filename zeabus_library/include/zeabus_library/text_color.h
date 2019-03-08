@@ -42,7 +42,7 @@
 	#define NMA "\x1B[0;35m"
 	#define BMA "\x1B[1;35m"
 
-	#define RES "\x1B[0m"
+	#define RES "\x1B[0;37m"
 
 namespace zeabus_library{
 

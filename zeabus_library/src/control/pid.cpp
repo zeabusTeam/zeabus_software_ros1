@@ -7,7 +7,7 @@
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.2
+	version				:	1.1.0
 	status				:	Product
 
 	Namespace			:	zeabus_library/control
@@ -57,7 +57,20 @@ namespace control{
 	}
 
 	void PID::limit_i( double limit ){
-		this->limit = limit;
+		this->i_limit = limit;
+	}
+
+	void PID::set_max_limit( double limit ){
+		this->max_limit = limit;
+	}
+
+	void PID::set_min_limit( double limit ){
+		this->min_limit = limit;
+	}
+
+	void PID::set_limit( double min , double max ){
+		this->min_limit = min;
+		this->max_limit = max;
 	}
 
 	void PID::calculate( double error , double& result ){
@@ -71,9 +84,13 @@ namespace control{
 			this->sum += ( ( error * this->i ) );
 					+ ( error - this->previous_error) / this->period * this->d;
 
-			if( zeabus_library::abs( this->sum ) > this->limit )
-				this->sum = copysign( this->limit , this->sum );
+			if( zeabus_library::abs( this->sum ) > this->i_limit )
+				this->sum = copysign( this->i_limit , this->sum );
 			result = this->sum + error*this->p; 
+
+			if( result > this->max_limit ) result = max_limit;
+			else if( result < this->min_limit ) result = min_limit;
+
 			this->previous_error = error;
 		}
 	}

@@ -2,12 +2,12 @@
 	File name			:	pid.h		
 	Author				:	Supasan Komonlit
 	Date created		:	2018 , JAN 24
-	Date last modified	:	2018 , ??? ??
+	Date last modified	:	2018 , FEB 27
 	Purpose				:	For receive message from localize in control system
 							
 	Maintainer			:	Supasan Komonlit
 	e-mail				:	supasan.k@ku.th
-	version				:	1.0.0
+	version				:	1.2.0
 	status				:	Product
 
 	Namespace			:	zeabus_library/control
@@ -37,6 +37,10 @@ namespace control{
 			void set_constant( double p , double i , double d );
 			void offset_i( double offset );
 			void limit_i( double limit );
+			void set_max_limit( double limit );
+			void set_min_limit( double limit );
+			void set_limit( double min , double max );
+			
 			
 			double calculate( double error );
 			void calculate( double error , double& result );
@@ -52,7 +56,9 @@ namespace control{
 			double period;
 			// value condition of i
 			double offset;
-			double limit;
+			double i_limit;
+			double max_limit;
+			double min_limit;
 			double sum;	
 			// value of pid
 			double previous_error;

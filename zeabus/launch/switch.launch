@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<node name="switch_open" output="screen" pkg="zeabus_master" type="switch_open"/>
+
+	<node name="switch_close" output="screen" pkg="zeabus_master" type="switch_close"/>
+
+</launch>

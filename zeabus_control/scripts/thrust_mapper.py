@@ -11,14 +11,14 @@ import rospy
 import numpy as np
 import LookUpPWM_2018 as lup
 from hg_ros_pololu.msg import Pwm
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import TwistStamped
 
 
 class ThrustMapper:
     def __init__(self):
         rospy.init_node('Thrust_mapper')
         self.pwm_publisher = rospy.Publisher('/pwm', Pwm, queue_size=1)
-        rospy.Subscriber("/cmd_vel", Twist, self.torque_callback)
+        rospy.Subscriber("/control/force", TwistStamped, self.torque_callback)
 
         cos_45 = math.cos(math.radians(45))
         sin_45 = math.sin(math.radians(45))
@@ -28,10 +28,10 @@ class ThrustMapper:
             [0, 0, 1],  			# thruster 2
             [0, 0, 1],  			# thruster 3
             [0, 0, 1],  			# thruster 4
-            [cos_45, -sin_45, 0],  	# thruster 5
-            [cos_45, sin_45, 0],  	# thruster 6
-            [-cos_45, -sin_45, 0],  # thruster 7
-            [-cos_45, sin_45, 0]  	# thruster 8
+            [-cos_45, sin_45, 0],  	# thruster 5
+            [-cos_45, -sin_45, 0],  	# thruster 6
+            [cos_45, sin_45, 0],  # thruster 7
+            [cos_45, -sin_45, 0]  	# thruster 8
         ])
 
         self.distance = np.array([
@@ -49,10 +49,10 @@ class ThrustMapper:
 									[-0.048, 0.045],	
 									[-0.048, 0.045],	
 									[-0.048, 0.045],	
-									[-0.01	, 0.01],	
-									[-0.01	, 0.01],	
-									[-0.01	, 0.01],	
-									[-0.01	, 0.01],
+									[-0.048	, 0.045],	
+									[-0.048	, 0.045],	
+									[-0.048	, 0.045],	
+									[-0.048	, 0.045],
         ])
 
         self.direction_angular = np.array([
@@ -78,8 +78,8 @@ class ThrustMapper:
         pwm_command = Pwm()
         pwm_command.pwm = [1500] * 8
 
-        force = np.array([message.linear.x, message.linear.y, message.linear.z,
-                      message.angular.x, message.angular.y, message.angular.z])
+        force = np.array([message.twist.linear.x, message.twist.linear.y, message.twist.linear.z,
+                      message.twist.angular.x, message.twist.angular.y, message.twist.angular.z])
 
         torque = np.matmul(self.direction_inverse.T,force.T)
        
@@ -97,15 +97,15 @@ class ThrustMapper:
                     torque[run] = self.min_force[run][1]
 
         cmd = []
-        for i in range(0, 4):
+        for i in range(0, 8):
             cmd.append(lup.lookup_pwm_02(torque[i]))
             if(torque[i] == 0):
                 cmd[i] = 1500
 
-        for i in range(4, 8):
-            cmd.append(lup.lookup_pwm_01(torque[i]))
-            if(torque[i] == 0):
-                cmd[i] = 1500
+#        for i in range(4, 8):
+#            cmd.append(lup.lookup_pwm_01(torque[i]))
+#            if(torque[i] == 0):
+#                cmd[i] = 1500
 
         for i in range(0, 8):
 			pwm_command.pwm[i] = cmd[i]  # thrust i

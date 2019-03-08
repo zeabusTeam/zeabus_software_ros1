@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<!--
+		Detail of this purpose
+			01. Open IMU 1 component
+			02. Open DVL 1 component
+			03.	Open Robot Node 1 robot
+			04. This file all use TF & Broadcaster to init frame and send a value
+-->
+
+<launch>
+
+	<arg name="dvl_serialport" default="/dev/usb2serial/ftdi_FT2VR5PM_02"/>
+	<arg name="microstrain_serial" default="/dev/microstrain/3dm_gx5_45_0000__6251.65901"/>
+	<arg name="world_frame" default="world"/>
+	<arg name="robot_frame" default="robot"/>
+	<arg name="imu_frame" default="imu"/>
+	<arg name="imu_topic" default="/sensor/imu"/>
+	<arg name="dvl_frame" default="dvl"/>
+	<arg name="pressure_frame" default="pressure"/>
+	<arg name="PI" default="3.14159265"/>
+	<arg name="HalfPI" default="1.570796325"/>
+	<arg name="NegateHalfPI" default="-1.570796325"/>
+
+	<node name="imu" output="screen" pkg="zeabus_sensor" type="tf_imu">
+		<param name="port_imu" value="$(arg microstrain_serial)"/>
+		<param name="publish_topic" type="str" value="$(arg imu_topic)"/>
+		<param name="subscribe_topic" type="str" value="/test/imu"/>
+		<param name="parent_id" type="str" value="$(arg robot_frame)"/>
+		<param name="frame_id" type="str" value="$(arg imu_frame)"/>
+		<param name="use_offset" type="bool" value="true"/>
+		<!--param name="offset_roll" type="double" value="$(arg PI)"/-->
+		<param name="offset_roll" type="double" value="0.0"/>
+		<param name="offset_pitch" type="double" value="0.0"/>
+		<param name="offset_yaw" type="double" value="$(arg HalfPI)"/>
+		<param name="frequency" type="int" value="50"/>
+	</node>
+
+	<node name="dvl" output="screen" pkg="zeabus_sensor" type="tf_dvl">
+		<param name="port_dvl" value="$(arg microstrain_serial)"/>
+		<param name="publish_topic" type="str" value="/sensor/dvl"/>
+		<param name="subscribe_topic" type="str" value="/test/dvl"/>
+		<param name="parent_id" type="str" value="$(arg robot_frame)"/>
+		<param name="frame_id" type="str" value="$(arg dvl_frame)"/>
+		<param name="raw_topic" type="str" value="/raw/dvl"/>
+	</node>
+
+	<node name="robot" output="screen" pkg="zeabus_sensor" type="tf_robot">
+		<param name="parent_id" type="str" value="$(arg world_frame)"/>
+		<param name="frame_id" type="str" value="$(arg robot_frame)"/>
+		<param name="imu_id" type="str" value="$(arg imu_frame)"/>
+		<param name="subscribe_imu" type="str" value="$(arg imu_topic)"/>
+		<param name="subscribe_state" type="str" value="/localize/state"/>
+		<param name="publish_topic" type="str" value="/sensor/robot"/>
+	</node>
+	
+	<node name="preesure_filter" output="screen" pkg="zeabus_sensor" type="pressure_filter.py"/>
+
+	<node pkg="tf" type="static_transform_publisher" name="dvl_to_robot" 
+			args="0 0 -0.1 0 0 0 1 $(arg robot_frame) $(arg dvl_frame) 100"/>
+
+	<node pkg="tf" type="static_transform_publisher" name="imu_to_robot"
+			args="1 0 0.1 0 0 -0.707 0.707 $(arg robot_frame) $(arg imu_frame) 100"/>
+
+	<node pkg="tf" type="static_transform_publisher" name="pressure_to_robot"
+			args="-0.5 0 0 0 0 0 1 $(arg robot_frame) $(arg pressure_frame) 100"/>
+</launch>

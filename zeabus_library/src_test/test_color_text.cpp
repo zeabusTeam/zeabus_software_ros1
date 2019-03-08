@@ -12,6 +12,7 @@
 
 	Namespace			:	None < main program>
 */
+//================>
 
 #include	<stdio.h>
 

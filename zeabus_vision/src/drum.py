@@ -64,8 +64,10 @@ def mission_callback(msg):
         lib.print_mission(task, req)
 
     drum_option = ['red', 'blue']
-    return_option = ['top-bottom', 'left-right', 'tb', 'lr']
-    if task in drum_option and req in return_option:
+    return_option = ['top-bottom', 'left-right', 'tb', 'lr', 'center','c']
+    if task == 'mat':
+        return find_mat() 
+    elif task in drum_option and req in return_option:
         return find_drum(task, req)
     elif task == 'golf':
         return find_golf(task)
@@ -100,22 +102,22 @@ def get_mask(color, shade=None):
     blur = cv.medianBlur(image.hsv, 5)
     _, s, _ = cv.split(blur)
 	
-    foregroud_mask = s
+    # foregroud_mask = s
 
-    # foregroud_mask = cv.threshold(
-    #     s, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
+    foregroud_mask = cv.threshold(
+        s, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
 
     if color == "blue":
-        upper = np.array([161, 197, 195], dtype=np.uint8)
-        lower = np.array([49, 9, 63], dtype=np.uint8)
-        # upper = np.array([120, 255, 255], dtype=np.uint8)
-        # lower = np.array([90, 160, 0], dtype=np.uint8)
+        # upper = np.array([161, 197, 195], dtype=np.uint8)
+        # lower = np.array([49, 9, 63], dtype=np.uint8)
+        upper = np.array([120, 255, 255], dtype=np.uint8)
+        lower = np.array([90, 160, 0], dtype=np.uint8)
     if color == "yellow":
         if shade == "dark":
-            upper = np.array([66, 255, 255], dtype=np.uint8)
-            lower = np.array([37, 98, 0], dtype=np.uint8)
-            #upper = np.array([47, 255, 255], dtype=np.uint8)
-            #lower = np.array([20, 17, 228], dtype=np.uint8)
+            # upper = np.array([66, 255, 255], dtype=np.uint8)
+            # lower = np.array([37, 98, 0], dtype=np.uint8)
+            upper = np.array([47, 255, 255], dtype=np.uint8)
+            lower = np.array([20, 17, 228], dtype=np.uint8)
         elif shade == "light":
             upper = np.array([60, 255, 255], dtype=np.uint8)
             lower = np.array([27, 160, 97], dtype=np.uint8)
@@ -190,7 +192,7 @@ def get_cx(cnt, return_option=None):
     cv.rectangle(image.display, (x, y), (x+w, y+h),
                      lib.get_color('green'), 3)
     area = w * h
-    if return_option is None:
+    if return_option in [None,'c','center']:
         cx1, cx2 = max(min(x,x+w),0),min(max(x,x+w),wimg)
         cy1, cy2 = max(min(y,y+h),0),min(max(y,y+h),himg)
     elif return_option in ['top-bottom','tb']:
@@ -216,6 +218,37 @@ def get_mat():
     cv.drawContours(mat_mask, [box], 0, (255), -1)
     return mat_mask
 
+def find_mat():
+    if image.bgr is None:
+        lib.img_is_none()
+        return message(state=-1)
+    image.renew_display()
+    himg, wimg = image.display.shape[:2]
+    mat_mask = get_mask("green")
+    contours = cv.findContours(
+        mat_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
+    processed_contours = []
+    for cnt in contours:
+        if cv.contourArea(cnt) < 1000:
+            continue
+        processed_contours.append(cnt)
+    state = len(processed_contours)
+    lib.publish_result(mat_mask, 'gray', public_topic + 'mask/mat')
+    lib.publish_result(image.display, 'bgr', public_topic+'display/mat')
+    if state == 0:
+        lib.print_result("CANNOT FOUND MAT", ct.RED)
+        return message()
+    lib.print_result("FOUND MAT",ct.GREEN)
+    return message(state=1)
+
+def temp_function(cnt):
+    himg, wimg = image.display.shape[:2]
+    mat_mask = np.zeros((himg, wimg), np.uint8)
+    (x,y),radius = cv.minEnclosingCircle(cnt)
+    center = (int(x),int(y))
+    radius = int(radius)
+    cv.circle(mat_mask,center,radius,(255),-1)
+    lib.publish_result(mat_mask,'gray',public_topic+'mask/enclose')
 
 def find_drum(color, return_option):
     if image.bgr is None:
@@ -231,12 +264,19 @@ def find_drum(color, return_option):
         lib.publish_result(drum_mask, 'gray', public_topic+'mask')
         lib.publish_result(image.display, 'bgr', public_topic+'display')
         return message()
+    temp_function(obj)
     lib.print_result("FOUND DRUM", ct.GREEN)
     cv.circle(image.display, lib.most_point(
-        obj, 'right'), 5, (255, 255, 0), -1)
-    cv.circle(image.display, lib.most_point(obj, 'left'), 5, (0, 255, 255), -1)
+        obj, 'right'), 10, (255, 255, 0), -1)
+    cv.circle(image.display, lib.most_point(obj, 'left'), 10, (0, 255, 255), -1)
     cx1, cy1, cx2, cy2, area = get_cx(obj,return_option=return_option)
+    t1 = lib.Aconvert(cx1, wimg)
+    ty1 = -1.0*lib.Aconvert(cy1, himg)
+    t2 = lib.Aconvert(cx2, wimg)
+    ty2 = -1.0*lib.Aconvert(cy2, himg)
     forward, backward, left, right = get_excess(obj)
+    cv.putText(image.display,"pt1 = ({:.2f},{:.2f})".format(t1,ty1), (0,himg-100), cv.FONT_HERSHEY_SIMPLEX, 2, 255,5)
+    cv.putText(image.display,"pt2 = ({:.2f},{:.2f})".format(t2,ty2), (0,himg-20), cv.FONT_HERSHEY_SIMPLEX, 2, 255,5)
     lib.publish_result(drum_mask, 'gray', public_topic+'mask')
     lib.publish_result(image.display, 'bgr', public_topic+'display')
     return message(state=state, cx1=cx1, cy1=cy1, cx2=cx2, cy2=cy2, forward=forward,

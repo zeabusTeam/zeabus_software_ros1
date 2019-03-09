@@ -125,8 +125,16 @@ def get_mask(color, shade=None):
         upper = np.array([90, 255, 255], dtype=np.uint8)
         lower = np.array([60, 160, 0], dtype=np.uint8)
 
-    foregroud = cv.bitwise_and(image.hsv, image.hsv, mask=foregroud_mask)
-    mask = cv.inRange(foregroud, lower, upper)
+    if color != 'red':
+        foregroud = cv.bitwise_and(image.hsv, image.hsv, mask=foregroud_mask)
+        mask = cv.inRange(foregroud, lower, upper)
+
+    if color == "red":
+        # upper = np.array([161, 197, 195], dtype=np.uint8)
+        # lower = np.array([49, 9, 63], dtype=np.uint8)
+        upper = np.array([179, 255, 255], dtype=np.uint8)
+        lower = np.array([120, 0, 0], dtype=np.uint8)
+        mask = cv.inRange(image.hsv, lower, upper)
     return mask
 
 
@@ -353,7 +361,6 @@ if __name__ == '__main__':
     rospy.init_node('vision_drum', anonymous=False)
 
     image_topic = image.topic("bottom")
-    print(image_topic)
     rospy.Subscriber(image_topic, CompressedImage, image.callback)
     rospy.Service('vision/drum', vision_srv_drum(),
                   mission_callback)

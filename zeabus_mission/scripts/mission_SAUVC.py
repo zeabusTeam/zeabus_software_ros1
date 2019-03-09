@@ -20,7 +20,8 @@ from standard_mission		import StandardMission
 #===============>
 # Code for mission gate have find_gate , play_gate
 # Code for drop ball have find_drum , play_drum
-# Code for pick ball have move_out_in , play_pick
+# Code for pick ball have move_out_in , find_drum , play_drum
+# Code for flare find_flare , play_flare
 
 class MissionAll( StandardMission ):
 	
@@ -70,14 +71,16 @@ class MissionAll( StandardMission ):
 			if( self.over_move( 10 , 70 ) ):
 				break
 		self.reset_velocity( "xy")
-		self.fix_z( -0.5 )
+		self.fix_z( -0.7 )
 
 		play_pick = False
 		if( self.ok_state() ): play_pick = self.find_drum() 
 		if( self.ok_state() and play_pick ): self.move_out_in()
 
+		self.find_flare( 6 , 50 , -1 )		
 
 		self.reset_velocity( "xy" )
+		self.hold_gripper()
 		self.active_control( False )
 		return True
 
@@ -93,6 +96,96 @@ class MissionAll( StandardMission ):
 #				return True
 			else:
 				return False
+
+	def play_flare( self ):
+		self.hold_gripper()
+		self.free_xy( True )
+		self.fix_z( -1.6 )
+		count_unfound = 0
+		while( self.ok_state() ):
+			self.sleep( 0.1 )
+			self.vision_flare( "flare" , "near" , 5 )
+			if( not self.vision_flare.have_object() ):
+				count_unfound += 1
+				if( count_unfound == 5 ):
+					break
+				continue
+			count_unfound = 0
+			if( abs( self.vision_flare.center_x() ) < 0.1 ):
+				self.velocity( { 'x' : 0.2 } )
+			else:
+				self.velocity( { 'y' : math.copysign( 0.25 , self.vision_flare.center_x()*-1 ) })
+
+		self.fix_z( -1.3 )	
+		self.echo("NEAR" , "wait depth" )
+		while( self.ok_state() ){
+			self.sleep( 0.1 )
+			self.velocity({ 'x':0.01 } )
+			if( self.check_position( "z" , 0.15 ) ): break
+		}
+		self.free_xy( False )
+		time_start = time.time()
+		diff_time = 0
+		self.velocity_xy( 0.2 )
+		while( self.ok_state() and diff_time < 6 ):
+			self.sleep( 0.1 )
+			diff_time = time.time() - time_start
+		return True
+
+
+	def find_flare( self , distance_survey , time_survey , direction ):
+		mode = 1 # 1 forward 2 survey
+		setup_mode = True
+		direction_survey = direction
+		current_fix_velocity = False
+		finish_flare = False
+		self.fix_z( -1.4 )
+		while( self.ok_state() ):
+			self.sleep( 0.1 )
+			self.vision_flare( "flare" , "near" , 5 )
+			if( self.vision_flare.have_object() ):
+				finish_flare = self.play_flare()
+				if( finish_flare ):
+					self.reset_velocity( "xy" )
+					break
+			self.vision_flare( "flare" , "far" , 5 )
+			if( self.vision_flare.have_object() ):
+				if( current_fix_velocity ):
+					self.reset_velocity( "xy" )
+					current_fix_velocity = False
+				setup_mode = True
+				if( abs( self.vision_flare.center_x() ) < 0.15 ):
+					self.velocity( { 'x' : 0.1 } ) 
+				else: self.velocity( {'y' : math.copysign( 0.12, self.vision_flare.center_x())} )
+				continue
+			if( setup_mode ):
+				if( mode == 1 ):
+					self.over_move( 1 , 15 , True )
+				else:
+					self.over_move( distance_survey ,time_survey , True )
+				setup_mode = False
+			if( not current_fix_velocity ):
+				if( mode == 1 ):
+					self.velocity_xy( 0.2 , 0 )
+				else:
+					self.velocity_xy( 0 , 0.2 * direction_survey )
+				current_fix_velocity = True
+			if( mode == 1 ):
+				if( self.over_move( 1 , 15 ) ):
+					self.echo( "FLARE" , "Change to mode survey" )
+					mode = 2
+					self.reset_velocity("xy")
+					current_fix_velocity = False
+					setup_mode = True
+			else:
+				if( self.over_move( distance_survey , time_survey ) ):
+					self.echo( "FLARE" , "Change to mode forward" )
+					distance_survey *= -1
+					self.reset_velocity("xy")
+					current_fix_velocity = False
+					setup_mode = True
+					mode = 1
+			
 
 	def move_out_in( self ):
 		self.velocity_xy( -0.15 , 0 )
@@ -134,7 +227,7 @@ class MissionAll( StandardMission ):
 					return False
 				continue
 			count_unfound = 0
-			self.vision_drum.result['cx_2'] -= 0.1
+			self.vision_drum.result['cx_2'] -= 0.15
 			if( abs(self.vision_drum.result['cx_2']) < 0.1 ): 
 				value_y = -0.05
 				ok_y = True
@@ -150,6 +243,7 @@ class MissionAll( StandardMission ):
 			if( ok_y and ok_x and self.check_position( "z" , 0.15 ) 
 					and self.check_position("yaw" , 0.2 ) and ( not ever_fire_golf ) ):
 				self.target_state()
+				self.echo( "DRUM" , "Now depth is " + str( self.temp_state[2] ) )
 				if( self.temp_state[2] < -1.4 ):
 					if( not drop_ball ): self.fire_golf()
 					else: self.velocity_z( -0.15 )

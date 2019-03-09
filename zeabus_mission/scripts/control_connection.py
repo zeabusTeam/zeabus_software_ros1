@@ -68,6 +68,7 @@ class ControlConnection:
 		self.cl_get_state		= rospy.ServiceProxy("/control/get_target" , ThreeOdometry )
 
 		self.cl_free_xy			= rospy.ServiceProxy("/control/free_xy" , TwoBool )
+		self.cl_active			= rospy.ServiceProxy("/control/active" , TwoBool )
 
 		self.fire_torpedo		= rospy.ServiceProxy("/fire_torpedo" , Torpedo );
 		self.hold_torpedo		= rospy.ServiceProxy("/hold_torpedo" , Torpedo );
@@ -252,6 +253,9 @@ class ControlConnection:
 		result = self.service_two_bool( self.cl_free_xy , data , "target_free_xy")
 		return result
 		
+	def active_control( self , data ):
+		result = self.service_two_bool( self.cl_active , data , "active_control")
+		return result
 #===============> FUNCTION FOR CALL SERVICE
 
 	def service_one_vector( self , service , vector3 , message = ""):

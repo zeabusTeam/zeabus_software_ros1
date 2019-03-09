@@ -72,7 +72,10 @@ class MissionAll( StandardMission ):
 		self.reset_velocity( "xy")
 		self.fix_z( -0.5 )
 
-		if( self.ok_state() ): self.find_drum() 
+		play_pick = False
+		if( self.ok_state() ): play_pick = self.find_drum() 
+		if( self.ok_state() and play_pick ): self.move_out_in()
+
 
 		self.reset_velocity( "xy" )
 		self.active_control( False )
@@ -91,7 +94,23 @@ class MissionAll( StandardMission ):
 			else:
 				return False
 
-	def play_drum( self ):
+	def move_out_in( self ):
+		self.velocity_xy( -0.15 , 0 )
+		self.find_drum
+		count_unfound = 0
+		while( self.ok_state() ):
+			self.sleep( 0.06 )
+			self.vision_drum.analysis_all( "mat" , "sevinar" , 5 )
+			if( not self.vision_drum.have_object() ):
+				count_unfound += 1
+				if( count_unfound == 5 ):
+					break
+			else:
+				count_unfound = 0
+		self.reset_velocity( "xy" )
+		return self.find_drum( True )
+
+	def play_drum( self , drop_ball ):
 		self.fire_gripper()
 		self.echo( "DROP" , "Command to release gripper")
 		self.free_xy( True )
@@ -100,9 +119,11 @@ class MissionAll( StandardMission ):
 		ok_y = True
 		ok_x = False
 		ever_fire_golf = False
+		wait_z = False
 		self.relative_z( -0.3 )
 		start_time = 0
 		count_unfound = 0
+		if( drop_ball ): self.hold_golf()
 		while( self.ok_state() ):
 			self.sleep( 0.06 )
 			self.vision_drum.analysis_all( "blue" , "left-right" , 5 )
@@ -113,6 +134,7 @@ class MissionAll( StandardMission ):
 					return False
 				continue
 			count_unfound = 0
+			self.vision_drum.result['cx_2'] -= 0.1
 			if( abs(self.vision_drum.result['cx_2']) < 0.1 ): 
 				value_y = -0.05
 				ok_y = True
@@ -129,18 +151,25 @@ class MissionAll( StandardMission ):
 					and self.check_position("yaw" , 0.2 ) and ( not ever_fire_golf ) ):
 				self.target_state()
 				if( self.temp_state[2] < -1.4 ):
-					self.fire_golf()
+					if( not drop_ball ): self.fire_golf()
+					else: self.velocity_z( -0.15 )
 					ever_fire_golf = True
 					start_time = time.time()
 				else:
 					self.relative_z( -0.3 )
 			self.velocity( { 'x' : value_x , 'y' : value_y } )
-			if( ever_fire_golf ):
-				if( ( time.time() - start_time ) > 6 ):
+			if( wait_z ):
+				if(self.check_position( "z" , 0.15  ) ):
 					self.free_xy( False )
 					return True
+				else: continue
+			if( ever_fire_golf ):
+				if( ( time.time() - start_time ) > 8 ):
+					self.reset_velocity( "z" )
+					self.fix_z( -0.6 )
+					wait_z = True
 
-	def find_drum( self , direction ):
+	def find_drum( self , direction , drop_ball = False ):
 		self.velocity_xy( 0.2 )
 		count_found = 0 
 		while( self.ok_state() ):
@@ -183,7 +212,7 @@ class MissionAll( StandardMission ):
 			if( self.vision_drum.have_object() ):
 				count_found += 1
 				if( count_found == 3 ):
-					return self.play_drum()
+					return self.play_drum( drop_ball )
 			else:
 				count_found = 0
 				self.velocity( { 'x' : value_x , 'y' : 0.1 * direction } )

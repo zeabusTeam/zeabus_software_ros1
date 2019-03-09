@@ -50,13 +50,13 @@ class MissionQualification( StandardMission ):
 		self.reset_velocity( "xy" )
 		self.reset_target( "xy" )
 		self.reset_target( "yaw" )
-		self.fix_z( -0.3 )
+		self.fix_z( -0.6 )
 
 		self.echo( self.name , "START MISSION QUALIFICATION")
 
 
 		self.collect_state()
-		self.velocity_xy( 0.4 , 0 )
+		self.velocity_xy( 0.6 , 0 )
 		while( self.ok_state() ):
 			self.sleep(0.2)
 			self.echo( self.name , "Now move direct" )

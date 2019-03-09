@@ -274,6 +274,7 @@ int main( int argv , char** argc ){
 
 				control_twist.twist.linear.y = value_fix_velocity[1] +
 						control_::velocity_xy( diff_point.y );
+
 			}
 			else if( received_target_twist[0] > 0 || received_target_twist[1] > 0 ){
 				received_target_twist[0]--;

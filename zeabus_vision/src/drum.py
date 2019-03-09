@@ -51,7 +51,7 @@ class Log:
 public_topic = '/vision/mission/drum/'
 image = Image(sub_sampling=0.5)
 DEBUG = {
-    'by-pass-mat': True,
+    'by-pass-mat': False,
     'console': True
 }
 log = Log()
@@ -97,21 +97,25 @@ def message(state=0, cx1=0, cy1=0, cx2=0, cy2=0, forward=False, backward=False, 
     return msg
 
 
-def get_mask(color, shade=None):
+def get_mask(color, shade=None,blur=5):
     image.get_hsv()
-    blur = cv.medianBlur(image.hsv, 5)
+    blur = cv.medianBlur(image.hsv, blur)
     _, s, _ = cv.split(blur)
 	
-    # foregroud_mask = s
+    foregroud_mask = s
 
-    foregroud_mask = cv.threshold(
-        s, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
+    # foregroud_mask = cv.threshold(
+        # s, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
+    
+    lib.publish_result(foregroud_mask,'gray',public_topic+'fg_mask')
 
     if color == "blue":
         # upper = np.array([161, 197, 195], dtype=np.uint8)
         # lower = np.array([49, 9, 63], dtype=np.uint8)
-        upper = np.array([120, 255, 255], dtype=np.uint8)
-        lower = np.array([90, 160, 0], dtype=np.uint8)
+        # upper = np.array([120, 255, 255], dtype=np.uint8)
+        # lower = np.array([90, 160, 0], dtype=np.uint8)
+        upper = np.array([123, 222, 255], dtype=np.uint8)
+        lower = np.array([61, 0, 144], dtype=np.uint8)
     if color == "yellow":
         if shade == "dark":
             # upper = np.array([66, 255, 255], dtype=np.uint8)
@@ -122,12 +126,15 @@ def get_mask(color, shade=None):
             upper = np.array([60, 255, 255], dtype=np.uint8)
             lower = np.array([27, 160, 97], dtype=np.uint8)
     if color == "green":
-        upper = np.array([90, 255, 255], dtype=np.uint8)
-        lower = np.array([60, 160, 0], dtype=np.uint8)
+        # upper = np.array([90, 255, 255], dtype=np.uint8)
+        # lower = np.array([60, 160, 0], dtype=np.uint8)
+        upper = np.array([72, 255, 255], dtype=np.uint8)
+        lower = np.array([28, 0, 0], dtype=np.uint8)
 
     if color != 'red':
         foregroud = cv.bitwise_and(image.hsv, image.hsv, mask=foregroud_mask)
         mask = cv.inRange(foregroud, lower, upper)
+        cv.rectangle(mask,(0,0),(380,360),(0),-1)
 
     if color == "red":
         # upper = np.array([161, 197, 195], dtype=np.uint8)
@@ -163,7 +170,7 @@ def get_obj(mask, request):
         check_area = 450 if request == 'golf' else 4500
         if area < check_area:
             continue
-
+        print(area)
         x, y, w, h = cv.boundingRect(cnt)
         cv.rectangle(image.display, (x, y), (x+w, y+h),
                      lib.get_color('yellow'), 2)
@@ -213,17 +220,26 @@ def get_cx(cnt, return_option=None):
 
 
 def get_mat():
-    mat = get_mask("green")
+    mat = get_mask("green",blur=5)
+    kernel = lib.get_kernel(21,21)
+    mat = cv.erode(mat.copy(),kernel)
+    mat = cv.dilate(mat.copy(),kernel)
     lib.publish_result(mat, 'gray', public_topic+'mask/mat/unprocessed')
     contours = cv.findContours(
-        mat, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
+        mat, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)[1]
+    if len(contours) == 0:
+        return np.array([])
     max_cnt = max(contours, key=cv.contourArea)
     rect = cv.minAreaRect(max_cnt)
     box = cv.boxPoints(rect)
     box = np.int64(box)
     himg, wimg = mat.shape[:2]
+    print(rect)
     mat_mask = np.zeros((himg, wimg), np.uint8)
+    temp = np.zeros((himg, wimg), np.uint8)
     cv.drawContours(mat_mask, [box], 0, (255), -1)
+    cv.drawContours(temp, max_cnt, -1, (255), -1)
+    lib.publish_result(temp, 'gray', public_topic+'temp')
     return mat_mask
 
 def find_mat():

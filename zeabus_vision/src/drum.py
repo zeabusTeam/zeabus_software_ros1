@@ -104,7 +104,7 @@ def get_mask(color, shade=None,blur=5):
 	
     foregroud_mask = s
 
-    # foregroud_mask = cv.threshold(
+    # foregroud_mask = cv.threshold(cv.line(img,(0,0),(wimg,0),(0),5)
         # s, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)[1]
     
     lib.publish_result(foregroud_mask,'gray',public_topic+'fg_mask')
@@ -115,7 +115,7 @@ def get_mask(color, shade=None,blur=5):
         # upper = np.array([120, 255, 255], dtype=np.uint8)
         # lower = np.array([90, 160, 0], dtype=np.uint8)
         upper = np.array([123, 222, 255], dtype=np.uint8)
-        lower = np.array([61, 0, 144], dtype=np.uint8)
+        lower = np.array([61, 120, 144], dtype=np.uint8)
     if color == "yellow":
         if shade == "dark":
             # upper = np.array([66, 255, 255], dtype=np.uint8)
@@ -132,9 +132,11 @@ def get_mask(color, shade=None,blur=5):
         lower = np.array([28, 0, 0], dtype=np.uint8)
 
     if color != 'red':
+        himg,wimg = image.bgr.shape[:2]
         foregroud = cv.bitwise_and(image.hsv, image.hsv, mask=foregroud_mask)
         mask = cv.inRange(foregroud, lower, upper)
         cv.rectangle(mask,(0,0),(380,360),(0),-1)
+        cv.rectangle(mask,(0,0),(wimg,himg-10),(0),10)
 
     if color == "red":
         # upper = np.array([161, 197, 195], dtype=np.uint8)
@@ -167,7 +169,7 @@ def get_obj(mask, request):
     obj = []
     for cnt in contours:
         area = cv.contourArea(cnt)
-        check_area = 450 if request == 'golf' else 4500
+        check_area = 450 if request == 'golf' else 7000
         if area < check_area:
             continue
         print(area)
@@ -221,16 +223,19 @@ def get_cx(cnt, return_option=None):
 
 def get_mat():
     mat = get_mask("green",blur=5)
-    kernel = lib.get_kernel(21,21)
+    kernel = lib.get_kernel(101,101)
     mat = cv.erode(mat.copy(),kernel)
     mat = cv.dilate(mat.copy(),kernel)
     lib.publish_result(mat, 'gray', public_topic+'mask/mat/unprocessed')
     contours = cv.findContours(
         mat, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)[1]
-    if len(contours) == 0:
+    
+    hmm = sorted([cnt for cnt in contours if cv.contourArea(cnt) > 500],key=cv.contourArea, reverse=True)
+    print(len(hmm))
+    if len(hmm) == 0:
         return np.array([])
-    max_cnt = max(contours, key=cv.contourArea)
-    rect = cv.minAreaRect(max_cnt)
+    # max_cnt = max(hmm, key=cv.contourArea)
+    rect = cv.minAreaRect(hmm[0])
     box = cv.boxPoints(rect)
     box = np.int64(box)
     himg, wimg = mat.shape[:2]
@@ -238,7 +243,7 @@ def get_mat():
     mat_mask = np.zeros((himg, wimg), np.uint8)
     temp = np.zeros((himg, wimg), np.uint8)
     cv.drawContours(mat_mask, [box], 0, (255), -1)
-    cv.drawContours(temp, max_cnt, -1, (255), -1)
+    cv.drawContours(temp, hmm, -1, (255), -1)
     lib.publish_result(temp, 'gray', public_topic+'temp')
     return mat_mask
 

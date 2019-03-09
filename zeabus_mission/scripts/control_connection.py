@@ -310,8 +310,8 @@ if( __name__ == "__main__" ):
 	ch = ControlConnection("testing_robot")
 
 	print("Welcome to testing control")
-#	ch.fire_gripper()	
-	ch.hold_gripper()	
+	ch.fire_gripper()	
+#	ch.hold_gripper()	
 #	ch.fire_golf()	
 #	ch.hold_golf()	
 '''

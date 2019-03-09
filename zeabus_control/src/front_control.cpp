@@ -275,15 +275,6 @@ int main( int argv , char** argc ){
 				control_twist.twist.linear.y = value_fix_velocity[1] +
 						control_::velocity_xy( diff_point.y );
 
-				int bit_answer = 0;
-				int bit_diff = 0;
-				if( control_twist.twist.linear.x < 0 ) bit_answer = 1;
-				if( diff_point.x < 0 ) bit_diff = 1;
-				if( ( bit_diff + bit_answer ) == 1){
-					control_twist.twist.linear.x = copysign( 0.5 , diff_point.x );
-					zeabus_library::bold_red( "Convert type\n");
-				}
-	
 			}
 			else if( received_target_twist[0] > 0 || received_target_twist[1] > 0 ){
 				received_target_twist[0]--;

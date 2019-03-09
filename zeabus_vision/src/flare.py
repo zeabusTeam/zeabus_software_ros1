@@ -61,15 +61,26 @@ def message(state=0, cx=0.0, cy=0.0, area=0.0):
     return msg
 
 
-def get_mask(img):
-    hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
+def get_mask():
+    image.get_hsv()
+    # hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
     # upper, lower = get_color_range('yellow', 'front', '1', 'flare')
     upper = np.array([48, 255, 255], dtype=np.uint8)
     lower = np.array([14, 0, 0], dtype=np.uint8)
     # upper = np.array([60, 255, 255], dtype=np.uint8)
     # lower = np.array([2, 0, 0], dtype=np.uint8)
-    mask = cv.inRange(hsv, lower, upper)
+    mask = cv.inRange(image.hsv, lower, upper)
     return mask
+
+def rm_bg(mask):
+    image.get_hsv()
+    upper = np.array([179, 225, 185], dtype=np.uint8)
+    lower = np.array([50, 54, 48], dtype=np.uint8)
+    bg = cv.inRange(image.hsv, lower, upper)
+    bg = cv.bitwise_not(bg)
+    obj = cv.bitwise_and(mask,bg)
+    lib.publish_result(obj,'gray',PUBLIC_TOPIC + '/rm_bg')
+    return obj
 
 
 def is_verticle_pipe(cnt, percent, rect):
@@ -95,7 +106,7 @@ def is_verticle_pipe(cnt, percent, rect):
     w, h = max(w, h), min(w, h)
 
     print('area', (area_box, area_cnt, w, h))
-    if area_box <= 1000 or area_cnt <= 1000 or w < 50:
+    if area_box <= 700 or area_cnt <= 700 or w < 50:
         return False
 
     area_ratio_expected = 0.3
@@ -148,11 +159,13 @@ def find_far_flare():
         lib.img_is_none()
         return message(state=-1)
 
+    image.renew_display()
     pre_process = lib.pre_process(image.bgr, 'flare')
     gray = cv.cvtColor(pre_process.copy(), cv.COLOR_BGR2GRAY)
     hsv = cv.cvtColor(pre_process, cv.COLOR_BGR2HSV)
     h, s, v = cv.split(hsv)
     obj = lib.bg_subtraction(h, mode='neg')
+    obj = rm_bg(obj)
 
     lib.publish_result(obj, 'gray', PUBLIC_TOPIC + 'far/temp')
     lib.publish_result(h, 'gray', PUBLIC_TOPIC + 'far/h_from_hsv')
@@ -162,14 +175,19 @@ def find_far_flare():
     kernel_vertical = lib.get_kernel(ksize=(1, 25))
     vertical = cv.erode(obj.copy(), kernel_vertical)
     vertical = cv.dilate(vertical.copy(), kernel_box)
-    kernel_erode = lib.get_kernel(ksize=(3, 11))
+    kernel_erode = lib.get_kernel(ksize=(3, 13))
     vertical = cv.erode(vertical.copy(), kernel_erode)
+
+    # kernel = lib.get_kernel(ksize=(1,101))
+    # vertical = cv.dilate(vertical, kernel)
+    # vertical = cv.erode(vertical, kernel)
+
 
     vertical_pipe, no_v_pipe = find_pipe(vertical)
     mode = no_v_pipe
     color = ct.CYAN
     if mode == 0:
-        lib.print_result("NOT FOUND", ct.RED)
+        lib.print_result("NOT FOUND (FAR)", ct.RED)
         lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'far/display')
         lib.publish_result(
             vertical, 'gray', PUBLIC_TOPIC + 'far/mask/vertical')
@@ -186,7 +204,7 @@ def find_far_flare():
     y1, y2 = max(min(vertical_y), 0), min(max(vertical_y), himg)
     area = (x2-x1) * (y2-y1)
 
-    if area > 8000 or area < 1500:
+    if area > 7000 or area < 700:
         lib.print_result("NOT FOUND "+color+"(FAR)", ct.RED)
         lib.publish_result(image.display, 'bgr', PUBLIC_TOPIC + 'far/display')
         lib.publish_result(vertical, 'gray', PUBLIC_TOPIC +
@@ -212,9 +230,10 @@ def get_obj(mask):
         mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
     # print('get_obj',len(contours))
     for cnt in contours:
-        check_area = 7200
+        check_area = 6000
         area_cnt = cv.contourArea(cnt)
-        print(area_cnt)
+        if area_cnt > 100:
+            print(area_cnt)
         if area_cnt < check_area:
             continue
         (x, y), (w, h), angle = rect = cv.minAreaRect(cnt)
@@ -249,8 +268,19 @@ def find_near_flare():
         lib.img_is_none()
         return message(state=-1)
 
+    image.renew_display()
     pre_process = lib.pre_process(image.bgr, 'flare')
-    mask = get_mask(pre_process.copy())
+    mask = get_mask()
+    
+    kernel_box = lib.get_kernel(ksize=(7, 7))
+    kernel_vertical = lib.get_kernel(ksize=(1, 25))
+    vertical = cv.erode(mask.copy(), kernel_vertical)
+    vertical = cv.dilate(vertical.copy(), kernel_box)
+    kernel_erode = lib.get_kernel(ksize=(3, 13))
+    vertical = cv.erode(vertical.copy(), kernel_erode)
+
+    mask = vertical
+
     cx, cy, area, obj, box = get_obj(mask)
 
     mode = area != 0

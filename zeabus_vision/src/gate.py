@@ -198,7 +198,7 @@ def find_pole():
     image.renew_display()
     log.update_time()
     image.get_gray()
-    obj = lib.bg_subtraction(image.gray, mode='neg')
+    obj = lib.bg_subtraction(image.gray, mode='neg',fg_blur_size=3)
 
     kernel_box = lib.get_kernel(ksize=(7, 7))
 

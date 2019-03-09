@@ -81,10 +81,9 @@ class ThrustMapper:
         print '==================== RECEIVE FORCE ===================='
         print("%+5.4f %+5.4f "%(message.twist.linear.x , message.twist.linear.y ) )
 
-        while( abs( abs( message.twist.linear.x ) - abs( message.twist.linear.y ) ) > 0.7 ):
+        if( abs( abs( message.twist.linear.x ) - abs( message.twist.linear.y ) ) > 1 ):
 			message.twist.linear.x /= 2
 			message.twist.linear.y /= 2
-
         print '==================== RESULT FORCE ===================='
         print("%+5.4f %+5.4f "%(message.twist.linear.x , message.twist.linear.y ) )
 

@@ -10,6 +10,6 @@
 	
 	<include file="$(find hg_ros_pololu)/launch/maestro8.launch"/>
 
-	<node name="thruster_mapper" output="screen" pkg="zeabus_control" type="thrust_mapper.py"/>
+	<node name="thruster_mapper" output="screen" pkg="zeabus_control" type="thrust_mapper_ratio.py"/>
 
 </launch>

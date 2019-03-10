@@ -135,6 +135,7 @@ def get_mask(color, shade=None,blur=5):
         himg,wimg = image.bgr.shape[:2]
         foregroud = cv.bitwise_and(image.hsv, image.hsv, mask=foregroud_mask)
         mask = cv.inRange(foregroud, lower, upper)
+    if shade is not ['golf']:
         cv.rectangle(mask,(0,0),(380,360),(0),-1)
         cv.rectangle(mask,(0,0),(wimg,himg-10),(0),10)
 
@@ -247,6 +248,7 @@ def get_mat():
     lib.publish_result(temp, 'gray', public_topic+'temp')
     return mat_mask
 
+
 def find_mat():
     if image.bgr is None:
         lib.img_is_none()
@@ -343,7 +345,18 @@ def find_golf(objective):
         return message(state=-1)
     image.renew_display()
     image.get_gray()
+    himg, wimg = image.bgr.shape[:2]
     obj = lib.bg_subtraction(image.gray,mode='pos')
+    drum_mask = get_mask("blue",shade='golf')
+    cnt = get_obj(drum_mask, "blue")
+    temp = np.zeros((himg, wimg), np.uint8)
+    if len(cnt) > 0:
+        (x,y),radius = cv.minEnclosingCircle(cnt)
+        center = (int(x),int(y))
+        radius = int(radius)
+        cv.circle(temp,center,radius,(255),-1)
+        # cv.drawContours(temp, np.array(cnt), 0, (255), -1)
+    obj = cv.bitwise_and(obj,temp)
     contours= cv.findContours(obj.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)[1]
     circle = []
     for cnt in contours:

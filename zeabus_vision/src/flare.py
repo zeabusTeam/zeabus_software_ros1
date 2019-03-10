@@ -230,7 +230,7 @@ def get_obj(mask):
         mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)[1]
     # print('get_obj',len(contours))
     for cnt in contours:
-        check_area = 6000
+        check_area = 3000
         area_cnt = cv.contourArea(cnt)
         if area_cnt > 100:
             print(area_cnt)

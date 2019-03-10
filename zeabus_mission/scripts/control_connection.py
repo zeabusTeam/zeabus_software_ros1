@@ -214,7 +214,7 @@ class ControlConnection:
 		return result
 
 #===============> SERVICE OF Torpedo
-	def fire_gripper( self ):
+	def fire_gripper( self , message = ""):
 		try:
 			result = self.fire_torpedo( 1 )
 		except rospy.ServiceException , error :
@@ -222,7 +222,7 @@ class ControlConnection:
 			result = False
 		return result
 		
-	def hold_gripper( self ):
+	def hold_gripper( self , message = ""):
 		try:
 			result = self.hold_torpedo( 1 )
 		except rospy.ServiceException , error :
@@ -230,7 +230,7 @@ class ControlConnection:
 			result = False
 		return result
 
-	def fire_golf( self ):
+	def fire_golf( self , message = ""):
 		try:
 			result = self.fire_torpedo( 0 )
 		except rospy.ServiceException , error :
@@ -238,7 +238,7 @@ class ControlConnection:
 			result = False
 		return result
 		
-	def hold_golf( self ):
+	def hold_golf( self , message = ""):
 		print("Command to hold golf")
 		try:
 			result = self.hold_torpedo( 0 )

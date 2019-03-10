@@ -74,9 +74,12 @@ class MissionAll( StandardMission ):
 		self.fix_z( -0.7 )
 
 		play_pick = False
-		if( self.ok_state() ): play_pick = self.find_drum() 
+		if( self.ok_state() ): play_pick = self.find_drum( 0 ) 
 		if( self.ok_state() and play_pick ): self.move_out_in()
 
+		self.fix_yaw( self.start_yaw - 1.57)
+		self.relative_xy( 5 , -12 )
+		self.wait_state( "xy" , 0.2 , 5 )
 		self.find_flare( 6 , 50 , -1 )		
 
 		self.reset_velocity( "xy" )
@@ -84,7 +87,7 @@ class MissionAll( StandardMission ):
 		self.active_control( False )
 		return True
 
-	def over_move( self , distance , time , setup = False ):
+	def over_move( self , distance , time_limit , setup = False ):
 		if( setup ):
 			self.time_start = time.time()
 			self.collect_state()
@@ -92,7 +95,7 @@ class MissionAll( StandardMission ):
 		else:
 			if( self.distance() > distance ):
 				return True
-#			elif( ( time.time() - self.time_start ) > time ):
+#			elif( ( time.time() - self.time_start ) > time_limit ):
 #				return True
 			else:
 				return False
@@ -104,7 +107,7 @@ class MissionAll( StandardMission ):
 		count_unfound = 0
 		while( self.ok_state() ):
 			self.sleep( 0.1 )
-			self.vision_flare( "flare" , "near" , 5 )
+			self.vision_flare.analysis_all( "flare" , "near" , 5 )
 			if( not self.vision_flare.have_object() ):
 				count_unfound += 1
 				if( count_unfound == 5 ):
@@ -112,28 +115,31 @@ class MissionAll( StandardMission ):
 				continue
 			count_unfound = 0
 			if( abs( self.vision_flare.center_x() ) < 0.1 ):
+				self.echo( "play flare" , "Now I move forward because is center")
 				self.velocity( { 'x' : 0.2 } )
 			else:
 				self.velocity( { 'y' : math.copysign( 0.25 , self.vision_flare.center_x()*-1 ) })
+				self.echo( "play flare" , "Now I move survey because isn't center")
 
-		self.fix_z( -1.3 )	
-		self.echo("NEAR" , "wait depth" )
-		while( self.ok_state() ){
+		self.fix_z( -1.4 )	
+		self.echo( "NEAR" , "wait depth" )
+		while( self.ok_state() ):
 			self.sleep( 0.1 )
 			self.velocity({ 'x':0.01 } )
 			if( self.check_position( "z" , 0.15 ) ): break
-		}
 		self.free_xy( False )
 		time_start = time.time()
 		diff_time = 0
-		self.velocity_xy( 0.2 )
+		self.velocity_xy( 0.2 , 0)
 		while( self.ok_state() and diff_time < 6 ):
 			self.sleep( 0.1 )
 			diff_time = time.time() - time_start
+			self.echo( "play flare" , "Last forward is diff_time is " + str(diff_time) )
 		return True
 
 
 	def find_flare( self , distance_survey , time_survey , direction ):
+		self.echo( "find flare" , "Start survey")
 		mode = 1 # 1 forward 2 survey
 		setup_mode = True
 		direction_survey = direction
@@ -142,13 +148,13 @@ class MissionAll( StandardMission ):
 		self.fix_z( -1.4 )
 		while( self.ok_state() ):
 			self.sleep( 0.1 )
-			self.vision_flare( "flare" , "near" , 5 )
+			self.vision_flare.analysis_all( "flare" , "near" , 5 )
 			if( self.vision_flare.have_object() ):
 				finish_flare = self.play_flare()
 				if( finish_flare ):
 					self.reset_velocity( "xy" )
 					break
-			self.vision_flare( "flare" , "far" , 5 )
+			self.vision_flare.analysis_all( "flare" , "far" , 5 )
 			if( self.vision_flare.have_object() ):
 				if( current_fix_velocity ):
 					self.reset_velocity( "xy" )
@@ -186,10 +192,8 @@ class MissionAll( StandardMission ):
 					setup_mode = True
 					mode = 1
 			
-
 	def move_out_in( self ):
 		self.velocity_xy( -0.15 , 0 )
-		self.find_drum
 		count_unfound = 0
 		while( self.ok_state() ):
 			self.sleep( 0.06 )
@@ -201,9 +205,11 @@ class MissionAll( StandardMission ):
 			else:
 				count_unfound = 0
 		self.reset_velocity( "xy" )
-		return self.find_drum( True )
+		return self.find_drum( 0 , True )
 
-	def play_drum( self , drop_ball ):
+	def play_drum( self , pick_ball ):
+		if( pick_ball ): self.echo( "PLAYDRUM" , "For pick ball")
+		else: self.echo( "PLAYDRUM" , "For drop ball")
 		self.fire_gripper()
 		self.echo( "DROP" , "Command to release gripper")
 		self.free_xy( True )
@@ -216,7 +222,7 @@ class MissionAll( StandardMission ):
 		self.relative_z( -0.3 )
 		start_time = 0
 		count_unfound = 0
-		if( drop_ball ): self.hold_golf()
+		if( pick_ball ): self.hold_golf()
 		while( self.ok_state() ):
 			self.sleep( 0.06 )
 			self.vision_drum.analysis_all( "blue" , "left-right" , 5 )
@@ -245,7 +251,7 @@ class MissionAll( StandardMission ):
 				self.target_state()
 				self.echo( "DRUM" , "Now depth is " + str( self.temp_state[2] ) )
 				if( self.temp_state[2] < -1.4 ):
-					if( not drop_ball ): self.fire_golf()
+					if( not pick_ball ): self.fire_golf()
 					else: self.velocity_z( -0.15 )
 					ever_fire_golf = True
 					start_time = time.time()
@@ -263,8 +269,10 @@ class MissionAll( StandardMission ):
 					self.fix_z( -0.6 )
 					wait_z = True
 
-	def find_drum( self , direction , drop_ball = False ):
-		self.velocity_xy( 0.2 )
+	def find_drum( self , direction , pick_ball = False ):
+		if( direction == 0 ): direction = 1
+		self.echo( "FIND DRUM" , "Survey for find drum")
+		self.velocity_xy( 0.2 , 0 )
 		count_found = 0 
 		while( self.ok_state() ):
 			self.sleep( 0.06 )
@@ -275,13 +283,14 @@ class MissionAll( StandardMission ):
 					break
 			else:
 				count_found = 0
+		self.echo("FIND DRUM" , "Continue to find drum")
 		self.reset_velocity( "xy" )
 		self.reset_target( "xy" )
-
 		value_x = 0
 		value_y = 0
 		ever_change = False
 		count_found = 0
+		can_aborted = False
 		while( self.ok_state() ):
 			self.sleep( 0.06 )
 			self.vision_drum.analysis_all( "mat" , "sevinar" , 5 )
@@ -289,30 +298,35 @@ class MissionAll( StandardMission ):
 			elif( not self.vision_drum.result['backward'] ): value_x = -0.1
 			else: value_x = 0
 			
-			if( direction == 1 ): # direction == 1 is left
-				if( not self.vision_drum.result['left'] and not ever_change):
+			if( direction == 1 and not self.vision_drum.have_object() ): # direction == 1 is left
+				if( not ever_change):
+					self.echo( "FIND DRUM" , "Change mode to find drum")
+					direction *= -1
+					ever_change = True
+					can_aborted = False
+				else:
+					return False
+			elif(direction == 2 and not self.vision_drum.have_object() ):
+				if( not ever_change ):
+					self.echo( "FIND DRUM" , "Change mode to find drum")
 					direction *= -1
 					ever_change = True
 				else:
 					return False
-			else:
-				if( not self.vision_drum.result['right'] and not ever_change):
-					direction *= -1
-					ever_change = True
-				else:
-					return False
-		
-			self.vision_drum.analysis_all( "blue" , "center" , 5 )
+			else: can_aborted = True
+
+			self.echo( "FIND DRUM" , "Check drum")	
+			self.vision_drum.analysis_all( "blue" , "left-right" , 5 )
 			if( self.vision_drum.have_object() ):
 				count_found += 1
 				if( count_found == 3 ):
-					return self.play_drum( drop_ball )
+					return self.play_drum( pick_ball )
 			else:
 				count_found = 0
 				self.velocity( { 'x' : value_x , 'y' : 0.1 * direction } )
 
 	def find_gate( self, distance_forward, time_forward, distance_survey, time_survey, direct):
-		self.velocity_xy( 0.2 )
+		self.velocity_xy( 0.2 , 0)
 		self.over_move( distance_forward , time_forward , True )
 		finish_gate = False
 		count_found = 0 

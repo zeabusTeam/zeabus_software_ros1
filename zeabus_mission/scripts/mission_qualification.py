@@ -33,9 +33,11 @@ class MissionQualification( StandardMission ):
 
 		result = False
 
+		self.temp_pier = 0
+
 		self.reset_target( "xy" )
 		self.reset_target( "yaw" )
-		self.fix_z( -0.5 )
+		self.fix_z( -0.3 )
 
 		self.echo( self.name , "START MISSION QUALIFICATION")
 

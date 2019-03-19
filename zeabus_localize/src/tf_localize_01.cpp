@@ -215,6 +215,8 @@ int main( int argv , char** argc ){
 		if( fabs(adding_x) > aborted_value ) state.pose.pose.position.x += adding_x;
 		if( fabs(adding_y) > aborted_value ) state.pose.pose.position.y += adding_y;
 
+		state.twist.twist.angular.z *= -1;
+
 		state.header.stamp = ros::Time::now();
 		pub_state.publish( state );
 	

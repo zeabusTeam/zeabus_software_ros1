@@ -28,11 +28,10 @@ class ThrustMapper:
             [0, 0, 1],  			# thruster 2
             [0, 0, 1],  			# thruster 3
             [0, 0, 1],  			# thruster 4
-            [cos_45, -sin_45, 0],  	# thruster 5
-            [cos_45, sin_45, 0],  	# thruster 6
-            [-cos_45, -sin_45, 0],  # thruster 7
-#            [-cos_45, sin_45, 0]  	# thruster 8
-			[0 , 0 , 0]
+            [-cos_45, sin_45, 0],  	# thruster 5
+            [-cos_45, -sin_45, 0],  	# thruster 6
+            [cos_45, sin_45, 0],  # thruster 7
+            [cos_45, -sin_45, 0]  	# thruster 8
         ])
 
         self.distance = np.array([
@@ -50,10 +49,10 @@ class ThrustMapper:
 									[-0.048, 0.045],	
 									[-0.048, 0.045],	
 									[-0.048, 0.045],	
-									[-0.01	, 0.01],	
-									[-0.01	, 0.01],	
-									[-0.01	, 0.01],	
-									[-0.01	, 0.01],
+									[-0.048	, 0.045],	
+									[-0.048	, 0.045],	
+									[-0.048	, 0.045],	
+									[-0.048	, 0.045],
         ])
 
         self.direction_angular = np.array([
@@ -98,15 +97,15 @@ class ThrustMapper:
                     torque[run] = self.min_force[run][1]
 
         cmd = []
-        for i in range(0, 4):
+        for i in range(0, 8):
             cmd.append(lup.lookup_pwm_02(torque[i]))
             if(torque[i] == 0):
                 cmd[i] = 1500
 
-        for i in range(4, 8):
-            cmd.append(lup.lookup_pwm_01(torque[i]))
-            if(torque[i] == 0):
-                cmd[i] = 1500
+#        for i in range(4, 8):
+#            cmd.append(lup.lookup_pwm_01(torque[i]))
+#            if(torque[i] == 0):
+#                cmd[i] = 1500
 
         for i in range(0, 8):
 			pwm_command.pwm[i] = cmd[i]  # thrust i

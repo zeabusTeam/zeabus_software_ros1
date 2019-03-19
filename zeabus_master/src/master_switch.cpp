@@ -29,6 +29,8 @@
 
 #define _PLAY_QUALIFICATION_
 
+#define _PLAY_ALL_MISSION_
+
 int main( int argv , char** argc ){
 
 	ros::init( argv , argc , "master_switch");
@@ -65,11 +67,20 @@ int main( int argv , char** argc ){
 	zeabus_library::TwoBool srv_connect_mission_qualification;
 #endif
 
+#ifdef _PLAY_ALL_MISSION_
+	ros::ServiceClient connect_mission_all =
+			nh.serviceClient< zeabus_library::TwoBool >("/mission/all");
+	zeabus_library::TwoBool srv_connect_mission_all;
+#endif
+
 //================> LOOP ROS SYSTEM	
 	int count_switch = 0;
 	bool status_back_control = 0;
 #ifdef _PLAY_QUALIFICATION_
 	bool status_mission_qualification = 0;
+#endif
+#ifdef _PLAY_ALL_MISSION_
+	bool status_mission_all = 0 ;
 #endif
 	
 	#ifdef _SHOW_COUNT_SWITCH_
@@ -108,13 +119,33 @@ int main( int argv , char** argc ){
 		if( status_mission_qualification ){
 			if( count_switch == 0 ){
 				status_mission_qualification = false;
+				srv_connect_mission_qualification.request.data = false;
+				connect_mission_qualification.call( srv_connect_mission_qualification );
 			}
 		}
 		else{
 			if( count_switch == limit_count_switch ){
+				status_mission_qualification = true;
 				srv_connect_mission_qualification.request.data = true;
 				connect_mission_qualification.call( srv_connect_mission_qualification );
-				status_mission_qualification = true;
+			}
+		}
+#endif
+
+
+#ifdef _PLAY_ALL_MISSION_
+		if( status_mission_all ){
+			if( count_switch == 0 ){
+				status_mission_all = false;
+				srv_connect_mission_all.request.data = false;
+				connect_mission_all.call( srv_connect_mission_all );
+			}
+		}
+		else{
+			if( count_switch == limit_count_switch ){
+				status_mission_all = true;
+				srv_connect_mission_all.request.data = true;
+				connect_mission_all.call( srv_connect_mission_all );
 			}
 		}
 #endif
@@ -126,6 +157,9 @@ int main( int argv , char** argc ){
 				printf("status_control      : %5d\n" , status_back_control );
 			#ifdef _PLAY_QUALIFICATION_
 				printf("status_qulification : %5d\n" , status_mission_qualification );
+			#endif
+			#ifdef _PLAY_ALL_MISSION_
+				printf("status_mission_all  : %5d\n" , status_mission_all );
 			#endif
 				printf("\n\n");	
 				count_print = 0;

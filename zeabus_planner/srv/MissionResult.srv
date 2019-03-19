@@ -1,6 +1,0 @@
-std_msgs/Bool start
----
-std_msgs/Bool result
-std_msgs/Int8 reason
-# reason = 0 : can't play because of have still run 
-#		 = -1: don't sucess please fine another target

@@ -34,7 +34,7 @@ namespace zeabus_library{
 		public:
 			double A;
 			double D;
-			double A_inverse;
+			double A_inverse; //  A_inverse is A_2
 			double D_2;
 
 			LinearEquation( double x0 = 0 , double y0 = 0 , double x1 = 0 , double y1 = 0 );
@@ -48,7 +48,10 @@ namespace zeabus_library{
 			void update();
 			void cut_point( double x , double y , double& cut_x , double& cut_y );
 			void cut_point( double x , double y , double& cut_x , double& cut_y 
-					, double& diff_x , double& diff_y ); 
+					, double& diff_x , double& diff_y );
+
+			void find_point_x( double& x , double y );
+			void find_point_y( double x , double& y ); 
 
 			void print_equation();
 

@@ -19,6 +19,10 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable( master_switch src/master_switch.cpp)
-add_dependencies( master_switch ${PROJECT_NAME}_EXPORTED_TARGETS ${catkin_EXPORTED_TARGETS})
-target_link_libraries( master_switch ${catkin_LIBRARIES} )
+add_executable( switch_open src/switch_open.cpp)
+add_dependencies( switch_open ${PROJECT_NAME}_EXPORTED_TARGETS ${catkin_EXPORTED_TARGETS})
+target_link_libraries( switch_open ${catkin_LIBRARIES} )
+
+add_executable( switch_close src/switch_close.cpp)
+add_dependencies( switch_close ${PROJECT_NAME}_EXPORTED_TARGETS ${catkin_EXPORTED_TARGETS})
+target_link_libraries( switch_close ${catkin_LIBRARIES} )

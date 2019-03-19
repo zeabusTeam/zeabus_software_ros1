@@ -11,7 +11,7 @@
 <launch>
 
 	<arg name="dvl_serialport" default="/dev/usb2serial/ftdi_FT2VR5PM_02"/>
-	<arg name="microstrain_serial" default="/dev/microstrain/3dm_gx5_45_0000__6251.65903"/>
+	<arg name="microstrain_serial" default="/dev/microstrain/3dm_gx5_45_0000__6251.65901"/>
 	<arg name="world_frame" default="world"/>
 	<arg name="robot_frame" default="robot"/>
 	<arg name="imu_frame" default="imu"/>
@@ -29,7 +29,8 @@
 		<param name="parent_id" type="str" value="$(arg robot_frame)"/>
 		<param name="frame_id" type="str" value="$(arg imu_frame)"/>
 		<param name="use_offset" type="bool" value="true"/>
-		<param name="offset_roll" type="double" value="$(arg PI)"/>
+		<!--param name="offset_roll" type="double" value="$(arg PI)"/-->
+		<param name="offset_roll" type="double" value="0.0"/>
 		<param name="offset_pitch" type="double" value="0.0"/>
 		<param name="offset_yaw" type="double" value="$(arg HalfPI)"/>
 		<param name="frequency" type="int" value="50"/>
@@ -59,7 +60,7 @@
 			args="0 0 -0.1 0 0 0 1 $(arg robot_frame) $(arg dvl_frame) 100"/>
 
 	<node pkg="tf" type="static_transform_publisher" name="imu_to_robot"
-			args="1 0 0.1 0.707 0.707 0 0 $(arg robot_frame) $(arg imu_frame) 100"/>
+			args="1 0 0.1 0 0 -0.707 0.707 $(arg robot_frame) $(arg imu_frame) 100"/>
 
 	<node pkg="tf" type="static_transform_publisher" name="pressure_to_robot"
 			args="-0.5 0 0 0 0 0 1 $(arg robot_frame) $(arg pressure_frame) 100"/>

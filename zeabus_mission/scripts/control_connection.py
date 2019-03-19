@@ -13,7 +13,8 @@ from __future__ import print_function
 import rospy
 import math
 
-from zeabus_library.srv import OneVector3Stamped , TwoStringVector3Stamped , ThreeOdometry
+from zeabus_library.srv import OneVector3Stamped, TwoStringVector3Stamped, ThreeOdometry, TwoBool
+from zeabus_elec_ros_hardware_interface.srv import Torpedo
 
 from std_msgs.msg import Header
 from geometry_msgs.msg import Twist , TwistStamped , Vector3
@@ -25,6 +26,7 @@ from tf.transformations import euler_from_quaternion
 ##	OneVector3Stamped		: relative_${xy, z, yaw} , fix_$(z, yaw) , velocity_$(xy, z, yaw)
 ##	TwoStringVector3Stamped	: reset_target reset_velocity check_position 
 ##	ThreeOdometry			: get_state
+##	TwoBool					: free_xy
 ################################################################################################
 
 class ControlConnection:
@@ -65,10 +67,16 @@ class ControlConnection:
 
 		self.cl_get_state		= rospy.ServiceProxy("/control/get_target" , ThreeOdometry )
 
+		self.cl_free_xy			= rospy.ServiceProxy("/control/free_xy" , TwoBool )
+		self.cl_active			= rospy.ServiceProxy("/control/active" , TwoBool )
+
+		self.fire_torpedo		= rospy.ServiceProxy("/fire_torpedo" , Torpedo );
+		self.hold_torpedo		= rospy.ServiceProxy("/hold_torpedo" , Torpedo );
+
 	def distance( self ):
 		self.target_state()
-		print( self.save_state )
-		print( self.temp_state )
+#		print( self.save_state )
+#		print( self.temp_state )
 		return math.sqrt( math.pow( 1.0*self.save_state[0] - 1.0*self.temp_state[0] , 2 ) + 
 				math.pow( 1.0*self.save_state[1] - 1.0*self.temp_state[1] , 2 )	)
 
@@ -205,6 +213,49 @@ class ControlConnection:
 		result = self.service_one_vector( self.cl_fix_yaw , self.vector , "fix_yaw")
 		return result
 
+#===============> SERVICE OF Torpedo
+	def fire_gripper( self , message = ""):
+		try:
+			result = self.fire_torpedo( 1 )
+		except rospy.ServiceException , error :
+			print("\x1B[1;release Gripper " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
+			result = False
+		return result
+		
+	def hold_gripper( self , message = ""):
+		try:
+			result = self.hold_torpedo( 1 )
+		except rospy.ServiceException , error :
+			print("\x1B[1;release Gripper " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
+			result = False
+		return result
+
+	def fire_golf( self , message = ""):
+		try:
+			result = self.fire_torpedo( 0 )
+		except rospy.ServiceException , error :
+			print("\x1B[1;fire golf " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
+			result = False
+		return result
+		
+	def hold_golf( self , message = ""):
+		print("Command to hold golf")
+		try:
+			result = self.hold_torpedo( 0 )
+		except rospy.ServiceException , error :
+			print("\x1B[1;hold golf " + str(message) + " :\n\t\x1B[0;37m" + str(error) )
+			result = False
+		print("Finish to hold golf")
+		return result
+
+#===============> SERVICE OF TWOBOOL
+	def free_xy( self , data ):
+		result = self.service_two_bool( self.cl_free_xy , data , "target_free_xy")
+		return result
+		
+	def active_control( self , data ):
+		result = self.service_two_bool( self.cl_active , data , "active_control")
+		return result
 #===============> FUNCTION FOR CALL SERVICE
 
 	def service_one_vector( self , service , vector3 , message = ""):
@@ -235,6 +286,14 @@ class ControlConnection:
 					str(error) )
 		return result
 
+	def service_two_bool( self , service , data , message = ""):
+		try:
+			result = service( data ).result
+		except rospy.ServiceException , error :
+			print("\x1B[1;31mservice two bool of " + str(message) , " :\n\t\x1B[0;37m" + 
+					str(error) )
+		return result
+
 #===============> SET UP HEADER PART
 	def set_name( self , name ):
 		self.header.frame_id = name
@@ -255,7 +314,11 @@ if( __name__ == "__main__" ):
 	ch = ControlConnection("testing_robot")
 
 	print("Welcome to testing control")
-
+	ch.fire_gripper()	
+#	ch.hold_gripper()	
+#	ch.fire_golf()	
+#	ch.hold_golf()	
+'''
 	ch.velocity_xy( 0.5 , 0.2 )
 	print("Already send velocity_xy 0.5 : 0.2")
 
@@ -280,4 +343,4 @@ if( __name__ == "__main__" ):
 		if( count_ok == 5 ):
 			break
 		print("Wait xy count is " + str( count_ok ) )
-	
+'''

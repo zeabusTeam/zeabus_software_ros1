@@ -59,12 +59,12 @@ add_service_files(
 	DelObject.srv
 )
 
-generate_messages( DEPENDENCIES std_msgs geometry_msgs nav_msgs)
+generate_messages( DEPENDENCIES std_msgs geometry_msgs nav_msgs )
 
 catkin_package(
 	INCLUDE_DIRS include
 	LIBRARIES zeabus_library
-	CATKIN_DEPENDS roscpp message_runtime std_msgs tf
+	CATKIN_DEPENDS roscpp message_runtime std_msgs tf 
 	DEPENDS Boost
 )
 

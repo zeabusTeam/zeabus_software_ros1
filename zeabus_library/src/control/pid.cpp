@@ -60,8 +60,17 @@ namespace control{
 		this->i_limit = limit;
 	}
 
-	void PID::limit_pid( double limit ){
-		this->pid_limit = limit;
+	void PID::set_max_limit( double limit ){
+		this->max_limit = limit;
+	}
+
+	void PID::set_min_limit( double limit ){
+		this->min_limit = limit;
+	}
+
+	void PID::set_limit( double min , double max ){
+		this->min_limit = min;
+		this->max_limit = max;
 	}
 
 	void PID::calculate( double error , double& result ){
@@ -78,7 +87,10 @@ namespace control{
 			if( zeabus_library::abs( this->sum ) > this->i_limit )
 				this->sum = copysign( this->i_limit , this->sum );
 			result = this->sum + error*this->p; 
-			if( fabs(result) > this->pid_limit ) result = copysign( this->pid_limit , result );
+
+			if( result > this->max_limit ) result = max_limit;
+			else if( result < this->min_limit ) result = min_limit;
+
 			this->previous_error = error;
 		}
 	}
